@@ -1,0 +1,184 @@
+# vim: set ft=sh ai si ts=4 sw=4 et :
+
+# default file permissions -rw------- / drwx------
+umask 077
+
+# set my standard environment settings
+PATH="/bin:/sbin:/usr/bin:/usr/sbin"; export PATH
+
+# locale related settings
+TZ='Etc/UTC'; export TZ                 # my time zone
+LANG='en_US.UTF-8'; export LANG         # language.encoding
+# some programs require us to set LC_ALL manually as well.
+LC_ALL='en_US.UTF-8'; export LC_ALL
+MM_CHARSET='UTF-8'; export MM_CHARSET
+BLOCKSIZE='M'; export BLOCKSIZE         # prefer megabytes over 512 byte blocks
+
+# set my pager
+if [ -x /usr/bin/less ]; then
+    PAGER='/usr/bin/less'; export PAGER
+    LESS='-FiJqX'; export LESS  # default options to less
+else
+    PAGER="more"; export PAGER
+fi
+
+# set my default editor, on order of preference and create aliases
+if [ -x /usr/local/bin/vim ]; then
+    EDITOR='/usr/local/bin/vim'; export EDITOR
+    VISUAL='/usr/local/bin/vim'; export VISUAL
+    if [ -x /usr/local/bin/view ]; then
+        # I prefer Vim to Vi when 'view'ing a file
+        alias view='/usr/local/bin/view'
+    fi
+elif [ -x /usr/bin/vi ]; then
+    EDITOR='/usr/bin/vi'; export EDITOR
+    VISUAL='/usr/bin/vi'; export VISUAL
+    # on some systems where vim is not installed, I tend to type vim
+    alias vim='/usr/bin/vi'
+elif [ -x /usr/bin/mg -o /usr/local/bin/mg ]; then
+    # Micro GNU Emacs is 
+    EDITOR="`which mg`"; export EDITOR
+    VISUAL="`which mg`"; export VISUAL
+    alias microemacs='mg'
+fi
+
+case `uname -s` in
+    'FreeBSD') isFreeBSD=1
+               LSCOLORS='CxGxxxxxBxexExcxdx'; export LSCOLORS
+               ;; # FreeBSD
+    'OpenBSD') isOpenBSD=1;;
+    'NetBSD')  isNetBSD=1;;
+    'Linux')   isLinux=1;;
+    'Unix')    isUnix=1;;
+esac
+
+case `basename $SHELL` in
+    'sh') # older versions of the bourne shell lack line editing (i.e. < sys 3)
+          [ $isFreeBSD ] || [ $isOpenBSD ] ||
+          [ $isNetBSD ] || [ $isLinux ] # &&  set -o emacs
+          # set prompt
+          PS1="`hostname -s`$ "; export PS1
+          ;; # sh
+    'bash') 
+          # prompt is: [ user@host:pwd ]$
+          PS1="[ \u@\h:\w ]$ "; export PS1
+          set -o emacs
+          ;; # bash
+    'ksh'| 'pdksh' | "mksh")
+          # my standard issue prompt
+          PS1="$USER@`hostname -s`-$ "; export PS1
+          set -o emacs
+          # make sure tab completion works (where possible)
+          bind "^I=complete"
+          bind "^I=complete-command"
+          bind "^I=complete-file"
+          ;; # ksh family
+    'zsh') # set my various options
+           HISTFILE=~/.histfile
+           HISTSIZE=100
+           SAVEHIST=300
+           setopt appendhistory autocd extendedglob
+           # dont' beep !
+           unsetopt beep
+           # emacs bindings
+           bindkey -e
+           zstyle :compinstall filename "$HOME/.zshrc"
+           autoload -Uz compinit
+           compinit
+           # COLORS
+           fg_green=$'%{\e[0;32m%}'
+           fg_blue=$'%{\e[0;34m%}'
+           fg_cyan=$'%{\e[0;36m%}'
+           fg_red=$'%{\e[0;31m%}'
+           fg_brown=$'%{\e[0;33m%}'
+           fg_purple=$'%{\e[0;35m%}'
+           fg_light_gray=$'%{\e[0;37m%}'
+           fg_dark_gray=$'%{\e[1;30m%}'
+           fg_light_blue=$'%{\e[1;34m%}'
+           fg_light_green=$'%{\e[1;32m%}'
+           fg_light_cyan=$'%{\e[1;36m%}' 
+           fg_light_red=$'%{\e[1;31m%}'
+           fg_light_purple=$'%{\e[1;35m%}'
+           fg_no_colour=$'%{\e[0m%}'
+           fg_white=$'%{\e[1;37m%}'
+           fg_black=$'%{\e[0;30m%}'
+           # I like color in my zsh prompt ;-)
+           PS1="$USER@%B%m%b${fg_green}$ ${fg_no_colour}"; export PS1
+           # display the (24h) time in the right-prompt`
+           RPS1="%T"; export RPS1
+esac
+
+#
+# define some standard aliases for programs, should be fairly portable where
+# said programs are installed.
+#
+alias   bye="echo 'bye'; exit"
+alias   cls='clear'
+alias   pgr="$PAGER"
+alias   limeric='fortune /usr/share/games/fortune/limerick'
+alias   gcc='gcc -Wall -W -Wpointer-arith -Wbad-function-cast -std=c99'
+alias   gcc_wall= 'gcc -Wall -Wpointer-arith -Wcast-qual -Wcast-align \
+                   -Wconversion -Waggregate-return -Wstrict-prototypes \
+                   -Wmissing-prototypes -Wmissing-declarations \
+                   -Wredundant-decls -Winline -Wnested-externs -std=c99 \
+                   -march=i686 -pipe'
+alias   gcc_optimize='gcc -fforce-mem -fforce-addr -finline-functions \
+                           -fstrength-reduce  -floop-optimize -O3'
+alias   gcc_debug='gcc -ggdb3'
+# this quick lint works on both FreeBSD and OpenBSD anyway (ansi mode)
+alias   lint='lint -cehzs'
+# lint's -H option is not documented on FreeBSD but works on both FreeBSD and
+# OpenBSD, dunno about othe rlints.
+alias lint_ansi='lint -aaabcehHzs'
+alias lint_traditional='lint -aaabcehHzt'
+
+#
+# define system specfic aliases for common commands
+#
+if [ $isFreeBSD ]; then
+    # The FreeBSD system seems to have been made by people that have an "Hey
+    # we've been using this command prompt for the past 30 years, let's tmake it
+    # comfortable!" approch...  Thus it needs it's own set of aliases.
+
+    alias   cp='cp -ivRL'
+    alias   mv='mv -v'
+    alias   ls='ls -FGH'
+    alias   ll='ls -laFhHo'
+    alias   la='ls -aFG'
+    alias   rm='rm -d'
+    alias   rmdir='rmdir -v'
+    # quick command to mute/unmute the sound system
+    mute() {
+        OLD_VOLUME=`mixer -s`
+        mixer vol 0:0 pcm 0:0
+    }
+    unmute() {
+      mixer $OLD_VOLUME $*
+    }
+elif [ $isOpenBSD ]; then
+	alias 	cp='cp -iRL'
+	alias 	ls='ls -F'
+	alias 	ll='ls -laFho'
+	alias 	la='ls -aF'
+	alias 	rm='rm -d'
+elif [ $isLinux ]; then 
+    echo "No aliases set..."
+else
+    #
+    # define fail safe aliases that should work on most systems
+    #
+    alias   ll='ls -l'
+    alias   la='la'
+fi
+
+
+# give a few fortune cookie and the current date/time on login
+[ -x /usr/games/fortune ] && /usr/games/fortune -aes
+echo ''
+
+echo ''; echo -n 'To days date is: '; date
+
+#
+# parse site local additions
+#
+. ${HOME}/.site_shrc

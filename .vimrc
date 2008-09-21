@@ -519,7 +519,7 @@
 	function! SchemeFileHandler()
 		call PreHandlerHook()
 
-		setl tabstop=4 shiftwidth=2 expandtab
+		setl tabstop=4 shiftwidth=4 expandtab
 		setl foldmethod=syntax
 		setl matchpairs-=<:>
 		if exists("+spell")

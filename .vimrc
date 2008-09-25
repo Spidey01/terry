@@ -1,5 +1,6 @@
-" Terry M Poulin personal vimrc file
 " vim: set ff=unix ai si noet ts=4 sw=4 fdls=1 fdm=marker wrap tw=0 sm mat=3 spell tags=$HOME/.vim/vimrc.tags :
+"
+" Terry M Poulin personal vimrc file
 "
 "	$Id$:
 "
@@ -152,7 +153,7 @@
 	filetype indent off
 
 	"Enable syntax highlighting
-	if &t_Co > 2 || has("gui_running")
+	if &t_Co > 2 
 		syntax on
 	endif
 
@@ -263,7 +264,7 @@
 	function! DocFileHandler()
 		call PreHandlerHook()
 
-		if has("gui_running") || has("x11") || has("win32")
+		if has("gui_running") ||  has("win32")
 			!{abiword "%" || kword "%" || swriteer "%"}  &
 			q
 		else
@@ -653,11 +654,6 @@
 	set mouseshape=i:beam
 
 
-	if has("gui_running")
-		" Kill the dang visual bell if GUI is running!!!!
-		set novisualbell
-	endif
-	
 	" X11: Specifics for GVim
 	if has("x11")
 		"I love this font!!
@@ -674,6 +670,7 @@
 	endif
 
 	function! SetGuiColo()
+		let g:currentcolo = 'unset'
 		if exists("*strftime")
 			let s:random = strftime("%S")
 		else " fall through to the else
@@ -769,12 +766,17 @@
 			let g:currentcolo = 'shine'
 		else
 			colo default
+			let g:currentcolo = 'default'
 		endif
 	endfunction
 
 	function! SetConsoleColo()
-		let s:random = strftime("%S")
+		let g:currentcolo = 'unset'
 
+		" XXX override this for now
+		colo elflord
+		let g:currentcolo = 'elflord'
+		return 
 		if exists("*strftime")
 			let s:random = strftime("%S")
 		else " fall through to the else
@@ -866,14 +868,12 @@
 			let g:currentcolo = 'murphy'
 		else
 			colo default
+			let g:currentcolo = 'default'
 		endif
 
 	endfunction
 
-	" XXX make this a function to operate on a  list of colo
-	if has("gui_running")
-		call SetGuiColo()
-	else
+	if !has("gui_running")
 		call SetConsoleColo()
 	endif
 
@@ -966,11 +966,6 @@ endfunction
 	let g:Tlist_Exit_OnlyWindow=1
 	let g:Tlist_Display_Prototype=1
 	let g:Tlist_Show_Menu=1
-	if !has("gui_running")
-		let g:Tlist_Inc_Winwidth=0
-		let g:Tlist_WinHeight=7
-		let g:Tlist_WinWidth=15
-	endif
 
 " !Taglist }}}
 

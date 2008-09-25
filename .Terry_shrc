@@ -7,14 +7,6 @@
 # $Author$
 #
 
-#
-# These variables are later set -- only define them here.
-#
-isFreeBSD=0
-isOpenBSD=0
-isNetBSD=0
-isLinux=0
-isUnix=0
 
 #
 # default file permissions -rw------- / drwx------

@@ -192,29 +192,29 @@
 		autocmd BufRead *.jpg,*.jpeg,*.png,*.tiff,*.bmp,*.gif call ImgFileHandler()
 		autocmd BufRead *.xpm call XImgFileHandler()
 "	XXX Code based formats
-		autocmd BufNewFile,BufRead *.ada call AdaFileHandler()
-		autocmd BufNewFile,BufRead *.asm call AsmFileHandler()
+		autocmd filetype ada call AdaFileHandler()
+		autocmd filetype asm call AsmFileHandler()
 		autocmd BufNewFile,BufRead *.c,*.h call CFileHandler()
-		autocmd BufNewFile,BufRead *.css call CSSFileHandler()
+		autocmd filetype css call CSSFileHandler()
 		autocmd BufNewFile,BufRead *.cc,*.cxx,*.cpp,*.hh,*.hpp,*.hxx call CXXFileHandler()
 		autocmd BufNewFile,BufRead *.d call DFileHandler()
 		autocmd BufNewFile,BufRead *.el call ELispFileHandler()
 		autocmd BufNewFile,BufRead *.html,*.xhtml call HtmlFileHandler()
-		autocmd BufNewFile,BufRead *.java call JavaFileHandler()
-		autocmd BufNewFile,BufRead *.js call JavaScriptFileHandler()
+		autocmd filetype java call JavaFileHandler()
+		autocmd filetype javascript call JavaScriptFileHandler()
 		autocmd BufNewFile,BufRead *.lua call LuaFileHandler()
-		autocmd BufNewFile,BufRead Makefile,Makefile.*,*.mk call MakefileFileHandler()
-		autocmd BufNewFile,BufRead *.pl,*.plx,*.pm,*.ppm call PerlFileHandler()
-		autocmd BufNewFile,BufRead *.php,*.php? call PhpFileHandler()
-		autocmd BufNewFile,BufRead *.py call PythonFileHandler()
-		autocmd BufNewFile,BufRead *.rb call RubyFileHandler()
-		autocmd BufNewFile,BufRead *.scm call SchemeFileHandler()
-		autocmd BufNewFile,BufRead *.sh,*.ksh,*.pdksh,*.ksh*,*.zsh,*.bash call ShellFileHandler()
-		autocmd BufNewFile,BufRead *.sql call SqlFileHandler()
-		autocmd BufNewFile,BufRead *.tex call TexFileHanlder()
-		autocmd BufNewFile,BufRead *.t call TroffFileHandler
-		autocmd BufNewFile,BufRead *.vim call VimFileHanlder()
-		autocmd BufNewFile,BufRead *.vb,*.vb? call VisualBasicFilHandler()
+		autocmd filetype make call MakefileFileHandler()
+		autocmd filetype perl call PerlFileHandler()
+		autocmd filetype php call PhpFileHandler()
+		autocmd filetype python call PythonFileHandler()
+		autocmd filetype ruby call RubyFileHandler()
+		autocmd filetype scheme call SchemeFileHandler()
+		autocmd filetype sh call ShellFileHandler()
+		autocmd filetype sql call SqlFileHandler()
+		autocmd filetype tex call TexFileHanlder()
+		autocmd filetype nroff call TroffFileHandler
+		autocmd filetype vim call VimFileHanlder()
+		autocmd filetype vb  call VisualBasicFilHandler()
 "	XXX for use with other programs
 		autocmd BufNewFIle,BUfRead *.tmp call My_KNodeConfig()
 	endif
@@ -385,6 +385,9 @@
 		" use C syntax in *.h rather then C++ syntax
 		let c_syntax_for_h=1
 
+		" allow doxygen highlighting
+		set syntax=c.doxygen
+
 		call PostHandlerHook()
 	endfunction
 
@@ -403,6 +406,9 @@
 		setl tabstop=4 shiftwidth=4 expandtab
 		setl foldmethod=syntax foldcolumn=1
 		setl matchpairs-=<:>
+
+		" allow doxygen highlighting
+		set syntax=cpp.doxygen
 
 		call PostHandlerHook()
 	endfunction
@@ -471,6 +477,7 @@
 		setl foldmethod=indent
 		setl matchpairs-=<:>
 		let perl_fold=1
+		let perl_fold_blocks=1
 		" perldoc is to complex imho for keywordprg w/o a wrapper script imho
 
 		call PostHandlerHook()
@@ -535,13 +542,15 @@
 		setl tabstop=4 shiftwidth=4 expandtab
 		setl foldmethod=indent
 		setl matchpairs-=<:>
+		let g:sh_fold_enabled=8
 
 		call PostHandlerHook()
 	endfunction
 
 	function! SqlFileHandler()
 		call PreHandlerHook()
-
+		" We almost always work with MySQL, so default to it.
+		SQLSetType mysql
 		setl tabstop=2 shiftwidth=2 expandtab
 		setl matchpairs-=<:>
 

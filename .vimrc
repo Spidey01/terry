@@ -148,9 +148,7 @@
 	endif
 
 	" Enable filetypes and plugins
-	filetype on
-	filetype plugin on
-	filetype indent off
+	filetype plugin indent on 
 
 	"Enable syntax highlighting
 	if &t_Co > 2 
@@ -170,9 +168,9 @@
 
 " !GENERAL }}}
 
-" FORMATS {{{
+" *FORMATS* {{{
 
-" AUTOCMDS {{{
+" *AUTOCMDS* {{{
 
 
 
@@ -221,10 +219,10 @@
 
 " !AUTOCMDS }}}
 
-" HANDLERS {{{
+" *HANDLERS* {{{
 
 	function! PreHandlerHook()
-		setl autoindent smartindent
+		setl autoindent 
 		if exists("+spell")
 			setl spell
 		endif
@@ -244,11 +242,12 @@
 		endif
 		setl fdm=expr
 		set fo=tqna
+		" fixes gq from using c-keyword based indentation
+		set cinwords=""
 
 		call PostHandlerHook()
 	endfunction
 
-	"function! RtfFileHandler(1)
 	function! RtfFileHandler()
 		call PreHandlerHook()
 
@@ -377,6 +376,13 @@
 		setl tabstop=8 shiftwidth=8 noexpandtab
 		setl foldmethod=syntax foldcolumn=1
 		setl matchpairs-=<:>
+
+		if has("+cindent")
+			" modify cindent to understand my switch...case and paren style
+			setl cinoptions+=:2,=2,g2,(0
+			setl cinkeys-=0#
+		endif
+
 		" highlight GNU Compiler stuff
 		let c_gnu=1
 		" highlight preceding spaces before a tab as an error
@@ -406,6 +412,14 @@
 		setl tabstop=4 shiftwidth=4 expandtab
 		setl foldmethod=syntax foldcolumn=1
 		setl matchpairs-=<:>
+
+		if has("+cindent")
+			" modify cindent to understand my switch...case / class member
+			" access specifier / paren styles and not force #directives into
+			" col 1
+			setl cinoptions+=:2,=2,g2,(0,#1
+			setl cinkeys-=0#
+		endif
 
 		" allow doxygen highlighting
 		set syntax=cpp.doxygen
@@ -506,8 +520,11 @@
 		setl foldmethod=indent
 		setl matchpairs-=<:>
 		setl keywordprg=pydoc
-		let python_highlight_all=1
 
+		let python_highlight_all=1
+		" slightly smarter indenting for (code\nmorecode) situations
+		let g:pyindent_open_paren = '&sw + 1'
+			
 		call PostHandlerHook()
 	endfunction
 
@@ -566,6 +583,8 @@
 		setl matchpairs-=<:>
 		"  syntax-based folding of parts, chapters, sections, subsections, etc
 		let g:tex_fold_enabled=1
+		" fixes gq from using c-keyword based indentation
+		set cinwords=""
 
 		call PostHandlerHook()
 	endfunction
@@ -966,7 +985,7 @@ endfunction
 
 " *PLUGINS* {{{
 
-" Taglist* {{{
+" *Taglist* {{{
 
 	map <silent><leader>tl :TlistToggle<CR>
 	let g:Tlist_Auto_Open=0

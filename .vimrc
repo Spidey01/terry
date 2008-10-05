@@ -72,7 +72,7 @@
 	set nolist
 
 	" Physical word wrapping
-	set textwidth=80
+	set textwidth=76
 
 	" Allow backspacing over everything in insert mode
 	set backspace=indent,eol,start
@@ -241,7 +241,8 @@
 			endif
 		endif
 		setl fdm=expr
-		set fo=tqna
+		set fo+=tqn
+		set ai
 		" fixes gq from using c-keyword based indentation
 		set cinwords=""
 

@@ -161,8 +161,8 @@
 	" Enable filetypes and plugins
 	filetype plugin indent on 
 
-	"Enable syntax highlighting
-	if has("syntax") && &t_Co > 2
+	"Enable syntax related features
+	if has("syntax")
 		syntax on
 	endif
 

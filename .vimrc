@@ -45,13 +45,20 @@
 	" Also skip .exrc -> I use it for Vi
 	set nocompatible
 	set noexrc
+	
+	" highlight matched text when searching
+	"if has('extra_search')
+	"	set hlsearch
+	"endif
 
 	" Ignore case when searching unless it starts with a Capitol
 	set ignorecase
 	set smartcase
 
 	" Use the system clipboard as the default register, '*'
-	set clipboard=unnamed
+	if has("clipboard")
+		set clipboard=unnamed,exclude:cons\|linux
+	endif
 
 	" Make join commands smarter
 	set joinspaces
@@ -81,8 +88,10 @@
 	set whichwrap=b,s,h,l,<,>,[,],~
 
 	" Set folding
-	set foldlevelstart=99
-	set foldmethod=indent
+	if has("folding")
+		set foldlevelstart=99
+		set foldmethod=indent
+	endif
 
 	" Indentation settings (explictly)
 	set tabstop=8
@@ -105,7 +114,9 @@
 	set laststatus=2
 
 	" Show % of file in status bar
-	set ruler
+	if has("cmdline_info")
+		set ruler
+	endif
 
 	" Vim command line completion lists possible matches
 	set wildmode=list:full
@@ -151,7 +162,7 @@
 	filetype plugin indent on 
 
 	"Enable syntax highlighting
-	if &t_Co > 2 
+	if has("syntax") && &t_Co > 2
 		syntax on
 	endif
 
@@ -171,7 +182,6 @@
 " *FORMATS* {{{
 
 " *AUTOCMDS* {{{
-
 
 
 	if has("autocmd")
@@ -212,7 +222,7 @@
 		autocmd filetype tex call TexFileHanlder()
 		autocmd filetype nroff call TroffFileHandler
 		autocmd filetype vim call VimFileHanlder()
-		autocmd filetype vb  call VisualBasicFilHandler()
+		autocmd filetype vb  call VisualBasicFileHandler()
 "	XXX for use with other programs
 		autocmd BufNewFIle,BUfRead *.tmp call My_KNodeConfig()
 	endif
@@ -254,7 +264,7 @@
 
 		let l:prompt = input("View or edit % [yes|no]?: ")
 		if l:prompt=="y" || l:prompt=="yes" || l:prompt=="Y" || l:prompt=="YES"
-			!{abiword "%" || wordpad.exe "%" || kword "%" || swriteer "%"}  &
+			!{abiword "%" || wordpad.exe "%" || kword "%" || swriter "%"}  &
 			q
 		endif
 
@@ -265,7 +275,7 @@
 		call PreHandlerHook()
 
 		if has("gui_running") ||  has("win32")
-			!{abiword "%" || kword "%" || swriteer "%"}  &
+			!{abiword "%" || kword "%" || swriter "%"}  &
 			q
 		else
 			echo "You didn't setup antiword"
@@ -368,6 +378,9 @@
 	function! AsmFileHandler()
 		call PreHandlerHook()
 
+		if exists("+spell")
+			setl nospell 
+		endif
 		call PostHandlerHook()
 	endfunction
 
@@ -375,7 +388,9 @@
 		call PreHandlerHook()
 		
 		setl tabstop=8 shiftwidth=8 noexpandtab
-		setl foldmethod=syntax foldcolumn=1
+		if has("folding")
+			setl foldmethod=syntax foldcolumn=1
+		endif
 		setl matchpairs-=<:>
 
 		if has("+cindent")
@@ -390,10 +405,12 @@
 		let c_space_errors=1
 		let c_no_trail_space_error=1
 		" use C syntax in *.h rather then C++ syntax
-		let c_syntax_for_h=1
+		if has("syntax")
+			let c_syntax_for_h=1
 
-		" allow doxygen highlighting
-		set syntax=c.doxygen
+			" allow doxygen highlighting
+			set syntax=c.doxygen
+		endif
 
 		call PostHandlerHook()
 	endfunction
@@ -402,7 +419,9 @@
 		call PreHandlerHook()
 
 		setl tabstop=5 shiftwidth=5 expandtab
-		setl foldmethod=indent
+		if has("folding")
+			setl foldmethod=indent
+		endif
 
 		call PostHandlerHook()
 	endfunction
@@ -411,7 +430,9 @@
 		call PreHandlerHook()
 
 		setl tabstop=4 shiftwidth=4 expandtab
-		setl foldmethod=syntax foldcolumn=1
+		if has("folding")
+			setl foldmethod=syntax foldcolumn=1
+		endif
 		setl matchpairs-=<:>
 
 		if has("+cindent")
@@ -422,8 +443,10 @@
 			setl cinkeys-=0#
 		endif
 
-		" allow doxygen highlighting
-		set syntax=cpp.doxygen
+		if has("syntax")
+			" allow doxygen highlighting
+			set syntax=cpp.doxygen
+		endif
 
 		call PostHandlerHook()
 	endfunction
@@ -441,8 +464,14 @@
 	function! HtmlFileHandler()
 		call PreHandlerHook()
 
+		if has("syntax") && &t_Co > 2 
+			syntax on
+			colo elflord
+		endif
 		setl tabstop=2 shiftwidth=2 expandtab
-		setl foldmethod=indent
+		if has("folding")
+			setl foldmethod=indent
+		endif
 		filetype indent on
 		if exists("+omnifunc")	" think twice about using this with other langs
 			imap </ </<c-x><c-o>
@@ -455,7 +484,9 @@
 		call PreHandlerHook()
 
 		setl tabstop=4 shiftwidth=4 expandtab
-		setl foldmethod=indent
+		if has("folding")
+			setl foldmethod=indent
+		endif
 		setl matchpairs-=<:>
 		if exists("+spell")
 			setl nospell " FUBAR in Java
@@ -480,7 +511,9 @@
 		call PreHandlerHook()
 
 		setl tabstop=4 shiftwidth=4 noexpandtab
-		setl foldmethod=indent
+		if has("folding")
+			setl foldmethod=indent
+		endif
 
 		call PostHandlerHook()
 	endfunction
@@ -489,11 +522,12 @@
 		call PreHandlerHook()
 
 		setl tabstop=4 shiftwidth=4 noexpandtab
-		setl foldmethod=indent
+		if has("folding")
+			setl foldmethod=indent
+			let perl_fold=1
+			let perl_fold_blocks=1
+		endif
 		setl matchpairs-=<:>
-		let perl_fold=1
-		let perl_fold_blocks=1
-		" perldoc is to complex imho for keywordprg w/o a wrapper script imho
 
 		call PostHandlerHook()
 	endfunction
@@ -502,14 +536,16 @@
 		call PreHandlerHook()
 
 		setl tabstop=4 shiftwidth=4 expandtab
-		setl foldmethod=indent
+		if has("folding")
+			setl foldmethod=indent
+			" allow code folding for classes and functions!
+			let php_folding=1
+		endif
 		setl matchpairs-=<:>
 		" highlight HTML tags within strings
 		let php_htmlInStrings=1
 		" disable short tags
 		let php_noShortTags=1
-		" allow code folding for classes and functions!
-		let php_folding=1
 
 		call PostHandlerHook()
 	endfunction
@@ -518,12 +554,14 @@
 		call PreHandlerHook()
 
 		setl tabstop=4 shiftwidth=4 expandtab
-		setl foldmethod=indent
+		if has("folding")
+			setl foldmethod=indent
+		endif
 		setl matchpairs-=<:>
 		setl keywordprg=pydoc
 
 		let python_highlight_all=1
-		" slightly smarter indenting for (code\nmorecode) situations
+		" slightly smarter indenting for (code\n morecode) situations
 		let g:pyindent_open_paren = '&sw + 1'
 			
 		call PostHandlerHook()
@@ -533,11 +571,13 @@
 		call PreHandlerHook()
 
 		setl tabstop=2 shiftwidth=2 expandtab
-		setl foldmethod=syntax
+		if has("folding")
+			setl foldmethod=syntax
+			let ruby_fold=1
+		endif
 		setl matchpairs-=<:>
 		filetype indent on
 		setl keywordprg=ri
-		let ruby_fold=1
 
 		call PostHandlerHook()
 	endfunction
@@ -546,7 +586,9 @@
 		call PreHandlerHook()
 
 		setl tabstop=4 shiftwidth=4 expandtab
-		setl foldmethod=syntax
+		if has("folding")
+			setl foldmethod=syntax
+		endif
 		setl matchpairs-=<:>
 		if exists("+spell")
 			setl nospell " FUBAR in Scheme
@@ -558,9 +600,11 @@
 		call PreHandlerHook()
 
 		setl tabstop=4 shiftwidth=4 expandtab
-		setl foldmethod=indent
+		if has("folding")
+			setl foldmethod=indent
+			let g:sh_fold_enabled=8
+		endif
 		setl matchpairs-=<:>
-		let g:sh_fold_enabled=8
 
 		call PostHandlerHook()
 	endfunction
@@ -577,13 +621,18 @@
 
 	function! TexFileHanlder()
 		call PreHandlerHook()
-
+		if has("syntax") && &t_Co > 2 
+			syntax on
+			colo elflord
+		endif
 		setl fileformat=dos
 		setl tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab
-		setl foldmethod=indent
+		if has("folding")
+			setl foldmethod=indent
+			" syntax-based folding of parts, chapters, sections, etc
+			let g:tex_fold_enabled=1
+		endif
 		setl matchpairs-=<:>
-		"  syntax-based folding of parts, chapters, sections, subsections, etc
-		let g:tex_fold_enabled=1
 		" fixes gq from using c-keyword based indentation
 		set cinwords=""
 
@@ -599,18 +648,24 @@
 	function! VimFileHanlder()
 		call PreHandlerHook()
 
+		if has("syntax") && &t_Co > 2 
+			syntax on
+			colo elflord
+		endif
 		setl fileformat=unix
 		setl tabstop=4 shiftwidth=4 noexpandtab
-		setl foldmethod=marker
+		if has("folding")
+			setl foldmethod=marker
+		endif
 		setl matchpairs-=<:>
 
 		call PostHandlerHook()
 	endfunction
 
-	function! VisualBasicFilHandler()
+	function! VisualBasicFileHandler()
 		call PreHandlerHook()
 
-		setl fileformat=unix
+		"setl fileformat=unix
 		setl matchpairs-=<:>
 
 		call PostHandlerHook()
@@ -627,15 +682,20 @@
 		if exists("+spell")
 			setl spell
 		endif
-		setl autoindent smartindent
+		setl autoindent 
+		if has("smartindent")
+			setl smartindent
+		endif
 		setl showmatch matchtime=3
 		setl matchpairs+=(:),{:},[:],<:>
-		" Fold by tabs
-		"setl foldmethod=expr
-		"setl foldexpr=getline(v:lnum)[0]==\"\\t\"
-		" Fold by braces
-		setl foldmethod=marker
-		setl foldmarker={,}
+		if has("folding")
+			" Fold by tabs
+			"setl foldmethod=expr
+			"setl foldexpr=getline(v:lnum)[0]==\"\\t\"
+			" Fold by braces
+			setl foldmethod=marker
+			setl foldmarker={,}
+		endif
 
 		call PostHandlerHook()
 	endfunction
@@ -648,8 +708,13 @@
 		if exists("+spell")
 			setl spell
 		endif
-		setl autoindent smartindent
-		setl foldmethod=indent
+		setl autoindent 
+		if has('smartindent')
+			smartindent
+		endif
+		if has("folding")
+			setl foldmethod=indent
+		endif
 		set ft=mail
 
 		call PostHandlerHook()
@@ -698,8 +763,8 @@
 
 	endif
 
-	function! SetGuiColo()
-		let g:currentcolo = 'unset'
+	function! SetGuiColo() " {{{
+		
 		if exists("*strftime")
 			let s:random = strftime("%S")
 		else " fall through to the else
@@ -708,103 +773,103 @@
 
 		if s:random < 2
 			colo ron
-			let g:currentcolo = 'ron'
+			
 		elseif s:random < 4
 			colo candycode
-			let g:currentcolo = 'candycode'
+			
 		elseif s:random < 6
 			colo silent
-			let g:currentcolo = 'silent'
+			
 		elseif s:random < 8
 			colo default
-			let g:currentcolo = 'default'
+			
 		elseif s:random < 12
 			colo denim
-			let g:currentcolo = 'denim'
+			
 		elseif s:random < 14
 			colo midnight2
-			let g:currentcolo = 'midnight2'
+			
 		elseif s:random < 16
 			colo hhazure
-			let g:currentcolo = 'hhazure'
+			
 		elseif s:random < 18
 			colo rootwater
-			let g:currentcolo = 'rootwater'
+			
 		elseif s:random < 20
 			colo nightshimmer
-			let g:currentcolo = 'nightshimmer'
+			
 		elseif s:random < 22
 			colo murphy
-			let g:currentcolo = 'murphy'
+			
 		elseif s:random < 24
 			colo coffee
-			let g:currentcolo = 'coffee'
+			
 		elseif s:random < 26
 			colo professional
-			let g:currentcolo = 'professional'
+			
 		elseif s:random < 28
 			colo sf
-			let g:currentcolo = 'sf'
+			
 		elseif s:random < 30
 			colo my
-			let g:currentcolo = 'my'
+			
 		elseif s:random < 32
 			colo vcbc
-			let g:currentcolo = 'vcbc'
+			
 		elseif s:random < 34
 			colo gobo
-			let g:currentcolo = 'gobo'
+			
 		elseif s:random < 36
 			colo metacosm
-			let g:currentcolo = 'metacosm'
+			
 		elseif s:random < 38
 			colo blackboard
-			let g:currentcolo = 'blackboard'
+			
 		elseif s:random < 40
 			colo billw
-			let g:currentcolo = 'billw'
+			
 		elseif s:random < 42
 			colo dusk
-			let g:currentcolo = 'dusk'
+			
 		elseif s:random < 44
 			colo desert
-			let g:currentcolo = 'desert'
+			
 		elseif s:random < 46
 			colo evening
-			let g:currentcolo = 'evening'
+			
 		elseif s:random < 48
 			colo golden
-			let g:currentcolo = 'golden'
+			
 		elseif s:random < 50
 			colo chela_light
-			let g:currentcolo = 'chela_light'
+			
 		elseif s:random < 52
 			colo camo
-			let g:currentcolo = 'camo'
+			
 		elseif s:random < 54
 			colo developer
-			let g:currentcolo = 'developer'
+			
 		elseif s:random < 56
 			colo neon
-			let g:currentcolo = 'neon'
+			
 		elseif s:random < 58
 			colo chlordane
-			let g:currentcolo = 'chlordane'
+			
 		elseif s:random < 60
 			colo shine
-			let g:currentcolo = 'shine'
+			
 		else
 			colo default
-			let g:currentcolo = 'default'
+			
 		endif
-	endfunction
+	endfunction " }}}
 
-	function! SetConsoleColo()
-		let g:currentcolo = 'unset'
+	function! SetConsoleColo() "{{{
+		
 
 		" XXX override this for now
-		colo elflord
-		let g:currentcolo = 'elflord'
+		colo none
+		
 		return 
 		if exists("*strftime")
 			let s:random = strftime("%S")
@@ -814,93 +879,93 @@
 
 		if s:random < 2
 			colo astronaut
-			let g:currentcolo = 'astronaut'
+			
 		elseif s:random < 4
 			colo redblack
-			let g:currentcolo = 'redblack'
+			
 		elseif s:random < 6
 			colo default
-			let g:currentcolo = 'default'
+			
 		elseif s:random < 8
 			colo golden
-			let g:currentcolo = 'golden'
+			
 		elseif s:random < 12
 			colo candycode
-			let g:currentcolo = 'candycode'
+			
 		elseif s:random < 14
 			colo murphy
-			let g:currentcolo = 'murphy'
+			
 		elseif s:random < 16
 			colo my
-			let g:currentcolo = 'my'
+			
 		elseif s:random < 18
 			colo c
-			let g:currentcolo = 'c'
+			
 		elseif s:random < 20
 			colo elflord
-			let g:currentcolo = 'elflord'
+			
 		elseif s:random < 22
 			colo relaxedgreen
-			let g:currentcolo = 'relaxedgreen'
+			
 		elseif s:random < 24
 			colo astronaut
-			let g:currentcolo = 'astronaut'
+			
 		elseif s:random < 26
 			colo redblack
-			let g:currentcolo = 'redblack'
+			
 		elseif s:random < 28
 			colo default
-			let g:currentcolo = 'default'
+			
 		elseif s:random < 30
 			colo golden
-			let g:currentcolo = 'golden'
+			
 		elseif s:random < 32
 			colo candycode
-			let g:currentcolo = 'candycode'
+			
 		elseif s:random < 34
 			colo elflord
-			let g:currentcolo = 'elflord'
+			
 		elseif s:random < 36
 			colo c
-			let g:currentcolo = 'c'
+			
 		elseif s:random < 38
 		elseif s:random < 40
 		elseif s:random < 42
 			colo relaxedgreen
-			let g:currentcolo = 'relaxedgreen'
+			
 		elseif s:random < 44
 			colo redblack
-			let g:currentcolo = 'redblack'
+			
 		elseif s:random < 46
 			colo default
-			let g:currentcolo = 'default'
+			
 		elseif s:random < 48
 			colo candycode
-			let g:currentcolo = 'candycode'
+			
 		elseif s:random < 50
 			colo golden
-			let g:currentcolo = 'golden'
+			
 		elseif s:random < 52
 			colo relaxedgreen
-			let g:currentcolo = 'relaxedgreen'
+			
 		elseif s:random < 54
 			colo astronaut
-			let g:currentcolo = 'astronaut'
+			
 		elseif s:random < 56
 			colo my
-			let g:currentcolo = 'my'
+			
 		elseif s:random < 58
 			colo astronaut
-			let g:currentcolo = 'astronaut'
+			
 		elseif s:random < 60
 			colo murphy
-			let g:currentcolo = 'murphy'
+			
 		else
 			colo default
-			let g:currentcolo = 'default'
+			
 		endif
 
-	endfunction
+	endfunction " }}}
 
 	if !has("gui_running")
 		call SetConsoleColo()
@@ -925,7 +990,7 @@ command! Chmod call ChmodScript()
 
 " ROT13 encode/decode the current file
 function! ROT13()
-	<esc>1GvGg?
+	<esc>ggvGg?
 endfunction
 
 " !FUNCTIONS }}}
@@ -981,7 +1046,6 @@ endfunction
 	nnoremap <F5> :OPEN %:p:h<CR>
 	inoremap <F5> <esc>:OPEN %:p:h<CR>i
 
-
 " !KEYS }}}
 
 " *PLUGINS* {{{
@@ -1011,7 +1075,9 @@ endfunction
 "highlight Pmenu guifg=white guibg=blue ctermfg=white ctermbg=blue    
 
 " Fold paragraphs
-"set foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
+"if has("folding")
+"	set foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
+"endif
 
 	if exists("*strftime")
 		iabbrev insert_date <c-r>=strftime("%Y-%m-%d %H:%M:%S")<cr>

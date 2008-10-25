@@ -17,8 +17,9 @@ fbpanel -p pager &
 
 gkrellm &
 
-pidgin &
-
 Terminal &
+
+pidgin &
+psi &
 
 blackbox

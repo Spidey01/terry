@@ -79,7 +79,7 @@
 	set nolist
 
 	" Physical word wrapping
-	set textwidth=76
+	set textwidth=78
 
 	" Allow backspacing over everything in insert mode
 	set backspace=indent,eol,start
@@ -220,7 +220,7 @@
 		autocmd filetype sh call ShellFileHandler()
 		autocmd filetype sql call SqlFileHandler()
 		autocmd filetype tex call TexFileHanlder()
-		autocmd filetype nroff call TroffFileHandler
+		autocmd filetype nroff call TroffFileHandler()
 		autocmd filetype vim call VimFileHanlder()
 		autocmd filetype vb  call VisualBasicFileHandler()
 "	XXX for use with other programs
@@ -499,6 +499,7 @@
 
 	function! JavaScriptFileHandler()
 		call PreHandlerHook()
+
 		call PostHandlerHook()
 	endfunction
 
@@ -641,6 +642,11 @@
 
 	function! TroffFileHandler()
 		call PreHandlerHook()
+
+		setl matchpairs-=<:>
+		if exists("+spell")
+			setl nospell " FUBAR in Java
+		endif
 
 		call PostHandlerHook()
 	endfunction

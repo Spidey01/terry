@@ -6,7 +6,7 @@
 # $Author$
 #
 
-#~/sh/psetbg &
+~/sh/psetbg &
 
 ~/sh/startup-sound.sh &
 bbkeys &

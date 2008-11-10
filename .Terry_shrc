@@ -98,8 +98,9 @@ umask 077
               set -o emacs
               # make sure tab completion works (where possible)
               bind "^I=complete"
-              bind "^I=complete-command"
-              bind "^I=complete-file"
+              # these to binds seem to break tab completion with ^I
+              #bind "^I=complete-command"
+              #bind "^I=complete-file"
               ;; # ksh family
         'zsh') # set my various options
                HISTFILE=~/.histfile

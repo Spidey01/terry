@@ -17,7 +17,7 @@ fbpanel -p pager &
 
 gkrellm &
 
-Terminal &
+urxvt -title ${USER}@`hostname -s` &
 
 pidgin &
 psi &

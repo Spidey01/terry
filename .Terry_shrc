@@ -147,10 +147,10 @@ umask 077
     alias   pgr="$PAGER"
     alias   limeric='fortune /usr/share/games/fortune/limerick'
     alias   gcc='gcc -Wall -W -Wpointer-arith -Wbad-function-cast -std=c99'
-    alias   gcc_wall= 'gcc -Wall -Wpointer-arith -Wcast-qual -Wcast-align \
-                       -Wconversion -Waggregate-return -Wstrict-prototypes \
-                       -Wmissing-prototypes -Wmissing-declarations \
-                       -Wredundant-decls -Winline -Wnested-externs -std=c99 \
+    alias   gcc_wall= 'gcc -Wall -Wpointer-arith -Wcast-qual -Wcast-align 
+                       -Wconversion -Waggregate-return -Wstrict-prototypes 
+                       -Wmissing-prototypes -Wmissing-declarations 
+                       -Wredundant-decls -Winline -Wnested-externs -std=c99 
                        -march=i686 -pipe'
     alias   gcc_optimize='gcc -fforce-mem -fforce-addr -finline-functions \
                                -fstrength-reduce  -floop-optimize -O3'

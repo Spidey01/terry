@@ -98,6 +98,8 @@ umask 077
               set -o emacs
               # make sure tab completion works (where possible)
               bind "^I=complete"
+              # needed to display the completion list, where applicable.
+              bind "^I=complete-list"
               # these to binds seem to break tab completion with ^I
               #bind "^I=complete-command"
               #bind "^I=complete-file"
@@ -155,6 +157,10 @@ umask 077
     alias   gcc_optimize='gcc -fforce-mem -fforce-addr -finline-functions \
                                -fstrength-reduce  -floop-optimize -O3'
     alias   gcc_debug='gcc -ggdb3'
+    alias   g++='g++ -Wall -pipe  -Wpointer-arith -Wcast-qual -Wcast-align \
+                 -Wconversion -Waggregate-return -Wredundant-decls -Winline \
+                 -pedantic -Wctor-dtor-privacy -Wnon-virtual-dtor \
+                 -Wstrict-null-sentinel -fno-omit-frame-pointer'
     # this quick lint works on both FreeBSD and OpenBSD anyway (ansi mode)
     alias   lint='lint -cehzs'
     # lint's -H option is not documented on FreeBSD but works on both FreeBSD

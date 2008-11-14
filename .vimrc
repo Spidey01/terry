@@ -132,6 +132,9 @@
 	" Set spell checker language
 	if exists("+spell")
 		set spelllang=en_us,en_gb,de
+		set spell
+		" disable highlighting
+		set hl+=B:none,P:none,R:none,L:none
 	endif
 
 	" Show function prototypes when doing ins-completion
@@ -278,7 +281,7 @@
 			!{abiword "%" || kword "%" || swriter "%"}  &
 			q
 		else
-			echo "You didn't setup antiword"
+			r!antiword -tf  "%s" 
 		endif
 		call PostHandlerHook()
 	endfunction
@@ -393,7 +396,7 @@
 		endif
 		setl matchpairs-=<:>
 
-		if has("+cindent")
+		if has("cindent")
 			" modify cindent to understand my switch...case and paren style
 			setl cinoptions+=:2,=2,g2,(0
 			setl cinkeys-=0#
@@ -435,11 +438,11 @@
 		endif
 		setl matchpairs-=<:>
 
-		if has("+cindent")
+		if has("cindent")
 			" modify cindent to understand my switch...case / class member
 			" access specifier / paren styles and not force #directives into
 			" col 1
-			setl cinoptions+=:2,=2,g2,(0,#1
+			setl cinoptions+=:2,=2,g2,h2,(0,#1
 			setl cinkeys-=0#
 		endif
 
@@ -982,6 +985,8 @@
 
 " !SETTINGS }}}
 
+" |BINDS| {{{
+
 " *FUNCTIONS* {{{
 
 " XXX: Be sure to add ! to functions and commands in order to overwrite
@@ -1001,8 +1006,7 @@ endfunction
 
 " !FUNCTIONS }}}
 
-
-" *KEYS* {{{
+" *MAPS* {{{
 
 """" WARNING !!!
 """" NEVER MAP THE BACKSPACE KEY OR A MODIFIER
@@ -1023,6 +1027,10 @@ endfunction
 	" (e.g. move to miss spelled word in direction and get suggestions)
 	nnoremap [z [sz=
 	nnoremap ]z ]sz=
+
+	" toggle spelling highlights on/off
+	nnoremap <leader>Z :set hl&<cr>
+	nnoremap <leader>z :set hl+=B:none,P:none,R:none,L:none<cr>
 
 	" swap words under cursor with \xp or \gw (where \ = <leader>
 	noremap <silent> <leader>xp "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o><c-l> 
@@ -1053,6 +1061,8 @@ endfunction
 	inoremap <F5> <esc>:OPEN %:p:h<CR>i
 
 " !KEYS }}}
+
+" !BINDS }}}
 
 " *PLUGINS* {{{
 

@@ -147,6 +147,9 @@ umask 077
     alias   bye="echo 'bye'; exit"
     alias   cls='clear'
     alias   pgr="$PAGER"
+    alias   del="rm -i"
+    alias   copy="cp -i"
+    alias   move="mv -i"
     alias   limeric='fortune /usr/share/games/fortune/limerick'
     alias   gcc='gcc -Wall -W -Wpointer-arith -Wbad-function-cast -std=c99'
     alias   gcc_wall= 'gcc -Wall -Wpointer-arith -Wcast-qual -Wcast-align 

@@ -6,6 +6,15 @@
 # $Author$
 #
 
+
+#
+# launch a D-Bus channel for this session
+#
+which dbus-launch >/dev/null && if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+    eval `dbus-launch --sh-syntax --exit-with-session`
+fi
+
+
 ~/sh/psetbg &
 
 ~/sh/startup-sound.sh &

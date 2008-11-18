@@ -1,51 +1,40 @@
 # vim: set ft=sh :
-# $Id$
-#
-# My personal Bourne-style Shell resource configuration profile.
-# 	For Dixie
-#
-# $Revision$
-# $Author$
-#
-
-
-# site local aliases
-alias	paxhelp='paxhelp | pgr'
-alias	scp2v='scp -P 22222 -i ~/.ssh/vectra_rsa_key_nopw -rB'
-alias 	ssh2v='ssh -p 22222 Terry@vectra -i ~/.ssh/vectra_rsa_key_nopw'
-alias   ssh2npm='ssh -p 22 sas_spidey01@shell.sourceforge.net'
-alias	ra="hsetroot -fill ~/Pictures/Wall_Papers/kernel-dream.jpg"
-alias	redalert=ra
-
-
-# web browser preferences
-BROWSER="linux-flock %s:lynx -force_html %s"; export BROWSER
-
-# Our IP Address, doesn't work in older bourne shells
-MY_IP=$(ifconfig ath0 | grep 'inet' | awk '{print $2}'); export MY_IP
-
-
-# update search pathes
-PYTHONPATH="${HOME}/code/Python/modules"; export PYTHONPATH
-RUBYLIB="${HOME}/code/Ruby/modules"; export RUBYLIB
-C_INCLUDE_PATH=":${HOME}/code/C/include"; export C_INCLUDE_PATH
-CPLUS_INCLUDE_PATH=":${HOME}/code/C++/include"; export CPLUS_INCLUDE_PATH
-
 
 # TeX Live stuff
 PATH="/usr/local/texlive/2007/bin/i386-freebsd:$PATH:/usr/games:/usr/local/bin:/usr/local/sbin:${HOME}/sh:${HOME}/bin"; export PATH
 MANPATH="/usr/local/texlive/2007/texmf/doc/man:/usr/share/man:/usr/local/man:$MANPATH"; export MANPATH
 INFOPATH="/usr/local/texlive/2007/texmf/doc/info:/usr/share/info:/usr/local/info:$INFOPATH"; export INFOPATH
 
-
-# QT settings: needed in order to compile Qt3/4 programs...
+# QT: needed in order to compile QT programs...
 QMAKESPEC='freebsd-g++'; export QMAKESPEC
-QTDIR='/usr/local/include/'; export QTDIR
+QTDIR='/usr/X11R6/include/'; export QTDIR
 
-# for NPM development
+# for NPM
 SVNROOT='https://npm.svn.sourceforge.net/svnroot/npm'; export SVNROOT
 
-# local (home) CVS stuff
+# local CVS stuff
 CVSROOT=":ext:Terry@vectra:/srv/cvs/"; export CVSROOT
 CVS_RSH="/usr/bin/ssh"; export CVS_RSH
 
+
+# for sudo pkg_add
+#PACKAGEROOT="ftp://ftp13.us.FreeBSD.org/"; export PACKAGEROOT
+
+
+alias	paxhelp='paxhelp | pgr'
+alias	scp2v='scp -P 22222 -i ~/.ssh/vectra_rsa_key_nopw -rB'
+alias 	ssh2v='ssh -p 22222 Terry@vectra -i ~/.ssh/vectra_rsa_key_nopw'
+alias   ssh2npm='ssh -p 22 sas_spidey01@shell.sourceforge.net'
+alias 	gcj='gcj42'
+alias	ra="hsetroot -fill ~/Pictures/Wall_Papers/kernel-dream.jpg"
+alias	redalert=ra
+
+# Our IP Address, doesn't work in older bourne shells
+MY_IP=$(ifconfig ath0 | grep 'inet' | awk '{print $2}')
+export MY_IP
+
+
+BROWSER="firefox3 %s:lynx -force_html %s"; export BROWSER
+
+PYTHONPATH="${HOME}/code/Python/modules"; export PYTHONPATH
+RUBYLIB="${HOME}/code/Ruby/modules"; export RUBYLIB

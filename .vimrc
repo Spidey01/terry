@@ -17,6 +17,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Table of Contents
+" |VARIABLES|			--- Global and Script wide variables
 " |SETTINGS|			---	Settings
 "	|GENERAL|			---	General options
 "	|FORMATS|			---	Configuration for various file formats
@@ -36,7 +37,21 @@
 " Preferences
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" *VARIABLES* {{{
+" XXX Note that plugin specific variables belong in |PLUGINS|
 
+	" A list of 'filetype' that we want to kill spell for by default
+	"let s:kill_spell_for_ft = [ 'asm', 'help', 'scheme', 'java' ]
+
+	" DEPRECIATED -> used by Set*Colo() functions
+	if exists("*strftime")
+		let s:random = strftime("%S")
+	else " fall through to the else
+		let s:random = 61
+	endif
+	
+" !VARIABLES }}}
+ 
 " *SETTINGS* {{{
 
 " *GENERAL* {{{
@@ -237,10 +252,18 @@
 
 " *HANDLERS* {{{
 
+	" A list of 'filetype' that we want to kill spell for by default
+	"let s:kill_spell_for_ft = [ 'asm', 'help', 'scheme', 'java' ]
+	
 	function! PreHandlerHook()
 		setl autoindent 
 		if exists("+spell")
 			setl spell
+			"if index(s:kill_spell_for_ft, &ft) != -1
+			"	setl nospell
+			"else
+			"	setl spell
+			"endif
 		endif
 	endfunction
 	function! PostHandlerHook()
@@ -384,9 +407,6 @@
 	function! AsmFileHandler()
 		call PreHandlerHook()
 
-		if exists("+spell")
-			setl nospell 
-		endif
 		call PostHandlerHook()
 	endfunction
 
@@ -492,9 +512,6 @@
 		if has("folding")
 			setl foldmethod=indent
 		endif
-		if exists("+spell")
-			setl nospell " FUBAR in Java
-		endif
 		" Highlight all identifiers in java.lang.* 
 		let java_highlight_java_lang_ids=1
 
@@ -590,9 +607,6 @@
 		if has("folding")
 			setl foldmethod=syntax
 		endif
-		if exists("+spell")
-			setl nospell " FUBAR in Scheme
-		endif
 		call PostHandlerHook()
 	endfunction
 
@@ -612,42 +626,45 @@
 		call PreHandlerHook()
 
 		" We almost always work with MySQL, so default to it.
+		" XXX using this after starting the buffer is fine, here it errors out
 		"SQLSetType mysql
+
 		setl tabstop=2 shiftwidth=2 expandtab
 
 		" define buffer local abbreviations to auto-capitalize keywords
-		iab <buffer> and AND
-		iab <buffer> or OR
+		iab <buffer> all ALL
 		iab <buffer> alter ALTER
-		iab <buffer> table TABLE
+		iab <buffer> and AND
 		iab <buffer> as AS
 		iab <buffer> between BETWEEN
+		iab <buffer> by BY
 		iab <buffer> create CREATE
 		iab <buffer> database DATABASE
-		iab <buffer> index INDEX
-		iab <buffer> view VIEW
 		iab <buffer> delete DELETE
+		iab <buffer> distinct DISTINCT
 		iab <buffer> drop DROP
+		iab <buffer> from FROM
+		iab <buffer> full FULL
 		iab <buffer> group GROUP
-		iab <buffer> by BY
 		iab <buffer> having HAVING
 		iab <buffer> in IN
+		iab <buffer> index INDEX
+		iab <buffer> inner INNERY
 		iab <buffer> insert INSERT
 		iab <buffer> into INTO
-		iab <buffer> inner INNERY
 		iab <buffer> join JOIN
 		iab <buffer> left LEFT
-		iab <buffer> right RIGHT
-		iab <buffer> full FULL
 		iab <buffer> like LIKE
+		iab <buffer> or OR
 		iab <buffer> order ORDER
+		iab <buffer> right RIGHT
 		iab <buffer> select SELECT
-		iab <buffer> distinct DISTINCT
+		iab <buffer> table TABLE
 		iab <buffer> top TOP
 		iab <buffer> truncate TRUNCATE
 		iab <buffer> union UNION
-		iab <buffer> all ALL
 		iab <buffer> update UPDATE
+		iab <buffer> view VIEW
 		iab <buffer> where WHERE
 
 		call PostHandlerHook()
@@ -669,16 +686,13 @@
 		" fixes gq from using c-keyword based indentation
 		set cinwords=""
 		" skip filename completion on these suckers
-		set wildignore+=.aux,.log
+		set wildignore+=.aux,.log,ilg
+
 		call PostHandlerHook()
 	endfunction
 
 	function! TroffFileHandler()
 		call PreHandlerHook()
-
-		if exists("+spell")
-			setl nospell " FUBAR in Java
-		endif
 
 		call PostHandlerHook()
 	endfunction
@@ -800,11 +814,6 @@
 
 	function! SetGuiColo() " {{{		XXX DEPRECIATED
 		
-		if exists("*strftime")
-			let s:random = strftime("%S")
-		else " fall through to the else
-			let s:random = 61
-		endif
 
 		if s:random < 2
 			colo ron
@@ -906,11 +915,6 @@
 		colo none
 		
 		return 
-		if exists("*strftime")
-			let s:random = strftime("%S")
-		else " fall through to the else
-			let s:random = 61
-		endif
 
 		if s:random < 2
 			colo astronaut
@@ -1133,7 +1137,7 @@ endfunction
 "endif
 
 	if exists("*strftime")
-		iabbrev insert_date <c-r>=strftime("%Y-%m-%d %H:%M:%S")<cr>
+		iabbrev insert_date <c-r>=strftime("%Y-%m-%d T%H:%M:%S %Z")<cr>
 	endif
 
 	iabbrev teh the

@@ -28,6 +28,8 @@ alias   ssh2npm='ssh -p 22 sas_spidey01@shell.sourceforge.net'
 alias 	gcj='gcj42'
 alias	ra="hsetroot -fill ~/Pictures/Wall_Papers/kernel-dream.jpg"
 alias	redalert=ra
+alias   nail="/usr/local/bin/mailx"
+alias   man-nail="man -M /usr/local/man mailx"
 
 # Our IP Address, doesn't work in older bourne shells
 MY_IP=$(ifconfig ath0 | grep 'inet' | awk '{print $2}')
@@ -38,3 +40,5 @@ BROWSER="firefox3 %s:lynx -force_html %s"; export BROWSER
 
 PYTHONPATH="${HOME}/code/Python/modules"; export PYTHONPATH
 RUBYLIB="${HOME}/code/Ruby/modules"; export RUBYLIB
+
+NAILRC="~/.nail/nailrc"

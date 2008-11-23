@@ -25,7 +25,7 @@
 "	|INTERFACE|			---	Interface specific settings
 " |BINDS|				---	Common Bindings 
 " 	|FUNCTIONS|			---	Global helper functions
-"	|COMMANDS|			--- Normal mode commands
+"	|COMMANDS|			--- Ex commands
 " 	|MAPS|				--- Key mappings
 " |PLUGINS|				--- Plugin specific configuration 
 "	|Taglist|
@@ -42,7 +42,7 @@
 " *GENERAL* {{{
 
 	" Don't be VI compatible - Keep this at top of file !
-	" Also skip .exrc -> I use it for Vi
+	" Also skip loading .exrc and friends in the CWD.
 	set nocompatible
 	set noexrc
 	
@@ -72,7 +72,7 @@
 	" Show matching symbols Vi style
 	set showmatch
 	set matchtime=3
-	set matchpairs=(:),{:},[:],<:>
+	"set matchpairs=(:),{:},[:],<:>
 
 	" How to display tabs when list is on and expand tab is off
 	set listchars=tab:\|\ 
@@ -127,13 +127,16 @@
 	set mousehide
 
 	" Allow split windows to shrink to this size
-	set winminheight=0
+	if has("windows")
+		set winminheight=0
+	endif
 
 	" Set spell checker language
 	if exists("+spell")
 		set spelllang=en_us,en_gb,de
 		set spell
 		" disable highlighting
+		" XXX see |MAPS| for a mapping to toggle this highlighting
 		set hl+=B:none,P:none,R:none,L:none
 	endif
 
@@ -189,7 +192,7 @@
 
 	if has("autocmd")
 "	XXX Document based formats
-		" make *.txt dos/win friendly
+		" make new.txt files dos/win friendly
 		autocmd BufNewFile *.txt set ff=dos
 		autocmd BufNewFile,BufRead *.txt call TextFileHandler()
 		autocmd BufNewFile *.rtf call RtfFileHandler()
@@ -222,7 +225,7 @@
 		autocmd filetype scheme call SchemeFileHandler()
 		autocmd filetype sh call ShellFileHandler()
 		autocmd filetype sql call SqlFileHandler()
-		autocmd filetype tex call TexFileHanlder()
+		autocmd filetype tex call TexFileHandler()
 		autocmd filetype nroff call TroffFileHandler()
 		autocmd filetype vim call VimFileHanlder()
 		autocmd filetype vb  call VisualBasicFileHandler()
@@ -394,7 +397,6 @@
 		if has("folding")
 			setl foldmethod=syntax foldcolumn=1
 		endif
-		setl matchpairs-=<:>
 
 		if has("cindent")
 			" modify cindent to understand my switch...case and paren style
@@ -436,7 +438,6 @@
 		if has("folding")
 			setl foldmethod=syntax foldcolumn=1
 		endif
-		setl matchpairs-=<:>
 
 		if has("cindent")
 			" modify cindent to understand my switch...case / class member
@@ -476,6 +477,7 @@
 			setl foldmethod=indent
 		endif
 		filetype indent on
+		setl matchpairs+=<:>
 		if exists("+omnifunc")	" think twice about using this with other langs
 			imap </ </<c-x><c-o>
 		endif
@@ -490,7 +492,6 @@
 		if has("folding")
 			setl foldmethod=indent
 		endif
-		setl matchpairs-=<:>
 		if exists("+spell")
 			setl nospell " FUBAR in Java
 		endif
@@ -531,7 +532,6 @@
 			let perl_fold=1
 			let perl_fold_blocks=1
 		endif
-		setl matchpairs-=<:>
 
 		call PostHandlerHook()
 	endfunction
@@ -545,7 +545,6 @@
 			" allow code folding for classes and functions!
 			let php_folding=1
 		endif
-		setl matchpairs-=<:>
 		" highlight HTML tags within strings
 		let php_htmlInStrings=1
 		" disable short tags
@@ -561,7 +560,6 @@
 		if has("folding")
 			setl foldmethod=marker
 		endif
-		setl matchpairs-=<:>
 		setl keywordprg=pydoc
 
 		let python_highlight_all=1
@@ -579,7 +577,6 @@
 			setl foldmethod=syntax
 			let ruby_fold=1
 		endif
-		setl matchpairs-=<:>
 		filetype indent on
 		setl keywordprg=ri
 
@@ -593,7 +590,6 @@
 		if has("folding")
 			setl foldmethod=syntax
 		endif
-		setl matchpairs-=<:>
 		if exists("+spell")
 			setl nospell " FUBAR in Scheme
 		endif
@@ -608,22 +604,56 @@
 			setl foldmethod=indent
 			let g:sh_fold_enabled=8
 		endif
-		setl matchpairs-=<:>
 
 		call PostHandlerHook()
 	endfunction
 
 	function! SqlFileHandler()
 		call PreHandlerHook()
+
 		" We almost always work with MySQL, so default to it.
-		SQLSetType mysql
+		"SQLSetType mysql
 		setl tabstop=2 shiftwidth=2 expandtab
-		setl matchpairs-=<:>
+
+		" define buffer local abbreviations to auto-capitalize keywords
+		iab <buffer> and AND
+		iab <buffer> or OR
+		iab <buffer> alter ALTER
+		iab <buffer> table TABLE
+		iab <buffer> as AS
+		iab <buffer> between BETWEEN
+		iab <buffer> create CREATE
+		iab <buffer> database DATABASE
+		iab <buffer> index INDEX
+		iab <buffer> view VIEW
+		iab <buffer> delete DELETE
+		iab <buffer> drop DROP
+		iab <buffer> group GROUP
+		iab <buffer> by BY
+		iab <buffer> having HAVING
+		iab <buffer> in IN
+		iab <buffer> insert INSERT
+		iab <buffer> into INTO
+		iab <buffer> inner INNERY
+		iab <buffer> join JOIN
+		iab <buffer> left LEFT
+		iab <buffer> right RIGHT
+		iab <buffer> full FULL
+		iab <buffer> like LIKE
+		iab <buffer> order ORDER
+		iab <buffer> select SELECT
+		iab <buffer> distinct DISTINCT
+		iab <buffer> top TOP
+		iab <buffer> truncate TRUNCATE
+		iab <buffer> union UNION
+		iab <buffer> all ALL
+		iab <buffer> update UPDATE
+		iab <buffer> where WHERE
 
 		call PostHandlerHook()
 	endfunction
 
-	function! TexFileHanlder()
+	function! TexFileHandler()
 		call PreHandlerHook()
 		if has("syntax") && &t_Co > 2 
 			syntax on
@@ -636,17 +666,16 @@
 			" syntax-based folding of parts, chapters, sections, etc
 			let g:tex_fold_enabled=1
 		endif
-		setl matchpairs-=<:>
 		" fixes gq from using c-keyword based indentation
 		set cinwords=""
-
+		" skip filename completion on these suckers
+		set wildignore+=.aux,.log
 		call PostHandlerHook()
 	endfunction
 
 	function! TroffFileHandler()
 		call PreHandlerHook()
 
-		setl matchpairs-=<:>
 		if exists("+spell")
 			setl nospell " FUBAR in Java
 		endif
@@ -666,7 +695,6 @@
 		if has("folding")
 			setl foldmethod=marker
 		endif
-		setl matchpairs-=<:>
 
 		call PostHandlerHook()
 	endfunction
@@ -674,8 +702,6 @@
 	function! VisualBasicFileHandler()
 		call PreHandlerHook()
 
-		"setl fileformat=unix
-		setl matchpairs-=<:>
 
 		call PostHandlerHook()
 	endfunction
@@ -772,7 +798,7 @@
 
 	endif
 
-	function! SetGuiColo() " {{{
+	function! SetGuiColo() " {{{		XXX DEPRECIATED
 		
 		if exists("*strftime")
 			let s:random = strftime("%S")
@@ -873,7 +899,7 @@
 		endif
 	endfunction " }}}
 
-	function! SetConsoleColo() "{{{
+	function! SetConsoleColo() "{{{		XXX DEPRECIATED
 		
 
 		" XXX override this for now
@@ -1006,6 +1032,17 @@ endfunction
 
 " !FUNCTIONS }}}
 
+" *COMMANDS* {{{
+	" XXX you need to use gQ rather then Q to use these without the visual 
+	" interface being online.
+
+	" unconditionally edit file with :E, as in ed
+	"cnoremap E e!
+	" unconditionally exit vim with :Q, as in ed
+	"cnoremap Q q!
+
+" }}} !COMMANDS
+
 " *MAPS* {{{
 
 """" WARNING !!!
@@ -1103,3 +1140,4 @@ endfunction
 	iabbrev swtich switch
 
 """"" !play }}}
+

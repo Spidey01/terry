@@ -27,7 +27,8 @@ set novisualbell
 call SetGuiColo()
 
 " adjust nerd tree options
-let g:Tlist_Inc_Winwidth=0
+let g:Tlist_Inc_Winwidth=1
 let g:Tlist_WinHeight=7
-let g:Tlist_WinWidth=15
+let g:Tlist_WinWidth=25
+let g:Tlist_Show_Menu=1
 

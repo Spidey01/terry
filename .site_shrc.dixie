@@ -41,4 +41,4 @@ BROWSER="firefox3 %s:lynx -force_html %s"; export BROWSER
 PYTHONPATH="${HOME}/code/Python/modules"; export PYTHONPATH
 RUBYLIB="${HOME}/code/Ruby/modules"; export RUBYLIB
 
-NAILRC="~/.nail/nailrc"
+NAILRC="${HOME}/.nail/nailrc"; export NAILRC

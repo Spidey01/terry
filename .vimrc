@@ -1149,12 +1149,14 @@ endfunction
 "	set foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
 "endif
 
-	if exists("*strftime")
-		iabbrev insert_date <c-r>=strftime("%Y-%m-%d T%H:%M:%S %Z")<cr>
-	endif
+	if has("localmap")
+		if exists("*strftime")
+			iabbrev insert_date <c-r>=strftime("%Y-%m-%d T%H:%M:%S %Z")<cr>
+		endif
 
-	iabbrev teh the
-	iabbrev swtich switch
+		iabbrev teh the
+		iabbrev swtich switch
+	endif
 
 """"" !play }}}
 

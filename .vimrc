@@ -1,4 +1,4 @@
-" vim: set ff=unix ai si noet ts=4 sw=4 fdls=1 fdm=marker wrap tw=0 sm mat=3 spell tags=$HOME/.vim/vimrc.tags :
+" vim: set ff=unix ai si noet ts=4 sw=4 fdls=1 fdm=marker nowrap tw=0 sm mat=3 spell tags=$HOME/.vim/vimrc.tags :
 "
 " Terry M Poulin personal vimrc file
 "
@@ -95,6 +95,9 @@
 
 	" Physical word wrapping
 	set textwidth=78
+	" this makes verticly split windows more READIBLE.
+	" -> Thanks godlygeek
+	set nowrap
 
 	" Allow backspacing over everything in insert mode
 	set backspace=indent,eol,start
@@ -1041,9 +1044,15 @@ endfunction
 	" interface being online.
 
 	" unconditionally edit file with :E, as in ed
-	"cnoremap E e!
+	" XXX looses <tab> completion of filename :-(
+	"com! E e!
 	" unconditionally exit vim with :Q, as in ed
-	"cnoremap Q q!
+	com! Q q!
+
+	" :Command to view diffthis against the last save.
+	com! DiffOrig diffoff! | vert new | set bt=nofile | r # | 0d_ | \
+	diffthis | wincmd p | diffthis
+
 
 " }}} !COMMANDS
 
@@ -1110,29 +1119,16 @@ endfunction
 " *Taglist* {{{
 
 	map <silent><leader>tl :TlistToggle<CR>
-	"let g:Tlist_Sort_Type="name"
-	let g:Tlist_Auto_Highlight_Tag=0
 	let g:Tlist_Auto_Open=0
-	let g:Tlist_Auto_Update=1
-	let g:Tlist_Compact_Format=1
-	let g:Tlist_Display_Prototype=1
+	let g:Tlist_GainFocus_On_ToggleOpen=1
 	let g:Tlist_Enable_Fold_Column=0
 	let g:Tlist_Exit_OnlyWindow=1
-	let g:Tlist_File_Fold_Auto_Close=1
-	let g:Tlist_GainFocus_On_ToggleOpen=1
-	let g:Tlist_Inc_Winwidth=0
-	let g:Tlist_Process_File_Always=1
+	let g:Tlist_Display_Prototype=1
 	let g:Tlist_Show_Menu=1
-	let g:Tlist_Show_One_File=1
-	let g:Tlist_Use_Right_Window=1
-	let g:Tlist_Use_SingleClick=1
-	let g:Tlist_WinHeight=7
-	let g:Tlist_WinWidth=25
 
 " !Taglist }}}
 
 " *NERDTree* {{{
-	map <silent><leader>nt :NERDTreeToggle<CR>
 
 " !NERDTree }}}
 
@@ -1149,14 +1145,13 @@ endfunction
 "	set foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
 "endif
 
-	if has("localmap")
-		if exists("*strftime")
-			iabbrev insert_date <c-r>=strftime("%Y-%m-%d T%H:%M:%S %Z")<cr>
-		endif
-
-		iabbrev teh the
-		iabbrev swtich switch
+	if exists("*strftime")
+		iabbrev insert_date <c-r>=strftime("%Y-%m-%d T%H:%M:%S %Z")<cr>
 	endif
+
+	iabbrev teh the
+	iabbrev swtich switch
+ 
 
 """"" !play }}}
 

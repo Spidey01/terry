@@ -1,0 +1,22 @@
+# white on black status messages, so they can be _read_ in transparent terms
+sorendition wK
+
+# turn off the copyright nag on startup
+startup_message off
+
+# always emulate a hardware status line when the term doesn't have one.
+hardstatus on
+hardstatus lastline
+# [hostname][   sessions [active session] sessions    ][iso date]
+hardstatus string "%{= kY}[%H]%{w}[%= %{=kc}%?%-Lw%?%{r}[%{c}%t%?%?%{r}]%{c}%?%+Lw%?%?%= %{w}]%{g}[%{B}%Y-%m-%d%{g}]"
+
+# control J, interfers with both vim/emacs but nothing we can't live without.
+escape ^Jj
+defflow off
+
+
+screen -t aux		2
+screen -t main		1
+
+# make ctrl-j g< redisplay the last message
+# how would we do that?

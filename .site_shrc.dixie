@@ -1,9 +1,9 @@
 # vim: set ft=sh :
 
 # TeX Live stuff
-PATH="/usr/local/texlive/2007/bin/i386-freebsd:$PATH:/usr/games:/usr/local/bin:/usr/local/sbin:${HOME}/sh:${HOME}/bin"; export PATH
-MANPATH="/usr/local/texlive/2007/texmf/doc/man:/usr/share/man:/usr/local/man:$MANPATH"; export MANPATH
-INFOPATH="/usr/local/texlive/2007/texmf/doc/info:/usr/share/info:/usr/local/info:$INFOPATH"; export INFOPATH
+PATH="/usr/local/texlive/2008/bin/i386-freebsd:$PATH:/usr/games:/usr/local/bin:/usr/local/sbin:${HOME}/sh:${HOME}/bin"; export PATH
+MANPATH="/usr/local/texlive/2008/texmf/doc/man:/usr/share/man:/usr/local/man:$MANPATH"; export MANPATH
+INFOPATH="/usr/local/texlive/2008/texmf/doc/info:/usr/share/info:/usr/local/info:$INFOPATH"; export INFOPATH
 
 # QT: needed in order to compile QT programs...
 QMAKESPEC='freebsd-g++'; export QMAKESPEC

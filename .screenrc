@@ -1,3 +1,9 @@
+#
+# $Id$
+#
+# My .screenrc file
+#
+
 # white on black status messages, so they can be _read_ in transparent terms
 sorendition wK
 

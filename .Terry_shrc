@@ -97,7 +97,9 @@ umask 077
             ;; # bash
         'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
             set -o emacs
-            PS1="${USER}$'\E[1;37m'@`hostname -s`$'\E[0;36m'$ $'\E[0;0m'"
+            if [ -z "$isOpenBSD" ]; then
+                PS1="${USER}$'\E[1;37m'@`hostname -s`$'\E[0;36m'$ $'\E[0;0m'"
+            fi
 
             # As used by the classic  korn shell
             HISTFILE="${HOME}/.sh_history"
@@ -191,13 +193,14 @@ umask 077
     # Gee, it is so nice how *BSD lint's so often do the inverse
     # of SUSv2 when given a standard switch.
     #
-    if [ !-z "$isFreeBSD" ]; then
+    if [ ! -z "$isFreeBSD" ]; then
         alias   lint='lint -a -aa -ceghnuxz'
     elif [ ! -z "$isNetBSD" ]; then
+        echo "Make an alias for lint"
     elif [ ! -z "$isOpenBSD" ]; then
-        alis    lint='lint -ceghnuxz'
+        alias    lint='lint -ceghnuxz'
     elif [ ! -z "$isLinux" ]; then
-    else
+        echo "Make an alias for lint"
     fi
 
 #
@@ -229,6 +232,7 @@ umask 077
             mixer `echo $OLD_VOLUME` $*
         }
     elif [ $isNetBSD ]; then
+        echo "No aliases for NetBSD"
     elif [ $isOpenBSD ]; then
         alias 	cp='cp -iRL'
         alias 	ls='ls -F'

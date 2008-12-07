@@ -1050,8 +1050,7 @@ endfunction
 	com! Q q!
 
 	" :Command to view diffthis against the last save.
-	com! DiffOrig diffoff! | vert new | set bt=nofile | r # | 0d_ | \
-	diffthis | wincmd p | diffthis
+	com! DiffOrig diffoff! | vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
 
 " }}} !COMMANDS

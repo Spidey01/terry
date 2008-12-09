@@ -184,11 +184,12 @@ umask 077
 #
     alias   bye="echo 'bye'; exit"
     alias   cls='clear'
-    alias   pgr="$PAGER"
-    alias   del='rm -i'
     alias   copy='cp -i'
-    alias   move='mv -i'
+    alias   del='rm -i'
+    alias   igrep='grep -i'
     alias   limeric='fortune /usr/share/games/fortune/limerick'
+    alias   move='mv -i'
+    alias   pgr="$PAGER"
     #
     # Gee, it is so nice how *BSD lint's so often do the inverse
     # of SUSv2 when given a standard switch.

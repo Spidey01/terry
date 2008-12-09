@@ -428,13 +428,13 @@
 		endif
 
 		" highlight GNU Compiler stuff
-		let c_gnu=1
+		let g:c_gnu=1
 		" highlight preceding spaces before a tab as an error
-		let c_space_errors=1
-		let c_no_trail_space_error=1
+		let g:c_space_errors=1
+		let g:c_no_trail_space_error=1
 		" use C syntax in *.h rather then C++ syntax
 		if has("syntax")
-			let c_syntax_for_h=1
+			let g:c_syntax_for_h=1
 
 			" allow doxygen highlighting
 			set syntax=c.doxygen
@@ -516,7 +516,7 @@
 			setl foldmethod=indent
 		endif
 		" Highlight all identifiers in java.lang.* 
-		let java_highlight_java_lang_ids=1
+		let g:java_highlight_java_lang_ids=1
 
 		call PostHandlerHook()
 	endfunction
@@ -549,8 +549,8 @@
 		setl tabstop=4 shiftwidth=4 noexpandtab
 		if has("folding")
 			setl foldmethod=indent
-			let perl_fold=1
-			let perl_fold_blocks=1
+			let g:perl_fold=1
+			let g:perl_fold_blocks=1
 		endif
 
 		call PostHandlerHook()
@@ -563,12 +563,16 @@
 		if has("folding")
 			setl foldmethod=indent
 			" allow code folding for classes and functions!
-			let php_folding=1
+			let g:php_folding=1
 		endif
 		" highlight HTML tags within strings
-		let php_htmlInStrings=1
+		let g:php_htmlInStrings=1
 		" disable short tags
-		let php_noShortTags=1
+		let g:php_noShortTags=1
+		" Do SQL highlighting inside strings
+		let g:php_sql_query=1
+		" Do HTML highlighting inside strings
+		let g:php_htmlInStrings=1
 
 		call PostHandlerHook()
 	endfunction
@@ -582,7 +586,7 @@
 		endif
 		setl keywordprg=pydoc
 
-		let python_highlight_all=1
+		let g:python_highlight_all=1
 		" slightly smarter indenting for (code\n morecode) situations
 		let g:pyindent_open_paren = '&sw + 1'
 			
@@ -595,7 +599,7 @@
 		setl tabstop=2 shiftwidth=2 expandtab
 		if has("folding")
 			setl foldmethod=syntax
-			let ruby_fold=1
+			let g:ruby_fold=1
 		endif
 		filetype indent on
 		setl keywordprg=ri
@@ -1124,10 +1128,17 @@ endfunction
 	let g:Tlist_Exit_OnlyWindow=1
 	let g:Tlist_Display_Prototype=1
 	let g:Tlist_Show_Menu=1
+	let g:Tlist_Use_Right_Window=1
+	let g:Tlist_WinWidth=24
+	let g:Tlist_Inc_WinWidth=0
 
 " !Taglist }}}
 
 " *NERDTree* {{{
+
+	map <silent><leader>nt :NERDTreeToggle<CR>
+	let g:NERDTreeWinPos="right"
+	let g:NERDTreeWinSize=24
 
 " !NERDTree }}}
 

@@ -546,7 +546,7 @@
 	function! PerlFileHandler()
 		call PreHandlerHook()
 
-		setl tabstop=4 shiftwidth=4 noexpandtab
+		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
 			setl foldmethod=indent
 			let g:perl_fold=1

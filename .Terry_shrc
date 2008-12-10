@@ -109,8 +109,10 @@ umask 077
             if [ $? -eq 0 ]; then 
                 # assume we have a pd-style korn
 
-                # the pdksh won't accept $'\eEscape's
-                PS1="${USER}\e[1;37m@`hostname -s`\e[0;36m$\e[0;0m "
+                # the pdksh won't accept $'\eEscape's and requires the
+                # old escape the escapes trick (see pdksh manual for PS1)
+                #
+                PS1="${USER}\e[1;37m@`hostname -s`\e[0;36m$\e[0;0m "
 
                 #
                 # make sure tab completion works (where possible)
@@ -121,9 +123,13 @@ umask 077
                 bind "^I=complete-list"
             else
                 # assume we have a real korn
-
+    
                 # the regular ksh needs $'\eEscapes'
-                PS1="${USER}$'\e[1;37m'@`hostname -s`$'\e[0;36m'$ $'\E[0;0m'"
+                # ksh93 doesn't need the old escape the escapes to get the
+                # line length right, but ksh88 might? Either way, ksh93
+                # doesn't mind if they are there.
+                #
+                PS1="${USER}$'\e[1;37m'@`hostname -s`$'\e[0;36m'$ $'\e[0;0m'"
 
                 #
                 # define a function (keybind) that we can use to map keys.

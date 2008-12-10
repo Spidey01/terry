@@ -97,9 +97,6 @@ umask 077
             ;; # bash
         'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
             set -o emacs
-            if [ -z "$isOpenBSD" ]; then
-                PS1="${USER}$'\E[1;37m'@`hostname -s`$'\E[0;36m'$ $'\E[0;0m'"
-            fi
 
             # As used by the classic  korn shell
             HISTFILE="${HOME}/.sh_history"
@@ -112,6 +109,9 @@ umask 077
             if [ $? -eq 0 ]; then 
                 # assume we have a pd-style korn
 
+                # the pdksh won't accept $'\eEscape's
+                PS1="${USER}\e[1;37m@`hostname -s`\e[0;36m$\e[0;0m "
+
                 #
                 # make sure tab completion works (where possible)
                 # XXX do not use complete-{command,file} - they break it!
@@ -121,6 +121,9 @@ umask 077
                 bind "^I=complete-list"
             else
                 # assume we have a real korn
+
+                # the regular ksh needs $'\eEscapes'
+                PS1="${USER}$'\e[1;37m'@`hostname -s`$'\e[0;36m'$ $'\E[0;0m'"
 
                 #
                 # define a function (keybind) that we can use to map keys.
@@ -155,23 +158,6 @@ umask 077
             zstyle :compinstall filename "$HOME/.zshrc"
             autoload -Uz compinit
             compinit
-            # COLORS
-            fg_green=$'%{\e[0;32m%}'
-            fg_blue=$'%{\e[0;34m%}'
-            fg_cyan=$'%{\e[0;36m%}'
-            fg_red=$'%{\e[0;31m%}'
-            fg_brown=$'%{\e[0;33m%}'
-            fg_purple=$'%{\e[0;35m%}'
-            fg_light_gray=$'%{\e[0;37m%}'
-            fg_dark_gray=$'%{\e[1;30m%}'
-            fg_light_blue=$'%{\e[1;34m%}'
-            fg_light_green=$'%{\e[1;32m%}'
-            fg_light_cyan=$'%{\e[1;36m%}' 
-            fg_light_red=$'%{\e[1;31m%}'
-            fg_light_purple=$'%{\e[1;35m%}'
-            fg_no_colour=$'%{\e[0m%}'
-            fg_white=$'%{\e[1;37m%}'
-            fg_black=$'%{\e[0;30m%}'
             # I like color in my zsh prompt ;-)
             PS1="${USER}@%B%m%b${fg_green}$ ${fg_no_colour}"; export PS1
             # display the (24h) time in the right-prompt`

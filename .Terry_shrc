@@ -108,7 +108,7 @@ umask 077
             # Check if we're using a public domain ksh, which supports the 
             # nifty 'bind' command, plus an extended command set
             #
-            echo $KSH_VERSION | egrep 'MIRBSD|PD KSH' >-
+            echo $KSH_VERSION | egrep 'MIRBSD|PD KSH' >/dev/null
             if [ $? -eq 0 ]; then 
                 # assume we have a pd-style korn
 

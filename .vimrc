@@ -548,7 +548,6 @@
 
 		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
-			setl foldmethod=indent
 			let g:perl_fold=1
 			let g:perl_fold_blocks=1
 		endif
@@ -561,7 +560,6 @@
 
 		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
-			setl foldmethod=indent
 			" allow code folding for classes and functions!
 			let g:php_folding=1
 		endif
@@ -598,7 +596,6 @@
 
 		setl tabstop=2 shiftwidth=2 expandtab
 		if has("folding")
-			setl foldmethod=syntax
 			let g:ruby_fold=1
 		endif
 		filetype indent on
@@ -622,7 +619,6 @@
 
 		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
-			setl foldmethod=indent
 			let g:sh_fold_enabled=8
 		endif
 
@@ -686,7 +682,6 @@
 		setl fileformat=dos
 		setl tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab
 		if has("folding")
-			setl foldmethod=indent
 			" syntax-based folding of parts, chapters, sections, etc
 			let g:tex_fold_enabled=1
 		endif

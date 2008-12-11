@@ -92,11 +92,13 @@ umask 077
         'bash') 
             # prompt is: [ user@host:pwd ]$
             PS1="[ \u@\h:\w ]$ "; export PS1
-            set -o emacs
+            set -o emacs 
+            set -o ignoreeof
             HISTFILE="${HOME}/.bash_history"
             ;; # bash
         'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
-            set -o emacs
+            set -o emacs 
+            set -o ignoreeof
 
             # As used by the classic  korn shell
             HISTFILE="${HOME}/.sh_history"
@@ -149,6 +151,10 @@ umask 077
                 # allow one <tab> to do completion work.
                 #keybind $'\t' $'\E\E' #<-- use this if shell uses <esc><esc>
                 keybind $'\t' $'\t\t'  #<-- use this if shell uses <tab><tab>
+
+                # clear the screen on ^L    (control char)
+                # rather then just reprinting the prompt.
+                keybind  $'clear\n'
             fi
             ;; # ksh family
         'zsh') # set my various options
@@ -225,13 +231,16 @@ umask 077
             mixer `echo $OLD_VOLUME` $*
         }
     elif [ $isNetBSD ]; then
-        echo "No aliases for NetBSD"
+        # NetBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name 
+        alias   exctags=ectags
     elif [ $isOpenBSD ]; then
         alias 	cp='cp -iRL'
         alias 	ls='ls -F'
         alias 	ll='ls -laFho'
         alias 	la='ls -aF'
         alias 	rm='rm -d'
+        # OpenBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name 
+        alias   exctags=ectags
     elif [ $isLinux ]; then 
         echo "No aliases set..."
     else

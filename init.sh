@@ -26,9 +26,10 @@ fbpanel -p pager &
 
 gkrellm &
 
-urxvt -title ${USER}@`hostname -s` -e screen &
+urxvt -title ${USER}@`hostname -s` -e screen -U &
 
 pidgin &
 psi &
+xchat --minimize=2 &
 
 blackbox

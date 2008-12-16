@@ -29,6 +29,7 @@
 "	|COMMANDS|			--- Ex commands
 " 	|MAPS|				--- Key mappings
 " |PLUGINS|				--- Plugin specific configuration 
+"   |CSApprox|
 "	|Taglist|
 "	|NERDTree|
 " |play|				--- Misc stuff, usually notes / code snippets
@@ -49,6 +50,18 @@
 	else " fall through to the else
 		let s:random = 61
 	endif
+
+	" a quick constant for hostnames...
+	if hostname() == 'dixie.launchmodem.com'
+		let g:hostname = 'dixie'
+	elseif hostname() == 'vectra.launchmodem.com'
+		let g:hostname = 'vectra'
+	elseif hostname() == 'sal1600.lauchmodem.com'
+		let g:hostname = 'sal1600'
+	else
+		" unknown host.
+		let g:hostname = '?'
+	endif
 	
 " !VARIABLES }}}
  
@@ -60,7 +73,18 @@
 	" Also skip loading .exrc and friends in the CWD.
 	set nocompatible
 	set noexrc
-	
+
+	" Provide overrides for terminal type where the environment has
+	" deviancies that vim can not correct for, so we get optimal values.
+	if &term == 'rxvt' && g:hostname == 'dixie'
+		" FreeBSDs rxvt-unicode has 88 colours, but looks sour in vim
+		" so we drop to 16.
+        set t_Co=16
+	elseif &term == 'screen'
+		" Screen does ok at simulating 256col on my systems.
+		set t_Co=256
+    endif
+
 	" highlight matched text when searching
 	"if has('extra_search')
 	"	set hlsearch
@@ -518,6 +542,9 @@
 		" Highlight all identifiers in java.lang.* 
 		let g:java_highlight_java_lang_ids=1
 
+		" Ignore class files in filename completion
+		set wildignore+=.class
+
 		call PostHandlerHook()
 	endfunction
 
@@ -777,6 +804,7 @@
 
 " *INTERFACE* {{{
 
+	colo none
 
 	"set :command line height in lines
 	if has("gui_running")
@@ -910,108 +938,6 @@
 		endif
 	endfunction " }}}
 
-	function! SetConsoleColo() "{{{		XXX DEPRECIATED
-		
-
-		" XXX override this for now
-		colo none
-		
-		return 
-
-		if s:random < 2
-			colo astronaut
-			
-		elseif s:random < 4
-			colo redblack
-			
-		elseif s:random < 6
-			colo default
-			
-		elseif s:random < 8
-			colo golden
-			
-		elseif s:random < 12
-			colo candycode
-			
-		elseif s:random < 14
-			colo murphy
-			
-		elseif s:random < 16
-			colo my
-			
-		elseif s:random < 18
-			colo c
-			
-		elseif s:random < 20
-			colo elflord
-			
-		elseif s:random < 22
-			colo relaxedgreen
-			
-		elseif s:random < 24
-			colo astronaut
-			
-		elseif s:random < 26
-			colo redblack
-			
-		elseif s:random < 28
-			colo default
-			
-		elseif s:random < 30
-			colo golden
-			
-		elseif s:random < 32
-			colo candycode
-			
-		elseif s:random < 34
-			colo elflord
-			
-		elseif s:random < 36
-			colo c
-			
-		elseif s:random < 38
-		elseif s:random < 40
-		elseif s:random < 42
-			colo relaxedgreen
-			
-		elseif s:random < 44
-			colo redblack
-			
-		elseif s:random < 46
-			colo default
-			
-		elseif s:random < 48
-			colo candycode
-			
-		elseif s:random < 50
-			colo golden
-			
-		elseif s:random < 52
-			colo relaxedgreen
-			
-		elseif s:random < 54
-			colo astronaut
-			
-		elseif s:random < 56
-			colo my
-			
-		elseif s:random < 58
-			colo astronaut
-			
-		elseif s:random < 60
-			colo murphy
-			
-		else
-			colo default
-			
-		endif
-
-	endfunction " }}}
-
-	if !has("gui_running")
-		call SetConsoleColo()
-	endif
-
 
 " !INTERFACE }}}
 
@@ -1114,7 +1040,20 @@ endfunction
 
 " *PLUGINS* {{{
 
+" *CSApprox*  {{{
+" Colour Scheme Approximator for console
+
+if !has("gui")	" only load plugin if gui support is available.
+	let g:CSApprox_loaded=1
+else
+	" it currently gives most of my favorite colour schemes the screw :-P
+	let g:CSApprox_loaded=1
+endif
+
+" }}} !CSApprox
+
 " *Taglist* {{{
+" Exuberant Ctags capable tags browser window
 
 	map <silent><leader>tl :TlistToggle<CR>
 	let g:Tlist_Auto_Open=0
@@ -1130,6 +1069,7 @@ endfunction
 " !Taglist }}}
 
 " *NERDTree* {{{
+" A very nerdy file system tree browser window
 
 	map <silent><leader>nt :NERDTreeToggle<CR>
 	let g:NERDTreeWinPos="right"

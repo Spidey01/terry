@@ -1015,24 +1015,6 @@ endfunction
 	"inoremap <c-a> <esc>I
 	"inoremap <c-e> <esc>A
 
-	" F1 toggles spell checking for this buffer
-	if exists("+spell")
-		inoremap <F1> <esc>:set spell! <bar> set spell?<CR>i
-		nnoremap <F1> <esc>:set spell! <bar> set spell?<CR>
-	endif
-
-	" F2 toggles  line numbers
-	nnoremap <F2> :set number! <bar> set number?<CR>
-	inoremap <F2> <esc>:set number! <bar> set number?<CR>i
-
-	" F3 turns on  auto indentations
-	nnoremap <F3> :set smartindent autoindent<CR>
-	inoremap <F3> <esc>:set smartindent autoindent<CR>i
-
-	" XXX make this toggle the nerd tree plugin
-	" F5 launches file manager in the current directory
-	nnoremap <F5> :OPEN %:p:h<CR>
-	inoremap <F5> <esc>:OPEN %:p:h<CR>i
 
 " !KEYS }}}
 

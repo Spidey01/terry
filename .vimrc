@@ -237,8 +237,6 @@
 		" make new.txt files dos/win friendly
 		autocmd BufNewFile *.txt set ff=dos
 		autocmd BufNewFile,BufRead *.txt call TextFileHandler()
-		autocmd BufNewFile *.rtf call RtfFileHandler()
-		autocmd BufRead *.rtf call RtfFileHandler()
 		autocmd BufRead *.doc call DocFileHandler()
 		autocmd BufRead *.pdf call PdfFileHandler()
 		autocmd BufRead *.ps call PsFileHandler()		
@@ -315,17 +313,6 @@
 		call PostHandlerHook()
 	endfunction
 
-	function! RtfFileHandler()
-		call PreHandlerHook()
-
-		let l:prompt = input("View or edit % [yes|no]?: ")
-		if l:prompt=="y" || l:prompt=="yes" || l:prompt=="Y" || l:prompt=="YES"
-			!{abiword "%" || wordpad.exe "%" || kword "%" || swriter "%"}  &
-			q
-		endif
-
-		call PostHandlerHook()
-	endfunction
 
 	function! DocFileHandler()
 		call PreHandlerHook()
@@ -358,8 +345,7 @@
 	function! PsFileHandler()
 		call PreHandlerHook()
 
-		let l:prompt = input("View or edit % [yes|no]?: ")
-		if l:prompt=="y" || l:prompt=="yes" || l:prompt=="Y" || l:prompt=="YES"
+		if ViewOrEdit()
 			if has("x11")
 				!{evince "%" || kpdf "%" || xpdf "%"} &
 				q
@@ -376,18 +362,17 @@
 	function! DviFileHandler()
 		call PreHandlerHook()
 
-		let l:prompt = input("View % in Vim [yes|no]?: ")
-		if l:prompt=="y" || l:prompt=="yes" || l:prompt=="Y" || l:prompt=="YES"
-			" depends on the dvi2tty program
-			!dvi2tty -F'vim -c "setl ro fdl=99"  -' "%"
-			q
-		else
+		if ViewOrEdit()
 			if has("x11")
 				!{xdvi "%" || kdvi "%" ||  "%"} &
 				q
 			elseif has("win32")
 				!echo "Go look up how to open DVI on TexLive Win"
 			endif
+		else
+			" depends on the dvi2tty program
+			!dvi2tty -F'vim -c "setl ro fdl=99"  -' "%"
+			q
 		endif
 
 		call PostHandlerHook()
@@ -413,8 +398,7 @@
 	function! XImgFileHandler()
 		call PreHandlerHook()
 
-		let l:prompt = input("View or edit % [yes|no]?: ")
-		if l:prompt=="y" || l:prompt=="yes" || l:prompt=="Y" || l:prompt=="YES"
+		if ViewOrEdit()
 			if has("x11")
 				!xv "%" &
 				q
@@ -960,6 +944,18 @@ command! Chmod call ChmodScript()
 " ROT13 encode/decode the current file
 function! ROT13()
 	<esc>ggvGg?
+endfunction
+
+
+" Helper function to prompt the user if editing or viewing is desired
+" returns 1 = view, 0 = edit
+function! ViewOrEdit()
+	let l:prompt = input("View or edit % [view|edit]: ")
+	if l:prompt[0] == 'v' || l:prompt[0] == 'V'
+		return 1
+	elseif l:prompt[0] == 'e' || l:prompt[0] == 'E'
+		return 0
+	endif
 endfunction
 
 " !FUNCTIONS }}}

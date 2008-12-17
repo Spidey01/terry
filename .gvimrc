@@ -23,8 +23,6 @@ syntax on
 " Kill the dang visual bell if GUI is running!!!!
 set novisualbell
 
-" set colo for gui
-call SetGuiColo()
 
 " adjust nerd tree options
 let g:Tlist_Inc_Winwidth=1

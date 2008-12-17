@@ -448,6 +448,9 @@
 			set syntax=c.doxygen
 		endif
 
+		" Ignore object files in filename completion
+		set wildignore+=.o
+
 		call PostHandlerHook()
 	endfunction
 
@@ -482,6 +485,9 @@
 			" allow doxygen highlighting
 			set syntax=cpp.doxygen
 		endif
+
+		" Ignore object files in filename completion
+		set wildignore+=.o
 
 		call PostHandlerHook()
 	endfunction
@@ -691,7 +697,7 @@
 			colo elflord
 		endif
 		setl fileformat=dos
-		setl tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab
+		setl tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 		if has("folding")
 			" syntax-based folding of parts, chapters, sections, etc
 			let g:tex_fold_enabled=1
@@ -734,6 +740,7 @@
 	endfunction
 
 "	XXX for use with other programs
+
 	" Settings for outlining ideas
 	function! My_OutlineMode()
 		call PreHandlerHook()
@@ -762,7 +769,7 @@
 		call PostHandlerHook()
 	endfunction
 
-	" For the .tmp files created by knode
+	" For the .tmp files created by knode	XXX DEPRECIATED
 	function! My_KNodeConfig()
 		call PreHandlerHook()
 
@@ -788,15 +795,11 @@
 
 " *INTERFACE* {{{
 
+	"load my default colour scheme
 	colo none
 
 	"set :command line height in lines
-	if has("gui_running")
-		set cmdheight=2
-	else
-		set cmdheight=1
-	endif
-
+	set cmdheight=1
 
 	" GUI: Set options mainly used for for GVim 
 
@@ -808,119 +811,9 @@
 	set mousemodel=popup_setpos
 
 	" Make mouse pointer an I-Beam in insert mode like most other programs
-	set mouseshape=i:beam
-
-
-	" X11: Specifics for GVim
-	if has("x11")
-		"I love this font!!
-		set guifont=Terminus\ 14
-		"set lines=40
-		"set columns=80
-
-	" WINDOWS: Specifics for GVim
-	elseif has("win32")
-		set guifont=Fixedsys:h11:cANSI
-		set lines=25
-		set columns=80
-
+	if has("mouseshape")
+		set mouseshape=i:beam
 	endif
-
-	function! SetGuiColo() " {{{		XXX DEPRECIATED
-		
-
-		if s:random < 2
-			colo ron
-			
-		elseif s:random < 4
-			colo candycode
-			
-		elseif s:random < 6
-			colo silent
-			
-		elseif s:random < 8
-			colo default
-			
-		elseif s:random < 12
-			colo denim
-			
-		elseif s:random < 14
-			colo midnight2
-			
-		elseif s:random < 16
-			colo hhazure
-			
-		elseif s:random < 18
-			colo rootwater
-			
-		elseif s:random < 20
-			colo nightshimmer
-			
-		elseif s:random < 22
-			colo murphy
-			
-		elseif s:random < 24
-			colo coffee
-			
-		elseif s:random < 26
-			colo professional
-			
-		elseif s:random < 28
-			colo sf
-			
-		elseif s:random < 30
-			colo my
-			
-		elseif s:random < 32
-			colo vcbc
-			
-		elseif s:random < 34
-			colo gobo
-			
-		elseif s:random < 36
-			colo metacosm
-			
-		elseif s:random < 38
-			colo blackboard
-			
-		elseif s:random < 40
-			colo billw
-			
-		elseif s:random < 42
-			colo dusk
-			
-		elseif s:random < 44
-			colo desert
-			
-		elseif s:random < 46
-			colo evening
-			
-		elseif s:random < 48
-			colo golden
-			
-		elseif s:random < 50
-			colo chela_light
-			
-		elseif s:random < 52
-			colo camo
-			
-		elseif s:random < 54
-			colo developer
-			
-		elseif s:random < 56
-			colo neon
-			
-		elseif s:random < 58
-			colo chlordane
-			
-		elseif s:random < 60
-			colo shine
-			
-		else
-			colo default
-			
-		endif
-	endfunction " }}}
 
 
 " !INTERFACE }}}
@@ -999,6 +892,9 @@ endfunction
 	" (e.g. move to miss spelled word in direction and get suggestions)
 	nnoremap [z [sz=
 	nnoremap ]z ]sz=
+	" make variants that do auto correction
+	nnoremap [Z [s1z=
+	nnoremap ]Z ]s1z=
 
 	" toggle spelling highlights on/off
 	nnoremap <leader>Z :set hl&<cr>

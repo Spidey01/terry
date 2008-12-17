@@ -23,6 +23,20 @@ syntax on
 " Kill the dang visual bell if GUI is running!!!!
 set novisualbell
 
+" X11: Specifics for GVim
+if has("x11")
+	"I love this font!!
+	set guifont=Terminus\ 14
+	"set lines=40
+	"set columns=80
+
+" WINDOWS: Specifics for GVim
+elseif has("win32")
+	set guifont=Fixedsys:h11:cANSI
+	set lines=25
+	set columns=80
+
+endif
 
 " adjust nerd tree options
 let g:Tlist_Inc_Winwidth=1

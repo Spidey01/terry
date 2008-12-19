@@ -543,6 +543,10 @@
 	function! JavaScriptFileHandler()
 		call PreHandlerHook()
 
+		if has("folding") 
+		  let javaScript_fold=1
+		endif
+
 		call PostHandlerHook()
 	endfunction
 

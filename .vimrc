@@ -77,11 +77,11 @@
 	" Provide overrides for terminal type where the environment has
 	" deviancies that vim can not correct for, so we get optimal values.
 	if &term == 'rxvt' && g:hostname == 'dixie'
-		" FreeBSDs rxvt-unicode has 88 colours, but looks sour in vim
-		" so we drop to 16.
-        set t_Co=16
+		" FreeBSDs rxvt-unicode has 88 colours by default.
+        set t_Co=88
 	elseif &term == 'screen'
 		" Screen does ok at simulating 256col on my systems.
+		" but fouls up CSApprox.
 		set t_Co=256
     endif
 
@@ -132,7 +132,9 @@
 	" Set folding
 	if has("folding")
 		set foldlevelstart=99
+		"set foldexpr=getline(v:lnum)[0]==\"\\t\"
 		set foldmethod=indent
+		set foldcolumn=0
 	endif
 
 	" Indentation settings (explictly)
@@ -426,7 +428,7 @@
 		
 		setl tabstop=8 shiftwidth=8 noexpandtab
 		if has("folding")
-			setl foldmethod=syntax foldcolumn=1
+			setl foldmethod=syntax 
 		endif
 
 		if has("cindent")
@@ -459,7 +461,7 @@
 
 		setl tabstop=5 shiftwidth=5 expandtab
 		if has("folding")
-			setl foldmethod=indent
+			setl foldmethod=expr
 		endif
 
 		call PostHandlerHook()
@@ -470,7 +472,7 @@
 
 		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
-			setl foldmethod=syntax foldcolumn=1
+			setl foldmethod=syntax 
 		endif
 
 		if has("cindent")
@@ -554,7 +556,8 @@
 
 		setl tabstop=4 shiftwidth=4 noexpandtab
 		if has("folding")
-			setl foldmethod=indent
+			setl foldexpr=getline(v:lnum)[0]==\"\\t\"
+			setl foldmethod=expr
 		endif
 
 		call PostHandlerHook()
@@ -626,6 +629,7 @@
 
 		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
+			" This doesn't work
 			setl foldmethod=syntax
 		endif
 		call PostHandlerHook()

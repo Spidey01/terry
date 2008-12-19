@@ -14,9 +14,10 @@
 " might be for you ;-). Most of the syntax highlighting has been removed (see
 " options), and anything that remains is kept for value. Note well, that
 " despite it's immense value that the CSApprox plugin will likely make this
-" look horrible in a console. A terminal supporting 8 or more colours plus and
-" the underline and bold attributes at the same time  is recommended; but
-" generally speaking is should not be required.
+" look horrible in a console in some setups (urxvt+screen on my system). A
+" terminal supporting 8 or more colours plus and the underline and bold
+" attributes at the same time  is recommended; but generally speaking is
+" should not be required.
 " 
 " Options:  
 "

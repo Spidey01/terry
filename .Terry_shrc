@@ -184,6 +184,7 @@ umask 077
 # said programs are installed.
 #
     alias   bye="echo 'bye'; exit"
+    [ ! -z "$isFreeBSD" ] && alias bc='bc -q'
     alias   cls='clear'
     alias   copy='cp -i'
     alias   del='rm -i'

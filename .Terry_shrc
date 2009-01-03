@@ -204,6 +204,10 @@ umask 077
     elif [ ! -z "$isLinux" ]; then
         echo "Make an alias for lint"
     fi
+    #
+    # useful aliases for various version control systems
+    #
+    alias cvs-st='cvs status | grep -i Status:'
 
 #
 # define system specfic aliases for common commands

@@ -29,9 +29,9 @@
 "	|COMMANDS|			--- Ex commands
 " 	|MAPS|				--- Key mappings
 " |PLUGINS|				--- Plugin specific configuration 
-"   |CSApprox|
-"	|Taglist|
-"	|NERDTree|
+"   |CSApprox|			--- Color Scheme Approximate
+"	|Taglist|			--- Tags file navigator plugin
+"	|NERDTree|			--- Enhanced file system tree navigator
 " |play|				--- Misc stuff, usually notes / code snippets
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -835,7 +835,7 @@
 
 " !SETTINGS }}}
 
-" |BINDS| {{{
+" *BINDS* {{{
 
 " *FUNCTIONS* {{{
 
@@ -931,7 +931,7 @@ endfunction
 
 " *PLUGINS* {{{
 
-" *CSApprox*  {{{
+" *CSApprox* {{{
 " Colour Scheme Approximator for console
 
 if !has("gui")	" only load plugin if gui support is available.

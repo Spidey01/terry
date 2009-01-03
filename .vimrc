@@ -41,6 +41,17 @@
 " *VARIABLES* {{{
 " XXX Note that plugin specific variables belong in |PLUGINS|
 
+	" Don't be VI compatible - Keep this at top of file !
+	" Also skip loading .exrc and friends in the CWD.
+	set nocompatible
+	set noexrc
+	" Set Vi compatiblity options
+	"
+	" v = don't update the line more then needed - like vi
+	" $ = place a $ at end of a change, instead of update - like vi
+	" y = . after a yank repeats the yank, not the insert - like vi
+	set cpoptions+=v$y
+
 	" A list of 'filetype' that we want to kill spell for by default
 	"let s:kill_spell_for_ft = [ 'asm', 'help', 'scheme', 'java' ]
 
@@ -69,10 +80,6 @@
 
 " *GENERAL* {{{
 
-	" Don't be VI compatible - Keep this at top of file !
-	" Also skip loading .exrc and friends in the CWD.
-	set nocompatible
-	set noexrc
 
 	" Provide overrides for terminal type where the environment has
 	" deviancies that vim can not correct for, so we get optimal values.
@@ -118,10 +125,10 @@
 	set nolist
 
 	" Physical word wrapping
-	set textwidth=78
+	"set textwidth=78
 	" this makes verticly split windows more READIBLE.
 	" -> Thanks godlygeek
-	set nowrap
+	set wrap
 
 	" Allow backspacing over everything in insert mode
 	set backspace=indent,eol,start

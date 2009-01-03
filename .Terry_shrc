@@ -159,8 +159,8 @@ umask 077
             ;; # ksh family
         'zsh') # set my various options
             HISTFILE="${HOME}/.histfile"
-            HISTSIZE=512
-            SAVEHIST=384
+            HISTSIZE=768
+            SAVEHIST=512
             setopt appendhistory autocd extendedglob 
             setopt incappendhistory
             # dont' beep !
@@ -174,7 +174,6 @@ umask 077
             fg_no_colour=$'%{\e[0m%}'
             fg_green=$'%{\e[0;32m%}'
             PS1="${USER}@%B%m%b${fg_green}$ ${fg_no_colour}"; export PS1
-            ; export PS1
             # display the (24h) time in the right-prompt`
             RPS1="%T"; export RPS1
     esac

@@ -259,6 +259,23 @@ umask 077
         alias   la='la'
     fi
 
+#
+# General functions
+#
+
+# quick test of each name server on unix box.
+test-dns() {
+    for IP in `cat /etc/resolv.conf | awk '/^nameserver/ { print $2 }'`
+    do
+        ping -c ${1:-3} "$IP" | tail -n 1
+    done
+}
+
+# create a new script, with the shebang! pre-inserted.
+# @params $1 = interp; $2 = filename
+new-script() {
+    echo '#!/usr/bin/env' " $1\n\n" >> $2
+}
 
 #
 # give a few fortune cookie and the current date/time on login

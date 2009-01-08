@@ -29,6 +29,7 @@
 "	|COMMANDS|			--- Ex commands
 " 	|MAPS|				--- Key mappings
 " |PLUGINS|				--- Plugin specific configuration 
+" 	|BuiltIn|			--- Options for built in plugin/syntax files/etc.
 "   |CSApprox|			--- Color Scheme Approximate
 "	|Taglist|			--- Tags file navigator plugin
 "	|NERDTree|			--- Enhanced file system tree navigator
@@ -142,7 +143,18 @@
 		"set foldexpr=getline(v:lnum)[0]==\"\\t\"
 		set foldmethod=indent
 		set foldcolumn=0
+
+		" These must be sourced before syntax/foo.vim in order to
+		" work correctly.
+		let g:perl_fold=1
+		let g:perl_fold_blocks=1
+		let g:php_folding=1
+		let g:ruby_fold=1
+		let g:sh_fold_enabled=4
+		let g:tex_fold_enabled=1
+		let javaScript_fold=1
 	endif
+
 
 	" Indentation settings (explictly)
 	set tabstop=8
@@ -257,6 +269,7 @@
 "	XXX Code based formats
 		autocmd filetype ada call AdaFileHandler()
 		autocmd filetype asm call AsmFileHandler()
+		autocmd filetype awk call AWKFileHandler()
 		autocmd BufNewFile,BufRead *.c,*.h call CFileHandler()
 		autocmd filetype css call CSSFileHandler()
 		autocmd BufNewFile,BufRead *.cc,*.cxx,*.cpp,*.hh,*.hpp,*.hxx call CXXFileHandler()
@@ -313,9 +326,11 @@
 				setl nospell
 			endif
 		endif
-		setl fdm=expr
+		if has("folding")
+			setl foldmethod==expr
+		endif
 		set fo+=tqn
-		set ai
+		set autoindent
 		" fixes gq from using c-keyword based indentation
 		set cinwords=""
 
@@ -427,6 +442,22 @@
 	function! AsmFileHandler()
 		call PreHandlerHook()
 
+		if has("folding")
+			setl foldmethod==indent
+		endif
+		" Ignore object files in filename completion
+		set wildignore+=.o
+
+		call PostHandlerHook()
+	endfunction
+
+	function! AWKFileHandler()
+		call PreHandlerHook()
+
+		if has("folding")
+			setl foldmethod==indent
+		endif
+
 		call PostHandlerHook()
 	endfunction
 
@@ -444,21 +475,11 @@
 			setl cinkeys-=0#
 		endif
 
-		" highlight GNU Compiler stuff
-		let g:c_gnu=1
-		" highlight preceding spaces before a tab as an error
-		let g:c_space_errors=1
-		let g:c_no_trail_space_error=1
-		" use C syntax in *.h rather then C++ syntax
-		if has("syntax")
-			let g:c_syntax_for_h=1
-
-			" allow doxygen highlighting
-			set syntax=c.doxygen
-		endif
-
 		" Ignore object files in filename completion
 		set wildignore+=.o
+
+		" allow doxygen highlighting
+		set syntax=c.doxygen
 
 		call PostHandlerHook()
 	endfunction
@@ -468,7 +489,7 @@
 
 		setl tabstop=5 shiftwidth=5 expandtab
 		if has("folding")
-			setl foldmethod=expr
+			setl foldmethod=indent
 		endif
 
 		call PostHandlerHook()
@@ -538,8 +559,6 @@
 		if has("folding")
 			setl foldmethod=indent
 		endif
-		" Highlight all identifiers in java.lang.* 
-		let g:java_highlight_java_lang_ids=1
 
 		" Ignore class files in filename completion
 		set wildignore+=.class
@@ -549,11 +568,6 @@
 
 	function! JavaScriptFileHandler()
 		call PreHandlerHook()
-
-		if has("folding") 
-		  let javaScript_fold=1
-		endif
-
 		call PostHandlerHook()
 	endfunction
 
@@ -579,8 +593,6 @@
 
 		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
-			let g:perl_fold=1
-			let g:perl_fold_blocks=1
 		endif
 
 		call PostHandlerHook()
@@ -590,18 +602,6 @@
 		call PreHandlerHook()
 
 		setl tabstop=4 shiftwidth=4 expandtab
-		if has("folding")
-			" allow code folding for classes and functions!
-			let g:php_folding=1
-		endif
-		" highlight HTML tags within strings
-		let g:php_htmlInStrings=1
-		" disable short tags
-		let g:php_noShortTags=1
-		" Do SQL highlighting inside strings
-		let g:php_sql_query=1
-		" Do HTML highlighting inside strings
-		let g:php_htmlInStrings=1
 
 		call PostHandlerHook()
 	endfunction
@@ -615,10 +615,6 @@
 		endif
 		setl keywordprg=pydoc
 
-		let g:python_highlight_all=1
-		" slightly smarter indenting for (code\n morecode) situations
-		let g:pyindent_open_paren = '&sw + 1'
-			
 		call PostHandlerHook()
 	endfunction
 
@@ -626,9 +622,6 @@
 		call PreHandlerHook()
 
 		setl tabstop=2 shiftwidth=2 expandtab
-		if has("folding")
-			let g:ruby_fold=1
-		endif
 		filetype indent on
 		setl keywordprg=ri
 
@@ -648,11 +641,7 @@
 
 	function! ShellFileHandler()
 		call PreHandlerHook()
-
 		setl tabstop=4 shiftwidth=4 expandtab
-		if has("folding")
-			let g:sh_fold_enabled=8
-		endif
 
 		call PostHandlerHook()
 	endfunction
@@ -665,6 +654,9 @@
 		"SQLSetType mysql
 
 		setl tabstop=2 shiftwidth=2 expandtab
+		if has("folding") 
+			setl foldmethod==indent
+		endif
 
 		" define buffer local abbreviations to auto-capitalize keywords
 		iab <buffer> all ALL
@@ -713,10 +705,6 @@
 		endif
 		setl fileformat=dos
 		setl tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-		if has("folding")
-			" syntax-based folding of parts, chapters, sections, etc
-			let g:tex_fold_enabled=1
-		endif
 		" fixes gq from using c-keyword based indentation
 		set cinwords=""
 		" skip filename completion on these suckers
@@ -931,15 +919,49 @@ endfunction
 
 " *PLUGINS* {{{
 
+" *BuiltIn* {{{
+
+	if has("syntax")
+	" PHP Syntax
+		" highlight HTML tags within strings
+		let g:php_htmlInStrings=1
+		" disable short tags
+		let g:php_noShortTags=1
+		" Do SQL highlighting inside strings
+		let g:php_sql_query=1
+		" Do HTML highlighting inside strings
+		let g:php_htmlInStrings=1
+
+	" Python Syntax
+	
+		let g:python_highlight_all=1
+
+	" C/C++ Syntax
+		" highlight GNU Compiler stuff
+		let g:c_gnu=1
+		" highlight preceding spaces before a tab as an error
+		let g:c_space_errors=1
+		let g:c_no_trail_space_error=1
+		" use C syntax in *.h rather then C++ syntax
+		let g:c_syntax_for_h=1
+
+	" Java Syntax
+		" Highlight all identifiers in java.lang.* 
+		let g:java_highlight_java_lang_ids=1
+	endif
+
+" !BuiltIn}}}
+
+
 " *CSApprox* {{{
 " Colour Scheme Approximator for console
 
-if !has("gui")	" only load plugin if gui support is available.
-	let g:CSApprox_loaded=1
-else
-	" it currently gives most of my favorite colour schemes the screw :-P
-	let g:CSApprox_loaded=1
-endif
+	if !has("gui")	" only load plugin if gui support is available.
+		let g:CSApprox_loaded=1
+	else
+		" it currently gives most of my favorite colour schemes the screw :-P
+		let g:CSApprox_loaded=1
+	endif
 
 " }}} !CSApprox
 

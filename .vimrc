@@ -39,6 +39,7 @@
 " Preferences
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
 " *VARIABLES* {{{
 " XXX Note that plugin specific variables belong in |PLUGINS|
 
@@ -327,7 +328,7 @@
 			endif
 		endif
 		if has("folding")
-			setl foldmethod==expr
+			setl foldmethod=indent
 		endif
 		set fo+=tqn
 		set autoindent
@@ -959,8 +960,14 @@ endfunction
 	if !has("gui")	" only load plugin if gui support is available.
 		let g:CSApprox_loaded=1
 	else
-		" it currently gives most of my favorite colour schemes the screw :-P
-		let g:CSApprox_loaded=1
+		if &term == 'screen' && g:hostname == 'dixie' 
+			let g:CSApprox_loaded=1
+		" Other wise we likely want transparency, and CSApprox
+		elseif &term =~ '.term'  && &term != xterm
+			let g:CSApprox_hook_none_post = 
+						\['hi Normal  ctermbg=NONE ctermfg=NONE',
+						\ 'hi NonText ctermbg=NONE ctermfg=NONE' ]
+		endif
 	endif
 
 " }}} !CSApprox

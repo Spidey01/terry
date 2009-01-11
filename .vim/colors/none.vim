@@ -9,13 +9,11 @@
 " Notes:
 "
 " This colour scheme is designed for those who do not like Christmas tree like
-" code or odd colour patterns!  If you prefer a similar vim/gvim appearance
-" from your colorscheme, especially one that is easy on the eyes, this colo
-" might be for you ;-). Most of the syntax highlighting has been removed (see
-" options), and anything that remains is kept for value. Note well, that
-" despite it's immense value that the CSApprox plugin will likely make this
-" look horrible in a console in some setups (urxvt+screen on my system). A
-" terminal supporting 8 or more colours plus and the underline and bold
+" code or odd colour patterns!  If you prefer a similar appearance in both
+" cterm/gui from your colorscheme, especially one that is easy on the eyes,
+" this colo might be for you ;-). Most of the syntax highlighting has been
+" removed (see options), and anything that remains is kept for value. A
+" terminal supporting 8 or more colours plus the underline and bold
 " attributes at the same time  is recommended; but generally speaking is
 " should not be required.
 " 
@@ -29,9 +27,10 @@
 " let g:none_usecolorcomments   : use coloured comments 
 " let g:none_usecolorimports    : makes some #include/import use colour
 " let g:none_usecolorstrings    : makes "strings" use colours.
-"
+" let g:none_usecolorwords      : makes some keywords stand out
 
 hi clear
+
 "set background&
 if exists("syntax_on")
     syntax reset
@@ -85,20 +84,20 @@ endif
 "hi StatusLine* Question Search
 
 " The line numbers when 'numbers' is set
-hi LineNr           ctermfg=yellow cterm=none guifg=brown
+hi LineNr           ctermfg=yellow cterm=NONE guifg=brown
 hi LineNr           guifg=brown
 
 " closed folds
-hi Folded           ctermbg=none ctermfg=cyan 
-hi Folded           guifg=blue guibg=white gui=bold
+hi Folded           ctermbg=NONE ctermfg=cyan 
+hi Folded           guifg=blue guibg=NONE gui=bold
 " fold column indicator
-hi FoldColumn       ctermbg=none ctermfg=cyan 
-hi FoldColumn       guifg=cyan guibg=white gui=bold
+hi FoldColumn       ctermbg=NONE ctermfg=cyan 
+hi FoldColumn       guifg=cyan guibg=NONE gui=bold
 
 " Tab bar colours
 "
 " inactive tabs
-hi TabLine          ctermbg=none ctermfg=white
+hi TabLine          ctermbg=NONE ctermfg=white
 " active tab
 hi TabLineSel       cterm=bold
 " blank space in the tab bar
@@ -114,7 +113,7 @@ hi PmenuSel         ctermbg=lightgreen cterm=underline
 hi PmenuSel         guibg=darkgreen gui=underline
 
 " Directory browsers dir colours
-hi Directory        ctermfg=magenta cterm=none guifg=magenta 
+hi Directory        ctermfg=magenta cterm=NONE guifg=magenta 
 
 " GUI scrollbar colour
 "hi Scrollbar       x
@@ -123,121 +122,131 @@ hi Directory        ctermfg=magenta cterm=none guifg=magenta
 " GUI tool tips
 "hi Tooltip         x
 
+" hilight for control charactors
 hi SpecialKey       ctermfg=yellow cterm=bold
-hi MatchParen       ctermfg=none ctermbg=none cterm=bold 
-hi MatchParen       guifg=black guibg=white gui=bold
-
+" hilight for sm/mps
+hi MatchParen       ctermfg=NONE ctermbg=NONE cterm=bold 
+hi MatchParen       guifg=NONE guibg=NONE gui=bold
 
 "syntax highlighting stuff
 
 if !exists("g:none_usecolorcomments")
-    hi Comment      ctermfg=none ctermbg=none 
-    hi Comment      guifg=black guibg=white gui=none
+    hi Comment      ctermfg=NONE ctermbg=NONE 
+    hi Comment      guifg=NONE guibg=NONE gui=NONE
 else
-    hi Comment      ctermfg=green  ctermbg=none 
-    hi Comment      guifg=seagreen guibg=white gui=bold
+    hi Comment      ctermfg=green  ctermbg=NONE 
+    hi Comment      guifg=seagreen guibg=NONE gui=bold
 endif
-hi Constant     ctermfg=none ctermbg=none cterm=none guifg=black guibg=white gui=none
+hi Constant     ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
 " various constant symbols
     if !exists("g:none_usecolorstrings")
-        hi Character    ctermfg=none ctermbg=none cterm=none 
-        hi Character    guifg=black guibg=white gui=none
-        hi String       ctermfg=none ctermbg=none cterm=none 
-        hi String       guifg=black guibg=white gui=none
+        hi Character    ctermfg=NONE ctermbg=NONE cterm=NONE 
+        hi Character    guifg=NONE guibg=NONE gui=NONE
+        hi String       ctermfg=NONE ctermbg=NONE cterm=NONE 
+        hi String       guifg=NONE guibg=NONE gui=NONE
     else
-        hi Character    ctermfg=brown ctermbg=none cterm=none 
-        hi Character    guifg=brown guibg=white gui=none
-        hi String       ctermfg=brown ctermbg=none cterm=none 
-        hi String       guifg=brown guibg=white gui=none
+        hi Character    ctermfg=brown ctermbg=NONE cterm=NONE 
+        hi Character    guifg=brown guibg=NONE gui=NONE
+        hi String       ctermfg=brown ctermbg=NONE cterm=NONE 
+        hi String       guifg=brown guibg=NONE gui=NONE
     endif
-    hi Number       ctermfg=none ctermbg=none cterm=none 
-    hi Number       guifg=black guibg=white gui=none
-    hi Boolean      ctermfg=none ctermbg=none cterm=none 
-    hi Boolean      guifg=black guibg=white gui=none
-    hi Float        ctermfg=none ctermbg=none cterm=none 
-    hi Float        guifg=black guibg=white gui=none
-hi Identifier       ctermfg=none ctermbg=none cterm=none 
-hi Identifier       guifg=black guibg=white gui=none
-hi Function         ctermfg=none ctermbg=none cterm=none 
-hi Function         guifg=black guibg=white gui=none
-hi Statement        ctermfg=none ctermbg=none cterm=none 
-hi Statement        guifg=black guibg=white gui=none
+    hi Number       ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Number       guifg=NONE guibg=NONE gui=NONE
+    hi Boolean      ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Boolean      guifg=NONE guibg=NONE gui=NONE
+    hi Float        ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Float        guifg=NONE guibg=NONE gui=NONE
+hi Identifier       ctermfg=NONE ctermbg=NONE cterm=NONE 
+hi Identifier       guifg=NONE guibg=NONE gui=NONE
+hi Function         ctermfg=NONE ctermbg=NONE cterm=NONE 
+hi Function         guifg=NONE guibg=NONE gui=NONE
+hi Statement        ctermfg=NONE ctermbg=NONE cterm=NONE 
+hi Statement        guifg=NONE guibg=NONE gui=NONE
+if !exists("g:none_usecolorwords")
     " if, then, else, endif, switch, etc
-    hi Conditional  ctermfg=none ctermbg=none cterm=none 
-    hi Conditional  guifg=black guibg=white gui=none
+    hi Conditional  ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Conditional  guifg=NONE guibg=NONE gui=bold
     " for, do, while, etc
-    hi Repeat       ctermfg=none ctermbg=none cterm=none 
-    hi Repeat       guifg=black guibg=white gui=none
-    " case, default, etc
-    hi Label        ctermfg=none ctermbg=none cterm=none 
-    hi Label        guifg=black guibg=white gui=none
-    " sizeof, +, *, etc
-    hi Operator     ctermfg=none ctermbg=none cterm=none 
-    hi Operator     guifg=black guibg=white gui=none
-    " any other keyword
-    hi Keyword      ctermfg=none ctermbg=none cterm=none 
-    hi Keyword      guifg=black guibg=white gui=none
+    hi Repeat       ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Repeat       guifg=NONE guibg=NONE gui=NONE
     " try, catch, throw, etc
-    hi Exception    ctermfg=none ctermbg=none cterm=none 
-    hi Exception    guifg=black guibg=white gui=none
-hi PreProc          ctermfg=none ctermbg=none cterm=none 
-hi PreProc          guifg=black guibg=white gui=none
+    hi Exception    ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Exception    guifg=NONE guibg=NONE gui=NONE
+else
+    hi Conditional  ctermfg=yellow ctermbg=NONE cterm=NONE 
+    hi Conditional  guifg=darkred guibg=NONE gui=bold
+    hi Repeat       ctermfg=yellow ctermbg=NONE cterm=NONE 
+    hi Repeat       guifg=darkred guibg=NONE gui=bold
+    hi Exception    ctermfg=yellow ctermbg=NONE cterm=NONE 
+    hi Exception    guifg=darkred guibg=NONE gui=bold
+endif
+" case, default, label:, etc
+    hi Label        ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Label        guifg=NONE guibg=NONE gui=NONE
+    " sizeof, +, *, etc
+    hi Operator     ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Operator     guifg=NONE guibg=NONE gui=NONE
+    " any other keyword
+    hi Keyword      ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Keyword      guifg=NONE guibg=NONE gui=NONE
+hi PreProc          ctermfg=NONE ctermbg=NONE cterm=NONE 
+hi PreProc          guifg=NONE guibg=NONE gui=NONE
     " #include, etc
     if !exists("g:none_usecolorimports")
-        hi Include                  ctermfg=none ctermbg=none 
-        hi Include                  guifg=black guibg=white gui=none
+        hi Include                  ctermfg=NONE ctermbg=NONE 
+        hi Include                  guifg=NONE guibg=NONE gui=NONE
     else
-        hi Include                  ctermfg=blue ctermbg=none 
-        hi Include                  guifg=blue guibg=white gui=bold
+        hi Include                  ctermfg=blue ctermbg=NONE 
+        hi Include                  guifg=blue guibg=NONE gui=bold
         " A few language specific things
         hi cIncluded                ctermfg=brown guifg=brown
         hi pythonPreCondit          ctermfg=blue guifg=blue gui=bold
         hi perlStatementInclude     ctermfg=blue guifg=blue gui=bold
     endif
     " #define, etc
-    hi Define       ctermfg=none ctermbg=none cterm=none 
-    hi Define       guifg=black guibg=white gui=none
-    hi Macro        ctermfg=none ctermbg=none cterm=none 
-    hi Macro        guifg=black guibg=white gui=none
+    hi Define       ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Define       guifg=NONE guibg=NONE gui=NONE
+    hi Macro        ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Macro        guifg=NONE guibg=NONE gui=NONE
     " #if, #else, #endif, etc
-    hi PreCondit    ctermfg=none ctermbg=none cterm=none 
-    hi PreCondit    guifg=black guibg=white gui=none
+    hi PreCondit    ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi PreCondit    guifg=NONE guibg=NONE gui=NONE
 if !exists("g:none_usestyles")
-    hi Type     ctermfg=none ctermbg=none 
-    hi Type     guifg=black guibg=white gui=none
+    hi Type     ctermfg=NONE ctermbg=NONE 
+    hi Type     guifg=NONE guibg=NONE gui=NONE
         " static, register, volatile, etc
-        hi StorageClass     ctermfg=none ctermbg=none 
-        hi StorageClass     guifg=black guibg=white gui=none
+        hi StorageClass     ctermfg=NONE ctermbg=NONE 
+        hi StorageClass     guifg=NONE guibg=NONE gui=NONE
 else
-    hi Type     ctermfg=none ctermbg=none cterm=underline
-    hi Type     guifg=black guibg=white gui=underline
+    hi Type     ctermfg=NONE ctermbg=NONE cterm=underline
+    hi Type     guifg=NONE guibg=NONE gui=underline
         " static, register, volatile, etc
-        hi StorageClass     ctermfg=none ctermbg=none cterm=bold
-        hi StorageClass     guifg=black guibg=white gui=bold
+        hi StorageClass     ctermfg=NONE ctermbg=NONE cterm=bold
+        hi StorageClass     guifg=NONE guibg=NONE gui=bold
 endif
         " struct, union, enum, etc
-        hi Structure        ctermfg=none ctermbg=none 
-        hi Structure        guifg=black guibg=white gui=none
-        hi Typedef          ctermfg=none ctermbg=none 
-        hi Typedef          guifg=black guibg=white gui=none
-hi Special          ctermfg=none ctermbg=none cterm=none 
-hi Special          guifg=black guibg=white gui=none
-    hi SpecialChar  ctermfg=none ctermbg=none cterm=none 
-    hi SpecialChar  guifg=black guibg=white gui=none
+        hi Structure        ctermfg=NONE ctermbg=NONE 
+        hi Structure        guifg=NONE guibg=NONE gui=NONE
+        hi Typedef          ctermfg=NONE ctermbg=NONE 
+        hi Typedef          guifg=NONE guibg=NONE gui=NONE
+hi Special          ctermfg=NONE ctermbg=NONE cterm=NONE 
+hi Special          guifg=NONE guibg=NONE gui=NONE
+    hi SpecialChar  ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi SpecialChar  guifg=NONE guibg=NONE gui=NONE
     " things you can CTRL-} on
-    hi Tag          ctermfg=none ctermbg=none cterm=none 
-    hi Tag          guifg=black guibg=white gui=none
-    hi Delimiter    ctermfg=none ctermbg=none cterm=none 
-    hi Delimiter    guifg=black guibg=white gui=none
-    hi Debug        ctermfg=none ctermbg=none cterm=none 
-    hi Debug        guifg=black guibg=white gui=none
-"hi Underlined      ctermfg=none ctermbg=none cterm=none 
-"hi Underlined      guifg=black guibg=white gui=none
-"hi Ignore          ctermfg=none ctermbg=none cterm=none 
-"hi Ignore          guifg=black guibg=white gui=none
-hi Error            ctermfg=red ctermbg=none 
-hi Error            guifg=red guibg=white gui=bold
-hi Todo             ctermfg=none ctermbg=none cterm=bold 
-hi Todo             guifg=black guibg=white gui=bold
+    hi Tag          ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Tag          guifg=NONE guibg=NONE gui=NONE
+    hi Delimiter    ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Delimiter    guifg=NONE guibg=NONE gui=NONE
+    hi Debug        ctermfg=NONE ctermbg=NONE cterm=NONE 
+    hi Debug        guifg=NONE guibg=NONE gui=NONE
+"hi Underlined      ctermfg=NONE ctermbg=NONE cterm=NONE 
+"hi Underlined      guifg=NONE guibg=NONE gui=NONE
+"hi Ignore          ctermfg=NONE ctermbg=NONE cterm=NONE 
+"hi Ignore          guifg=NONE guibg=NONE gui=NONE
+hi Error            ctermfg=red ctermbg=NONE 
+hi Error            guifg=red guibg=NONE gui=bold
+hi Todo             ctermfg=NONE ctermbg=NONE cterm=bold 
+hi Todo             guifg=NONE guibg=NONE gui=bold
 
 

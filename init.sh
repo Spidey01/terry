@@ -29,7 +29,6 @@ fi
 
 ~/sh/startup-sound.sh &
 bbkeys &
-dcopserver &
 
 fbpanel -p tray &
 fbpanel -p pager &

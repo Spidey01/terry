@@ -899,6 +899,7 @@ endfunction
 	" make variants that do auto correction
 	nnoremap [Z [s1z=
 	nnoremap ]Z ]s1z=
+	nnoremap Z= 1z=
 
 	" toggle spelling highlights on/off
 	nnoremap <leader>Z :set hl&<cr>

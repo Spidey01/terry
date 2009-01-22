@@ -37,8 +37,10 @@ gkrellm &
 
 urxvt -title ${USER}@`hostname -s` -e screen -U &
 
-pidgin &
-psi &
-xchat --minimize=2 &
+if [ ! -z "`ifconfig | grep -v lo0 | grep UP`" ]; then
+    pidgin &
+    psi &
+    xchat --minimize=2 &
+fi
 
 blackbox

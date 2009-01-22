@@ -330,7 +330,7 @@
 		if has("folding")
 			setl foldmethod=indent
 		endif
-		set fo+=tqn
+		set fo+=tcrqn
 		set autoindent
 		" fixes gq from using c-keyword based indentation
 		set cinwords=""
@@ -465,6 +465,7 @@
 	function! CFileHandler()
 		call PreHandlerHook()
 		
+		set formatoptions+=tcroqn
 		setl tabstop=8 shiftwidth=8 noexpandtab
 		if has("folding")
 			setl foldmethod=syntax 
@@ -499,6 +500,7 @@
 	function! CXXFileHandler()
 		call PreHandlerHook()
 
+		set formatoptions+=tcroqn
 		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
 			setl foldmethod=syntax 
@@ -556,6 +558,7 @@
 	function! JavaFileHandler()
 		call PreHandlerHook()
 
+		set formatoptions+=tcroqn
 		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
 			setl foldmethod=indent
@@ -592,6 +595,7 @@
 	function! PerlFileHandler()
 		call PreHandlerHook()
 
+		set formatoptions+=tcrqn
 		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
 		endif

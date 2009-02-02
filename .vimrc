@@ -49,10 +49,12 @@
 	set noexrc
 	" Set Vi compatiblity options
 	"
-	" v = don't update the line more then needed - like vi
+	" v = don't update the line more then needed          - like vi
 	" $ = place a $ at end of a change, instead of update - like vi
 	" y = . after a yank repeats the yank, not the insert - like vi
-	set cpoptions+=v$y
+	" r = makes . after / behave as in vi (vim way sucks  - like vi)
+	" u = undo behaves as in vi, use ^R to redo.
+	set cpoptions+=v$yru
 
 	" A list of 'filetype' that we want to kill spell for by default
 	"let s:kill_spell_for_ft = [ 'asm', 'help', 'scheme', 'java' ]

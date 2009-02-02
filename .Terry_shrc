@@ -6,7 +6,7 @@
 # $Revision$
 # $Author$
 #
-
+ 
 
 #
 # default file permissions -rw------- / drwx------
@@ -190,6 +190,7 @@ umask 077
     alias   igrep='grep -i'
     alias   limeric='fortune /usr/share/games/fortune/limerick'
     alias   move='mv -i'
+    alias   pd="perldoc"
     alias   pgr="$PAGER"
     #
     # Gee, it is so nice how *BSD lint's so often do the inverse

@@ -30,6 +30,7 @@ alias	ra="hsetroot -fill ~/Pictures/Wall_Papers/kernel-dream.jpg"
 alias	redalert=ra
 alias   nail="/usr/local/bin/mailx"
 alias   man-nail="man -M /usr/local/man mailx"
+alias   doom-hr='prboom -iwad doom2 -file /usr/local/share/doom/hr/hr.wad'
 
 # Our IP Address, doesn't work in older bourne shells
 MY_IP=$(ifconfig ath0 | grep 'inet' | awk '{print $2}')

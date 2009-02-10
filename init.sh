@@ -6,16 +6,11 @@
 # $Author$
 #
 
-#
-# override our locale environment
-#
-# locale related settings   (DEFAULT)
-TZ='Etc/UTC'; export TZ                 # my time zone
-LANG='en_US.UTF-8'; export LANG         # language.encoding
-# some programs require us to set LC_ALL manually as well.
-LC_ALL='en_US.UTF-8'; export LC_ALL
-MM_CHARSET='UTF-8'; export MM_CHARSET
 
+#
+# Force parsing of our current X resources file
+#
+xrdb -quiet ~/.Xresources
 
 #
 # launch a D-Bus channel for this session
@@ -25,7 +20,7 @@ which dbus-launch >/dev/null && if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
 fi
 
 
-~/sh/psetbg &
+~/sh/plsetbg &
 
 ~/sh/startup-sound.sh &
 bbkeys &

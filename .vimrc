@@ -971,7 +971,7 @@ endfunction
 		if &term == 'screen' && g:hostname == 'dixie' 
 			let g:CSApprox_loaded=1
 		" Other wise we likely want transparency, and CSApprox
-		elseif &term =~ '.term'  && &term != 'xterm'
+		else
 			let g:CSApprox_hook_none_post = 
 						\['hi Normal  ctermbg=NONE ctermfg=NONE',
 						\ 'hi NonText ctermbg=NONE ctermfg=NONE' ]
@@ -1025,6 +1025,5 @@ endfunction
 	iabbrev teh the
 	iabbrev swtich switch
  
-
 """"" !play }}}
 

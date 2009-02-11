@@ -34,7 +34,7 @@ urxvt -title ${USER}@`hostname -s` -e screen -U &
 
 if [ ! -z "`ifconfig | grep -v lo0 | grep UP`" ]; then
     pidgin &
-    psi &
+    #psi &
     xchat --minimize=2 &
 fi
 

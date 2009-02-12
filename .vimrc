@@ -450,7 +450,7 @@
 			setl foldmethod==indent
 		endif
 		" Ignore object files in filename completion
-		set wildignore+=.o
+		set wildignore+=*.o
 
 		call PostHandlerHook()
 	endfunction
@@ -481,7 +481,7 @@
 		endif
 
 		" Ignore object files in filename completion
-		set wildignore+=.o
+		set wildignore+=*.o
 
 		" allow doxygen highlighting
 		set syntax=c.doxygen
@@ -523,7 +523,7 @@
 		endif
 
 		" Ignore object files in filename completion
-		set wildignore+=.o
+		set wildignore+=*.o
 
 		call PostHandlerHook()
 	endfunction
@@ -568,7 +568,7 @@
 		endif
 
 		" Ignore class files in filename completion
-		set wildignore+=.class
+		set wildignore+=*.class
 
 		call PostHandlerHook()
 	endfunction
@@ -716,7 +716,7 @@
 		" fixes gq from using c-keyword based indentation
 		set cinwords=""
 		" skip filename completion on these suckers
-		set wildignore+=.aux,.log,ilg
+		set wildignore+=*.aux,*.log,*.ilg
 
 		call PostHandlerHook()
 	endfunction

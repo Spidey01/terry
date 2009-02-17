@@ -285,27 +285,6 @@ lj-post() {
     ${EDITOR} "${1:-/tmp}/lj-$$.post" || echo "$0: error?"
 }
 
-cvs-ci() {
-    # XXX some old bourne shells don't supprot local but those
-    # that I know don't, also don't have shell functions either!
-    #
-    local ECHOCMD=""
-    local CVSMSGF=`mktemp -t cvs-ci`
-
-    # some shells built in echo won't expand control char without -e
-    #
-    if [ "$isFreeBSD" -a "`basename $SHELL`" = 'sh' ] || \
-       [ "`basename $SHELL`" = "bash" ] ; then
-
-        ECHOCMD="echo -e \"$1\""
-    else
-        # a proper echo command is available
-        ECHOCMD="echo \"$1\""
-    fi
-    eval "$ECHOCMD" > "$CVSMSGF"
-    shift; echo XXX cvs commit -F "$CVSMSGF" "$@"
-    cvs commit -F "$CVSMSGF" "$@"
-}
 
 #
 # give a few fortune cookie and the current date/time on login

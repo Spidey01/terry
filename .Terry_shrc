@@ -278,6 +278,12 @@ new-script() {
     echo '#!/usr/bin/env' " $1\n\n" >> $2
 }
 
+# start new live journal post in editor
+# @params $1 = optional directory
+lj-post() {
+    ${EDITOR} "${1:-/tmp}/lj-$$.post" || echo "$0: error?"
+}
+
 #
 # give a few fortune cookie and the current date/time on login
 #

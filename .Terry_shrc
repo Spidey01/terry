@@ -257,7 +257,7 @@ umask 077
         # define fail safe aliases that should work on most systems
         #
         alias   ll='ls -l'
-        alias   la='la'
+        alias   la='ls -a'
     fi
 
 #

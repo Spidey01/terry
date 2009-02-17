@@ -303,7 +303,7 @@ cvs-ci() {
         ECHOCMD="echo \"$1\""
     fi
     eval "$ECHOCMD" > "$CVSMSGF"
-    cvs commit -F "$CVSMSG" "$@"
+    shift; cvs commit -F "$CVSMSGF" "$@"
 }
 
 #

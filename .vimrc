@@ -297,6 +297,7 @@
 		autocmd filetype vb  call VisualBasicFileHandler()
 "	XXX for use with other programs
 		autocmd BufNewFIle,BUfRead *.tmp call My_KNodeConfig()
+		autocmd filetype cvs,svn,git set autoindent
 	endif
 
 " !AUTOCMDS }}}

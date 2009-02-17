@@ -209,6 +209,7 @@ umask 077
     # useful aliases for various version control systems
     #
     alias cvs-st='cvs status | grep -i Status:'
+    # also see function `cvs-ci`
 
 #
 # define system specfic aliases for common commands
@@ -282,6 +283,27 @@ new-script() {
 # @params $1 = optional directory
 lj-post() {
     ${EDITOR} "${1:-/tmp}/lj-$$.post" || echo "$0: error?"
+}
+
+cvs-ci() {
+    # XXX some old bourne shells don't supprot local but those
+    # that I know don't, also don't have shell functions either!
+    #
+    local ECHOCMD=""
+    local CVSMSGF=`mktemp -t cvs-ci`
+
+    # some shells built in echo won't expand control char without -e
+    #
+    if [ "$isFreeBSD" -a "`basename $SHELL`" = 'sh' ] || \
+       [ "`basename $SHELL`" = "bash" ] ; then
+
+        ECHOCMD="echo -e \"$1\""
+    else
+        # a proper echo command is available
+        ECHOCMD="echo \"$1\""
+    fi
+    eval "$ECHOCMD" > "$CVSMSGF"
+    cvs commit -F "$CVSMSG" "$@"
 }
 
 #

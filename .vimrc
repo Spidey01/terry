@@ -286,6 +286,7 @@
 		autocmd BufNewFile,BufRead *.lua call LuaFileHandler()
 		autocmd filetype make call MakefileFileHandler()
 		autocmd filetype perl call PerlFileHandler()
+		autocmd filetype pod call PODFileHandler()
 		autocmd filetype php call PhpFileHandler()
 		autocmd filetype python call PythonFileHandler()
 		autocmd filetype ruby call RubyFileHandler()
@@ -604,6 +605,26 @@
 		setl tabstop=4 shiftwidth=4 expandtab
 		if has("folding")
 		endif
+
+		call PostHandlerHook()
+	endfunction
+
+	function! PODFileHandler()
+		call PreHandlerHook()
+
+		" insert abbreviations so we can use space to complete =directives
+		" with an arugment, and <cr> to complete =directives without any.
+		
+		" this allows our iab's to work
+		setl isk-=@
+		iab <buffer> =i =item
+		iab <buffer> =f =for
+		iab <buffer> =be =begin
+		iab <buffer> =ba =back<cr>
+		iab <buffer> =e =end
+		iab <buffer> =c =cut<cr>
+		iab <buffer> =p =pod<cr>
+		iab <buffer> =o =over
 
 		call PostHandlerHook()
 	endfunction

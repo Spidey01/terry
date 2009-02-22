@@ -38,5 +38,5 @@ if [ ! -z "`ifconfig | grep -v lo0 | grep UP`" ]; then
     xchat --minimize=2 &
 fi
 
-xkillname xconsole &
+~/sh/xkillname xconsole &
 blackbox

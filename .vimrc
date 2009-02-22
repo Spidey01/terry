@@ -616,7 +616,7 @@
 		" with an arugment, and <cr> to complete =directives without any.
 		
 		" this allows our iab's to work
-		setl isk-=@
+		setl isk+==
 		iab <buffer> =i =item
 		iab <buffer> =f =for
 		iab <buffer> =be =begin

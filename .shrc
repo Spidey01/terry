@@ -1,7 +1,4 @@
 #
-# $Revision$
-# $Author$
-#
 # .shrc - bourne shell startup file 
 #
 # This file will be used if the shell is invoked for interactive use and

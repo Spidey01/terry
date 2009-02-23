@@ -1,7 +1,6 @@
-" vim: set ff=unix ai 
-" si noet ts=4 sw=4 fdls=1 fdm=marker nowrap tw=0 sm mat=3 spell tags=$HOME/.vim/vimrc.tags :
+" vim: set ai noet ts=4 sw=4 fdls=1 fdm=marker sm tags=$HOME/.vim/vimrc.tags :
 "
-" Terry M Poulin personal vimrc file
+" Terry Matthew Poulin personal vimrc file
 "
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

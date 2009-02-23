@@ -2,8 +2,6 @@
 #
 # My personal X-Session initialization file.
 #
-# $Revision$
-# $Author$
 #
 
 

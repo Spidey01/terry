@@ -905,9 +905,9 @@ endfunction
 """" NEVER MAP THE BACKSPACE KEY OR A MODIFIER
 
 	" Use ";" as an alias for ":" -> it makes life so much easier
-	nnoremap ; :
+	"nnoremap ; :
 	" then make ":" behave like ";" would have behaved.
-	nnoremap : ;
+	"nnoremap : ;
 
 	" show more data when we ask for a line count
 	nnoremap <C-g> <C-g>2<C-g>

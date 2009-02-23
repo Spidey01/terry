@@ -888,16 +888,11 @@ endfunction
 " !FUNCTIONS }}}
 
 " *COMMANDS* {{{
-	" XXX you need to use gQ rather then Q to use these without the visual 
-	" interface being online.
 
 	" unconditionally edit file with :E, as in ed
-	" XXX looses <tab> completion of filename :-(
-	"com! E e!
+	cab E e!
 	" unconditionally exit vim with :Q, as in ed
-	com! Q q!
-	" and ablib for :qall as well
-	com! QALL qall!
+	cab Q q!
 
 	" :Command to view diffthis against the last save.
 	com! DiffOrig diffoff! | vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis

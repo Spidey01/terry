@@ -771,7 +771,7 @@
 
 			setl tabstop=2 shiftwidth=2 expandtab
 			if has("folding") 
-				setl foldmethod==indent
+				setl foldmethod=indent
 			endif
 
 			" define buffer local abbreviations to auto-capitalize keywords

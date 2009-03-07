@@ -305,7 +305,7 @@
 		" unconditionally edit file with :E, as in ed
 		cab E e!
 		" unconditionally exit vim with :Q, as in ed
-		cab Q q!
+		cab Q qall!
 
 		if exists("*strftime")
 			iabbrev insert_date <c-r>=strftime("%Y-%m-%d T%H:%M:%S %Z")<cr>

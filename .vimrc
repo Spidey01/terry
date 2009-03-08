@@ -361,6 +361,13 @@
 
 		" swap words under cursor with \xp or \gw (where \ = <leader>
 		noremap <silent> <leader>xp "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o><c-l> 
+
+		" allow a more natural style of line editing in :ex mode
+		:cnoremap <C-A> <Home>
+		:cnoremap <C-F> <Right>
+		:cnoremap <C-B> <Left>
+		:cnoremap <Esc>b <S-Left>
+		:cnoremap <Esc>f <S-Right>
 	
 	" !MAPS }}}
 

@@ -37,4 +37,4 @@ if [ ! -z "`ifconfig | grep -v lo0 | grep UP`" ]; then
 fi
 
 ~/sh/xkillname xconsole &
-blackbox
+fvwm

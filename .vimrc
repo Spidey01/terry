@@ -201,7 +201,7 @@
 
 		" Show status bar with file name e.t.c. 
 		" 0 = never, 1 = if >= 2 window, 2 = always
-		set laststatus=2
+		set laststatus=1
 
 		"set :command line height in lines
 		set cmdheight=1

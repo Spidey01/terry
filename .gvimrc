@@ -42,7 +42,8 @@ endif
 " X11: Specifics for GVim
 if has("x11")
 	"I love this font!!
-	set guifont=Terminus\ 14
+	"set guifont=Terminus\ 14
+	set guifont=Droid\ Sans\ Mono\ 12
 	"set lines=40
 	"set columns=80
 

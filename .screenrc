@@ -20,7 +20,7 @@ hardstatus string "%{= kY}[%H]%{w}[%= %{=kc}%?%-Lw%?%{r}[%{c}%t%?%?%{r}]%{c}%?%+
 escape ^Jj
 defflow off
 
-
+screen -t irc		0	weechat-curses
 screen -t aux		2
 screen -t main		1
 

@@ -33,7 +33,7 @@ urxvt -title ${USER}@`hostname -s` -e screen -U &
 if [ ! -z "`ifconfig | grep -v lo0 | grep UP`" ]; then
     pidgin &
     #psi &
-    xchat --minimize=2 &
+    #xchat --minimize=2 &
 fi
 
 ~/sh/xkillname xconsole &

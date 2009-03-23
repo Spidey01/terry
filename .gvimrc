@@ -49,7 +49,9 @@ if has("x11")
 
 " WINDOWS: Specifics for GVim
 elseif has("win32")
-	set guifont=Fixedsys:h11:cANSI
+	if g:hostname == 'sal1600'
+		set guifont=Droid_Sans_Mono:h10:cANSI 
+	endif
 	set lines=25
 	set columns=80
 

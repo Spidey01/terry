@@ -46,11 +46,12 @@
 " XXX Note that plugin specific variables belong in |PLUGINS|
 
 	" a quick constant for hostnames...
-	if hostname() == 'dixie.launchmodem.com'
+	let g:Hostname = hostname()
+	if g:Hostname == 'dixie.launchmodem.com'
 		let g:hostname = 'dixie'
-	elseif hostname() == 'vectra.launchmodem.com'
+	elseif g:Hostname == 'vectra.launchmodem.com'
 		let g:hostname = 'vectra'
-	elseif hostname() == 'sal1600.lauchmodem.com'
+	elseif g:Hostname == 'sal1600.lauchmodem.com' || g:Hostname == 'SAL1600'
 		let g:hostname = 'sal1600'
 	else
 		" unknown host.

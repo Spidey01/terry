@@ -168,6 +168,7 @@
 		" Set spell checker language
 		if exists("+spell")
 			set spelllang=en_us,en_gb,de
+			set spellfile=~/.vim/wordlist.utf-8.add
 			set spell
 			" disable highlighting
 			" XXX see |MAPS| for a mapping to toggle this highlighting

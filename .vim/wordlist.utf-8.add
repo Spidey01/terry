@@ -1,0 +1,41 @@
+/encoding=utf-8
+/regions=en
+#
+# words that are valid (for me) but not found in Vi IMproved regular spell 
+# files for English.
+#
+#    #		Comment
+#    =		Case must match exactly.
+#    ?		Rare word.
+#    !		Bad (wrong) word.
+#
+'mech
+'mechs
+BattleMech
+BattleMech's
+BattleMechs
+Daishi's
+Daishi
+Davion 
+Davions 
+EOL
+FreeBSD
+Leftenant
+MechWarrior
+MechWarriors
+NetBSD
+OmniMech
+OmniMech's/!
+OmniMechs
+OpenBSD
+Vi IMproved/=
+linux
+mech
+mechs
+mysql
+rxvt
+unix
+blackbox
+mplayer
+FVWM 
+PHP

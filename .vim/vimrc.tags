@@ -1,17 +1,20 @@
+ABBREVIATIONS	$MYVIMRC	/" *ABBREVIATIONS* {{{$/
 AUTOCMDS	$MYVIMRC	/" *AUTOCMDS* {{{$/
 BINDS	$MYVIMRC	/" *BINDS* {{{$/
-BuiltIn	$MYVIMRC	/^" *BuiltIn* {{{$/
+BuiltIn	$MYVIMRC	/" *BuiltIn* {{{$/
 COMMANDS	$MYVIMRC	/" *COMMANDS* {{{$/
 CSApprox	$MYVIMRC	/" *CSApprox* {{{$/
 FORMATS	$MYVIMRC	/" *FORMATS* {{{$/
 FUNCTIONS	$MYVIMRC	/" *FUNCTIONS* {{{$/
 GENERAL	$MYVIMRC	/" *GENERAL* {{{$/
 HANDLERS	$MYVIMRC	/" *HANDLERS* {{{$/
+HELPER	$MYVIMRC	/" *HELPER* {{{$/
 INTERFACE	$MYVIMRC	/" *INTERFACE* {{{$/
-MAPS	$MYVIMRC	/^" *MAPS* {{{$/
+MACROS	$MYVIMRC	/" *MACROS* {{{$/
+MAPS	$MYVIMRC	/" *MAPS* {{{$/
 NERDTree	$MYVIMRC	/*NERDTree* {{{$/
 PLUGINS	$MYVIMRC	/" *PLUGINS* {{{$/
 SETTINGS	$MYVIMRC	/^" *SETTINGS* {{{$/
-Taglist	$MYVIMRC	/^" *Taglist* {{{$/
+Taglist	$MYVIMRC	/" *Taglist* {{{$/
 VARIABLES	$MYVIMRC	/" *VARIABLES* {{{$/
 play	$MYVIMRC	/" *play* {{{$/

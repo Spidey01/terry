@@ -66,7 +66,7 @@
 	" Also skip loading .exrc and friends in the CWD.
 	set nocompatible
 	set noexrc
-	" Set Vi compatiblity options
+	" Set Vi compatibility options
 	"
 	" v = don't update the line more then needed          - like vi
 	" $ = place a $ at end of a change, instead of update - like vi
@@ -81,7 +81,7 @@
 
 	" *GENERAL* {{{
 
-		" Indentation settings (explictly)
+		" Indentation settings (explicitly)
 		set tabstop=8
 		set shiftwidth=8
 		set noexpandtab
@@ -99,7 +99,7 @@
 		endif
 
 
-		" this also makes verticly split windows more READIBLE.
+		" this also makes vertically split windows more READABLE.
 		" -> Thanks godlygeek
 		set wrap
 
@@ -706,14 +706,14 @@
 			call PreHandlerHook()
 
 			" insert abbreviations so we can use space to complete =directives
-			" with an arugment, and <cr> to complete =directives without any.
+			" with an argument, and <cr> to complete =directives without any.
 			
 			" this allows our iab's to work
 			setl isk+==
 			iab <buffer> =i =item
 			iab <buffer> =f =for
 			iab <buffer> =be =begin
-			iab <buffer> =ba =back<cr>
+			iab <buffer> =ba =back
 			iab <buffer> =e =end
 			iab <buffer> =c =cut<cr>
 			iab <buffer> =p =pod<cr>

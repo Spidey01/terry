@@ -1,0 +1,24 @@
+"Terry M. Poulin - .exrc file for nvi
+" vim: set ft= :
+
+" source vi compatible stuff
+source ~/.exrc
+
+
+set matchtime=3
+set ruler
+" found in some versions of vi
+set showmode
+" perform filename completion in :ex prompt
+set filec=
+
+
+" make ctrl+r redo the last thing; this is needed in nvi.
+" traditional vi allows the remap, but it would create confusion!
+map  .
+
+" alias gg to 1G, a logical addition from Vim
+map gg 1G
+
+" make a ZQ command, like vim -> to augment ZZ
+map ZQ :q!

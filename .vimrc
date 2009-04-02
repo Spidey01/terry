@@ -940,6 +940,11 @@
 	" *CSApprox* {{{
 	" Colour Scheme Approximator for console
 
+		" skip if the terminal can't handle it
+		if &t_Co < 88
+			let g:CSApprox_loaded=1
+		endif
+
 		if !has("gui")	" only load plugin if gui support is available.
 			let g:CSApprox_loaded=1
 		else

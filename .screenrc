@@ -22,6 +22,7 @@ defflow off
 
 screen -t irc		0	weechat-curses
 screen -t aux		2
+screen -t mp3		3
 screen -t main		1
 
 # make ctrl-j g< redisplay the last message

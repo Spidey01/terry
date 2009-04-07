@@ -135,7 +135,7 @@
 
 
 		" Allow names with some spaces in path, like when using gf
-		set isfname+=32
+		"set isfname+=32
 
 
 		" How to display tabs when list is on and expand tab is off
@@ -150,7 +150,6 @@
 			set t_Co=88
 		elseif &term == 'screen'
 			" Screen does ok at simulating 256col on my systems.
-			" but fouls up CSApprox.
 			set t_Co=256
 		endif
 
@@ -365,11 +364,12 @@
 		noremap <silent> <leader>xp "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o><c-l> 
 
 		" allow a more natural style of line editing in :ex mode
-		:cnoremap <C-A> <Home>
-		:cnoremap <C-F> <Right>
-		:cnoremap <C-B> <Left>
-		:cnoremap <Esc>b <S-Left>
-		:cnoremap <Esc>f <S-Right>
+		cnoremap <C-A> <Home>
+		cnoremap <C-E> <End>
+		cnoremap <C-F> <Right>
+		cnoremap <C-B> <Left>
+		cnoremap <Esc>b <S-Left>
+		cnoremap <Esc>f <S-Right>
 	
 	" !MAPS }}}
 

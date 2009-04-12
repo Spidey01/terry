@@ -165,6 +165,8 @@ umask 077
             unsetopt beep
             # emacs bindings
             bindkey -e
+            # use vi ^W behaviour rather then emacs mode default
+            bindkey "^W" vi-backward-kill-word
             zstyle :compinstall filename "$HOME/.zshrc"
             autoload -Uz compinit
             compinit

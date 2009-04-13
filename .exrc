@@ -8,3 +8,6 @@ set autoprint
 set noerrorbells noflash
 set ignorecase
 set wrapscan
+
+" make Y behave more logically
+nnoremap Y y$

@@ -338,6 +338,9 @@
 		" then make ":" behave like ";" would have behaved.
 		"nnoremap : ;
 
+		" make Y behave more logically
+		nnoremap Y y$
+
 		" show more data when we ask for a line count
 		nnoremap <C-g> <C-g>2<C-g>
 

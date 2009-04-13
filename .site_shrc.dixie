@@ -38,7 +38,7 @@ export MY_IP
 
 
 WWW_HOME="www.google.com"
-BROWSER="linux-opera --remote 'openURL(%s, new-page)':links -g %s:firefox3 %s:lynx -force_html %s"; export BROWSER 
+BROWSER="firefox3 %s:links -g %s:lynx -force_html %s:linux-opera --remote 'openURL(%s, new-page)':"; export BROWSER 
 
 PYTHONPATH="${HOME}/code/Python/modules"; export PYTHONPATH
 RUBYLIB="${HOME}/code/Ruby/modules"; export RUBYLIB

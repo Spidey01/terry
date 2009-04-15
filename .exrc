@@ -10,4 +10,4 @@ set ignorecase
 set wrapscan
 
 " make Y behave more logically
-nnoremap Y y$
+map Y y$

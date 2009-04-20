@@ -182,27 +182,27 @@ umask 077
 # define some standard aliases for programs, should be fairly portable where
 # said programs are installed.
 #
-    alias   bye="echo 'bye'; exit"
-    [ ! -z "$isFreeBSD" ] && alias bc='bc -q'
+    alias   bye='echo "bye"; exit'
+    [ -n "$isFreeBSD" ] && alias bc='bc -q'
     alias   cls='clear'
     alias   copy='cp -i'
     alias   del='rm -i'
     alias   igrep='grep -i'
     alias   limeric='fortune /usr/share/games/fortune/limerick'
     alias   move='mv -i'
-    alias   pd="perldoc"
-    alias   pgr="$PAGER"
+    alias   pd='perldoc'
+    alias   pgr='$PAGER'
     #
     # Gee, it is so nice how *BSD lint's so often do the inverse
     # of SUSv2 when given a standard switch.
     #
-    if [ ! -z "$isFreeBSD" ]; then
+    if [ -n "$isFreeBSD" ]; then
         alias   lint='lint -a -aa -ceghnuxz'
-    elif [ ! -z "$isNetBSD" ]; then
+    elif [ -n "$isNetBSD" ]; then
         echo "Make an alias for lint"
-    elif [ ! -z "$isOpenBSD" ]; then
+    elif [ -n "$isOpenBSD" ]; then
         alias    lint='lint -ceghnuxz'
-    elif [ ! -z "$isLinux" ]; then
+    elif [ -n "$isLinux" ]; then
         echo "Make an alias for lint"
     fi
     #

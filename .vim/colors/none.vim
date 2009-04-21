@@ -250,3 +250,7 @@ hi Todo             ctermfg=NONE ctermbg=NONE cterm=bold
 hi Todo             guifg=NONE guibg=NONE gui=bold
 
 
+" Some colours for Dr Chips manpageview plugin
+hi manTitle             ctermfg=magenta 
+hi manSectionTitle      ctermfg=magenta 
+hi manReference         ctermfg=yellow

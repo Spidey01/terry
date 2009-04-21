@@ -325,6 +325,9 @@
 
 	" *COMMANDS* {{{
 
+		" Display the syn/hi group of the word under the cursor
+		com! SynID echo synIDattr(synID(line("."), col("."), 1), "name") 
+
 		" :Command to view diffthis against the last save.
 		com! DiffOrig diffoff! | vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 

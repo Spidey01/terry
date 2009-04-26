@@ -16,7 +16,7 @@ xrdb -quiet ~/.Xresources
 #
 # Fancy shadows and things
 #
-xcompmgr -CfFns &
+xcompmgr -CfFc &
 
 #
 # launch a D-Bus channel for this session
@@ -58,7 +58,7 @@ fi
 #
 ~/sh/xkillname xconsole &
 ~/sh/startup-sound.sh &
-transset-df -n "Terry@dixie" .9
+(sleep 25; transset-df -n "Terry@dixie" .9)&
 
 # start the big kahuna
 fvwm

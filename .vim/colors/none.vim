@@ -98,10 +98,14 @@ hi FoldColumn       guifg=cyan guibg=NONE gui=bold
 "
 " inactive tabs
 hi TabLine          ctermbg=NONE ctermfg=white
+hi TabLine          guibg=NONE guifg=black guibg=#00ced1
 " active tab
 hi TabLineSel       cterm=bold
+hi TabLineSel       gui=bold guibg=#ce8639 guifg=black
 " blank space in the tab bar
 hi TabLineFill      cterm=underline
+hi TabLineFill      gui=underline guibg=#00ced1
+
 
 " search highlights when 'hls' is set
 "hi Search          

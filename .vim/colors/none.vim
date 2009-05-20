@@ -39,7 +39,7 @@ endif
 let g:colors_name = "none"
 
 " normal text
-"hi Normal          
+hi Normal           guifg=black     guibg=white
 " ~, @ at the end of the window, characters from showbreak, etc
 hi NonText          ctermfg=blue 
 hi NoneText         guifg=blue 
@@ -72,7 +72,7 @@ endif
 "hi StatusLineNC    guifg=gray      guibg=#008080
 if &bg == "light"
     hi StatusLine       ctermfg=white   ctermbg=black 
-    hi StatusLine       guibg=#ffffff   guifg=#ce8639
+    hi StatusLine       guibg=black     guifg=#ce8639
     hi StatusLineNC     ctermfg=black   ctermbg=white 
     hi StatusLineNC     guifg=#008080   guibg=#fff5ee
 elseif &bg == "dark"

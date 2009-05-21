@@ -20,16 +20,8 @@ let g:none_usestyles         = 1
 let g:none_usecolorcomments  = 1
 let g:none_usecolorimports   = 1
 
-"Enable syntax highlighting
-syntax on
-
 " Kill the dang visual bell if GUI is running!!!!
 set novisualbell
-
-
-" autoselect, console dialogs, tabpages, icon, menubar, show grey menu
-" items, tearoff menu items, Toolbar, always right scrollbar.
-set guioptions=aceimgtTr
 
 " Right click menu lists correction options when spell is set
 set mousemodel=popup_setpos

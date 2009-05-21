@@ -75,6 +75,18 @@
 	" u = undo behaves as in vi, use ^R to redo.
 	set cpoptions+=v$yru
 
+	" Set GUI Options options before loading other stuff
+	"
+	" c = use console dialogs for simple choices
+	" i = use Vim icon if available
+	" m = use menu bar
+	set guioptions=cgim
+
+	" autoselect, console dialogs, tabpages, icon, menubar, show grey menu
+	" items, tearoff menu items, Toolbar, always right scrollbar.
+	"set guioptions=aceimgtTrM
+	
+
 	" Kill visual bell
 	set visualbell t_vb=
 
@@ -281,6 +293,7 @@
 			autocmd filetype nroff call TroffFileHandler()
 			autocmd filetype vim call VimFileHanlder()
 			autocmd filetype vb  call VisualBasicFileHandler()
+			autocmd filetype xml call XMLFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
 		endif
@@ -377,6 +390,9 @@
 		cnoremap <Esc>b <S-Left>
 		cnoremap <Esc>f <S-Right>
 	
+		" make useless shift+tab do auto completion -- great for XML !
+		inoremap <S-Tab> <C-x><C-o>
+
 	" !MAPS }}}
 
 	" *FUNCTIONS* {{{
@@ -869,6 +885,14 @@
 		function! VisualBasicFileHandler()
 			call PreHandlerHook()
 
+
+			call PostHandlerHook()
+		endfunction
+
+		function! XMLFileHandler()
+			call PreHandlerHook()
+
+			set ts=2 sw=2 et
 
 			call PostHandlerHook()
 		endfunction

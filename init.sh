@@ -42,7 +42,7 @@ mkdir "${INIT_TMPDIR}/plsetbg"
 # Window dressings (docs, panels, applets, etc)
 #
 fbpanel -p tray &
-fbpanel -p pager &
+#fbpanel -p pager &
 gkrellm &
 
 #

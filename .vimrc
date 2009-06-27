@@ -846,10 +846,6 @@
 
 		function! TexFileHandler()
 			call PreHandlerHook()
-			if has("syntax") && &t_Co > 2 
-				syntax on
-				colo elflord
-			endif
 			setl fileformat=dos
 			setl tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 			" fixes gq from using c-keyword based indentation

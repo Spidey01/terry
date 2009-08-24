@@ -222,9 +222,9 @@ umask 077
 
         alias   cp='cp -ivRL'
         alias   mv='mv -v'
-        alias   ls='ls -FGH'
+        alias   ls='ls -FGHh'
         alias   ll='ls -laFhHo'
-        alias   la='ls -aFG'
+        alias   la='ls -aFGh'
         alias   rm='rm -d'
         alias   rmdir='rmdir -v'
 
@@ -243,22 +243,26 @@ umask 077
         # NetBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name 
         alias   exctags=ectags
     elif [ $isOpenBSD ]; then
+        # note, -h added in OpenBSD 3.4
         alias 	cp='cp -iRL'
-        alias 	ls='ls -F'
+        alias 	ls='ls -Fh'
         alias 	ll='ls -laFho'
-        alias 	la='ls -aF'
+        alias 	la='ls -aFh'
         alias 	rm='rm -d'
         # OpenBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name 
         alias   exctags=ectags
     elif [ $isLinux ]; then 
-        echo "No aliases set..."
+        alias 	ls='ls -Fh'
+        alias 	ll='ls -laFho'
+        alias 	la='ls -aFh'
     else
         echo "Using POSIX/SUS based generic UNIX aliases"
         #
         # define fail safe aliases that should work on most systems
         #
-        alias   ll='ls -l'
-        alias   la='ls -a'
+        alias   ls='ls -FH'
+        alias   ll='ls -laFHo'
+        alias   la='ls -aF'
     fi
 
 #

@@ -1,6 +1,4 @@
 #
-# $Id$
-#
 # My .screenrc file
 #
 
@@ -19,6 +17,10 @@ hardstatus string "%{= kY}[%H]%{w}[%= %{=kc}%?%-Lw%?%{r}[%{c}%t%?%?%{r}]%{c}%?%+
 # control J, interfers with both vim/emacs but nothing we can't live without.
 escape ^Jj
 defflow off
+
+# default scrollback buffers are 100 lines each. Let's try something more
+# practical for catching error messages without a type`script`
+defscrollback 10000
 
 screen -t irc		0	weechat-curses
 screen -t aux		2

@@ -40,23 +40,23 @@ umask 077
 
     # set my default editor, on order of preference and create aliases
     if [ -x /usr/local/bin/vim ]; then
-        EDITOR='/usr/local/bin/vim'; export EDITOR
-        VISUAL='/usr/local/bin/vim'; export VISUAL
-        #if [ -x /usr/local/bin/view ]; then
-            # I prefer Vim to Vi when 'view'ing a file
-        #   alias view='/usr/local/bin/view'
-        #fi
+        EDITOR='/usr/local/bin/vim'
+        VISUAL='/usr/local/bin/vim'
     elif [ -x /usr/bin/vi ]; then
-        EDITOR='/usr/bin/vi'; export EDITOR
-        VISUAL='/usr/bin/vi'; export VISUAL
+        EDITOR='/usr/bin/vi'
+        VISUAL='/usr/bin/vi'
         # on some systems where vim is not installed, I tend to type vim
         alias vim='/usr/bin/vi'
     elif [ -x /usr/bin/mg -o /usr/local/bin/mg ]; then
-        EDITOR="`which mg`"; export EDITOR
-        VISUAL="`which mg`"; export VISUAL
+        EDITOR="`which mg`"
+        VISUAL="`which mg`"
         # alias to normal uemacs name if it is available
         which uemacs > /dev/null && alias uemacs='mg'
+    else
+        EDITOR=/bin/ed
+        VISUAL=""
     fi
+    export EDITOR VISUAL
 
 #
 # Adaopt self based on OS
@@ -220,13 +220,12 @@ umask 077
         # make it comfortable!" approch...  Thus it needs it's own set of
         # aliases.
 
-        alias   cp='cp -ivRL'
-        alias   mv='mv -v'
         alias   ls='ls -FGHh'
         alias   ll='ls -laFhHo'
         alias   la='ls -aFGh'
-        alias   rm='rm -d'
-        alias   rmdir='rmdir -v'
+
+        # OpenBSD calls Exuberant Ctags 'ectags', allow both
+        alias   ectags=exctags
 
         # quick command to mute/unmute the sound system
         mute() {
@@ -240,16 +239,14 @@ umask 077
             mixer `echo $OLD_VOLUME` $*
         }
     elif [ $isNetBSD ]; then
-        # NetBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name 
+        # NetBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name
         alias   exctags=ectags
     elif [ $isOpenBSD ]; then
         # note, -h added in OpenBSD 3.4
-        alias 	cp='cp -iRL'
         alias 	ls='ls -Fh'
         alias 	ll='ls -laFho'
         alias 	la='ls -aFh'
-        alias 	rm='rm -d'
-        # OpenBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name 
+        # OpenBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name
         alias   exctags=ectags
     elif [ $isLinux ]; then 
         alias 	ls='ls -Fh'

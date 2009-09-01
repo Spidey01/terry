@@ -1,0 +1,17 @@
+" vim: set ft=vimperator:
+
+
+" Mappings
+
+" Options
+set focuscontent
+set showtabline=1
+set guioptions=TN
+
+" set the StatusLine to something more interesting
+hi StatusLine color:#ffffff; background-color:#ce8639
+
+" Abbreviations
+
+source! ~/.vimperatorrc.local
+

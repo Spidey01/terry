@@ -1,46 +1,44 @@
 # vim: set ft=sh :
 
-# TeX Live stuff
+#
+# update paths
+#
 PATH="/usr/local/texlive/2008/bin/i386-freebsd:$PATH:/usr/games:/usr/local/kde4/bin:/usr/local/bin:/usr/local/sbin:${HOME}/sh:${HOME}/bin:/usr/local/kde4/bin"; export PATH
 MANPATH="/usr/local/texlive/2008/texmf/doc/man:/usr/share/man:/usr/local/man:/usr/local/kde4/man:$MANPATH"; export MANPATH
 INFOPATH="/usr/local/texlive/2008/texmf/doc/info:/usr/share/info:/usr/local/info:/usr/local/kde4/info:$INFOPATH"; export INFOPATH
-
-# QT: needed in order to compile QT programs...
-QMAKESPEC='freebsd-g++'; export QMAKESPEC
-QTDIR='/usr/X11R6/include/'; export QTDIR
-
-# for NPM
-SVNROOT='https://npm.svn.sourceforge.net/svnroot/npm'; export SVNROOT
-
-# local CVS stuff
-CVSROOT=":ext:Terry@vectra:/srv/cvs/"; export CVSROOT
-CVS_RSH="/usr/bin/ssh"; export CVS_RSH
-
 
 # for sudo pkg_add
 #PACKAGEROOT="ftp://ftp13.us.FreeBSD.org/"; export PACKAGEROOT
 
 
-alias	paxhelp='paxhelp | pgr'
-alias	scp2v='scp -P 22222 -i ~/.ssh/vectra_rsa_key_nopw -rB'
-alias 	ssh2v='ssh -p 22222 Terry@vectra -i ~/.ssh/vectra_rsa_key_nopw'
-alias   ssh2npm='ssh -p 22 sas_spidey01@shell.sourceforge.net'
-alias 	gcj='gcj42'
-alias	ra="hsetroot -fill ~/Pictures/Wall_Papers/kernel-dream.jpg"
+# Our IP Address, doesn't work in older bourne shells
+MY_IP=$(ifconfig ath0 | grep 'inet' | awk '{print $2}')
+export MY_IP
+
+WWW_HOME="www.google.com"
+BROWSER="firefox3 %s:links -g %s:lynx -force_html %s:"; export BROWSER 
+
+#
+# variables for development stuffs
+#
+#PYTHONPATH="${HOME}/code/Python/modules"; export PYTHONPATH
+#RUBYLIB="${HOME}/code/Ruby/modules"; export RUBYLIB
+QMAKESPEC='freebsd-g++'; export QMAKESPEC
+QTDIR='/usr/X11R6/include/'; export QTDIR
+
+CVS_RSH="/usr/bin/ssh"; export CVS_RSH
+
+
+NAILRC="${HOME}/.nail/nailrc"; export NAILRC
+
+
+
+#
+# machine local aliases
+#
+alias	ra="hsetroot -fill ~/Pictures/Wall-Papers/kernel-dream.jpg"
 alias	redalert=ra
 alias   nail="/usr/local/bin/mailx"
 alias   man-nail="man -M /usr/local/man mailx"
 alias   doom-hr='prboom -iwad doom2 -file /usr/local/share/doom/hr/hr.wad'
 
-# Our IP Address, doesn't work in older bourne shells
-MY_IP=$(ifconfig ath0 | grep 'inet' | awk '{print $2}')
-export MY_IP
-
-
-WWW_HOME="www.google.com"
-BROWSER="firefox3 %s:links -g %s:lynx -force_html %s:linux-opera --remote 'openURL(%s, new-page)':"; export BROWSER 
-
-PYTHONPATH="${HOME}/code/Python/modules"; export PYTHONPATH
-RUBYLIB="${HOME}/code/Ruby/modules"; export RUBYLIB
-
-NAILRC="${HOME}/.nail/nailrc"; export NAILRC

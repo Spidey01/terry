@@ -11,6 +11,10 @@ set guioptions=TN
 " set the StatusLine to something more interesting
 hi StatusLine color:#ffffff; background-color:#ce8639
 
+" turn off visual bell AND beeping, by turning visual bell on, with no style
+set vb
+hi Bell display: none;
+
 " Abbreviations
 
 source! ~/.vimperatorrc.local

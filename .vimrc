@@ -238,8 +238,8 @@
 		" Vim command line completion lists possible matches
 		set wildmode=list:full
 
-		" Start with mouse support in all modes
-		set mouse=a
+		" Start with mouse support off for all modes
+		set mouse=
 		" Hide mouse pointer when typing in text
 		set mousehide
 

@@ -212,7 +212,7 @@ umask 077
     # also see function `cvs-ci`
 
 #
-# define system specfic aliases for common commands
+# define system specfic aliases for various commands
 #
     if [ $isFreeBSD ]; then
         # The FreeBSD system seems to have been made by people that have an "Hey
@@ -226,6 +226,9 @@ umask 077
 
         # OpenBSD calls Exuberant Ctags 'ectags', allow both
         alias   ectags=exctags
+
+        # system specific alias for displaying temps
+        alias   temp='sysctl hw.acpi.thermal | egrep "tz.*\.temperature"'
 
         # quick command to mute/unmute the sound system
         mute() {

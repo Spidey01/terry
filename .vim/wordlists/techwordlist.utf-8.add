@@ -4,34 +4,19 @@
 # words that are valid (for me) but not found in Vi IMproved regular spell 
 # files for English.
 #
+# this word file is for technical things
+#
 #    #		Comment
 #    =		Case must match exactly.
 #    ?		Rare word.
 #    !		Bad (wrong) word.
 #
-'mech
-'mechs
-BattleMech
-BattleMech's
-BattleMechs
-Daishi's
-Daishi
-Davion 
-Davions 
 EOL
 FreeBSD
-Leftenant
-MechWarrior
-MechWarriors
 NetBSD
-OmniMech
-OmniMech's/!
-OmniMechs
 OpenBSD
 Vi IMproved/=
 linux
-mech
-mechs
 mysql
 rxvt
 unix
@@ -39,20 +24,10 @@ blackbox
 mplayer
 FVWM 
 PHP
-flashbang
-flashbangs
-endian
-lol
-webmaster
-toolchain
-screenshot
-playlist
-passphrase
 netmask
 multithreading
 framebuffer
 VESA
-UTC
 UFS
 OpenSSH
 OpenSSL

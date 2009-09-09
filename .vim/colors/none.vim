@@ -256,6 +256,9 @@ hi Todo             ctermfg=NONE    ctermbg=NONE    cterm=bold
 hi Todo             guifg=NONE      guibg=NONE      gui=bold
 
 
+" for :help pages
+hi helpBar              cterm=bold
+hi helpStar             cterm=bold
 " Some colours for Dr Chips manpageview plugin
 hi manTitle             ctermfg=magenta 
 hi manSectionTitle      ctermfg=magenta 

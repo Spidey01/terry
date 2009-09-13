@@ -17,6 +17,7 @@ umask 077
 # whenever needed. At least this is more efficient then `hostname -s`...
 #
 HOSTNAME="`echo ${HOSTNAME:-\`hostname\`} | sed 's/\..*//'`"
+export HOSTNAME
 
 #
 # set my standard environment settings

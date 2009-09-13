@@ -15,7 +15,7 @@ INFOPATH="/usr/local/texlive/2008/texmf/doc/info:/usr/share/info:/usr/local/info
 MY_IP=$(ifconfig ath0 | grep 'inet' | awk '{print $2}')
 export MY_IP
 
-WWW_HOME="www.google.com"
+WWW_HOME="www.google.com"; export WWW_HOME
 BROWSER="firefox3 %s:links -g %s:lynx -force_html %s:"; export BROWSER 
 
 #

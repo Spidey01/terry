@@ -82,6 +82,7 @@ HOSTNAME="`echo ${HOSTNAME:-\`hostname\`} | sed 's/\..*//'`"
         'Linux')   isLinux=1;;
         'Unix')    isUnix=1;;
         'Interix') isUnix=1;;   # treat Microsoft SFU as generic UNIX
+        CYGWIN_NT*) isCygwin=1;;
     esac
 
 #
@@ -261,6 +262,8 @@ HOSTNAME="`echo ${HOSTNAME:-\`hostname\`} | sed 's/\..*//'`"
         alias 	ls='ls -Fh'
         alias 	ll='ls -laFho'
         alias 	la='ls -aFh'
+    elif [ $isCygwin ]; then
+        echo "Using Cygwin compatible aliases"
     else
         echo "Using POSIX/SUS based generic UNIX aliases"
         #

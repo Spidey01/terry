@@ -22,7 +22,14 @@ export HOSTNAME
 #
 # set my standard environment settings
 #
-    PATH="/bin:/sbin:/usr/bin:/usr/sbin"; export PATH
+
+    #
+    # the system should provide a suitable PATH for what we need here, 
+    # avoid setting it here if we can, and let the site_shrc worry later.
+    #
+    if [ -z "$PATH" ]; then
+        PATH="/bin:/sbin:/usr/bin:/usr/sbin"; export PATH
+    fi
 
     # my standard issue prompt  (overriden later, based on $SHELL)
     PS1="${USER}@${HOSTNAME}-$ "; export PS1

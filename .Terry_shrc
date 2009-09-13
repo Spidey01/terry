@@ -103,10 +103,13 @@ export HOSTNAME
             fi
             ;; # sh
         'bash') 
-            # prompt is: [ user@host:pwd ]$
-            PS1="[ \u@\h:\w ]$ "; export PS1
+            set bell-style none
             set -o emacs 
             set -o ignoreeof
+
+            # prompt is: [ user@host:pwd ]$
+            PS1="[ \u@\h:\w ]$ "; export PS1
+
             HISTFILE="${HOME}/.bash_history"
             ;; # bash
         'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')

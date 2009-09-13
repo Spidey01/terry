@@ -11,6 +11,12 @@
 #
 umask 077
 
+#
+# hostname -s is not portable enough for getting the short form of our
+# current machines hostname, so do this instead of invoking hostname -s
+# whenever needed. At least this is more efficient then `hostname -s`...
+#
+HOSTNAME="`echo ${HOSTNAME:-\`hostname\`} | sed 's/\..*//'`"
 
 #
 # set my standard environment settings
@@ -18,7 +24,7 @@ umask 077
     PATH="/bin:/sbin:/usr/bin:/usr/sbin"; export PATH
 
     # my standard issue prompt  (overriden later, based on $SHELL)
-    PS1="$USER@`hostname -s`-$ "; export PS1
+    PS1="${USER}@${HOSTNAME}-$ "; export PS1
 
     # locale related settings   (DEFAULT)
     TZ='Etc/UTC'; export TZ                 # my time zone
@@ -112,7 +118,7 @@ umask 077
                 # the pdksh won't accept $'\eEscape's and requires the
                 # old escape the escapes trick (see pdksh manual for PS1)
                 #
-                PS1="${USER}\e[1;37m@`hostname -s`\e[0;36m$\e[0;0m "
+                PS1="${USER}\e[1;37m@${HOSTNAME}\e[0;36m$\e[0;0m "
 
                 #
                 # make sure tab completion works (where possible)
@@ -129,7 +135,7 @@ umask 077
                 # line length right, but ksh88 might? Either way, ksh93
                 # doesn't mind if they are there.
                 #
-                PS1="${USER}$'\e[1;37m'@`hostname -s`$'\e[0;36m'$ $'\e[0;0m'"
+                PS1="${USER}$'\e[1;37m'@${HOSTNAME}$'\e[0;36m'$ $'\e[0;0m'"
 
                 #
                 # define a function (keybind) that we can use to map keys.

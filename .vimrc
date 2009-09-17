@@ -372,8 +372,10 @@
 		nnoremap <leader>Z :set hl&<cr>
 		nnoremap <leader>z :set hl+=B:none,P:none,R:none,L:none<cr>
 
-		" swap words under cursor with \xp or \gw (where \ = <leader>
-		noremap <silent> <leader>xp "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o><c-l> 
+		" swap words under cursor with \xp or gxp (where \ = <leader>
+		" note: effecting the registers is intentional!
+		nnoremap <silent> <leader>xp diWdWWP"2P
+		nmap gxp <leader>xp
 
 		" allow a more natural style of line editing in :ex mode
 		cnoremap <C-A> <Home>

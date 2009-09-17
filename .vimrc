@@ -45,18 +45,11 @@
 " *VARIABLES* {{{
 " XXX Note that plugin specific variables belong in |PLUGINS|
 
-	" a quick constant for hostnames...
+	" a quick pair of constants for hostnames...
+	" full hostname
 	let g:Hostname = hostname()
-	if g:Hostname == 'dixie.launchmodem.com'
-		let g:hostname = 'dixie'
-	elseif g:Hostname == 'vectra.launchmodem.com'
-		let g:hostname = 'vectra'
-	elseif g:Hostname == 'sal1600.lauchmodem.com' || g:Hostname == 'SAL1600'
-		let g:hostname = 'sal1600'
-	else
-		" unknown host.
-		let g:hostname = '?'
-	endif
+	" short hostname
+	let g:hostname = tolower(substitute(g:Hostname, '\..*', '', ''))
 	
 " !VARIABLES }}}
 

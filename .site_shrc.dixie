@@ -1,14 +1,19 @@
 # vim: set ft=sh :
 
 #
+# Setup the locale settings for this system. Note that some programs
+# require us to set LC_ALL manually as well as LANG.
+#
+LANG='en_US.UTF-8'; export LANG
+LC_ALL='en_US.UTF-8'; export LC_ALL
+MM_CHARSET='UTF-8'; export MM_CHARSET
+
+#
 # update paths
 #
 PATH="/usr/local/texlive/2008/bin/i386-freebsd:$PATH:/usr/games:/usr/local/kde4/bin:/usr/local/bin:/usr/local/sbin:${HOME}/sh:${HOME}/bin:/usr/local/kde4/bin"; export PATH
 MANPATH="/usr/local/texlive/2008/texmf/doc/man:/usr/share/man:/usr/local/man:/usr/local/kde4/man:$MANPATH"; export MANPATH
 INFOPATH="/usr/local/texlive/2008/texmf/doc/info:/usr/share/info:/usr/local/info:/usr/local/kde4/info:$INFOPATH"; export INFOPATH
-
-# for sudo pkg_add
-#PACKAGEROOT="ftp://ftp13.us.FreeBSD.org/"; export PACKAGEROOT
 
 
 # Our IP Address, doesn't work in older bourne shells
@@ -17,6 +22,7 @@ export MY_IP
 
 WWW_HOME="www.google.com"; export WWW_HOME
 BROWSER="firefox3 %s:links -g %s:lynx -force_html %s:"; export BROWSER 
+
 
 #
 # variables for development stuffs
@@ -30,6 +36,9 @@ CVS_RSH="/usr/bin/ssh"; export CVS_RSH
 
 
 NAILRC="${HOME}/.nail/nailrc"; export NAILRC
+
+# for sudo pkg_add
+#PACKAGEROOT="ftp://ftp13.us.FreeBSD.org/"; export PACKAGEROOT
 
 
 

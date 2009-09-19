@@ -1,8 +1,3 @@
-#
-# WeeChat configuration file, created by WeeChat v0.2.6.3 on Tue Sep  1 06:48:15 2009
-# WARNING! Be careful when editing this file, WeeChat writes this file when exiting.
-#
-
 [look]
 look_save_on_exit = off
 look_set_title = off

@@ -3,20 +3,38 @@
 #
 # My personal Bourne-style Shell resource configuration profile.
 #
+# This should be portable across virtually all Bourne shells and operating
+# systems, as long as alias and functions are supported.
+#
+# portable functions are sourced from ~/.sh_funcs
+#
+# system specific functions are sourced from ~/.sh_funcs.osname
+#
+# .site_shrc is sourced after everything else, to privide system local changes.
+#
 #
  
+. "${HOME}/.sh_funcs"
 
 #
 # default file permissions -rw------- / drwx------
 #
 umask 077
 
+
 #
-# hostname -s is not portable enough for getting the short form of our
-# current machines hostname, so do this instead of invoking hostname -s
-# whenever needed. At least this is more efficient then `hostname -s`...
+# Set a string of OS_* variables to the portable subset of uname outputs
 #
-HOSTNAME="`echo ${HOSTNAME:-\`hostname\`} | sed 's/\..*//'`"
+OS_ARCH=`uname -m`
+OS_NAME=`uname -s`
+OS_RELLVL=`uname -r`
+
+#
+# Cache the current machines hostname. hostname -s is not portable enough for
+# getting the short form of our current machines hostname, so do this instead
+# of invoking hostname -s whenever needed. 
+#
+HOSTNAME="`echo ${HOSTNAME:-\`uname -n\`} | sed 's/\..*//'`"
 export HOSTNAME
 
 #
@@ -34,48 +52,39 @@ export HOSTNAME
     # my standard issue prompt  (overriden later, based on $SHELL)
     PS1="${USER}@${HOSTNAME}-$ "; export PS1
 
-    # locale related settings   (DEFAULT)
-    TZ='Etc/UTC'; export TZ                 # my time zone
-    LANG='en_US.UTF-8'; export LANG         # language.encoding
-    # some programs require us to set LC_ALL manually as well.
-    LC_ALL='en_US.UTF-8'; export LC_ALL
-    MM_CHARSET='UTF-8'; export MM_CHARSET
+    # Attempt to override default timezone; I prefer UTC
+    TZ='Etc/UTC'; export TZ
 
     # prefer megabytes over 512 byte blocks.
     BLOCKSIZE='M'; export BLOCKSIZE
 
     # set my pager
-    if [ -x /usr/bin/less ]; then
-        PAGER='/usr/bin/less'; export PAGER
-    else
-        PAGER="more"; export PAGER
-    fi
-    LESS='-FiJqX'; export LESS  # default options to less
+    find_in_normpaths PAGER less 
+    LESS='-FiJqX'  # default options to less
+    export PAGER LESS
 
-    # set my default editor, on order of preference and create aliases
-    if [ -x /usr/local/bin/vim ]; then
-        EDITOR='/usr/local/bin/vim'
-        VISUAL='/usr/local/bin/vim'
-    elif [ -x /usr/bin/vi ]; then
-        EDITOR='/usr/bin/vi'
-        VISUAL='/usr/bin/vi'
-        # on some systems where vim is not installed, I tend to type vim
-        alias vim='/usr/bin/vi'
-    elif [ -x /usr/bin/mg -o /usr/local/bin/mg ]; then
-        EDITOR="`which mg`"
-        VISUAL="`which mg`"
-        # alias to normal uemacs name if it is available
-        which uemacs > /dev/null && alias uemacs='mg'
-    else
-        EDITOR=/bin/ed
-        VISUAL=""
+    #
+    # set my default editor, if not found then go in on order of preference.
+    #
+    find_in_normpaths EDITOR vim >/dev/null
+    if [ -z "$EDITOR" ]; then
+        find_in_normpaths EDITOR nvi >/dev/null
     fi
-    export EDITOR VISUAL
+    if [ -z "$EDITOR" ]; then
+        find_in_normpaths EDITOR vi >/dev/null
+    fi
+    if [ -z "$EDITOR" ]; then
+        find_in_normpaths EDITOR mg >/dev/null
+    fi
+    if [ -z "$EDITOR" ]; then
+        find_in_normpaths EDITOR ed >/dev/null
+    fi
+    VISUAL="$EDITOR"; export VISUAL
 
 #
-# Adaopt self based on OS
+# Adapt self based on OS
 #
-    case `uname -s` in
+    case "$OS_NAME" in
         'FreeBSD') isFreeBSD=1
                    LSCOLORS='CxGxxxxxBxexExcxdx'; export LSCOLORS
                    ;; # FreeBSD
@@ -107,6 +116,9 @@ export HOSTNAME
             set -o emacs 
             set -o ignoreeof
 
+            # list possible-completions instead of ring bell
+            bind 'set show-all-if-ambiguous on'
+
             # prompt is: [ user@host:pwd ]$
             PS1="[ \u@\h:\w ]$ "; export PS1
 
@@ -115,6 +127,16 @@ export HOSTNAME
         'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
             set -o emacs 
             set -o ignoreeof
+
+            #
+            # The various korn shells handle escape codes in prompts 
+            # rather differently from one another. This method appears
+            # to work on all ksh implementations and plays nicely with
+            # VT102 emulators like rxvt perfectly fine.
+            #
+            # Special thanks to Scotto for this technique.
+            #
+            PS1='${USER}@[1;37m${HOSTNAME}[0;36m$[0;0m '
 
             # As used by the classic  korn shell
             HISTFILE="${HOME}/.sh_history"
@@ -127,11 +149,6 @@ export HOSTNAME
             if [ $? -eq 0 ]; then 
                 # assume we have a pd-style korn
 
-                # the pdksh won't accept $'\eEscape's and requires the
-                # old escape the escapes trick (see pdksh manual for PS1)
-                #
-                PS1="${USER}\e[1;37m@${HOSTNAME}\e[0;36m$\e[0;0m "
-
                 #
                 # make sure tab completion works (where possible)
                 # XXX do not use complete-{command,file} - they break it!
@@ -141,13 +158,6 @@ export HOSTNAME
                 bind "^I=complete-list"
             else
                 # assume we have a real korn
-    
-                # the regular ksh needs $'\eEscapes'
-                # ksh93 doesn't need the old escape the escapes to get the
-                # line length right, but ksh88 might? Either way, ksh93
-                # doesn't mind if they are there.
-                #
-                PS1="${USER}$'\e[1;37m'@${HOSTNAME}$'\e[0;36m'$ $'\e[0;0m'"
 
                 #
                 # define a function (keybind) that we can use to map keys.
@@ -163,6 +173,7 @@ export HOSTNAME
                         *) print -u2 "Usage: $0 key [action]"
                            return 2;; # usage errors return 2 by default
                     esac
+
                 }
                 # allow one <tab> to do completion work.
                 #keybind $'\t' $'\E\E' #<-- use this if shell uses <esc><esc>
@@ -196,9 +207,17 @@ export HOSTNAME
             RPS1="%T"; export RPS1
     esac
 
+
 #
-# define some standard aliases for programs, should be fairly portable where
-# said programs are installed.
+# parse platform specific functions
+#
+    . "${HOME}/.sh_funcs.${OS_NAME}"
+
+
+#
+# define some standard aliases for programs. 
+#
+# These should be fairly portable where said programs are installed.
 #
     alias   bye='echo "bye"; exit'
     [ -n "$isFreeBSD" ] && alias bc='bc -q'
@@ -247,18 +266,6 @@ export HOSTNAME
 
         # system specific alias for displaying temps
         alias   temp='sysctl hw.acpi.thermal | egrep "tz.*\.temperature"'
-
-        # quick command to mute/unmute the sound system
-        mute() {
-            OLD_VOLUME=`mixer -s`
-            mixer vol 0:0 pcm 0:0
-
-        }
-        unmute() {
-            # XXX FreeBSDs mixer command requires an EOF terminated argument
-            # list. `echo $old` or `cat tmpfile` will work.
-            mixer `echo $OLD_VOLUME` $*
-        }
     elif [ $isNetBSD ]; then
         # NetBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name
         alias   exctags=ectags
@@ -285,57 +292,6 @@ export HOSTNAME
         alias   la='ls -aF'
     fi
 
-#
-# General functions
-#
-
-# quick test of each name server on unix box.
-test-dns() {
-    for IP in `cat /etc/resolv.conf | awk '/^nameserver/ { print $2 }'`
-    do
-        ping -c ${1:-3} "$IP" | tail -n 1
-    done
-}
-
-# create a new script, with the shebang! pre-inserted.
-# @params $1 = interp; $2 = filename
-new-script() {
-    echo '#!/usr/bin/env' " $1\n\n" >> $2
-}
-
-# start new live journal post in editor
-# @params $1 = optional directory
-lj-post() {
-    ${EDITOR} "${1:-/tmp}/lj-$$.post" || echo "$0: error?"
-}
-
-# commit short message (string) to file, after expanding c escapes
-# @parms $1 = "file:\n\tmessage"
-cvs-ci() {
-    if [ -z "$1" ]; then
-        echo "$0: No commit message specified: aborting"
-        exit 1;
-    fi
-
-    # XXX some old bourne shells don't support local but those
-    # that I know don't, also don't have shell functions either!
-    #
-    local ECHOCMD=""
-    local CVSMSGF=`mktemp -t cvs-ci`
-
-    # some shells built in echo won't expand control char without -e
-    #
-    if [ "$isFreeBSD" -a "`basename $SHELL`" = 'sh' ] || \
-       [ "`basename $SHELL`" = "bash" ] ; then
-
-        ECHOCMD="echo -e \"$1\""
-    else
-        # a proper echo command is available
-        ECHOCMD="echo \"$1\""
-    fi
-    eval "$ECHOCMD" > "$CVSMSGF"
-    shift; cvs commit -F "$CVSMSGF" "$@"
-}
 
 #
 # give a few fortune cookie and the current date/time on login
@@ -347,5 +303,5 @@ cvs-ci() {
 #
 # parse site local additions
 #
-    . ${HOME}/.site_shrc
+    . "${HOME}/.site_shrc"
 

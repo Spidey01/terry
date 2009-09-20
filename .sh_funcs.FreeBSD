@@ -1,0 +1,12 @@
+
+# quick command to mute/unmute the sound system
+mute() {
+    OLD_VOLUME=`mixer -s`
+    mixer vol 0:0 pcm 0:0
+
+}
+unmute() {
+    # XXX FreeBSDs mixer command requires an EOF terminated argument
+    # list. `echo $old` or `cat tmpfile` will work.
+    mixer `echo $OLD_VOLUME` $*
+}

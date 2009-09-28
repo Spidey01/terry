@@ -183,6 +183,14 @@ export HOSTNAME
                 # rather then just reprinting the prompt.
                 keybind  $'clear\n'
             fi
+
+            # ksh doesn't support C-style directory stacks, emulate them
+            DIRSTACK="$HOME"
+            export DIRSTACK
+            alias dirs=emulate-dirs
+            alias popd=emulate-popd
+            alias pushd=emulate-pushd
+
             ;; # ksh family
         'zsh') # set my various options
             HISTFILE="${HOME}/.histfile"

@@ -125,3 +125,81 @@ cvs-ci() {
     printf "$1" > "$CVSMSGF"
     shift; cvs commit -F "$CVSMSGF" "$@"
 }
+
+
+
+emulate-pushd() {
+    DIRSTACK="$1 ${DIRSTACK:-`pwd`}"
+    cd $1 && emulate-dirs
+}
+
+emulate-popd() {
+    local _n
+    [ "$1" = "-n" ] && _n=$1
+
+    set -- $DIRSTACK
+    shift
+    DIRSTACK="$*"
+
+    # done this way in case of an error with chdir
+    if [ -z "$_n" ]; then
+        cd $1 && emulate-dirs
+    else
+        emulate-dirs
+    fi
+}
+
+emulate-dirs() {
+    local _args
+    local _i=0
+
+    _args=`getopt clpv $* 2> /dev/null`
+    if [ $? -ne 0 ]; then
+        # handle wrong options here.
+        echo "usage: emulate-dirs [-cplv]"
+    fi
+    set -- $_args
+
+    for _args do
+        case $_args in
+           # print with ~'s
+           --)  type perl >/dev/null 2>/dev/null
+                if [ $? -ne 0 ]; then
+                    # perl not found, fall back on dirs -l
+                    emulate-dirs -l
+                    return
+                fi
+                echo $DIRSTACK | perl -pe 's%$ENV{HOME}%~%g'
+                shift; break
+                ;;
+           # erase dir stack
+           -c)  DIRSTACK=""
+                shift; break
+                ;;
+           # list with ~'s expanded, our normal behavour
+           -l)  echo $DIRSTACK
+                shift; break
+                ;;
+           # print on own line
+           -p)  for _args in $DIRSTACK
+                do
+                    echo $_args
+                done
+                shift; break
+                ;;
+           # print on own line with indexes and tabulators
+           -v)  for _args in $DIRSTACK
+                  do
+                      printf "%d\t%s\n" "$_i" "$_args"
+                      _i=`expr "$_i" + 1`
+                  done
+                shift; break
+                ;;
+            # handled above
+            *)  echo "$0: Programmer error if you ever see this"
+                shift; break
+                ;;
+        esac
+    done
+}
+

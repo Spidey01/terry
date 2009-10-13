@@ -232,7 +232,10 @@
 		set wildmode=list:full
 
 		" Start with mouse support off for all modes
-		set mouse=
+		if has("gui_running")
+			set mouse=
+		endif
+
 		" Hide mouse pointer when typing in text
 		set mousehide
 
@@ -689,6 +692,7 @@
 
 		function! JavaScriptFileHandler()
 			call PreHandlerHook()
+			set et ts=4 sw=4
 			call PostHandlerHook()
 		endfunction
 
@@ -995,7 +999,9 @@
 		let g:Tlist_Use_Right_Window=1
 		let g:Tlist_WinWidth=24
 		let g:Tlist_Inc_WinWidth=0
-
+		if g:hostname == 'sal1600'
+			let g:Tlist_Ctags_Cmd='C:/DevFiles/Tools/ctags58/ctags.exe'
+		endif
 	" !Taglist }}}
 
 	" *NERDTree* {{{

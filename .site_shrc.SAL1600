@@ -10,7 +10,7 @@ GOOGLE_CHROME_PATH="/cygdrive/c/Documents and Settings/Terry/Local Settings/Appl
 #
 # update paths
 #
-PATH="/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/X11R6/bin:/opt/gcc-tools/bin:`cygpath -u $WINXP_DEF_PATH`:${HOME}/sh:${HOME}/bin:${GOOGLE_CHROME_PATH}"; export PATH
+PATH="/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/X11R6/bin:/opt/gcc-tools/bin:`cygpath -u $DEF_PATH`:${HOME}/sh:${HOME}/bin:${GOOGLE_CHROME_PATH}"; export PATH
 # cygwin /etc/profile sets MANPATH and INFOPATH. Suck it up here.
 eval `grep MANPATH= /etc/profile` 
 eval `grep INFOPATH= /etc/profile` 

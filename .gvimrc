@@ -23,6 +23,9 @@ let g:none_usecolorimports   = 1
 " Kill the dang visual bell if GUI is running!!!!
 set novisualbell
 
+" Use mouse in all modes when using the GUI
+set mouse=ar
+
 " Right click menu lists correction options when spell is set
 set mousemodel=popup_setpos
 

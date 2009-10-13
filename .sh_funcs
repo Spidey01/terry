@@ -1,3 +1,4 @@
+# vim: set ft=sh :
 #
 # General functions that should be fairly portable
 #
@@ -203,3 +204,20 @@ emulate-dirs() {
     done
 }
 
+get_ipaddr() {
+    #
+    # Prints the current machines IP address.
+    #
+    # params: 
+    #   $1  = interface to query
+    #   $2  = prefix, default is 'inet'
+    #
+    #
+    type ifconfig >/dev/null 2>/dev/null
+    if [ $? -eq 0 ]; then
+        ifconfig "$1" | grep "${2:-inet}" | awk '{ print $2 }'
+    else
+        echo "$0: System not supported?"
+    fi
+
+}

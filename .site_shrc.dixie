@@ -16,8 +16,8 @@ MANPATH="/usr/local/texlive/2008/texmf/doc/man:/usr/share/man:/usr/local/man:/us
 INFOPATH="/usr/local/texlive/2008/texmf/doc/info:/usr/share/info:/usr/local/info:/usr/local/kde4/info:$INFOPATH"; export INFOPATH
 
 
-# Our IP Address, doesn't work in older bourne shells
-MY_IP=$(ifconfig ath0 | grep 'inet' | awk '{print $2}')
+# Our IP Address
+MY_IP=`get_ipaddr ath0`
 export MY_IP
 
 WWW_HOME="www.google.com"; export WWW_HOME

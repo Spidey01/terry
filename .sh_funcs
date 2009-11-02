@@ -91,7 +91,11 @@ new-script() {
     #  $1   = interp
     #  $2   = filename
     #
-    printf "#\!/usr/bin/env $1\n\n" >> $2
+    if [ -z "$1" ]; then
+        echo "Usage: $0 iterpname scriptname"
+        return 0
+    fi
+    printf "#!/usr/bin/env $1\n\n" >> "$2" && chmod +x "$2"
 }
 
 lj-post() {

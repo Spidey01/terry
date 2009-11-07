@@ -887,7 +887,16 @@
 		function! XMLFileHandler()
 			call PreHandlerHook()
 
-			set ts=2 sw=2 et
+			setl tabstop=2 shiftwidth=2 expandtab
+			if has("folding")
+				setl foldmethod=indent
+			endif
+			filetype indent on
+			setl matchpairs+=<:>
+			if exists("+omnifunc")
+				imap </ </<c-x><c-o>
+			endif
+
 
 			call PostHandlerHook()
 		endfunction

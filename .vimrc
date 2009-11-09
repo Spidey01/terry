@@ -658,10 +658,6 @@
 		function! HtmlFileHandler()
 			call PreHandlerHook()
 
-			if has("syntax") && &t_Co > 2 
-				syntax on
-				colo elflord
-			endif
 			setl tabstop=2 shiftwidth=2 expandtab
 			if has("folding")
 				setl foldmethod=indent

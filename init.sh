@@ -4,19 +4,38 @@
 #
 #
 
-# setup a tmpdir and umask for this file
-INIT_TMPDIR="${TMPDIR:-/tmp}"
+#
+# setup a local environment for this scripts run
+#
 umask 077
+HOSTNAME="`echo ${HOSTNAME:-\`hostname\`} | sed 's/\..*//'`"
+INIT_TMPDIR="${TMPDIR:-/tmp}"
+if [ ! -z "`ifconfig | grep -v lo0 | grep UP`" ]; then
+    HAVE_INTERNET_CONNECTION=yes
+fi
+DO_RSYNC() {
+    local PATH="${PATH}:/usr/local/bin:${HOME}/sh" 
+    notify-send "Please wait" "Running rsync system manager..."
+    local OUT="$(rs-mgr)"
+    echo "$OUT"
+    notify-send "rsync system manager" "$OUT"
+}
+
+if [ -n "$HAVE_INTERNET_CONNECTION" ]; then
+    DO_RSYNC
+fi
+
+#
+# launch wall paper changer
+#
+mkdir "${INIT_TMPDIR}/plsetbg"
+~/sh/plsetbg -D "${INIT_TMPDIR}/plsetbg" -c ~/sh/wp-set &
 
 #
 # Force parsing of our current X resources file
 #
 xrdb -quiet ~/.Xresources
 
-#
-# Fancy shadows and things
-#
-xcompmgr -CfFc &
 
 #
 # launch a D-Bus channel for this session
@@ -25,32 +44,25 @@ which dbus-launch >/dev/null && if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     eval `dbus-launch --sh-syntax --exit-with-session`
 fi
 
-# download dir for MPlayer plugin
-mkdir "${INIT_TMPDIR}/mplayer"
+
+#
+# Fancy shadows and things
+#
+#xcompmgr -CfFc &
+xcompmgr -sfF &
+
 
 #
 # Eexecute my primary user interface
 #
-urxvt -title ${USER}@`hostname -s` -e screen -U &
+urxvt -title ${USER}@${HOSTNAME} -e screen -R &
 
-
-# launchwall paper changer
-mkdir "${INIT_TMPDIR}/plsetbg"
-~/sh/plsetbg -D "${INIT_TMPDIR}/plsetbg" &
-
-#
-# Window dressings (docs, panels, applets, etc)
-#
-fbpanel -p tray &
-#fbpanel -p pager &
-gkrellm &
 
 #
 # Only launch these if we have an internet connection
 #
-if [ ! -z "`ifconfig | grep -v lo0 | grep UP`" ]; then
+if [ -n "$HAVE_INTERNET_CONNECTION" ]; then
     pidgin &
-    #psi &
 fi
 
 #
@@ -58,7 +70,8 @@ fi
 #
 ~/sh/xkillname xconsole &
 ~/sh/startup-sound.sh &
-(sleep 25; transset-df -n "Terry@dixie" .9)&
+env PATH="$PATH:${HOME}/sh" ~/sh/rs-touch && echo "TOUCH"
+(sleep 25; transset-df -n "${USER}@${HOSTNAME}" .8)&
 
 # start the big kahuna
-fvwm
+startxfce4

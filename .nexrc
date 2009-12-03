@@ -10,7 +10,7 @@ set ruler
 " found in some versions of vi
 set showmode
 " perform filename completion in :ex prompt
-set filec=
+set filec=
 
 
 " make ctrl+r redo the last thing; this is needed in nvi.

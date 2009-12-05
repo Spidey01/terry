@@ -110,6 +110,13 @@ export HOSTNAME
             if [ $isFreeBSD -o $isOpenBSD -o $isNetBSD -o $isLinux ]; then
                 set -o emacs
             fi
+            # sh doesn't support C-style directory stacks, emulate them
+            DIRSTACK="$HOME"
+            export DIRSTACK
+            alias dirs=emulate-dirs
+            alias popd=emulate-popd
+            alias pushd=emulate-pushd
+
             ;; # sh
         'bash') 
             set bell-style none

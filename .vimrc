@@ -755,7 +755,7 @@
 
 			setl tabstop=4 shiftwidth=4 expandtab
 			if has("folding")
-				setl foldmethod=marker
+				setl foldmethod=indent
 			endif
 			setl keywordprg=pydoc
 

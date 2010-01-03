@@ -63,6 +63,7 @@ urxvt -title ${USER}@${HOSTNAME} -e screen -R &
 #
 if [ -n "$HAVE_INTERNET_CONNECTION" ]; then
     pidgin &
+    xchat --minimize=2 &
 fi
 
 #

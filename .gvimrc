@@ -47,7 +47,7 @@ elseif has("win32")
 	if g:hostname == 'sal1600'
 		set guifont=Droid_Sans_Mono:h10:cANSI 
 	endif
-	set lines=25
+	set lines=35
 	set columns=80
 
 endif

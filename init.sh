@@ -76,3 +76,9 @@ env PATH="$PATH:${HOME}/sh" ~/sh/rs-touch && echo "TOUCH"
 
 # start the big kahuna
 startxfce4
+
+# clean up
+kill -s HUP pidgin
+kill -s HUP xchat
+kill -s TERM `cat ${INIT_TMPDIR}/plsetbg/pid` && rm -rf "${INIT_TMPDIR}/plsetbg"
+

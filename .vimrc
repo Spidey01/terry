@@ -185,7 +185,7 @@
 
 		" Settings for omni completion
 		if exists("+omnifunc")
-			set completeopt=menu
+			set completeopt=menu,longest
 			set infercase
 			"Enable syntax file based omni completion when no other method is set
 			if has("autocmd")

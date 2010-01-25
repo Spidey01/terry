@@ -160,13 +160,13 @@
 
 		" Automatically change to directories if possible.
 		if has("netbeans_intg") || has("sun_workshop")
-			set autochdir
+			"set autochdir
 		elseif has("autocmd")
 			" Mimic the autochdir option with a function and an autocmd
 			function! My_Autochdir()
 				exec "cd %:p:h"
 			endfunction
-			autocmd BufEnter * call My_Autochdir()
+			"autocmd BufEnter * call My_Autochdir()
 		endif
 
 		" Set spell checker language
@@ -195,6 +195,7 @@
 				\	endif
 			endif
 		endif
+
 
 
 	" !GENERAL }}}
@@ -292,6 +293,7 @@
 			autocmd filetype xml call XMLFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
+			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
 		endif
 
 		if has("folding")
@@ -1026,3 +1028,4 @@
 
 " !play }}}
 
+"let g:did_install_default_menus = 1

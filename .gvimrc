@@ -17,11 +17,14 @@
 
 " set options for my gui colo
 let g:none_usestyles         = 1
-let g:none_usecolorcomments  = 1
 let g:none_usecolorimports   = 1
 
 " Kill the dang visual bell if GUI is running!!!!
 set novisualbell
+
+" No ficken breaking cursor
+" Also keep it in block mode
+set guicursor+=a:block,a:blink0
 
 " Use mouse in all modes when using the GUI
 set mouse=ar

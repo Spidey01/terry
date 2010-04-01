@@ -3,7 +3,7 @@
 " Name: none.vim: a conservative colorscheme for Vim/gVim 
 " Author: Terry M. Poulin <BigBoss1964@gmail.com 
 " Date: 2008-12-18 
-" Version: 2.4
+" Version: 2.5
 "
 "
 " Notes:
@@ -18,6 +18,10 @@
 " should not be required.
 " 
 " Options:  
+"
+" let g:none_colormode = [ light | dark]
+" 
+"   Makes things suitable for light or dark backgrounds
 "
 " If any of these variables are found, they will acted upon; all are off by
 " default. Their main purpose is to enable a minimalist form of syntax
@@ -37,16 +41,28 @@ if exists("syntax_on")
 endif
 
 let g:colors_name = "none"
+if !exists("g:none_colormode")
+    let g:none_colormode = "light"
+endif
 
-" normal text
-hi Normal           guifg=black     guibg=white
+if g:none_colormode == "light"
+    " normal text
+    hi Normal           guifg=black     guibg=white
+    " cursor colours
+    hi Cursor           guibg=black     guifg=white
+elseif g:none_colormode == "dark"
+    " normal text
+    hi Normal           guifg=white     guibg=black
+    " cursor colours
+    hi Cursor           guibg=white     guifg=black
+else
+    echomsg "Unknown value for g:none_colors_name"
+endif
 " ~, @ at the end of the window, characters from showbreak, etc
 hi NonText          ctermfg=blue 
 hi NoneText         guifg=blue 
 " visual mode
-hi Visual           ctermfg=grey    ctermbg=black 
-" cursor colours
-hi Cursor           guibg=black     guifg=white
+hi Visual           ctermfg=green    ctermbg=black 
 " set cul -> underline the line the cursor is on
 hi CursorLine       cterm=underline gui=underline
 

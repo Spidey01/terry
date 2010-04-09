@@ -16,6 +16,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " set options for my gui colo
+if g:hostname == "dixie"
+	let g:none_colormode		 = 'dark'
+endif
 let g:none_usestyles         = 1
 let g:none_usecolorimports   = 1
 
@@ -24,7 +27,9 @@ set novisualbell
 
 " No ficken breaking cursor
 " Also keep it in block mode
-set guicursor+=a:block,a:blink0
+if !has("win32")
+	"set guicursor+=a:block,a:blink0
+endif
 
 " Use mouse in all modes when using the GUI
 set mouse=ar

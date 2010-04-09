@@ -981,6 +981,7 @@
 		endif
 
 		if !has("gui")	" only load plugin if gui support is available.
+			let g:CSApprox_verbose_level=0
 			let g:CSApprox_loaded=1
 		else
 			if &term == 'screen' && g:hostname == 'dixie' 

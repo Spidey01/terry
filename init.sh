@@ -12,6 +12,7 @@ HOSTNAME="`echo ${HOSTNAME:-\`hostname\`} | sed 's/\..*//'`"
 INIT_TMPDIR="${TMPDIR:-/tmp}"
 if [ ! -z "`ifconfig | grep -v lo0 | grep UP`" ]; then
     HAVE_INTERNET_CONNECTION=yes
+    export HAVE_INTERNET_CONNECTION
 fi
 DO_RSYNC() {
     local PATH="${PATH}:/usr/local/bin:${HOME}/sh" 
@@ -48,9 +49,9 @@ fi
 #
 # Fancy shadows and things
 #
-#xcompmgr -CfFc &
 xcompmgr -sfF &
 
+fbpanel -p flibber &
 
 #
 # Eexecute my primary user interface
@@ -73,12 +74,14 @@ fi
 ~/sh/startup-sound.sh &
 env PATH="$PATH:${HOME}/sh" ~/sh/rs-touch && echo "TOUCH"
 (sleep 25; transset-df -n "${USER}@${HOSTNAME}" .8)&
+(sleep 25; transset-df -n "panel" .7)&
 
 # start the big kahuna
-startxfce4
+FVWM_STYLE=Slate; export FVWM_STYLE
+fvwm
 
 # clean up
-kill -s HUP pidgin
-kill -s HUP xchat
+pkill -s HUP pidgin
+pkill -s HUP xchat
 kill -s TERM `cat ${INIT_TMPDIR}/plsetbg/pid` && rm -rf "${INIT_TMPDIR}/plsetbg"
-
+echo "X-Session terminated" > /tmp/xsession

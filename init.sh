@@ -62,7 +62,7 @@ urxvt -title ${USER}@${HOSTNAME} -e screen -R &
 #
 # Only launch these if we have an internet connection
 #
-if [ -n "$HAVE_INTERNET_CONNECTION" ]; then
+if [ -n "$HAVE_INTERNET_CONNECTION" -a ! -e ${INIT_TMPDIR}/nochat ]; then
     pidgin &
     xchat --minimize=2 &
 fi

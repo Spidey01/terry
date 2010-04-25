@@ -4,9 +4,16 @@
 # Setup the locale settings for this system. Note that some programs
 # require us to set LC_ALL manually as well as LANG.
 #
-LANG='en_US.UTF-8'; export LANG
-LC_ALL='en_US.UTF-8'; export LC_ALL
-MM_CHARSET='UTF-8'; export MM_CHARSET
+# note: we want to ignore this for vtty's
+if [ "$TERM" = "cons25" ]; then 
+    LANG='en_US.ISO8859-1'; export LANG
+    LC_ALL='en_US.ISO8859-1'; export LC_ALL
+    MM_CHARSET='ISO8859-1'; export MM_CHARSET
+else
+    LANG='en_US.UTF-8'; export LANG
+    LC_ALL='en_US.UTF-8'; export LC_ALL
+    MM_CHARSET='UTF-8'; export MM_CHARSET
+fi
 
 #
 # update paths

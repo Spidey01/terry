@@ -270,6 +270,7 @@
 			autocmd filetype awk call AWKFileHandler()
 			autocmd BufNewFile,BufRead *.c,*.h call CFileHandler()
 			autocmd filetype cpp call CXXFileHandler()
+			autocmd filetype cs call CSharpFileHandler()
 			autocmd filetype css call CSSFileHandler()
 			autocmd filetype d call DFileHandler()
 			autocmd BufNewFile,BufRead *.el call ELispFileHandler()
@@ -645,6 +646,20 @@
 
 			" Ignore object files in filename completion
 			set wildignore+=*.o
+
+			call PostHandlerHook()
+		endfunction
+
+		function! CSharpFileHandler()
+			call PreHandlerHook()
+
+			set formatoptions+=tcroqn
+			setl tabstop=4 shiftwidth=4 expandtab
+			if has("folding")
+				setl foldmethod=marker
+				setl foldmarker={,}
+				setl foldtext=substitute(getline(v:foldstart),'{.*','{...}',)
+			endif
 
 			call PostHandlerHook()
 		endfunction

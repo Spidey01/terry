@@ -113,9 +113,9 @@ export HOSTNAME
             # sh doesn't support C-style directory stacks, emulate them
             DIRSTACK="$HOME"
             export DIRSTACK
-            alias dirs=emulate-dirs
-            alias popd=emulate-popd
-            alias pushd=emulate-pushd
+            alias dirs=emulate_dirs
+            alias popd=emulate_popd
+            alias pushd=emulate_pushd
 
             ;; # sh
         'bash') 
@@ -194,9 +194,9 @@ export HOSTNAME
             # ksh doesn't support C-style directory stacks, emulate them
             DIRSTACK="$HOME"
             export DIRSTACK
-            alias dirs=emulate-dirs
-            alias popd=emulate-popd
-            alias pushd=emulate-pushd
+            alias dirs=emulate_dirs
+            alias popd=emulate_popd
+            alias pushd=emulate_pushd
 
             ;; # ksh family
         'zsh') # set my various options

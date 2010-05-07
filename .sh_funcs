@@ -72,7 +72,7 @@ find_in_normpaths() {
 }
 
 
-test-dns() {
+test_dns() {
     #
     # quick test of each name server on unix box.
     #
@@ -83,7 +83,7 @@ test-dns() {
     done
 }
 
-new-script() {
+new_script() {
     #
     # create a new script, with the shebang! pre-inserted.
     #
@@ -98,7 +98,7 @@ new-script() {
     printf "#!/usr/bin/env $1\n\n" >> "$2" && chmod +x "$2"
 }
 
-lj-post() {
+lj_post() {
     #
     # start new live journal post in editor
     #
@@ -108,7 +108,7 @@ lj-post() {
     ${EDITOR} "${1:-/tmp}/lj-$$.post" || echo "$0: error?"
 }
 
-cvs-ci() {
+cvs_ci() {
     #
     # commit short message (string) to file, after expanding c escapes
     # parms:
@@ -133,12 +133,12 @@ cvs-ci() {
 
 
 
-emulate-pushd() {
+emulate_pushd() {
     DIRSTACK="$1 ${DIRSTACK:-`pwd`}"
     cd $1 && emulate-dirs
 }
 
-emulate-popd() {
+emulate_popd() {
     local _n
     [ "$1" = "-n" ] && _n=$1
 
@@ -154,7 +154,7 @@ emulate-popd() {
     fi
 }
 
-emulate-dirs() {
+emulate_dirs() {
     local _args
     local _i=0
 
@@ -217,11 +217,11 @@ get_ipaddr() {
     #   $2  = prefix, default is 'inet'
     #
     #
-    type ifconfig >/dev/null 2>/dev/null
+    
+    type ifconfig >/dev/null 2>/dev/null && \
+         ifconfig | grep $1 >/dev/null 2>/dev/null
     if [ $? -eq 0 ]; then
-        ifconfig "$1" | grep "${2:-inet}" | awk '{ print $2 }'
-    else
-        echo "$0: System not supported?"
+        ifconfig "$1" | grep "${2:-inet} " | awk '{ print $2 }' | head -n 1
     fi
 
 }

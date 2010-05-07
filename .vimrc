@@ -385,6 +385,9 @@
 		nnoremap <silent> <leader>xp diWdWWP"2P
 		nmap gxp <leader>xp
 
+		" \date normal mode command  makes for "	-- g:myname YYYY-MM-DD"
+		nnoremap <leader>date A<c-r>="\t-- ".g:myname.strftime(" %Y-%m-%d")<cr><esc>
+
 		" allow a more natural style of line editing in :ex mode
 		cnoremap <C-A> <Home>
 		cnoremap <C-E> <End>

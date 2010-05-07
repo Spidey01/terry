@@ -36,6 +36,7 @@ BROWSER="firefox3 %s:links -g %s:lynx -force_html %s:"; export BROWSER
 #
 #PYTHONPATH="${HOME}/code/Python/modules"; export PYTHONPATH
 #RUBYLIB="${HOME}/code/Ruby/modules"; export RUBYLIB
+GOOS=freebsd; GOARCH=386; GOROOT=/usr/local/lib/go; export GOOS GOARCH GOROOT
 QMAKESPEC='freebsd-g++'; export QMAKESPEC
 QTDIR='/usr/X11R6/include/'; export QTDIR
 

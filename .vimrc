@@ -281,7 +281,6 @@
 			autocmd filetype ruby call RubyFileHandler()
 			autocmd filetype scheme call SchemeFileHandler()
 			autocmd filetype sh call ShellFileHandler()
-			autocmd filetype tex call TexFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
@@ -760,16 +759,6 @@
 
 		endfunction
 
-		function! TexFileHandler()
-			call PreHandlerHook()
-			setl fileformat=dos
-			setl tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-			" fixes gq from using c-keyword based indentation
-			set cinwords=""
-			" skip filename completion on these suckers
-			set wildignore+=*.aux,*.log,*.ilg
-
-			call PostHandlerHook()
 		endfunction
 
 	"	XXX for use with other programs

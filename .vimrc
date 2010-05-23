@@ -269,7 +269,6 @@
 			autocmd filetype cpp call CXXFileHandler()
 			autocmd filetype cs call CSharpFileHandler()
 			autocmd filetype html,xhtml call HtmlFileHandler()
-			autocmd filetype javascript call JavaScriptFileHandler()
 			autocmd filetype perl call PerlFileHandler()
 			autocmd filetype pod call PODFileHandler()
 			autocmd filetype php call PhpFileHandler()
@@ -629,11 +628,6 @@
 			call PostHandlerHook()
 		endfunction
 
-		function! JavaScriptFileHandler()
-			call PreHandlerHook()
-			set et ts=4 sw=4
-			call PostHandlerHook()
-		endfunction
 
 		function! PerlFileHandler()
 			call PreHandlerHook()

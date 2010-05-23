@@ -265,7 +265,6 @@
 						\ call ImgFileHandler()
 			autocmd BufRead *.xpm call XImgFileHandler()
 	"	XXX Code based formats
-			autocmd filetype awk call AWKFileHandler()
 			autocmd BufNewFile,BufRead *.c,*.h call CFileHandler()
 			autocmd filetype cpp call CXXFileHandler()
 			autocmd filetype cs call CSharpFileHandler()
@@ -558,16 +557,6 @@
 		endfunction
 
 	"	XXX Code based formats
-
-		function! AWKFileHandler()
-			call PreHandlerHook()
-
-			if has("folding")
-				setl foldmethod=indent
-			endif
-
-			call PostHandlerHook()
-		endfunction
 
 		function! CFileHandler()
 			call PreHandlerHook()

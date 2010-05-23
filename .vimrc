@@ -271,8 +271,6 @@
 			autocmd filetype html,xhtml call HtmlFileHandler()
 			autocmd filetype java call JavaFileHandler()
 			autocmd filetype javascript call JavaScriptFileHandler()
-			autocmd filetype lua call LuaFileHandler()
-			autocmd filetype make call MakefileFileHandler()
 			autocmd filetype perl call PerlFileHandler()
 			autocmd filetype pod call PODFileHandler()
 			autocmd filetype php call PhpFileHandler()
@@ -574,8 +572,6 @@
 			call PostHandlerHook()
 		endfunction
 
-		endfunction
-
 		function! CXXFileHandler()
 			call PreHandlerHook()
 
@@ -655,18 +651,6 @@
 			call PostHandlerHook()
 		endfunction
 
-		function! MakefileFileHandler()
-			call PreHandlerHook()
-
-			setl tabstop=4 shiftwidth=4 noexpandtab
-			if has("folding")
-				setl foldexpr=getline(v:lnum)[0]==\"\\t\"
-				setl foldmethod=expr
-			endif
-
-			call PostHandlerHook()
-		endfunction
-
 		function! PerlFileHandler()
 			call PreHandlerHook()
 
@@ -739,10 +723,6 @@
 			call PostHandlerHook()
 		endfunction
 
-
-		endfunction
-
-		endfunction
 
 	"	XXX for use with other programs
 

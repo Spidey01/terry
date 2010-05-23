@@ -291,7 +291,6 @@
 			autocmd filetype nroff call TroffFileHandler()
 			autocmd filetype vim call VimFileHanlder()
 			autocmd filetype vb  call VisualBasicFileHandler()
-			autocmd filetype xml call XMLFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
@@ -897,23 +896,6 @@
 
 		function! VisualBasicFileHandler()
 			call PreHandlerHook()
-
-
-			call PostHandlerHook()
-		endfunction
-
-		function! XMLFileHandler()
-			call PreHandlerHook()
-
-			setl tabstop=2 shiftwidth=2 expandtab
-			if has("folding")
-				setl foldmethod=indent
-			endif
-			filetype indent on
-			setl matchpairs+=<:>
-			if exists("+omnifunc")
-				imap </ </<c-x><c-o>
-			endif
 
 
 			call PostHandlerHook()

@@ -271,7 +271,6 @@
 			autocmd filetype html,xhtml call HtmlFileHandler()
 			autocmd filetype perl call PerlFileHandler()
 			autocmd filetype pod call PODFileHandler()
-			autocmd filetype ruby call RubyFileHandler()
 			autocmd filetype scheme call SchemeFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
@@ -661,15 +660,6 @@
 
 		endfunction
 
-		function! RubyFileHandler()
-			call PreHandlerHook()
-
-			setl tabstop=2 shiftwidth=2 expandtab
-			filetype indent on
-			setl keywordprg=ri
-
-			call PostHandlerHook()
-		endfunction
 
 		function! SchemeFileHandler()
 			call PreHandlerHook()

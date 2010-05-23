@@ -269,8 +269,6 @@
 			autocmd filetype cpp call CXXFileHandler()
 			autocmd filetype cs call CSharpFileHandler()
 			autocmd filetype css call CSSFileHandler()
-			autocmd filetype d call DFileHandler()
-			autocmd BufNewFile,BufRead *.el call ELispFileHandler()
 			autocmd filetype html,xhtml call HtmlFileHandler()
 			autocmd filetype java call JavaFileHandler()
 			autocmd filetype javascript call JavaScriptFileHandler()
@@ -285,8 +283,6 @@
 			autocmd filetype sh call ShellFileHandler()
 			autocmd filetype sql call SqlFileHandler()
 			autocmd filetype tex call TexFileHandler()
-			autocmd filetype nroff call TroffFileHandler()
-			autocmd filetype vb  call VisualBasicFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
@@ -635,16 +631,6 @@
 			call PostHandlerHook()
 		endfunction
 
-		function! DFileHandler()
-			call PreHandlerHook()
-			call PostHandlerHook()
-		endfunction
-
-		function! ELispFileHandler()
-			call PreHandlerHook()
-			call PostHandlerHook()
-		endfunction
-
 		function! HtmlFileHandler()
 			call PreHandlerHook()
 
@@ -679,11 +665,6 @@
 		function! JavaScriptFileHandler()
 			call PreHandlerHook()
 			set et ts=4 sw=4
-			call PostHandlerHook()
-		endfunction
-
-		function! LuaFileHandler()
-			call PreHandlerHook()
 			call PostHandlerHook()
 		endfunction
 
@@ -837,19 +818,6 @@
 			set cinwords=""
 			" skip filename completion on these suckers
 			set wildignore+=*.aux,*.log,*.ilg
-
-			call PostHandlerHook()
-		endfunction
-
-		function! TroffFileHandler()
-			call PreHandlerHook()
-
-			call PostHandlerHook()
-		endfunction
-
-		function! VisualBasicFileHandler()
-			call PreHandlerHook()
-
 
 			call PostHandlerHook()
 		endfunction

@@ -268,7 +268,6 @@
 			autocmd BufNewFile,BufRead *.c,*.h call CFileHandler()
 			autocmd filetype cpp call CXXFileHandler()
 			autocmd filetype cs call CSharpFileHandler()
-			autocmd filetype css call CSSFileHandler()
 			autocmd filetype html,xhtml call HtmlFileHandler()
 			autocmd filetype java call JavaFileHandler()
 			autocmd filetype javascript call JavaScriptFileHandler()
@@ -575,15 +574,6 @@
 			call PostHandlerHook()
 		endfunction
 
-		function! CSSFileHandler()
-			call PreHandlerHook()
-
-			setl tabstop=5 shiftwidth=5 expandtab
-			if has("folding")
-				setl foldmethod=indent
-			endif
-
-			call PostHandlerHook()
 		endfunction
 
 		function! CXXFileHandler()

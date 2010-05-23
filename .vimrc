@@ -255,10 +255,6 @@
 			" make new.txt files dos/win friendly
 			autocmd BufNewFile *.txt set ff=dos
 			autocmd BufNewFile,BufRead *.txt call TextFileHandler()
-			autocmd BufRead *.doc call DocFileHandler()
-			autocmd BufRead *.pdf call PdfFileHandler()
-			autocmd BufRead *.ps call PsFileHandler()		
-			autocmd BufRead *.dvi call DviFileHandler()
 			autocmd BufNewFile,BufRead *.outline call My_OutlineMode()
 	"	XXX Image file based formats
 			autocmd BufRead *.jpg,*.jpeg,*.png,*.tiff,*.bmp,*.gif
@@ -438,70 +434,6 @@
 			call PostHandlerHook()
 		endfunction
 
-
-		function! DocFileHandler()
-			call PreHandlerHook()
-
-			if has("gui_running") ||  has("win32")
-				!{abiword "%" || kword "%" || swriter "%"}  &
-				q
-			else
-				r!antiword -tf  "%s" 
-			endif
-			call PostHandlerHook()
-		endfunction
-
-		function! PdfFileHandler()
-			call PreHandlerHook()
-
-			if has("x11")
-				!{evince "%" || kpdf "%" || xpdf "%"} &
-				q
-			elseif has("win32")
-				!"Foxit Reader.exe" "%" &
-				q
-			else
-				echo "No text dump program setup available...."
-			endif
-
-			call PostHandlerHook()
-		endfunction
-
-		function! PsFileHandler()
-			call PreHandlerHook()
-
-			if ViewOrEdit()
-				if has("x11")
-					!{evince "%" || kpdf "%" || xpdf "%"} &
-					q
-				elseif has("win32")
-					echo "Whats the ps viewer?"
-				else
-					echo "No text dump program installed...."
-				endif
-			endif
-
-			call PostHandlerHook()
-		endfunction
-			
-		function! DviFileHandler()
-			call PreHandlerHook()
-
-			if ViewOrEdit()
-				if has("x11")
-					!{xdvi "%" || kdvi "%" ||  "%"} &
-					q
-				elseif has("win32")
-					!echo "Go look up how to open DVI on TexLive Win"
-				endif
-			else
-				" depends on the dvi2tty program
-				!dvi2tty -F'vim -c "setl ro fdl=99"  -' "%"
-				q
-			endif
-
-			call PostHandlerHook()
-		endfunction
 
 	"	XXX Image file based formats
 		function! ImgFileHandler()

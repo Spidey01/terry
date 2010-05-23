@@ -280,7 +280,6 @@
 			autocmd filetype python call PythonFileHandler()
 			autocmd filetype ruby call RubyFileHandler()
 			autocmd filetype scheme call SchemeFileHandler()
-			autocmd filetype sh call ShellFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
@@ -750,12 +749,6 @@
 			call PostHandlerHook()
 		endfunction
 
-		function! ShellFileHandler()
-			call PreHandlerHook()
-			setl tabstop=4 shiftwidth=4 expandtab
-
-			call PostHandlerHook()
-		endfunction
 
 		endfunction
 

@@ -271,7 +271,6 @@
 			autocmd filetype html,xhtml call HtmlFileHandler()
 			autocmd filetype perl call PerlFileHandler()
 			autocmd filetype pod call PODFileHandler()
-			autocmd filetype php call PhpFileHandler()
 			autocmd filetype python call PythonFileHandler()
 			autocmd filetype ruby call RubyFileHandler()
 			autocmd filetype scheme call SchemeFileHandler()
@@ -660,13 +659,6 @@
 			call PostHandlerHook()
 		endfunction
 
-		function! PhpFileHandler()
-			call PreHandlerHook()
-
-			setl tabstop=4 shiftwidth=4 expandtab
-
-			call PostHandlerHook()
-		endfunction
 
 		function! PythonFileHandler()
 			call PreHandlerHook()

@@ -271,7 +271,6 @@
 			autocmd filetype html,xhtml call HtmlFileHandler()
 			autocmd filetype perl call PerlFileHandler()
 			autocmd filetype pod call PODFileHandler()
-			autocmd filetype python call PythonFileHandler()
 			autocmd filetype ruby call RubyFileHandler()
 			autocmd filetype scheme call SchemeFileHandler()
 	"	XXX for use with other programs
@@ -660,16 +659,6 @@
 		endfunction
 
 
-		function! PythonFileHandler()
-			call PreHandlerHook()
-
-			setl tabstop=4 shiftwidth=4 expandtab
-			if has("folding")
-				setl foldmethod=marker
-			endif
-			setl keywordprg=pydoc
-
-			call PostHandlerHook()
 		endfunction
 
 		function! RubyFileHandler()

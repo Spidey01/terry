@@ -289,7 +289,6 @@
 			autocmd filetype sql call SqlFileHandler()
 			autocmd filetype tex call TexFileHandler()
 			autocmd filetype nroff call TroffFileHandler()
-			autocmd filetype vim call VimFileHanlder()
 			autocmd filetype vb  call VisualBasicFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
@@ -874,22 +873,6 @@
 
 		function! TroffFileHandler()
 			call PreHandlerHook()
-
-			call PostHandlerHook()
-		endfunction
-
-		function! VimFileHanlder()
-			call PreHandlerHook()
-
-			if has("syntax") && &t_Co > 2 
-				syntax on
-				colo elflord
-			endif
-			setl fileformat=unix
-			setl tabstop=4 shiftwidth=4 noexpandtab
-			if has("folding")
-				setl foldmethod=marker
-			endif
 
 			call PostHandlerHook()
 		endfunction

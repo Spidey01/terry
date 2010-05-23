@@ -265,8 +265,6 @@
 						\ call ImgFileHandler()
 			autocmd BufRead *.xpm call XImgFileHandler()
 	"	XXX Code based formats
-			autocmd filetype ada call AdaFileHandler()
-			autocmd filetype asm call AsmFileHandler()
 			autocmd filetype awk call AWKFileHandler()
 			autocmd BufNewFile,BufRead *.c,*.h call CFileHandler()
 			autocmd filetype cpp call CXXFileHandler()
@@ -560,23 +558,6 @@
 		endfunction
 
 	"	XXX Code based formats
-		function! AdaFileHandler()
-			call PreHandlerHook()
-
-			call PostHandlerHook()
-		endfunction
-
-		function! AsmFileHandler()
-			call PreHandlerHook()
-
-			if has("folding")
-				setl foldmethod=indent
-			endif
-			" Ignore object files in filename completion
-			set wildignore+=*.o
-
-			call PostHandlerHook()
-		endfunction
 
 		function! AWKFileHandler()
 			call PreHandlerHook()

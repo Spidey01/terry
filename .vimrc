@@ -269,7 +269,6 @@
 			autocmd filetype cpp call CXXFileHandler()
 			autocmd filetype cs call CSharpFileHandler()
 			autocmd filetype html,xhtml call HtmlFileHandler()
-			autocmd filetype java call JavaFileHandler()
 			autocmd filetype javascript call JavaScriptFileHandler()
 			autocmd filetype perl call PerlFileHandler()
 			autocmd filetype pod call PODFileHandler()
@@ -626,21 +625,6 @@
 			if exists("+omnifunc")	" think twice about using this with other langs
 				imap </ </<c-x><c-o>
 			endif
-
-			call PostHandlerHook()
-		endfunction
-
-		function! JavaFileHandler()
-			call PreHandlerHook()
-
-			set formatoptions+=tcroqn
-			setl tabstop=4 shiftwidth=4 expandtab
-			if has("folding")
-				setl foldmethod=indent
-			endif
-
-			" Ignore class files in filename completion
-			set wildignore+=*.class
 
 			call PostHandlerHook()
 		endfunction

@@ -264,8 +264,6 @@
 			autocmd BufRead *.jpg,*.jpeg,*.png,*.tiff,*.bmp,*.gif
 						\ call ImgFileHandler()
 			autocmd BufRead *.xpm call XImgFileHandler()
-	"	XXX Code based formats
-			autocmd filetype html,xhtml call HtmlFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
@@ -534,27 +532,6 @@
 
 			call PostHandlerHook()
 		endfunction
-
-	"	XXX Code based formats
-
-
-
-		function! HtmlFileHandler()
-			call PreHandlerHook()
-
-			setl tabstop=2 shiftwidth=2 expandtab
-			if has("folding")
-				setl foldmethod=indent
-			endif
-			filetype indent on
-			setl matchpairs+=<:>
-			if exists("+omnifunc")	" think twice about using this with other langs
-				imap </ </<c-x><c-o>
-			endif
-
-			call PostHandlerHook()
-		endfunction
-
 
 	"	XXX for use with other programs
 

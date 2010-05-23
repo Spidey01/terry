@@ -256,10 +256,6 @@
 			autocmd BufNewFile *.txt set ff=dos
 			autocmd BufNewFile,BufRead *.txt call TextFileHandler()
 			autocmd BufNewFile,BufRead *.outline call My_OutlineMode()
-	"	XXX Image file based formats
-			autocmd BufRead *.jpg,*.jpeg,*.png,*.tiff,*.bmp,*.gif
-						\ call ImgFileHandler()
-			autocmd BufRead *.xpm call XImgFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
@@ -434,36 +430,6 @@
 			call PostHandlerHook()
 		endfunction
 
-
-	"	XXX Image file based formats
-		function! ImgFileHandler()
-			call PreHandlerHook()
-
-			if has("x11")
-				!xv "%" &
-				q
-			elseif has("win32")
-				!\%systemroot\%\system32\rundll32.exe \%systemroot\%\system32\shimgvw.dll,imageview_fullscreen  "%" || \%systemroot\%\system32\mspaint.exe "%"
-				q
-			else
-				echo "no external viewer for text mode set...."
-			endif
-
-			call PostHandlerHook()
-		endfunction
-
-		function! XImgFileHandler()
-			call PreHandlerHook()
-
-			if ViewOrEdit()
-				if has("x11")
-					!xv "%" &
-					q
-				endif
-			endif
-
-			call PostHandlerHook()
-		endfunction
 
 	"	XXX for use with other programs
 

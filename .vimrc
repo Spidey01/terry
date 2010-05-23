@@ -269,8 +269,6 @@
 			autocmd filetype cpp call CXXFileHandler()
 			autocmd filetype cs call CSharpFileHandler()
 			autocmd filetype html,xhtml call HtmlFileHandler()
-			autocmd filetype perl call PerlFileHandler()
-			autocmd filetype pod call PODFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
@@ -624,37 +622,6 @@
 			call PostHandlerHook()
 		endfunction
 
-
-		function! PerlFileHandler()
-			call PreHandlerHook()
-
-			setl formatoptions+=tcrqn
-			setl tabstop=4 shiftwidth=4 expandtab
-			if has("folding")
-			endif
-
-			call PostHandlerHook()
-		endfunction
-
-		function! PODFileHandler()
-			call PreHandlerHook()
-
-			" insert abbreviations so we can use space to complete =directives
-			" with an argument, and <cr> to complete =directives without any.
-			
-			" this allows our iab's to work
-			setl isk+==
-			iab <buffer> =i =item
-			iab <buffer> =f =for
-			iab <buffer> =be =begin
-			iab <buffer> =ba =back
-			iab <buffer> =e =end
-			iab <buffer> =c =cut<cr>
-			iab <buffer> =p =pod<cr>
-			iab <buffer> =o =over
-
-			call PostHandlerHook()
-		endfunction
 
 	"	XXX for use with other programs
 

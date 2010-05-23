@@ -271,7 +271,6 @@
 			autocmd filetype html,xhtml call HtmlFileHandler()
 			autocmd filetype perl call PerlFileHandler()
 			autocmd filetype pod call PODFileHandler()
-			autocmd filetype scheme call SchemeFileHandler()
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
@@ -656,22 +655,6 @@
 
 			call PostHandlerHook()
 		endfunction
-
-
-		endfunction
-
-
-		function! SchemeFileHandler()
-			call PreHandlerHook()
-
-			setl tabstop=4 shiftwidth=4 expandtab
-			if has("folding")
-				" This doesn't work
-				setl foldmethod=syntax
-			endif
-			call PostHandlerHook()
-		endfunction
-
 
 	"	XXX for use with other programs
 

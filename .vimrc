@@ -297,6 +297,8 @@
 
 	" *AUTOCMDS* {{{
 
+		" If it ends in .rakefile, it ought to be treated like a ruby script
+		autocmd BufNewFile,BufRead *.rakefile set filetype=ruby
 	
 	" !AUTOCMDS }}}
 

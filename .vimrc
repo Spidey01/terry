@@ -36,6 +36,7 @@
 "   |CSApprox|			--- Color Scheme Approximate
 "	|Taglist|			--- Tags file navigator plugin
 "	|NERDTree|			--- Enhanced file system tree navigator
+"	|netlib|			--- A snazzy NetRW replacement
 " |play|				--- Misc stuff, usually notes / code snippets
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -552,6 +553,13 @@
 		let g:NERDTreeWinSize=24
 
 	" !NERDTree }}}
+	
+	" *netlib* {{{
+		if g:hostname == 'sal1600'
+			" rsync isn't in path, avoid error by removing rsync support
+			let g:netplugin_rsync_loaded=1
+		endif
+	" !netlib }}}
 
 " !PLUGINS }}}
 

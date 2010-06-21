@@ -17,4 +17,5 @@ PLUGINS	$MYVIMRC	/" *PLUGINS* {{{$/
 SETTINGS	$MYVIMRC	/^" *SETTINGS* {{{$/
 Taglist	$MYVIMRC	/" *Taglist* {{{$/
 VARIABLES	$MYVIMRC	/" *VARIABLES* {{{$/
+netlib	$MYVIMRC	/*netlib* {{{$/
 play	$MYVIMRC	/" *play* {{{$/

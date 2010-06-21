@@ -24,7 +24,7 @@ INFOPATH="/usr/local/texlive/2008/texmf/doc/info:/usr/share/info:/usr/local/info
 
 
 # Our IP Address
-MY_IP=`get_ipaddr ath0`
+MY_IP=`get_ipaddr wlan0`
 export MY_IP
 
 WWW_HOME="www.google.com"; export WWW_HOME

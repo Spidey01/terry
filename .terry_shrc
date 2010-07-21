@@ -230,8 +230,7 @@ export HOSTNAME
 #
 # parse platform specific functions
 #
-    . "${HOME}/.sh_funcs.${OS_NAME}"
-
+    [ -f "${HOME}/.sh_funcs.${OS_NAME}" ] && . "${HOME}/.sh_funcs.${OS_NAME}"
 
 #
 # define some standard aliases for programs. 
@@ -322,5 +321,5 @@ export HOSTNAME
 #
 # parse site local additions
 #
-    . "${HOME}/.site_shrc"
+    [ -f "${HOME}/.site_shrc" ] && . "${HOME}/.site_shrc"
 

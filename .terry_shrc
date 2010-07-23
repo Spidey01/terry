@@ -295,9 +295,9 @@ export HOSTNAME
         # OpenBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name
         alias   exctags=ectags
     elif [ $isLinux ]; then 
-        alias 	ls='ls -Fh'
-        alias 	ll='ls -laFho'
-        alias 	la='ls -aFh'
+        alias 	ls='ls --color=auto -Fh'
+        alias 	ll='ls --color=auto -laFho'
+        alias 	la='ls --color=auto -aFh'
     elif [ $isCygwin ]; then
         echo "Using Cygwin compatible aliases"
     else

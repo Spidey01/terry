@@ -260,6 +260,8 @@
 	"	XXX for use with other programs
 			autocmd filetype cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
+			autocmd BufNewFile,BufRead *.rakefile set filetype=ruby
+	
 		endif
 
 		if has("folding")
@@ -297,9 +299,6 @@
 
 	" *AUTOCMDS* {{{
 
-		" If it ends in .rakefile, it ought to be treated like a ruby script
-		autocmd BufNewFile,BufRead *.rakefile set filetype=ruby
-	
 	" !AUTOCMDS }}}
 
 	" *COMMANDS* {{{
@@ -384,6 +383,7 @@
 		function! ROT13()
 			<esc>ggvGg?
 		endfunction
+		command! Rot13 call ROT13()
 
 
 		" Helper function to prompt the user if editing or viewing is desired

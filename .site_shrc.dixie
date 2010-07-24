@@ -18,44 +18,21 @@ fi
 #
 # update paths
 #
-PATH="/usr/local/texlive/2008/bin/i386-freebsd:$PATH:/usr/games:/usr/local/kde4/bin:/usr/local/bin:/usr/local/sbin:${HOME}/sh:${HOME}/bin:/usr/local/kde4/bin"; export PATH
-MANPATH="/usr/local/texlive/2008/texmf/doc/man:/usr/share/man:/usr/local/man:/usr/local/kde4/man:$MANPATH"; export MANPATH
-INFOPATH="/usr/local/texlive/2008/texmf/doc/info:/usr/share/info:/usr/local/info:/usr/local/kde4/info:$INFOPATH"; export INFOPATH
+PATH="$PATH:${HOME}/sh:${HOME}/bin"; export PATH
 
 
 # Our IP Address
-MY_IP=`get_ipaddr wlan0`
+MY_IP=`get_ipaddr wlan0 | cut -d : -f 2`
 export MY_IP
 
-WWW_HOME="www.google.com"; export WWW_HOME
-BROWSER="firefox3 %s:links -g %s:lynx -force_html %s:"; export BROWSER 
+WWW_HOME="www.google.com"
+BROWSER="google-chrome %s:firefox3 %s:firefox %s:links -g %s:lynx -force_html %s:"
+export WWW_HOME BROWSER 
 
 
 #
 # variables for development stuffs
 #
-#PYTHONPATH="${HOME}/code/Python/modules"; export PYTHONPATH
-#RUBYLIB="${HOME}/code/Ruby/modules"; export RUBYLIB
-GOOS=freebsd; GOARCH=386; GOROOT=/usr/local/lib/go; export GOOS GOARCH GOROOT
-QMAKESPEC='freebsd-g++'; export QMAKESPEC
-QTDIR='/usr/X11R6/include/'; export QTDIR
 
 CVS_RSH="/usr/bin/ssh"; export CVS_RSH
-
-
-NAILRC="${HOME}/.nail/nailrc"; export NAILRC
-
-# for sudo pkg_add
-#PACKAGEROOT="ftp://ftp13.us.FreeBSD.org/"; export PACKAGEROOT
-
-
-
-#
-# machine local aliases
-#
-alias	ra="hsetroot -fill ~/Pictures/Wall-Papers/kernel-dream.jpg"
-alias	redalert=ra
-alias   nail="/usr/local/bin/mailx"
-alias   man-nail="man -M /usr/local/man mailx"
-alias   doom-hr='prboom -iwad doom2 -file /usr/local/share/doom/hr/hr.wad'
 

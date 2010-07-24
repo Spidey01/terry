@@ -49,7 +49,7 @@ find_in_normpaths() {
     #
     local P
 
-    if [ "$#" -eq 0 ]; then
+    if [ "$#" -eq 0 -o `expr $# % 2` -ne 0 ]; then
         printf "$0 name [variable name variable...]\n"
         return 0
     fi

@@ -2,6 +2,6 @@
 # Bourne shell aliases for Linux systems
 #
 
-alias 	ls='ls --color=auto -Fh'
-alias 	ll='ls --color=auto -laFho'
-alias 	la='ls --color=auto -aFh'
+alias 	ls='ls --color=auto -FHh'
+alias 	ll='ls --color=auto -laFHho'
+alias 	la='ls --color=auto -aFHh'

@@ -1,0 +1,45 @@
+#
+# default file permissions -rw------- / drwx------
+#
+umask 077
+
+#
+# the system should provide a suitable PATH for what we need here, 
+# avoid setting it here if we can, and let the site_shrc worry later.
+#
+if [ -z "$PATH" ]; then
+    PATH="/bin:/sbin:/usr/bin:/usr/sbin"; export PATH
+fi
+
+# my standard issue prompt  (overriden later, based on $SHELL)
+PS1="${USER}@${HOSTNAME}-$ "; export PS1
+
+# Attempt to override default timezone; I prefer UTC
+TZ='Etc/UTC'; export TZ
+
+# prefer megabytes over 512 byte blocks.
+BLOCKSIZE='M'; export BLOCKSIZE
+
+# set my pager
+find_in_normpaths PAGER less 
+LESS='-FiJqX'  # default options to less
+export PAGER LESS
+
+#
+# set my default editor, if not found then go in on order of preference.
+#
+find_in_normpaths EDITOR vim >/dev/null
+if [ -z "$EDITOR" ]; then
+    find_in_normpaths EDITOR nvi >/dev/null
+fi
+if [ -z "$EDITOR" ]; then
+    find_in_normpaths EDITOR vi >/dev/null
+fi
+if [ -z "$EDITOR" ]; then
+    find_in_normpaths EDITOR mg >/dev/null
+fi
+if [ -z "$EDITOR" ]; then
+    find_in_normpaths EDITOR ed >/dev/null
+fi
+VISUAL="$EDITOR"; export VISUAL
+

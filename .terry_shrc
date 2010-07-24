@@ -6,114 +6,52 @@
 # This should be portable across virtually all Bourne shells and operating
 # systems, as long as alias and functions are supported.
 #
+# portable environment data is sourced from ~/.sh_env
 # portable functions are sourced from ~/.sh_funcs
 # portable aliases are sourced from ~/.sh_aliases
 #
+# system specific environment data is sourced from ~/.sh_env.osname
 # system specific functions are sourced from ~/.sh_funcs.osname
 # system specific alias are sourced from ~/.sh_aliases.osname
 #
 # .site_shrc is sourced after everything else, to privide system local changes.
-# A symlink to .site_shrc.hostname or .site_shrc.hostname.osname is recommended.
+# For version control purposes .site_shrc is usually a symlink or a stub.
 #
-#
- 
-. "${HOME}/.sh_funcs"
-. "${HOME}/.sh_aliases"
+
 
 #
-# default file permissions -rw------- / drwx------
+# set my standard environment, functions, and aliases
 #
-umask 077
-
+    . "${HOME}/.sh_funcs"
+    . "${HOME}/.sh_env"     # depends on funcs
+    . "${HOME}/.sh_aliases"
 
 #
 # Set a string of OS_* variables to the portable subset of uname outputs
 #
-OS_ARCH=`uname -m`
-OS_NAME=`uname -s`
-OS_RELLVL=`uname -r`
-
+    OS_ARCH=`uname -m`
+    OS_NAME=`uname -s`
+    OS_RELLVL=`uname -r`
+    export OS_ARCH OS_NAME_OS_RELLVL
 #
 # Cache the current machines hostname. hostname -s is not portable enough for
 # getting the short form of our current machines hostname, so do this instead
 # of invoking hostname -s whenever needed. 
 #
-HOSTNAME="`echo ${HOSTNAME:-\`uname -n\`} | sed 's/\..*//'`"
-export HOSTNAME
-
-#
-# set my standard environment settings
-#
-
-    #
-    # the system should provide a suitable PATH for what we need here, 
-    # avoid setting it here if we can, and let the site_shrc worry later.
-    #
-    if [ -z "$PATH" ]; then
-        PATH="/bin:/sbin:/usr/bin:/usr/sbin"; export PATH
-    fi
-
-    # my standard issue prompt  (overriden later, based on $SHELL)
-    PS1="${USER}@${HOSTNAME}-$ "; export PS1
-
-    # Attempt to override default timezone; I prefer UTC
-    TZ='Etc/UTC'; export TZ
-
-    # prefer megabytes over 512 byte blocks.
-    BLOCKSIZE='M'; export BLOCKSIZE
-
-    # set my pager
-    find_in_normpaths PAGER less 
-    LESS='-FiJqX'  # default options to less
-    export PAGER LESS
-
-    #
-    # set my default editor, if not found then go in on order of preference.
-    #
-    find_in_normpaths EDITOR vim >/dev/null
-    if [ -z "$EDITOR" ]; then
-        find_in_normpaths EDITOR nvi >/dev/null
-    fi
-    if [ -z "$EDITOR" ]; then
-        find_in_normpaths EDITOR vi >/dev/null
-    fi
-    if [ -z "$EDITOR" ]; then
-        find_in_normpaths EDITOR mg >/dev/null
-    fi
-    if [ -z "$EDITOR" ]; then
-        find_in_normpaths EDITOR ed >/dev/null
-    fi
-    VISUAL="$EDITOR"; export VISUAL
-
-#
-# Adapt self based on OS
-#
-    case "$OS_NAME" in
-        'FreeBSD') isFreeBSD=1
-                   LSCOLORS='CxGxxxxxBxexExcxdx'; export LSCOLORS
-                   ;; # FreeBSD
-        'OpenBSD') isOpenBSD=1
-
-                    # OpenBSD seems to lack the UTF-8 locale, so fall back
-                    LANG='en_US.ISO8859-1'; export LANG
-                    LC_ALL='en_US.ISO8859-1'; export LC_ALL
-                    MM_CHARSET='ISO8859-1'; export MM_CHARSET
-                   ;; # OpenBSD
-        'NetBSD')  isNetBSD=1;;
-        'Linux')   isLinux=1;;
-        'Unix')    isUnix=1;;
-        'Interix') isUnix=1;;   # treat Microsoft SFU as generic UNIX
-        CYGWIN_NT*) isCygwin=1;;
-    esac
+    HOSTNAME="`echo ${HOSTNAME:-\`uname -n\`} | sed 's/\..*//'`"
+    export HOSTNAME
 
 #
 # set shell specific settings
 #
     case `basename $SHELL` in
-        'sh') # older versions of the sh lack line editing (i.e. < sys 3)
-            if [ $isFreeBSD -o $isOpenBSD -o $isNetBSD -o $isLinux ]; then
+        'sh') 
+            # older versions of the sh lack line editing (i.e. < sys 3)
+            if [ "$OS_NAME" = FreeBSD -o "$OS_NAME" = OpenBSD -o \
+                 "$OS_NAME" = NetBSD  -o "$OS_NAME" = Linux ]; then
                 set -o emacs
             fi
+
             # sh doesn't support C-style directory stacks, emulate them
             DIRSTACK="$HOME"
             export DIRSTACK
@@ -232,8 +170,9 @@ export HOSTNAME
 
 
 #
-# parse platform specific functions and aliases
+# parse platform specific environment, functions, and aliases
 #
+    [ -f "${HOME}/.sh_env.${OS_NAME}" ]     && . "${HOME}/.sh_env.${OS_NAME}"
     [ -f "${HOME}/.sh_funcs.${OS_NAME}" ]   && . "${HOME}/.sh_funcs.${OS_NAME}"
     [ -f "${HOME}/.sh_aliases.${OS_NAME}" ] && . "${HOME}/.sh_aliases.${OS_NAME}"
 

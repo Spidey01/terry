@@ -9,4 +9,8 @@ set cinwords=""
 " skip filename completion on these suckers
 set wildignore+=*.aux,*.log,*.ilg
 
+if has("folding")
+	let g:tex_fold_enabled=1
+endif
+
 call PostHandlerHook()

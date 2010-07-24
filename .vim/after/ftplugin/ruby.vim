@@ -6,4 +6,8 @@ filetype indent on
 
 setl keywordprg=ri
 
+if has("folding")
+	let g:ruby_fold=1
+endif
+
 call PostHandlerHook()

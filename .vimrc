@@ -264,16 +264,6 @@
 	
 		endif
 
-		if has("folding")
-			let g:perl_fold=1
-			let g:perl_fold_blocks=1
-			let g:php_folding=1
-			let g:ruby_fold=1
-			let g:sh_fold_enabled=4
-			let g:tex_fold_enabled=1
-			let javaScript_fold=1
-		endif
-
 " !FORMATS }}}
 
 " !SETTINGS }}}

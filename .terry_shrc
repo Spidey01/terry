@@ -7,14 +7,18 @@
 # systems, as long as alias and functions are supported.
 #
 # portable functions are sourced from ~/.sh_funcs
+# portable aliases are sourced from ~/.sh_aliases
 #
 # system specific functions are sourced from ~/.sh_funcs.osname
+# system specific alias are sourced from ~/.sh_aliases.osname
 #
 # .site_shrc is sourced after everything else, to privide system local changes.
+# A symlink to .site_shrc.hostname or .site_shrc.hostname.osname is recommended.
 #
 #
  
 . "${HOME}/.sh_funcs"
+. "${HOME}/.sh_aliases"
 
 #
 # default file permissions -rw------- / drwx------
@@ -228,88 +232,10 @@ export HOSTNAME
 
 
 #
-# parse platform specific functions
+# parse platform specific functions and aliases
 #
-    [ -f "${HOME}/.sh_funcs.${OS_NAME}" ] && . "${HOME}/.sh_funcs.${OS_NAME}"
-
-#
-# define some standard aliases for programs. 
-#
-# These should be fairly portable where said programs are installed.
-#
-    alias   bye='echo "bye"; exit'
-    [ -n "$isFreeBSD" ] && alias bc='bc -q'
-    alias   cls='clear'
-    alias   copy='cp -i'
-    alias   del='rm -i'
-    alias   igrep='grep -i'
-    alias   limeric='fortune /usr/share/games/fortune/limerick'
-    alias   move='mv -i'
-    alias   pd='perldoc'
-    alias   pgr='$PAGER'
-    #
-    # Gee, it is so nice how *BSD lint's so often do the inverse
-    # of SUSv2 when given a standard switch.
-    #
-    if [ -n "$isFreeBSD" ]; then
-        alias   lint='lint -a -aa -ceghnuxz'
-    elif [ -n "$isNetBSD" ]; then
-        echo "Make an alias for lint"
-    elif [ -n "$isOpenBSD" ]; then
-        alias    lint='lint -ceghnuxz'
-    elif [ -n "$isLinux" ]; then
-        echo "Make an alias for lint"
-    fi
-    #
-    # useful aliases for various version control systems
-    #
-    alias cvs-st='cvs status | grep -i Status:'
-    # also see function `cvs-ci`
-
-#
-# define system specfic aliases for various commands
-#
-    if [ $isFreeBSD ]; then
-        # The FreeBSD system seems to have been made by people that have an "Hey
-        # we've been using this command prompt for the past 30 years, let's
-        # make it comfortable!" approch...  Thus it needs it's own set of
-        # aliases.
-
-        alias   ls='ls -FGHh'
-        alias   ll='ls -laFhHo'
-        alias   la='ls -aFGh'
-
-        # OpenBSD calls Exuberant Ctags 'ectags', allow both
-        alias   ectags=exctags
-
-        # system specific alias for displaying temps
-        alias   temp='sysctl hw.acpi.thermal | egrep "tz.*\.temperature"'
-    elif [ $isNetBSD ]; then
-        # NetBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name
-        alias   exctags=ectags
-    elif [ $isOpenBSD ]; then
-        # note, -h added in OpenBSD 3.4
-        alias 	ls='ls -Fh'
-        alias 	ll='ls -laFho'
-        alias 	la='ls -aFh'
-        # OpenBSD calls Exuberant Ctags 'ectags', but I want the FreeBSD name
-        alias   exctags=ectags
-    elif [ $isLinux ]; then 
-        alias 	ls='ls --color=auto -Fh'
-        alias 	ll='ls --color=auto -laFho'
-        alias 	la='ls --color=auto -aFh'
-    elif [ $isCygwin ]; then
-        echo "Using Cygwin compatible aliases"
-    else
-        echo "Using POSIX/SUS based generic UNIX aliases"
-        #
-        # define fail safe aliases that should work on most systems
-        #
-        alias   ls='ls -FH'
-        alias   ll='ls -laFHo'
-        alias   la='ls -aF'
-    fi
-
+    [ -f "${HOME}/.sh_funcs.${OS_NAME}" ]   && . "${HOME}/.sh_funcs.${OS_NAME}"
+    [ -f "${HOME}/.sh_aliases.${OS_NAME}" ] && . "${HOME}/.sh_aliases.${OS_NAME}"
 
 #
 # give a few fortune cookie and the current date/time on login

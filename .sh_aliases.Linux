@@ -1,0 +1,7 @@
+#
+# Bourne shell aliases for Linux systems
+#
+
+alias 	ls='ls --color=auto -Fh'
+alias 	ll='ls --color=auto -laFho'
+alias 	la='ls --color=auto -aFh'

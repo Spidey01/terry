@@ -1,0 +1,24 @@
+#
+# define some standard aliases for programs. 
+#
+# These should be fairly portable where said programs are installed.
+#
+    alias   bye='echo "bye"; exit'
+    alias   cls='clear'
+    alias   copy='cp -i'
+    alias   del='rm -i'
+    alias   igrep='grep -i'
+    alias   limeric='fortune /usr/share/games/fortune/limerick'
+    alias   move='mv -i'
+    alias   pd='perldoc'
+    alias   pgr='$PAGER'
+
+
+
+#
+# Define fail safe aliases that should work on POSIX/SUS systems.
+# Most sh_aliases.osname files will override these.
+#
+alias   ls='ls -FH'
+alias   ll='ls -laFHo'
+alias   la='ls -aF'

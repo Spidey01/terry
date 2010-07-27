@@ -5,3 +5,7 @@
 alias 	ls='ls --color=auto -FHh'
 alias 	ll='ls --color=auto -laFHho'
 alias 	la='ls --color=auto -aFHh'
+
+
+alias   ectags=/usr/bin/ctags-exuberant
+alias	exctags=/usr/bin/ctags-exuberant

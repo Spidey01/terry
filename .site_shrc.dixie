@@ -36,3 +36,4 @@ export WWW_HOME BROWSER
 
 CVS_RSH="/usr/bin/ssh"; export CVS_RSH
 
+alias   links=links2

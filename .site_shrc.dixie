@@ -18,7 +18,7 @@ fi
 #
 # update paths
 #
-PATH="$PATH:${HOME}/sh:${HOME}/bin"; export PATH
+PATH="${HOME}/sh:${HOME}/bin:$PATH"; export PATH
 
 
 # Our IP Address

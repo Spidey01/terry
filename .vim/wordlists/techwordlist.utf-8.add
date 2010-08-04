@@ -43,3 +43,7 @@ BeOS
 Bluetooth
 Athlon
 !dataless
+plugin
+plugins
+ctor
+dtor

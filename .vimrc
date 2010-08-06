@@ -398,15 +398,29 @@
 		"
 		" Concept: 
 		"
-		" 	let filename = foo.rst
+		" 	if filename = foo.rst, outformat = html
 		"
-		" 	!rst2{outformat} foo.rst > foo.html
+		" 	then: !rst2html foo.rst > foo.html
 		"
 		function! Rst2fmt(filename, outformat)
-			let l:r  = "! rst2".a:outformat." ".a:filename." > "
-			let l:r .= substitute(a:filename, "\.rst$", ".".a:outformat, "")
+			call Convert2Format(a:filename, "rst2".a:outformat, a:outformat)
+		endfunction
 
-			exe l:r
+		"
+		" Convert filename to outformat using program.
+		"
+		" If outext is not "", then the output of program will be redirected
+		" to filename - with the trailing extension changed to outext.
+		"
+		function! Convert2Format(filename, program, outext)
+			let l:r  = a:program ." ". a:filename
+
+			if a:outext != ""
+				let l:r .= " > "
+				let l:r .= substitute(a:filename, '\.[^\.]*$', ".".a:outext, "")
+			endif
+
+			exe "! ".l:r
 		endfunction
 	
 

@@ -397,6 +397,10 @@
 			if exists("+spell")
 				setl spell
 			endif
+
+			if &columns >= 80
+				set number
+			endif
 		endfunction
 
 		function! PostHandlerHook()

@@ -301,7 +301,14 @@
 
 		" :Command to copy everything for pasting into another app
 		com! YankAll 1,$yank +
-	
+
+		" Feed the current file through rst2Whatever
+		"
+		com! Rst2html 	call Rst2fmt(expand("%"), "html")
+		com! Rst2latex 	call Rst2fmt(expand("%"), "latex")
+		com! Rst2man 	call Rst2fmt(expand("%"), "man")
+		com! Rst2odt 	call Rst2fmt(expand("%"), "odt")
+
 	" !COMMANDS }}}
 
 	" *MAPS* {{{
@@ -387,6 +394,21 @@
 			endif
 		endfunction
 
+		" Generates Restructured Text output for the filename.
+		"
+		" Concept: 
+		"
+		" 	let filename = foo.rst
+		"
+		" 	!rst2{outformat} foo.rst > foo.html
+		"
+		function! Rst2fmt(filename, outformat)
+			let l:r  = "! rst2".a:outformat." ".a:filename." > "
+			let l:r .= substitute(a:filename, "\.rst$", ".".a:outformat, "")
+
+			exe l:r
+		endfunction
+	
 
 	" !FUNCTIONS }}}
 

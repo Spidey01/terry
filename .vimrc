@@ -408,7 +408,6 @@
 
 	"	XXX Document based formats
 		function! TextFileHandler()
-			call PreHandlerHook()
 
 			" turn off some stuff when viewing Vim help files
 			if &ft == "help"
@@ -424,7 +423,6 @@
 			" fixes gq from using c-keyword based indentation
 			set cinwords=""
 
-			call PostHandlerHook()
 		endfunction
 
 
@@ -432,7 +430,6 @@
 
 		" Settings for outlining ideas
 		function! My_OutlineMode()
-			call PreHandlerHook()
 
 			setl tabstop=8 shiftwidth=8 noexpandtab
 			setl listchars =tab:\|\ " Mark \t's with |'s
@@ -455,7 +452,6 @@
 				setl foldmarker={,}
 			endif
 
-			call PostHandlerHook()
 		endfunction
 
 

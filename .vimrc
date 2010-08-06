@@ -309,6 +309,10 @@
 		com! Rst2man 	call Rst2fmt(expand("%"), "man")
 		com! Rst2odt 	call Rst2fmt(expand("%"), "odt")
 
+		" Feed the current file through markdown
+		"
+		com! Markdown	call Convert2Format(expand("%"), "markdown", "html")
+
 	" !COMMANDS }}}
 
 	" *MAPS* {{{

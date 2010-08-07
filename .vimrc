@@ -587,10 +587,7 @@
 	" !NERDTree }}}
 	
 	" *netlib* {{{
-		if g:hostname == 'sal1600'
-			" rsync isn't in path, avoid error by removing rsync support
-			let g:netplugin_rsync_loaded=1
-		endif
+
 	" !netlib }}}
 
 " !PLUGINS }}}
@@ -599,4 +596,3 @@
 
 " !play }}}
 
-"let g:did_install_default_menus = 1

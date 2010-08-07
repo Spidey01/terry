@@ -56,10 +56,12 @@
 
 " *SETTINGS* {{{
 
-	" Don't be VI compatible - Keep this at top of file !
-	" Also skip loading .exrc and friends in the CWD.
+	" Don't be VI compatible - Keep this near the top of the file !
 	set nocompatible
+
+	" Also skip loading .exrc and friends in the CWD.
 	set noexrc
+
 	" Set Vi compatibility options
 	"
 	" v = don't update the line more then needed          - like vi
@@ -67,6 +69,7 @@
 	" y = . after a yank repeats the yank, not the insert - like vi
 	" r = makes . after / behave as in vi (vim way sucks  - like vi)
 	" u = undo behaves as in vi, use ^R to redo.
+	"
 	set cpoptions+=v$yru
 
 	" Set GUI Options options before loading other stuff
@@ -74,12 +77,8 @@
 	" c = use console dialogs for simple choices
 	" i = use Vim icon if available
 	" m = use menu bar
+	"
 	set guioptions=cgim
-
-	" autoselect, console dialogs, tabpages, icon, menubar, show grey menu
-	" items, tearoff menu items, Toolbar, always right scrollbar.
-	"set guioptions=aceimgtTrM
-	
 
 	" Kill visual bell
 	set visualbell t_vb=
@@ -140,10 +139,6 @@
 		endif
 
 
-		" Allow names with some spaces in path, like when using gf
-		"set isfname+=32
-
-
 		" How to display tabs when list is on and expand tab is off
 		set listchars=tab:\|\ 
 		set nolist
@@ -197,15 +192,12 @@
 			endif
 		endif
 
-
-
 	" !GENERAL }}}
 
 	" *INTERFACE* {{{
 
 		"load my default colour scheme
 		colo none
-
 
 		" Show status bar with file name e.t.c. 
 		" 0 = never, 1 = if >= 2 window, 2 = always
@@ -272,11 +264,6 @@
 
 	" *ABBREVIATIONS* {{{
 
-		" unconditionally edit file with :E, as in ed
-		cab E e!
-		" unconditionally exit vim with :Q, as in ed
-		cab Q qall!
-
 		if exists("*strftime")
 			iabbrev insert_date <c-r>=strftime("%Y-%m-%d T%H:%M:%S %Z")<cr>
 		endif
@@ -292,6 +279,12 @@
 	" !AUTOCMDS }}}
 
 	" *COMMANDS* {{{
+
+		" unconditionally edit file with :E, as in ed
+		com! -nargs=+ -complete=file E e! <args>
+
+		" unconditionally exit vim with :Q, as in ed
+		com! Q qall!
 
 		" Display the syn/hi group of the word under the cursor
 		com! SynID echo synIDattr(synID(line("."), col("."), 1), "name") 

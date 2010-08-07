@@ -195,8 +195,10 @@
 
 	" *INTERFACE* {{{
 
-		"load my default colour scheme
-		colo none
+		if !has("gui_running")
+			"load my default colour scheme
+			colo none
+		endif
 
 		" Show status bar with file name e.t.c. 
 		" 0 = never, 1 = if >= 2 window, 2 = always

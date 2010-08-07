@@ -29,8 +29,7 @@
 "	|COMMANDS|			--- Ex commands
 " 	|MAPS|				--- Key mappings
 " 	|FUNCTIONS|			---	Global functions
-" 		|HELPER|		--- Useful functions for general usage
-"		|HANDLERS|		--- Handler functions for various file formats
+"	|HANDLERS|			--- Handler functions for various file formats
 " |PLUGINS|				--- Plugin specific configuration 
 " 	|BuiltIn|			--- Options for built in plugin/syntax files/etc.
 "   |CSApprox|			--- Color Scheme Approximate
@@ -558,7 +557,6 @@
 		endif
 
 	" !BuiltIn}}}
-
 
 	" *CSApprox* {{{
 	" Colour Scheme Approximator for console

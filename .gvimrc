@@ -15,12 +15,7 @@
 " on the command line or vim it self.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" set options for my gui colo
-if g:hostname == "dixie"
-	let g:none_colormode		 = 'dark'
-endif
-let g:none_usestyles         = 1
-let g:none_usecolorimports   = 1
+colorscheme github
 
 " Kill the dang visual bell if GUI is running!!!!
 set novisualbell
@@ -44,7 +39,9 @@ endif
 
 " X11: Specifics for GVim
 if has("x11")
-	set guifont=Andale\ Mono\ 10
+	if g:hostname == 'dixie'
+		set guifont=Monospace
+	endif
 
 " WINDOWS: Specifics for GVim
 elseif has("win32")

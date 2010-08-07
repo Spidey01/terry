@@ -313,6 +313,13 @@
 		"
 		com! Markdown	call Convert2Format(expand("%"), "markdown", "html")
 
+		" Commands that run their arguments as in :! but display the results
+		" in a split buffer, as opposed to following a hit enter prompt.
+		"
+		com! -nargs=+ -complete=shellcmd SC call Bang2Buffer("split", <f-args>)
+		com! -nargs=+ -complete=shellcmd VSC call Bang2Buffer("vsplit", <f-args>)
+
+
 	" !COMMANDS }}}
 
 	" *MAPS* {{{
@@ -426,7 +433,32 @@
 
 			exe "! ".l:r
 		endfunction
-	
+
+		" Runs a "! ..." command and transfers its output to a buffer.
+		"
+		" 	buftype = this | split | vsplit	- type of window to display in
+		"	... = arguments to :! out to.
+		"
+		function! Bang2Buffer(buftype, ...)
+			let l:buf = ""
+
+			if a:buftype == "split"
+				let l:buf = "new"
+			elseif a:buftype == "vsplit"
+				let l:buf = "vnew"
+			elseif a:buftype == "this"
+				let l:buf = "enew"
+			else
+				echomsg "Bang2Buffer: invalid buftype ".a:buftype
+				return
+			endif
+
+			let l:markings = "setlocal buftype=nofile bufhidden=hide "
+			let l:markings .= "noswapfile nobuflisted"
+
+			exe l:buf . " | " . l:markings . " | silent 0r! " . join(a:000, ' ')
+
+		endfunction
 
 	" !FUNCTIONS }}}
 

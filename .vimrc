@@ -588,6 +588,8 @@
 	
 	" *netlib* {{{
 
+		let g:netlib_ignored_protocols = [ 'fugitive' ]
+
 	" !netlib }}}
 
 " !PLUGINS }}}

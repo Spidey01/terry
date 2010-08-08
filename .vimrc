@@ -167,7 +167,8 @@
 		" Set spell checker language
 		if exists("+spell")
 			set spelllang=en_us,en_gb,de
-			set spellfile=~/.vim/wordlists/genwordlist.utf-8.add,~/.vim/wordlists/techwordlist.utf-8.add
+			set spellfile=~/.vim/wordlists/genwordlist.utf-8.add,
+			              \~/.vim/wordlists/techwordlist.utf-8.add
 			set spell
 			" disable highlighting
 			" XXX see |MAPS| for a mapping to toggle this highlighting
@@ -182,7 +183,8 @@
 		if exists("+omnifunc")
 			set completeopt=menu,longest
 			set infercase
-			"Enable syntax file based omni completion when no other method is set
+			" Enable syntax file based omni completion when no other 
+			" method is set
 			if has("autocmd")
 				autocmd Filetype *
 				\	if &omnifunc == "" |
@@ -291,7 +293,8 @@
 		com! SynID echo synIDattr(synID(line("."), col("."), 1), "name") 
 
 		" :Command to view diffthis against the last save.
-		com! DiffOrig diffoff! | vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+		com! DiffOrig diffoff! | vert new | set bt=nofile |
+		     \ r # | 0d_ | diffthis | wincmd p | diffthis
 
 		" :Command to copy everything for pasting into another app
 		com! YankAll 1,$yank +
@@ -310,8 +313,10 @@
 		" Commands that run their arguments as in :! but display the results
 		" in a split buffer, as opposed to following a hit enter prompt.
 		"
-		com! -nargs=+ -complete=shellcmd SC call Bang2Buffer("split", <f-args>)
-		com! -nargs=+ -complete=shellcmd VSC call Bang2Buffer("vsplit", <f-args>)
+		com! -nargs=+ -complete=shellcmd SC call
+		                                 \ Bang2Buffer("split", <f-args>)
+		com! -nargs=+ -complete=shellcmd VSC call
+		                                 \ Bang2Buffer("vsplit", <f-args>)
 
 
 	" !COMMANDS }}}
@@ -354,7 +359,8 @@
 		nmap gxp <leader>xp
 
 		" \date normal mode command  makes for "	-- g:myname YYYY-MM-DD"
-		nnoremap <leader>date A<c-r>="\t-- ".g:myname.strftime(" %Y-%m-%d")<cr><esc>
+		nnoremap <leader>date A<c-r>="\t-- " .
+		         \ g:myname.strftime(" %Y-%m-%d")<cr><esc>
 
 		" allow a more natural style of line editing in :ex mode
 		cnoremap <C-A> <Home>

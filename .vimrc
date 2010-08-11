@@ -18,26 +18,26 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Table of Contents
-" |VARIABLES|			--- Global variables
-" |SETTINGS|			---	Settings
-"	|GENERAL|			---	General options
-"	|INTERFACE|			---	Interface specific options
-"	|FORMATS|			---	Configuration for various file formats
-" |MACROS|				--- Macro instructions
-" 	|ABBREVIATIONS|		--- Abbreviations for insert, command, or all modes
-"	|AUTOCMDS|			---	Auto commands for calling format handler functions
-"	|COMMANDS|			--- Ex commands
-" 	|MAPS|				--- Key mappings
-" 	|FUNCTIONS|			---	Global functions
-"	|HANDLERS|			--- Handler functions for various file formats
-" |PLUGINS|				--- Plugin specific configuration 
-" 	|BuiltIn|			--- Options for built in plugin/syntax files/etc.
-"   |CSApprox|			--- Color Scheme Approximate
-"	|Taglist|			--- Tags file navigator plugin
-"	|NERDTree|			--- Enhanced file system tree navigator
-"	|NERDCommenter|		--- All things comment related
-"	|netlib|			--- A snazzy NetRW replacement
-" |play|				--- Misc stuff, usually notes / code snippets
+" |VARIABLES|           --- Global variables
+" |SETTINGS|            ---	Settings
+"   |GENERAL|           ---	General options
+"   |INTERFACE|         ---	Interface specific options
+"   |FORMATS|           ---	Configuration for various file formats
+" |MACROS|              --- Macro instructions
+"   |ABBREVIATIONS|     --- Abbreviations for insert, command, or all modes
+"   |AUTOCMDS|          ---	Auto commands for event handling
+"   |COMMANDS|          --- Ex commands
+"   |MAPS|              --- Key mappings
+"   |FUNCTIONS|         ---	Global functions
+"   |HANDLERS|          --- Handler functions for various file formats
+" |PLUGINS|             --- Plugin specific configuration 
+"   |BuiltIn|           --- Options for built in plugin/syntax files/etc.
+"   |CSApprox|          --- Color Scheme Approximate
+"   |Taglist|           --- Tags file navigator plugin
+"   |NERDTree|          --- Enhanced file system tree navigator
+"   |NERDCommenter|     --- All things comment related
+"   |netlib|            --- A snazzy NetRW replacement
+" |play|                --- Misc stuff, usually notes / code snippets
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Preferences

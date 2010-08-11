@@ -12,6 +12,7 @@ INTERFACE	$MYVIMRC	/" *INTERFACE* {{{$/
 MACROS	$MYVIMRC	/" *MACROS* {{{$/
 MAPS	$MYVIMRC	/" *MAPS* {{{$/
 NERDTree	$MYVIMRC	/*NERDTree* {{{$/
+NERDCommenter	$MYVIMRC	/*NERDCommenter* {{{$/
 PLUGINS	$MYVIMRC	/" *PLUGINS* {{{$/
 SETTINGS	$MYVIMRC	/^" *SETTINGS* {{{$/
 Taglist	$MYVIMRC	/" *Taglist* {{{$/

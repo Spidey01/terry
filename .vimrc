@@ -35,6 +35,7 @@
 "   |CSApprox|			--- Color Scheme Approximate
 "	|Taglist|			--- Tags file navigator plugin
 "	|NERDTree|			--- Enhanced file system tree navigator
+"	|NERDCommenter|		--- All things comment related
 "	|netlib|			--- A snazzy NetRW replacement
 " |play|				--- Misc stuff, usually notes / code snippets
 "
@@ -616,6 +617,12 @@
 		let g:NERDTreeWinSize=24
 
 	" !NERDTree }}}
+
+	" *NERDCommenter* {{{
+
+		let g:NERDSpaceDelims=1
+	
+	" !NERDCommenter }}}
 	
 	" *netlib* {{{
 

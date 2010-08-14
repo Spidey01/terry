@@ -165,7 +165,7 @@
             fg_green=$'%{\e[0;32m%}'
             PS1="${USER}@%B%m%b${fg_green}$ ${fg_no_colour}"; export PS1
             # display the (24h) time in the right-prompt`
-            RPS1="%T"; export RPS1
+            #RPS1="%T"; export RPS1
     esac
 
 

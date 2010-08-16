@@ -227,7 +227,7 @@
 		endif
 
 		" Vim command line completion lists possible matches
-		set wildmode=list:full
+		set wildmode=list:longest,full
 
 		" Start with mouse support off for all modes
 		if has("gui_running")

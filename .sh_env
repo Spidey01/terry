@@ -43,3 +43,12 @@ if [ -z "$EDITOR" ]; then
 fi
 VISUAL="$EDITOR"; export VISUAL
 
+#
+# for ircII
+#
+IRCNICK=Spidey01
+IRCNAME=TMPS01
+IRCSERVER=chat.freenode.net
+export IRCNICK IRCNAME IRCSERVER
+
+

@@ -41,6 +41,8 @@ endif
 if has("x11")
 	if g:hostname == 'dixie'
 		set guifont=Monospace
+		set columns=85
+		set lines=32
 	endif
 
 " WINDOWS: Specifics for GVim

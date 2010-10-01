@@ -18,7 +18,7 @@ fi
 #
 # update paths
 #
-PATH="${HOME}/sh:${HOME}/bin:$PATH"; export PATH
+PATH="${HOME}/sh:${HOME}/bin:${HOME}/.gem/ruby/1.8/bin/:$PATH"; export PATH
 
 
 # Our IP Address

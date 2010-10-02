@@ -18,7 +18,7 @@ fi
 #
 # update paths
 #
-PATH="${HOME}/sh:${HOME}/bin:${HOME}/.gem/ruby/1.8/bin/:$PATH"; export PATH
+PATH="${HOME}/sh:${HOME}/bin:$PATH"; export PATH
 
 
 # Our IP Address
@@ -35,5 +35,9 @@ export WWW_HOME BROWSER
 #
 
 CVS_RSH="/usr/bin/ssh"; export CVS_RSH
+
+# setup Ruby environment using the Ruby Version Manager
+[ -s "$HOME/.rvm/scripts/rvm" ] && . "$HOME/.rvm/scripts/rvm"
+
 
 alias   links=links2

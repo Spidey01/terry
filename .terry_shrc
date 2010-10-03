@@ -22,9 +22,9 @@
 #
 # set my standard environment, functions, and aliases
 #
-    . "${HOME}/.sh_funcs"
-    . "${HOME}/.sh_env"     # depends on funcs
-    . "${HOME}/.sh_aliases"
+    . "${HOME}/.sh/funcs"
+    . "${HOME}/.sh/env"     # depends on funcs
+    . "${HOME}/.sh/aliases"
 
 #
 # Set a string of OS_* variables to the portable subset of uname outputs
@@ -172,9 +172,9 @@
 #
 # parse platform specific environment, functions, and aliases
 #
-    [ -f "${HOME}/.sh_env.${OS_NAME}" ]     && . "${HOME}/.sh_env.${OS_NAME}"
-    [ -f "${HOME}/.sh_funcs.${OS_NAME}" ]   && . "${HOME}/.sh_funcs.${OS_NAME}"
-    [ -f "${HOME}/.sh_aliases.${OS_NAME}" ] && . "${HOME}/.sh_aliases.${OS_NAME}"
+    [ -f "${HOME}/.sh/env.d/${OS_NAME}" ]     && . "${HOME}/.sh/env.d/${OS_NAME}"
+    [ -f "${HOME}/.sh/funcs.d/${OS_NAME}" ]   && . "${HOME}/.sh/funcs.d/${OS_NAME}"
+    [ -f "${HOME}/.sh/aliases.d/${OS_NAME}" ] && . "${HOME}/.sh/aliases.d/${OS_NAME}"
 
 #
 # give a few fortune cookie and the current date/time on login

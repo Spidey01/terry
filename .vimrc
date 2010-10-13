@@ -83,6 +83,9 @@
 	" Kill visual bell
 	set visualbell t_vb=
 
+	" Control backup settings; see backup-table
+	set nobackup
+	set writebackup
 
 	" *GENERAL* {{{
 

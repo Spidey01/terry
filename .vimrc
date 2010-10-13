@@ -122,6 +122,8 @@
 		set showmatch
 		set matchtime=3
 
+		" I hate vim's incremental search
+		set noincsearch
 
 		" highlight matched text when searching
 		"if has('extra_search')

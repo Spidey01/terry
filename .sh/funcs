@@ -62,41 +62,6 @@ new_script() {
     printf "#!/usr/bin/env $1\n\n" >> "$2" && chmod +x "$2"
 }
 
-lj_post() {
-    #
-    # start new live journal post in editor
-    #
-    # params:
-    #  $1   = optional directory
-    #
-    ${EDITOR} "${1:-/tmp}/lj-$$.post" || echo "$0: error?"
-}
-
-cvs_ci() {
-    #
-    # commit short message (string) to file, after expanding c escapes
-    # parms:
-    #  $1   = "file:\n\tmessage"
-    #
-    if [ -z "$1" ]; then
-        echo "$0: No commit message specified: aborting"
-        exit 1;
-    fi
-
-    # XXX some old bourne shells don't support local but those
-    # that I know don't, also don't have shell functions either!
-    #
-    local ECHOCMD=""
-    local CVSMSGF=`mktemp -t cvs-ci`
-
-    # some shells built in echo won't expand control char without -e
-    #
-    printf "$1" > "$CVSMSGF"
-    shift; cvs commit -F "$CVSMSGF" "$@"
-}
-
-
-
 emulate_pushd() {
     DIRSTACK="$1 ${DIRSTACK:-`pwd`}"
     cd $1 && emulate-dirs

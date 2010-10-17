@@ -17,22 +17,20 @@ find_in_normpath() {
     #   0	= found
     #   >0	= not found
     #
-    local P
-    local name
-    local progname
 
-    for progname; do
-        for P in /bin /usr/bin /usr/local/bin "${HOME}/bin" "${HOME}/sh" \
+    for _progname; do
+        for _P in /bin /usr/bin /usr/local/bin "${HOME}/bin" "${HOME}/sh" \
                  /sbin /usr/sbin /usr/local/sbin "${HOME}/sbin"
         do
-            name="${P}/${progname}"
-            if [ -x "$name" ]; then
-                echo "$name"
+            _name="${_P}/${_progname}"
+            if [ -x "$_name" ]; then
+                echo "$_name"
                 continue 2
             fi
         done
-        echo "not found: $progname"
+        echo "not found: $_progname"
     done
+    unset P name progname
     return 127
 }
 
@@ -40,11 +38,11 @@ test_dns() {
     #
     # quick test of each name server on unix box.
     #
-    local IP
-    for IP in `cat /etc/resolv.conf | awk '/^nameserver/ { print $2 }'`
+    for _IP in `cat /etc/resolv.conf | awk '/^nameserver/ { print $2 }'`
     do
-        ping -c ${1:-3} "$IP" | tail -n 1
+        ping -c ${1:-3} "$_IP" | tail -n 1
     done
+    unset _IP
 }
 
 new_script() {
@@ -68,7 +66,6 @@ emulate_pushd() {
 }
 
 emulate_popd() {
-    local _n
     [ "$1" = "-n" ] && _n=$1
 
     set -- $DIRSTACK
@@ -77,15 +74,15 @@ emulate_popd() {
 
     # done this way in case of an error with chdir
     if [ -z "$_n" ]; then
+        unset _n
         cd $1 && emulate-dirs
     else
+        unset _n
         emulate-dirs
     fi
 }
 
 emulate_dirs() {
-    local _args
-    local _i=0
 
     _args=`getopt clpv $* 2> /dev/null`
     if [ $? -ne 0 ]; then
@@ -135,6 +132,7 @@ emulate_dirs() {
                 ;;
         esac
     done
+    unset _args _i
 }
 
 get_ipaddr() {

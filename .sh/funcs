@@ -36,42 +36,6 @@ find_in_normpath() {
     return 127
 }
 
-find_in_normpaths() {
-    #
-    # Search in the usual paths for the indicated programs and set the 
-    # indicated variables to that path, as would be suitable for exec.
-    #
-    # params: 
-    #   $@  = a list of 'program VARIABLE' to search for
-    #
-    # exit status:
-    #   0
-    #
-    local P
-
-    if [ "$#" -eq 0 -o `expr $# % 2` -ne 0 ]; then
-        printf "$0 name [variable name variable...]\n"
-        return 0
-    fi
-    while [ "$#" -ne 0 ]; do
-        local varname="$1"
-        local progname="$2"
-        shift 2
-
-        local P="`find_in_normpath $progname`"
-        echo "$P" | grep "not found:" >/dev/null 2>/dev/null
-        if [ $? -eq 0 ]; then
-            echo "unable to set $varname"
-        else
-            eval ${varname}="$P"
-            export ${varname}
-        fi
-    done
-
-    return 0
-}
-
-
 test_dns() {
     #
     # quick test of each name server on unix box.

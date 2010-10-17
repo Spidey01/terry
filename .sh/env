@@ -21,26 +21,14 @@ TZ='Etc/UTC'; export TZ
 BLOCKSIZE='M'; export BLOCKSIZE
 
 # set my pager
-find_in_normpaths PAGER less 
+PAGER="`find_in_normpath less`"
 LESS='-FiJqX'  # default options to less
 export PAGER LESS
 
 #
 # set my default editor, if not found then go in on order of preference.
 #
-find_in_normpaths EDITOR vim >/dev/null
-if [ -z "$EDITOR" ]; then
-    find_in_normpaths EDITOR nvi >/dev/null
-fi
-if [ -z "$EDITOR" ]; then
-    find_in_normpaths EDITOR vi >/dev/null
-fi
-if [ -z "$EDITOR" ]; then
-    find_in_normpaths EDITOR mg >/dev/null
-fi
-if [ -z "$EDITOR" ]; then
-    find_in_normpaths EDITOR ed >/dev/null
-fi
+EDITOR="`find_in_normpath vim nvi vi mg ed | grep -v 'not found:' | head -n 1`"
 VISUAL="$EDITOR"; export VISUAL
 
 #

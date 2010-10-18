@@ -539,6 +539,9 @@
 
 " *PLUGINS* {{{
 
+	" add plugins in ~/.vim/bundle/<dir> to rtp
+	call pathogen#runtime_append_all_bundles()
+
 	" *BuiltIn* {{{
 
 		if has("syntax")

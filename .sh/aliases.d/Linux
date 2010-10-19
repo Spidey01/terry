@@ -3,7 +3,7 @@
 #
 
 alias 	ls='ls --color=auto -FHh'
-alias 	ll='ls --color=auto -laFHho'
+alias 	ll='ls --color=auto -laHho'
 alias 	la='ls --color=auto -aFHh'
 
 

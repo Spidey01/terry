@@ -17,8 +17,8 @@
 
 #
 # Define fail safe aliases that should work on POSIX/SUS systems.
-# Most sh_aliases.osname files will override these.
+# Most .sh/aliases.d/osname files will override these.
 #
 alias   ls='ls -FH'
-alias   ll='ls -laFHo'
+alias   ll='ls -laHo'
 alias   la='ls -aF'

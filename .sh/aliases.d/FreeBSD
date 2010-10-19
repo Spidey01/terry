@@ -4,7 +4,7 @@
 # aliases.
 
 alias   ls='ls -FGHh'
-alias   ll='ls -laFhHo'
+alias   ll='ls -lahHo'
 alias   la='ls -aFGh'
 
 alias   bc='bc -q'

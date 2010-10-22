@@ -156,3 +156,30 @@ get_ipaddr() {
 vimhelp() {
     vim -c "help $@ | only"
 }
+
+swaptwofiles() {
+    mv "$1" "${2}.new" && \
+    mv "$2" "${1}" && \
+    mv "${2}.new" "$2"
+}
+
+swapfiles() {
+
+    type expr >/dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        echo "$0: error: can't find 'expr' in PATH"
+        return 1
+    fi
+
+    if [ `expr $# % 2` -ne 0 ]; then
+        echo "usage: $0 src1 dst1 [src2 dest2 ...]"
+        return 1
+    fi
+
+    for null; do
+        swaptwofiles $1 $2
+        if [ $# -eq 2 ]; then break; fi
+        shift 2 >/dev/null 2>&1
+    done
+    unset null
+}

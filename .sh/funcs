@@ -183,3 +183,11 @@ swapfiles() {
     done
     unset null
 }
+
+
+dirsize() {
+    # report the disk usage for $@ in human readable format
+
+    du -ch "$@" | tail -n 1 | awk '{ print $1 }'
+}
+

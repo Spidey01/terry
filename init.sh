@@ -26,7 +26,10 @@ fi
 #
 # Fancy shadows and things
 #
-#xcompmgr -sfF &
+#xcompmgr -nfF &
+
+(sleep 5; pidgin -n)&
+(sleep 5; xchat --minimize=2)&
 
 # start the big kahuna
 startxfce4

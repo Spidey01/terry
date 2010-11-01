@@ -234,13 +234,14 @@
 		" Vim command line completion lists possible matches
 		set wildmode=list:longest,full
 
-		" Start with mouse support off for all modes
-		if has("gui_running")
-			set mouse=
-		endif
+		if has("mouse")
 
-		" Hide mouse pointer when typing in text
-		set mousehide
+			" Start with mouse support off for all modes
+			set mouse=
+
+			" Hide mouse pointer when typing in text
+			set mousehide
+		endif
 
 		" I hate hls.
 		set nohlsearch

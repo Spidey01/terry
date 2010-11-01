@@ -242,6 +242,9 @@
 		" Hide mouse pointer when typing in text
 		set mousehide
 
+		" I hate hls.
+		set nohlsearch
+
 		" Set folding
 		if has("folding")
 			set foldlevelstart=99

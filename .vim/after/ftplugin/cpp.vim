@@ -11,7 +11,7 @@ if has("cindent")
 	" modify cindent to understand my switch...case / class member
 	" access specifier / paren styles and not force #directives into
 	" col 1
-	setl cinoptions+=:2,=2,g2,h2,(0,#1
+	setl cinoptions+=g2,h2,(0,#1
 	setl cinkeys-=0#
 endif
 

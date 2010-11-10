@@ -8,7 +8,7 @@ endif
 
 if has("cindent")
 	" modify cindent to understand my switch...case and paren style
-	setl cinoptions+=:2,=6,g2,(0
+	setl cinoptions+=g2,(0
 	setl cinkeys-=0#
 endif
 

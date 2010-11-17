@@ -28,6 +28,7 @@ fi
 #
 #xcompmgr -nfF &
 
+(sleep 5; dropbox start -i)&
 (sleep 5; pidgin -n)&
 (sleep 5; xchat --minimize=2)&
 

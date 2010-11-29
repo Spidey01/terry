@@ -72,6 +72,9 @@
 	"
 	set cpoptions+=v$yru
 
+	" I don't want this feature.
+	set viminfo=
+
 	" Set GUI Options options before loading other stuff
 	"
 	" c = use console dialogs for simple choices

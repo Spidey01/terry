@@ -40,7 +40,7 @@ endif
 " X11: Specifics for GVim
 if has("x11")
 	if g:hostname == 'dixie'
-		set guifont=Droid\ Sans\ Mono\ 10
+		set guifont=Inconsolata\ 10
 		set columns=85
 		set lines=32
 	endif

@@ -22,7 +22,7 @@ BLOCKSIZE='M'; export BLOCKSIZE
 
 # set my pager
 PAGER="`find_in_normpath less`"
-LESS='-FiJqX'  # default options to less
+LESS='-FiJqXR'  # default options to less
 export PAGER LESS
 
 #

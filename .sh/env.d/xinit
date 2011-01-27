@@ -1,5 +1,5 @@
 #!/bin/sh
-#
+
 # My personal X-Session initialization file.
 #
 #
@@ -31,10 +31,10 @@ fi
 (sleep 5; dropbox start -i)&
 (sleep 5; tomboy) &
 (sleep 5; pidgin -n)&
-(sleep 5; xchat --minimize=2)&
+#(sleep 5; xchat --minimize=2)&
 
 # start the big kahuna
-startxfce4
+gnome-session
 
 # clean up
 echo "X-Session terminated"

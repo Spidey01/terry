@@ -11,6 +11,10 @@ if [ -z "$PATH" ]; then
     PATH="/bin:/sbin:/usr/bin:/usr/sbin"; export PATH
 fi
 
+# append ~/{sh,bin} to path
+#
+PATH="${PATH}:${HOME}/sh:${HOME}/bin"
+
 # my standard issue prompt  (overriden later, based on $SHELL)
 PS1="${USER}@${HOSTNAME}-$ "; export PS1
 

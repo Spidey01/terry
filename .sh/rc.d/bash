@@ -1,0 +1,16 @@
+# vim : set ft=sh :
+set bell-style none
+set -o emacs 
+set -o ignoreeof
+shopt -s checkwinsize
+
+# list possible-completions instead of ring bell
+bind 'set show-all-if-ambiguous on'
+
+# prompt is: [ user@host:pwd ]$
+PS1="[ \u@\h ]$ "; export PS1
+
+# append to history file rather than overwrite
+shopt -s histappend
+
+HISTFILE="${HOME}/.bash_history"

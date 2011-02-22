@@ -1,1 +1,1 @@
-ENV="$HOME/.${USER}_shrc"; export ENV
+ENV="$HOME/.sh/rc"; export ENV

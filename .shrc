@@ -7,4 +7,4 @@
 # see also sh(1), environ(7).
 #
 
-ENV="$HOME/.${USER}_shrc"; export ENV
+ENV="$HOME/.sh/rc"; export ENV

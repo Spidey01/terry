@@ -1,0 +1,16 @@
+# vim : set ft=sh :
+
+# older versions of the sh lack line editing (i.e. < sys 3)
+if [ "$OS_NAME" = FreeBSD -o "$OS_NAME" = OpenBSD -o "$OS_NAME" = NetBSD \
+      -o "$OS_NAME" = Linux ]
+then
+    set -o emacs
+fi
+
+# sh doesn't support C-style directory stacks, emulate them
+DIRSTACK="$HOME"
+export DIRSTACK
+alias dirs=emulate_dirs
+alias popd=emulate_popd
+alias pushd=emulate_pushd
+

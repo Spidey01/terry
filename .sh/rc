@@ -1,5 +1,4 @@
 # vim: set ft=sh ai si ts=4 sw=4 et :
-# $Id$
 #
 # My personal Bourne-style Shell resource configuration profile.
 #
@@ -136,5 +135,6 @@
 #
 # parse site local additions
 #
-    [ -f "${HOME}/.site_shrc" ] && . "${HOME}/.site_shrc"
+    [ -f "${HOME}/.sh/rc.local" ] && . "${HOME}/.sh/rc.local"
+
 

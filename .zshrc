@@ -1,2 +1,2 @@
 
-. $HOME/.${USER}_shrc
+. $HOME/.sh/rc

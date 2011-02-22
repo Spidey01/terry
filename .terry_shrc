@@ -45,38 +45,8 @@
 # set shell specific settings
 #
     case `basename $SHELL` in
-        'sh') 
-            # older versions of the sh lack line editing (i.e. < sys 3)
-            if [ "$OS_NAME" = FreeBSD -o "$OS_NAME" = OpenBSD -o \
-                 "$OS_NAME" = NetBSD  -o "$OS_NAME" = Linux ]; then
-                set -o emacs
-            fi
-
-            # sh doesn't support C-style directory stacks, emulate them
-            DIRSTACK="$HOME"
-            export DIRSTACK
-            alias dirs=emulate_dirs
-            alias popd=emulate_popd
-            alias pushd=emulate_pushd
-
-            ;; # sh
-        'bash') 
-            set bell-style none
-            set -o emacs 
-            set -o ignoreeof
-            shopt -s checkwinsize
-
-            # list possible-completions instead of ring bell
-            bind 'set show-all-if-ambiguous on'
-
-            # prompt is: [ user@host:pwd ]$
-            PS1="[ \u@\h ]$ "; export PS1
-
-            # append to history file rather than overwrite
-            shopt -s histappend
-
-            HISTFILE="${HOME}/.bash_history"
-            ;; # bash
+        'sh') . ~/.sh/rc.d/sh ;; # sh
+        'bash') . ~/.sh/rc.d/bash ;; # bash
         'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
             set -o emacs 
             set -o ignoreeof
@@ -145,27 +115,7 @@
             alias pushd=emulate_pushd
 
             ;; # ksh family
-        'zsh') # set my various options
-            HISTFILE="${HOME}/.histfile"
-            HISTSIZE=768
-            SAVEHIST=512
-            setopt appendhistory autocd extendedglob 
-            setopt incappendhistory
-            # dont' beep !
-            unsetopt beep
-            # emacs bindings
-            bindkey -e
-            # use vi ^W behaviour rather then emacs mode default
-            bindkey "^W" vi-backward-kill-word
-            zstyle :compinstall filename "$HOME/.zshrc"
-            autoload -Uz compinit
-            compinit
-            # I like color in my zsh prompt ;-)
-            fg_no_colour=$'%{\e[0m%}'
-            fg_green=$'%{\e[0;32m%}'
-            PS1="${USER}@%B%m%b${fg_green}$ ${fg_no_colour}"; export PS1
-            # display the (24h) time in the right-prompt`
-            #RPS1="%T"; export RPS1
+        'zsh') . ~/.sh/rc.d/zsh
     esac
 
 

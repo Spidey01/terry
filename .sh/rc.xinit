@@ -26,14 +26,14 @@ fi
 #
 # Fancy shadows and things
 #
-#xcompmgr -nfF &
+xcompmgr -cfF &
 
-#(sleep 5; dropbox start -i)&
-(sleep 5; tomboy) &
+#(sleep 5; dropbox start -i)&   # now managed by GNOME
 (sleep 5; pidgin -n)&
 #(sleep 5; xchat --minimize=2)&
 
 # start the big kahuna
+WINDOW_MANAGER=xmonad; export WINDOW_MANAGER
 gnome-session
 
 # clean up

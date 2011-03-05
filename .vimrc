@@ -331,6 +331,7 @@
 		com! -nargs=+ -complete=shellcmd VSC call
 		                                 \ Bang2Buffer("vsplit", <f-args>)
 
+		" See |viki|
 
 	" !COMMANDS }}}
 
@@ -644,6 +645,20 @@
 		let g:netlib_ignored_protocols = [ 'fugitive' ]
 
 	" !netlib }}}
+
+	" *viki* {{{
+
+		let g:vikiNameSuffix=".viki"
+		let g:vikiHomePage="~/Notes/m.viki"
+		let g:vikiExplorer="NERDTree"
+		autocmd! BufRead,BufNewFile *.viki set filetype=viki
+		runtime! vikis
+
+		com! -nargs=1 V VikiEdit <args>
+		com! -nargs=1 VT VikiEditTab <args>
+
+
+	" !viki }}}
 
 " !PLUGINS }}}
 

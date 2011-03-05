@@ -1,7 +1,6 @@
 # vim : set ft=sh :
 set bell-style none
 set -o emacs 
-set -o ignoreeof
 shopt -s checkwinsize
 
 # list possible-completions instead of ring bell

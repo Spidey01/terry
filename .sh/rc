@@ -126,11 +126,14 @@
     [ -f "${HOME}/.sh/aliases.d/${OS_NAME}" ] && . "${HOME}/.sh/aliases.d/${OS_NAME}"
 
 #
-# give a few fortune cookie and the current date/time on login
+# give a few fortune cookie and the current date/time on login.
+# non-interactive SSH sessions excluded.
 #
+if [ -n "$SSH_TTY" -o -z "$SSH_CONNECTION" ]; then
     [ -x /usr/games/fortune ] && /usr/games/fortune -aes
     echo ''; echo ''
     echo "To days date is: `date`"
+fi
 
 #
 # parse site local additions

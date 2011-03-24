@@ -8,9 +8,9 @@ sorendition wK
 # turn off the copyright nag on startup
 startup_message off
 
-# always emulate a hardware status line when the term doesn't have one.
+# always emulate a hardware status line.
 hardstatus on
-hardstatus lastline
+hardstatus alwayslastline
 # [hostname][   sessions [active session] sessions    ][iso date]
 hardstatus string "%{= kY}[%H]%{w}[%= %{=kc}%?%-Lw%?%{r}[%{c}%t%?%?%{r}]%{c}%?%+Lw%?%?%= %{w}]%{g}[%{B}%Y-%m-%d%{g}]"
 

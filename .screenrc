@@ -22,7 +22,7 @@ defflow off
 # practical for catching error messages without a type`script`
 defscrollback 10000
 
-#screen -t irc		0	weechat-curses
+screen -t notes		0	viki	# assumes ~/sh is in PATH
 screen -t aux		2
 #screen -t util		3
 screen -t main		1

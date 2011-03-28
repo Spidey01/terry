@@ -652,7 +652,11 @@
 		let g:vikiHomePage="~/Notes/m.viki"
 		let g:vikiExplorer="NERDTree"
 		autocmd! BufRead,BufNewFile *.viki set filetype=viki
-		runtime! vikis
+		" Load the inter-viki definitions from viki home
+		let g:myVikisFile = $HOME.'/Notes/vikis'
+		if filereadable(g:myVikisFile)
+			exec "source ".g:myVikisFile
+		end
 
 		com! -nargs=1 V VikiEdit <args>
 		com! -nargs=1 VT VikiEditTab <args>

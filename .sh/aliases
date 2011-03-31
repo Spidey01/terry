@@ -1,3 +1,4 @@
+# vim: set ft=sh :
 #
 # define some standard aliases for programs. 
 #
@@ -13,6 +14,13 @@
     alias   pd='perldoc'
     alias   pgr='$PAGER'
 
+    # these systems call their ack package 'ack-grep' to avoid collision with
+    # some other program called ack, that I'll likely never even need to hear
+    # exists.
+    #
+    if uname -a | grep -Ei 'debian|ubuntu' >/dev/null; then
+        alias   ack='ack-grep'
+    fi
 
 
 #

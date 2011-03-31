@@ -1,4 +1,7 @@
- # set my various options
+# vim: set ft=sh :
+#
+# set my various options
+
 HISTFILE="${HOME}/.histfile"
 HISTSIZE=768
 SAVEHIST=512

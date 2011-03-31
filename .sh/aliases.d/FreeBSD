@@ -1,3 +1,5 @@
+# vim: set ft=sh :
+#
 # The FreeBSD system seems to have been made by people that have an "Hey
 # we've been using this command prompt for the past 30 years, let's
 # make it comfortable!" approch...  Thus it needs it's own set of

@@ -4,10 +4,6 @@
 #
 #
 
-#
-# setup a local environment for this scripts run
-#
-umask 077
 
 #
 # Force parsing of our current X resources file

@@ -5,7 +5,10 @@
 #
 # default file permissions -rw------- / drwx------
 #
-umask 077
+# Setting this umask tends to cause problems in certain environments (like
+# work), so move this to .sh/rc.local as desired!
+#
+#umask 077
 
 #
 # the system should provide a suitable PATH for what we need here, 

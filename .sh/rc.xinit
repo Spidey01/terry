@@ -27,6 +27,7 @@ xcompmgr -cfF &
 #(sleep 5; dropbox start -i)&   # now managed by GNOME
 (sleep 5; pidgin -n)&
 #(sleep 5; xchat --minimize=2)&
+(sleep 5; gnome-volume-control-applet) &
 
 # start the big kahuna
 WINDOW_MANAGER=xmonad; export WINDOW_MANAGER

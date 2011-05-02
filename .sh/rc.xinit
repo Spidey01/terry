@@ -31,7 +31,7 @@ xcompmgr -cfF &
 
 # start the big kahuna
 WINDOW_MANAGER=xmonad; export WINDOW_MANAGER
-gnome-session
+gnome-session --session="$LOGNAME"
 
 # clean up
 echo "X-Session terminated"

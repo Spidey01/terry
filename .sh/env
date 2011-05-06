@@ -50,4 +50,7 @@ IRCNAME=TMPS01
 IRCSERVER=chat.freenode.net
 export IRCNICK IRCNAME IRCSERVER
 
-
+# Set a variable to work like LD_LIBRARY_PATH. This is used by most systems I
+# use (Linux, *BSD). Other systems should use ~/.sh/env.d/$OS_NAME to set the
+# correct value from this variable.
+LD_LIBRARY_PATH="${HOME}/sw/lib"

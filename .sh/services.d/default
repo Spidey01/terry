@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# default services to run on login to X
+#
+
+. "$MY_PROFILE_PATH/services.d/lib"
+
+gnome-volume-control-applet &
+
+# only run these by default, if not using mobile Internet
+#
+if [ "$MY_NETWORK_PROFILE" != "mobile" ]; then
+    make_profile_link gnubiffrc && gnubiff -n --systemtray &
+    pidgin -n &
+    dropbox start -i &
+fi
+

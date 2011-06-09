@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. "$MY_PROFILE_PATH/services.d/lib"
+
+ln -sf ~/.mutt/accounts.d/gmail ~/.mutt/account

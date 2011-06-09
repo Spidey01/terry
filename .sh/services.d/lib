@@ -1,0 +1,40 @@
+
+services_d() {
+    local w
+
+    w="$MY_PROFILE_PATH/services.d/$1"
+	if [ -x "$w" ]; then
+	    "$w"
+	else
+	    echo "no $1 profile to execute! ($w)"
+	fi
+}
+
+make_profile_link() {
+    local w
+
+    w="${MY_PROFILE_PATH}/config.d/`basename $1`.${MY_NETWORK_PROFILE}"
+    if [ -f "$w" ]; then
+        ln -sf "$w" "${HOME}/.$1"
+        return 0
+    else
+        return 1
+    fi
+}
+
+get_network_profile() {
+    case "$1" in
+        "BSDNet")
+            echo "home"
+            ;;
+        "wegnet")
+            echo "work"
+            ;;
+        "engineering")
+            echo "work"
+            ;;
+        *)
+            echo "$1"
+            ;;
+    esac
+}

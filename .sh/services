@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# Script to configure startup services/apps during rc.xinit.
+# It uses the current network to determine which "Profile" to load
+#
+
+MY_PROFILE_PATH="${HOME}/.sh"; export MY_PROFILE_PATH
+
+# include some utility functions
+#
+. "$MY_PROFILE_PATH/services.d/lib"
+
+
+# network specific stuff
+#
+if ! which nmcli > /dev/null; then
+    echo "no supported network tool found"
+    exit 1
+fi
+
+while [ -z "$NETWORK_NAME" ]; do
+    # network specific issues
+    nmcli -t -f NAME con status | head -n 1 > /tmp/network-detected-name
+    case `nmcli -t -f NAME con status | head -n 1` in
+        "Auto BSDNet") # home
+            NETWORK_NAME="BSDNet"
+            ;;
+        "Auto wegnet") # work
+            NETWORK_NAME="wegnet"
+            ;;
+        "Auto SpideyMobile") # mobile (phone wifi)
+            NETWORK_NAME="mobile"
+            ;;
+        "Auto usb*") # mobile (currently phone via tether)
+            NETWORK_NAME="mobile"
+            ;;
+        "Auto eth0") # wired, check if wired or home
+            if ifconfig eth0 | grep "inet addr:" | grep -E "172\.1[67]\..+\..+" >/dev/null; then
+                NETWORK_NAME="engineering"
+            else
+                NETWORK_NAME="update $0 for this wired network!"
+            fi
+            ;;
+        *) # unknown or unconnected
+            sleep 5
+            ;;
+    esac
+done
+
+MY_NETWORK_PROFILE="`get_network_profile $NETWORK_NAME`"
+
+export MY_PROFILE_PATH NETWORK_NAME MY_NETWORK_PROFILE
+
+
+services_d default
+services_d "$MY_NETWORK_PROFILE"
+

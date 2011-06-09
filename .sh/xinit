@@ -19,15 +19,19 @@ which dbus-launch >/dev/null && if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
 fi
 
 
+# configure startup services based on network
+#
+# this assumes nmcli and Network Manager (common for Linux) which means we may
+# NOT have a network connection setup until sometime after login. So run this
+# as an external script in the background.
+#
+~/.sh/services" &
+
+
 #
 # Fancy shadows and things
 #
 xcompmgr -cfF &
-
-#(sleep 5; dropbox start -i)&   # now managed by GNOME
-(sleep 5; pidgin -n)&
-#(sleep 5; xchat --minimize=2)&
-(sleep 5; gnome-volume-control-applet) &
 
 # start the big kahuna
 WINDOW_MANAGER=xmonad; export WINDOW_MANAGER

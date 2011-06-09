@@ -56,3 +56,7 @@ export IRCNICK IRCNAME IRCSERVER
 #
 LD_LIBRARY_PATH="${HOME}/sw/lib"
 export LD_LIBRARY_PATH
+
+# Pick up programs/modules from Ruby gems
+RUBYLIB="$HOME/.gem/ruby/1.8/lib:$RUBYLIB"
+PATH="$HOME/.gem/ruby/1.8/bin:$PATH"

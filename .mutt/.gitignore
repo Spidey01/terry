@@ -1,0 +1,9 @@
+Mutt-Quick-Reference-Letter.pdf
+
+# these files should NEVER fall under version control
+account
+accounts.d/*
+cache/*
+
+# would be rude to put this under version control, publicly
+aliases

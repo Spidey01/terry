@@ -1,0 +1,35 @@
+# global
+
+set index_format = "%4C %Z %D    %L        %s"
+set date_format = "%Y-%m-%d"
+set mail_check = 240
+set edit_headers = yes
+set pager = "$PAGER"
+#bind editor <Tab> complete-query
+bind editor ^T complete
+# don't prompt about deleting messages, just DO IT!
+set delete = yes
+# don't prompt about including previous in reply
+set include = yes
+
+# cache stuff where possible
+set header_cache = "~/.mutt/cache/headers"
+set message_cachedir = "~/.mutt/cache/bodies"
+
+# simple query command for looking up aliases
+set query_command = "grep %s ~/.mutt/aliases"
+
+source '~/.mutt/aliases'
+
+# local: my X session scripts make this a link to ~/.mutt/accounts.d/name
+source '~/.mutt/account'
+
+
+# useful macros for changing folders. ~/.mutt/account sets the variables.
+# It should also create a suitable "ga" macro for going to archived mail.
+#
+macro index gi "<change-folder>$spoolfile<enter>" "Go to Inbox"
+macro index gs "<change-folder>$record<enter>" "Go to Sent Mail"
+macro index gd "<change-folder>$postponed<enter>" "Go to Drafts"
+macro index gt "<change-folder>$trash<enter>" "Go to Trash"
+

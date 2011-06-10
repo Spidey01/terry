@@ -11,6 +11,10 @@ bind editor ^T complete
 set delete = yes
 # don't prompt about including previous in reply
 set include = yes
+# be more terse about replying
+set fast_reply = yes
+# don't ask for a command after reading a message
+set prompt_after = no
 
 # cache stuff where possible
 set header_cache = "~/.mutt/cache/headers"

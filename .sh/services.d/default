@@ -7,6 +7,8 @@
 
 gnome-volume-control-applet &
 
+~/sw/sh.local/myterm -e tmux &
+
 # only run these by default, if not using mobile Internet
 #
 if [ "$MY_NETWORK_PROFILE" != "mobile" ]; then

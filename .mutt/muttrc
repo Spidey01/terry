@@ -4,7 +4,7 @@ set index_format = "%4C %Z %D    %L        %s"
 set date_format = "%Y-%m-%d"
 set mail_check = 240
 set edit_headers = yes
-set pager = "$PAGER"
+set pager = "view"
 #bind editor <Tab> complete-query
 bind editor ^T complete
 # don't prompt about deleting messages, just DO IT!

@@ -13,3 +13,8 @@ PS1="[ \u@\h ]$ "; export PS1
 shopt -s histappend
 
 HISTFILE="${HOME}/.bash_history"
+
+# enable bash completion where vailable
+if [ -f /etc/bash_completion ]; then
+	source /etc/bash_completion
+fi

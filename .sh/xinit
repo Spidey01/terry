@@ -25,7 +25,7 @@ fi
 # NOT have a network connection setup until sometime after login. So run this
 # as an external script in the background.
 #
-~/.sh/services &
+~/.sh/services start &
 
 
 #

@@ -1,7 +1,12 @@
 #!/bin/sh
 #
-# Script to configure startup services/apps during rc.xinit.
+# Script to configure services/apps during rc.xinit.
 # It uses the current network to determine which "Profile" to load
+#
+# usage: services {start | stop} [profile]
+#
+# if profile is supplied, network determination is ommitted. This is for a use
+# case like 'services stop work && services start', when changing networks.
 #
 
 MY_PROFILE_PATH="${HOME}/.sh"; export MY_PROFILE_PATH
@@ -11,17 +16,10 @@ MY_PROFILE_PATH="${HOME}/.sh"; export MY_PROFILE_PATH
 . "$MY_PROFILE_PATH/services.d/lib"
 
 
-# network specific stuff
-#
-if ! which nmcli > /dev/null; then
-    echo "no supported network tool found"
-    exit 1
-fi
-
-while [ -z "$NETWORK_NAME" ]; do
-    # network specific issues
-    nmcli -t -f NAME con status | head -n 1 > /tmp/network-detected-name
-    case `nmcli -t -f NAME con status | head -n 1` in
+if [ -n "$2" ]; then
+    MY_NETWORK_PROFILE="$2"
+else
+    case `echo_network_connection` in
         "Auto BSDNet") # home
             NETWORK_NAME="BSDNet"
             ;;
@@ -41,17 +39,17 @@ while [ -z "$NETWORK_NAME" ]; do
                 NETWORK_NAME="update $0 for this wired network!"
             fi
             ;;
-        *) # unknown or unconnected
-            sleep 5
+        *)
+            NETWORK_NAME="uknown"
             ;;
     esac
-done
 
-MY_NETWORK_PROFILE="`get_network_profile $NETWORK_NAME`"
+    MY_NETWORK_PROFILE="`echo_network_profile $NETWORK_NAME`"
+fi
 
 export MY_PROFILE_PATH NETWORK_NAME MY_NETWORK_PROFILE
 
 
-services_d default
-services_d "$MY_NETWORK_PROFILE"
+services_d default "$1"
+services_d "$MY_NETWORK_PROFILE" "$1"
 

@@ -2,4 +2,8 @@
 
 . "$MY_PROFILE_PATH/services.d/lib"
 
-ln -sf ~/.mutt/accounts.d/work ~/.mutt/account
+if [ "$1" = "start" ]; then
+    ln -sf ~/.mutt/accounts.d/work ~/.mutt/account
+elif [ "$1" = "stop" ]; then
+    rm_profile_link mutt/account
+fi

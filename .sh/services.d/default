@@ -5,21 +5,30 @@
 
 . "$MY_PROFILE_PATH/services.d/lib"
 
-gnome-volume-control-applet &
+if [ "$1" = "start" ]; then
+    gnome-volume-control-applet &
 
-# Usually I run tmux on all systems but my work station
-#
-if ! uname -n | grep -i 'workstation' >/dev/null; then
-    termargs="-e tmux"
+    # Usually I run tmux on all systems but my work station
+    #
+    if ! uname -n | grep -i 'workstation' >/dev/null; then
+        termargs="-e tmux"
+    fi
+
+    ~/sw/sh.local/myterm $termargs &
+
+    # only run these by default, if not using mobile Internet
+    #
+    if [ "$MY_NETWORK_PROFILE" != "mobile" ]; then
+        make_profile_link gnubiffrc && gnubiff -n --systemtray &
+        pidgin -n &
+        dropbox start -i &
+    fi
+
+elif [ "$1" = "stop" ]; then
+    dropbox stop
+    ~/sw/sh/xkillbyname "Buddy List" || pkill pidgin
+    pkill gnubiff
+    rm_profile_link gnubiffrc 
+    pkill gnome-volume-control-applet
+    # tmux?
 fi
-
-~/sw/sh.local/myterm $termargs &
-
-# only run these by default, if not using mobile Internet
-#
-if [ "$MY_NETWORK_PROFILE" != "mobile" ]; then
-    make_profile_link gnubiffrc && gnubiff -n --systemtray &
-    pidgin -n &
-    dropbox start -i &
-fi
-

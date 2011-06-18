@@ -1,10 +1,12 @@
+# vim: set ft=sh :
 
 services_d() {
     local w
 
     w="$MY_PROFILE_PATH/services.d/$1"
+    shift 1
 	if [ -x "$w" ]; then
-	    "$w"
+	    "$w" "$@"
 	else
 	    echo "no $1 profile to execute! ($w)"
 	fi
@@ -22,7 +24,15 @@ make_profile_link() {
     fi
 }
 
-get_network_profile() {
+rm_profile_link() {
+	if [ -L "${HOME}/.$1" ]; then
+		unlink "${HOME}/.$1"
+	fi
+}
+
+# Maps $NETWORK_NAME's to $MY_NETWORK_PROFILE's
+#
+echo_network_profile() {
     case "$1" in
         "BSDNet")
             echo "home"
@@ -38,3 +48,28 @@ get_network_profile() {
             ;;
     esac
 }
+
+# Displays the name of the network connection, e.g. Auto BSDNet.
+#
+echo_network_connection() {
+    local output
+
+	# network specific stuff
+	#
+	if ! which nmcli > /dev/null; then
+	    echo "no supported network tool found"
+	    return 1
+	fi
+
+	while [ -z "$output" ]; do
+	    # network specific issues
+	    output="`nmcli -t -f NAME con status | head -n 1`"
+
+        if [ -z "$output" ]; then # unknown or unconnected
+		    sleep 5
+        fi
+	done
+
+    echo "$output"
+}
+

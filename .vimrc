@@ -649,11 +649,11 @@
 	" *viki* {{{
 
 		let g:vikiNameSuffix=".viki"
-		let g:vikiHomePage="~/Notes/m.viki"
+		let g:vikiHomePage="~/n/m.viki"
 		let g:vikiExplorer="NERDTree"
 		autocmd! BufRead,BufNewFile *.viki set filetype=viki
 		" Load the inter-viki definitions from viki home
-		let g:myVikisFile = $HOME.'/Notes/vikis'
+		let g:myVikisFile = $HOME.'/n/vikis'
 		if filereadable(g:myVikisFile)
 			exec "source ".g:myVikisFile
 		end

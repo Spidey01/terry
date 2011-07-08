@@ -199,3 +199,12 @@ doneat() {
     printf "done at "; date
 }
 
+runinscript() {
+    if [ $# -eq 0 ]; then
+        echo "usage: $0 {command} {logfile}"
+        return
+    fi
+
+    eval "script -c \"$1\" \"$2\""
+}
+

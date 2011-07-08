@@ -135,7 +135,7 @@ emulate_dirs() {
     unset _args _i
 }
 
-get_ipaddr() {
+get_ipaddr() { # TODO this should become .sh/funcs.d/$OS_NAME specific
     #
     # Prints the current machines IP address.
     #
@@ -189,5 +189,13 @@ dirsize() {
     # report the disk usage for $@ in human readable format
 
     du -ch "$@" | tail -n 1 | cut -f 1
+}
+
+doneat() {
+    # eval its arguments and display the start/done at times bracketing the command
+
+    printf "started at "; date
+    eval "$@"
+    printf "done at "; date
 }
 

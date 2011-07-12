@@ -20,13 +20,11 @@ if [ "$1" = "start" ]; then
     #
     if [ "$MY_NETWORK_PROFILE" != "mobile" ]; then
         make_profile_link gnubiffrc && gnubiff -n --systemtray &
-        pidgin -n &
         dropbox start -i &
     fi
 
 elif [ "$1" = "stop" ]; then
     dropbox stop
-    ~/sw/sh/xkillbyname "Buddy List" || pkill pidgin
     pkill gnubiff
     rm_profile_link gnubiffrc 
     pkill gnome-volume-control-applet

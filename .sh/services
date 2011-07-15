@@ -40,7 +40,7 @@ else
             fi
             ;;
         *)
-            NETWORK_NAME="uknown"
+            NETWORK_NAME="unknown"
             ;;
     esac
 

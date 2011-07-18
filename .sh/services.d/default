@@ -11,7 +11,7 @@ if [ "$1" = "start" ]; then
     # Usually I run tmux on all systems but my work station
     #
     if ! uname -n | grep -i 'workstation' >/dev/null; then
-        termargs="-e tmux"
+        termargs="-e mytmux"
     fi
 
     ~/sw/sh.local/myterm $termargs &

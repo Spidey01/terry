@@ -15,7 +15,8 @@
 " on the command line or vim it self.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-colorscheme github
+" Not all my machines have this anymore, so disable for now.
+"colorscheme github
 
 " Kill the dang visual bell if GUI is running!!!!
 set novisualbell

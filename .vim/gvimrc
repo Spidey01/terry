@@ -62,3 +62,11 @@ let g:Tlist_WinHeight=7
 let g:Tlist_WinWidth=25
 let g:Tlist_Show_Menu=1
 
+"
+" load ~/.vim/gvimrc.local if available.
+"
+let g:local_gvimrc = expand("~/.vim/gvimrc.local")
+if filereadable(g:local_gvimrc)
+	exe "source ".g:local_gvimrc
+endif
+

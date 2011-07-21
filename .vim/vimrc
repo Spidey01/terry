@@ -489,6 +489,10 @@
 			endif
 		endfunction
 
+		" TODO: make this source something like .vim/after/ftplugin/{ft}.vim
+		"       when there is something like it that is to be site-local in my
+		"       .vim; rather than the stuff I normally use.
+		"       Better is probably make rtp+=~/.vim/site
 		function! PostHandlerHook()
 		endfunction
 
@@ -669,4 +673,12 @@
 " *play* {{{
 
 " !play }}}
+
+"
+" load ~/.vim/vimrc.local if available.
+"
+let g:local_vimrc = expand("~/.vim/vimrc.local")
+if filereadable(g:local_vimrc)
+	exe "source ".g:local_vimrc
+endif
 

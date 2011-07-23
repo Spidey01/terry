@@ -1,0 +1,20 @@
+#!/bin/sh
+OS_NAME="`uname -s`"
+
+linuxsleep() {
+    sudo sh -c 'echo mem > /sys/power/state'
+}
+
+# FreeBSD:
+#   sysctl hw.acpi.supported_sleep_state: should include S3 state and acpiconf -s S3 should put us to sleep
+
+case "$OS_NAME" in
+	Linux)
+        linuxsleep
+		;;
+	*)
+		echo "I dunno how to put OS_NAME=$OS_NAME to sleep yet"
+        exit 1
+		;;
+esac
+

@@ -1,0 +1,170 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Getopt::Long;
+use Image::Size;
+use Pod::Usage;
+
+=pod
+=head1 NAME
+
+image-size.pl
+
+=head1 SYNOPSIS
+
+image-size [options] [file ...]
+
+  Options:
+	-f, --ask-file 	include output from file(1) 
+	-h, --help   	print usage help info
+	--man       	read manual page
+	-s, --silent 	ignore errors
+	-v, --verbose 	more verbose output
+	-d, --die     	blow up on first error
+
+=head1 DESCRIPTION
+
+A quick perl script to do what I've always wanted, tell me the height and width
+of an image file. Without having to open a graphical program (X11) just for the
+sake of finding out! File formats supported are based on the Image::Size module
+which is required for this script to function.
+
+Special thanks to the creators of the llama book for mentioning perls
+Image::Size module and thanks to the creators of that module!
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<-f, --ask-file>
+
+Politely ask the systems file utility about the files format. This option
+requires the file program installed and accessible through your environments
+PATH.
+
+=item B<-h, --help>
+
+Print out a summery of command line options and exit.
+
+=item B<--man>
+
+Displays this manual page using the provided Plain Old Documentation.
+
+=item B<-s, --silent>
+
+Ignore failed files and continue, combine with -v or --verbose to include the
+file name but still skip printing error messages.
+
+=item B<-v, --verbose>
+
+Print the file name along with it's width, height, and type (if known). Each
+field is also separated by a new line and ordered in a more elaborate format.
+
+=item B<-d, --die>
+
+Default behavior for  image-size.pl is to print a simple warning message if any
+specified file can not be operated on. 
+
+When the the -d or --die switches are given, the program will halt execution
+with an appropriate exit status instead of continuing. 
+
+This is useful for when you do not wish to continue after an error when
+processing a list of files
+
+Refer to the perl documentation for details about how the exit status is
+affected.
+
+=back
+
+=head1 EXIT STATUS
+
+The image-size.pl utility exits 0 on success or returns via perls die() if -d or
+--die was passed on the command line.
+
+=head1 SEE ALSO
+
+L<perl(1)>, L<perldoc(1)>, L<file(1)>
+
+=head1 LICENSE
+
+Copyright (c) 2008, TerryP <BigBoss64@ippimail.com>
+
+Permission to use, copy, modify, and distribute this software for any purpose
+with or without fee is hereby granted, provided that the above copyright notice
+and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+THIS SOFTWARE.
+
+=cut
+
+
+# message for pod2usage()
+my $usage_msg = "$0 -- figure out the height and width of image files\n";
+
+# message to display on error getting the image size
+my $warn_msg = "File does not exist or cannot be opened: ";
+
+my ($deadly, $help, $verbose, $man, $silent, $ask) = undef;
+
+{
+	Getopt::Long::Configure('bundling');
+	GetOptions(
+	           	'f|ask-file'    =>       \$ask,
+	           	'h|help|?'      =>       \$help,
+	           	'man'           =>       \$man,
+	           	's|silent'      =>       \$silent,
+	           	'v|verbose'     =>       \$verbose,
+	           	'd|die'         =>       \$deadly,
+			  ) or $help++;
+
+	pod2usage(-msg => $usage_msg, -output => \*STDOUT,
+			  -exitval => 1, -verbose => 0 ) if $help;
+	pod2usage(-verbose => 2, -exitval => 1) if $man;
+
+	exit 1 unless @ARGV;
+
+	# check if we are reading file names off stdin
+	if ($ARGV[0] eq '-') {
+		while (<>) {
+			chomp;
+			&print_size(imgsize($_), $_)
+				if -f $_ or $silent ? next : &handle_error and next;
+		}
+	} else {
+		foreach (@ARGV) {
+			&print_size(imgsize($_), $_)
+				if -f $_ or $silent ? next : warn $warn_msg."$_\n" and next;
+		}
+	}
+}
+
+sub print_size() {
+	my ($x, $y, $type, $file) = @_;
+
+	$x = 'unkown' unless $x;
+	$y = 'unkown' unless $y;
+
+	# keep it simple stupid
+	my $std_msg = "width-x: $x\theight-y: $y\tfile type: $type\n";
+
+	# unless asked to shoot off your mouth
+	my $verb_msg = "file name: $file\n" .
+	               "width-x: $x\nheight-y: $y\n" .
+	               "file type: $type\n\n"; 
+
+	$verbose ? print $verb_msg : print $std_msg;
+
+	print "running file(1) ...\n\n",`file $_`,"\n" if $ask;
+}
+
+sub handle_error() {
+	$deadly ? die $! : warn $warn_msg."$_\n";
+}

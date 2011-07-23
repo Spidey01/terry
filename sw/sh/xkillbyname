@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# kill X client by window name
+#
+
+if [ -n "$1" ]; then
+    xwininfo -name "$1" | grep 'Window id:' | awk '{ print $4 }' | \
+    head -n 1 | xargs xkill -id 
+else
+    echo "usage: `basename $0` windowname"
+fi

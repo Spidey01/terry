@@ -1,0 +1,20 @@
+#!/bin/sh
+# mounter for SSHFS
+#
+# mnt-sshfs ssh-host-name
+#
+# Mounts or unmounts ~/ on ssh-host-name to ~/hosts/ssh-host-name. Be sure to
+# configure things in ~/.ssh/config so that `ssh host` works!
+#
+
+# where to mount hosts
+where="$HOME/hosts/$1"
+
+if mount | grep "$where" | grep "$1": >/dev/null; then
+    fusermount -u "$where"
+    rmdir "$where"
+else
+    mkdir -p "$where" && \
+    sshfs -o idmap=user,uid=`id -u`,gid=`id -g`,ServerAliveInterval=15,follow_symlinks,transform_symlinks "$1": ~/hosts/"$1"
+fi
+

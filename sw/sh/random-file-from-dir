@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+#
+# Choices a random file from the specified directory.
+#
+
+from os import environ
+from os.path import join, isdir
+from random import choice
+from subprocess import Popen, PIPE
+from sys import argv
+
+if not len(argv) == 2:
+    print("usage: " + argv[0] + ": {dir}")
+    exit(0)
+
+print(
+    choice(
+        Popen(['find', argv[1]], stdout=PIPE).communicate()[0].split("\n")
+    )
+)
+

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+if [ "$#" -eq 0 ]; then
+  echo "usage:"
+  echo "  $0 {subject} -> open editor and post to Blogger /w note on Facebook"
+  echo "  $0 -> not supported yet"
+  exit
+fi
+
+BLOGITDIR="/tmp/blogit/"
+SUBJECT="$1"
+FILE="${BLOGITDIR}${SUBJECT}.html"
+mkdir -p "${BLOGITDIR}" 2&>1 >/dev/null
+"$EDITOR" "$FILE"
+if [ -e "$FILE" ]; then
+    echo "Posting to blogger"
+    # *groan* google blogger uses stderr
+    note=$(google blogger post --title "$SUBJECT" --src "$FILE"  2>&1 | sed -e 's/Post created: //')
+
+    echo "Linking on Facebook"
+    fbcmd feednote "Blogger post: ${SUBJECT}" "I've posted a new journal entry <a href=\"$note\">here</a>"
+
+    echo "Moving blogit file to ${FILE}.backup.$$"
+    mv "$FILE" "$FILE".backup$$
+fi

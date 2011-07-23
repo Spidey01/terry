@@ -1,0 +1,20 @@
+#!/bin/sh
+OS_NAME="`uname -s`"
+
+linuxsnore() {
+    sudo sh -c 'echo disk > /sys/power/state'
+}
+
+# FreeBSD:
+#   ?
+
+case "$OS_NAME" in
+	Linux)
+        linuxsnore
+		;;
+	*)
+		echo "I dunno how to put OS_NAME=$OS_NAME into hibernate yet"
+        exit 1
+		;;
+esac
+

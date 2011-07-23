@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#
+# Most sh support select, as do bash and korn.  Dash does not, and bash is more
+# likely to be found than ksh under Linux systems. So use bash until I feel
+# like writing my own select.
+#
+# TODO: write own (sh compatible) select, so that a proper session selection is possible instead of relying on session names.
+#
+
+newtmuxsession() {
+    local defname tmsn
+    
+    defname="TMUX.$$"
+    printf "choose a name for this session [$defname]: "; read tmsn
+    exec tmux new-session -s "${tmsn:-$defname}"
+}
+
+# for some reason bash doesn't like this unless I use a var.
+#
+tmsl="`tmux ls 2>/dev/null | sed -e 's/:.*$//g'`"
+
+if [ -z "$tmsl" ]; then
+    newtmuxsession
+    exit
+fi
+
+select tms in "new-session" $tmsl; do
+    if [ "$tms" = "new-session" ]; then
+        newtmuxsession
+    else
+        exec tmux attach -t "$tms"
+    fi
+done

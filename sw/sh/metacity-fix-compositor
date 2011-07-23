@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# occasional issues cause me to have to flick the compositor off and then on
+# again. May as well have a script for it!
+
+metacity-compositor off
+metacity-compositor on

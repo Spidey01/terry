@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ "$#" -eq 0 ]; then 
+	exec $VISUAL -c "VikiHome"
+else
+    #f=$(echo "$@" | perl -ne 'chomp; my ($nb, $n) = split(/::/); print ucfirst(lc($nb))."/".($n || "index").".viki\n"')
+    f="$@"
+    if ! echo "$f" | grep '::' >/dev/null; then f="NOTES::$f"; fi
+    exec $VISUAL -c "VikiEdit $f"
+fi

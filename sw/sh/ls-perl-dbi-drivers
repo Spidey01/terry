@@ -1,0 +1,5 @@
+#!/usr/bin/env perl
+
+use DBI;
+
+print $_, "\n" foreach DBI->available_drivers();

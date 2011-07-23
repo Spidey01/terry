@@ -1,0 +1,4 @@
+#!/bin/sh
+# simple script to make linux google-chrome respond like windows chrome.exe
+
+exec google-chrome "$@"

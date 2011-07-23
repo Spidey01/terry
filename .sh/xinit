@@ -28,14 +28,15 @@ fi
 ~/.sh/services start &
 
 
+
 #
 # Fancy shadows and things
 #
 xcompmgr -cfF &
 
 # start the big kahuna
-WINDOW_MANAGER=xmonad; export WINDOW_MANAGER
-gnome-session --session="$LOGNAME"
+fbpanel &
+exec xmonad
 
 # clean up
 echo "X-Session terminated"

@@ -19,9 +19,11 @@ find_in_normpath() {
     #
 
     for _progname; do
-        for _P in /bin /usr/bin /usr/local/bin \
-                  "${HOME}/sw/bin" "${HOME}/sw/sh" "${HOME}/sw/sh.local" \
-                  /sbin /usr/sbin /usr/local/sbin "${HOME}/sw/sbin"
+        for _P in "${HOME}/sw/sh.local" "${HOME}/sw/sh" "${HOME}/sw/bin" \
+                  "${HOME}/sw/sbin" \
+                  /usr/local/bin /usr/local/sbin \
+                  /usr/bin /usr/sbin \
+                  /bin /sbin
         do
             _name="${_P}/${_progname}"
             if [ -x "$_name" ]; then

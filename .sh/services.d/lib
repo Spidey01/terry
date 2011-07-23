@@ -30,7 +30,7 @@ services_d() {
     w="$MY_PROFILE_PATH/services.d/$1"
     shift 1
 	if [ -x "$w" ]; then
-	    echo "$w" "$@"
+	    "$w" "$@"
 	else
 	    echo "no $1 profile to execute! ($w)"
 	fi

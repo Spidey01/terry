@@ -1,6 +1,7 @@
 #!/bin/sh
 
-. "$MY_PROFILE_PATH/services.d/lib"
+. "${MY_PROFILE_PATH:-$HOME/.sh}/services.d/lib"
+assert_sh_services_environment
 
 if [ "$1" = "start" ]; then
     ln -sf ~/.mutt/accounts.d/gmail ~/.mutt/account

@@ -3,7 +3,8 @@
 # default services to run on login to X
 #
 
-. "$MY_PROFILE_PATH/services.d/lib"
+. "${MY_PROFILE_PATH:-$HOME/.sh}/services.d/lib"
+assert_sh_services_environment
 
 if [ "$1" = "start" ]; then
     gnome-volume-control-applet &
@@ -18,7 +19,7 @@ if [ "$1" = "start" ]; then
 
     # only run these by default, if not using mobile Internet
     #
-    if [ "$MY_NETWORK_PROFILE" != "mobile" ]; then
+    if [ "`echo_this_profile MY_NETWORK_PROFILE`" != "mobile" ]; then
         make_profile_link gnubiffrc && gnubiff -n --systemtray &
         dropbox start -i &
     fi

@@ -8,48 +8,104 @@
 # if profile is supplied, network determination is ommitted. This is for a use
 # case like 'services stop work && services start', when changing networks.
 #
+# if profile is ommitted and the first argument is stop, the profile will be
+# looked up from the this-profile file. It is used to record the result of this
+# stuff.
+#
+########
+# TODO
+#   warn if trying to stop != current profile
+#   don't clobber NETWORK_PROFILE to non-existing-profile
+########
+
 
 MY_PROFILE_PATH="${HOME}/.sh"; export MY_PROFILE_PATH
+THIS_PROFILE="${MY_PROFILE_PATH}/this-profile"
+export MY_PROFILE_PATH THIS_PROFILE
 
 # include some utility functions
 #
 . "$MY_PROFILE_PATH/services.d/lib"
+assert_sh_services_environment
+
+# ensure environment is ok
+#
+ACTION="$1"
+MY_PROFILE="$2"
+if ! touch "$THIS_PROFILE"; then
+    echo "$0: unable to maintain state via $THIS_PROFILE - aborting!"
+    exit 1
+fi
+case "$ACTION" in
+    start|stop)
+        ;; 
+    *)
+        echo "Don't know how to handle $ACTION."
+        echo "Maybe run profile $PROFILE $ACTION directly?"
+        echo "Stopping."
+        exit 1
+        ;;
+esac
 
 
-if [ -n "$2" ]; then
-    MY_NETWORK_PROFILE="$2"
-else
+
+
+if [ "$ACTION" = "stop" -a -z "$MY_PROFILE" ]
+then # operate on current profile
+    if [ ! -r "$THIS_PROFILE" ]; then
+        echo "$0: error reading $THIS_PROFILE - aborting"
+        exit 127
+    fi
+    MY_PROFILE="`echo_this_profile NETWORK_PROFILE`"
+fi
+
+if [ "$ACTION" = "start" -a -z "$MY_PROFILE" ]
+then # detect it based on network connection
+
     case `echo_network_connection` in
         "Auto BSDNet") # home
-            NETWORK_NAME="BSDNet"
+            MY_NETWORK_NAME="BSDNet"
             ;;
         "Auto wegnet") # work
-            NETWORK_NAME="wegnet"
+            MY_NETWORK_NAME="wegnet"
             ;;
         "Auto SpideyMobile") # mobile (phone wifi)
-            NETWORK_NAME="mobile"
+            MY_NETWORK_NAME="mobile"
             ;;
         "Auto usb*") # mobile (currently phone via tether)
-            NETWORK_NAME="mobile"
+            MY_NETWORK_NAME="mobile"
             ;;
         "Auto eth0") # wired, check if wired or home
-            if ifconfig eth0 | grep "inet addr:" | grep -E "172\.1[67]\..+\..+" >/dev/null; then
-                NETWORK_NAME="engineering"
+            if ifconfig eth0 | grep "inet addr:" | \
+                grep -E "172\.1[67]\..+\..+" >/dev/null
+            then
+                MY_NETWORK_NAME="engineering"
             else
-                NETWORK_NAME="update $0 for this wired network!"
+                MY_NETWORK_NAME="update $0 for this wired network!"
             fi
             ;;
         *)
-            NETWORK_NAME="unknown"
+            MY_NETWORK_NAME="unknown"
             ;;
     esac
 
-    MY_NETWORK_PROFILE="`echo_network_profile $NETWORK_NAME`"
+    MY_PROFILE="`echo_network_profile $MY_NETWORK_NAME`"
+    write_this_profile NETWORK_NAME "$MY_NETWORK_NAME"
 fi
 
-export MY_PROFILE_PATH NETWORK_NAME MY_NETWORK_PROFILE
 
 
-services_d default "$1"
-services_d "$MY_NETWORK_PROFILE" "$1"
+
+# write information that should be exported to services_d().
+#
+write_this_profile NETWORK_PROFILE "$MY_PROFILE"
+
+# execute profiles
+#
+services_d default "$ACTION"
+services_d "$MY_PROFILE" "$ACTION"
+
+if [ "$ACTION" = "stop" ]; then # blank it as none is loaded
+    write_this_profile NETWORK_PROFILE ""
+fi
 

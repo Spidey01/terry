@@ -1,4 +1,28 @@
 # vim: set ft=sh :
+#
+# This file is designed to be sourced for its functions.
+#
+# You should be able to comply with assert_sh_services_environment() before
+# executing any of these functions.
+#
+
+# assert that the environment these functions need is exported
+#
+assert_sh_services_environment() {
+    if ! check_sh_services_environment; then
+        echo "sh services environment is missconfigured, abborting"
+        exit 1
+    fi
+}
+
+# check if the environment these functions need is exported
+# returns 0 if ok, > 0 if not ok
+#
+check_sh_services_environment() {
+    [ -z "$MY_PROFILE_PATH" ] && return 1
+    [ -z "$THIS_PROFILE" ] && return 1
+    return 0
+}
 
 services_d() {
     local w
@@ -6,7 +30,7 @@ services_d() {
     w="$MY_PROFILE_PATH/services.d/$1"
     shift 1
 	if [ -x "$w" ]; then
-	    "$w" "$@"
+	    echo "$w" "$@"
 	else
 	    echo "no $1 profile to execute! ($w)"
 	fi
@@ -15,7 +39,7 @@ services_d() {
 make_profile_link() {
     local w
 
-    w="${MY_PROFILE_PATH}/config.d/`basename $1`.${MY_NETWORK_PROFILE}"
+    w="${MY_PROFILE_PATH}/config.d/`basename $1`.`echo_this_profile NETWORK_PROFILE`"
     if [ -f "$w" ]; then
         ln -sf "$w" "${HOME}/.$1"
         return 0
@@ -30,7 +54,7 @@ rm_profile_link() {
 	fi
 }
 
-# Maps $NETWORK_NAME's to $MY_NETWORK_PROFILE's
+# Maps NETWORK_NAME's to NETWORK_PROFILE's
 #
 echo_network_profile() {
     case "$1" in
@@ -71,5 +95,67 @@ echo_network_connection() {
 	done
 
     echo "$output"
+}
+
+# extract info from the this-profile file.
+#
+# if no arguments: dump it sans comments.
+# for each argument (key), print the corrisonding value
+#
+echo_this_profile() {
+    local key
+
+    if [ ! -r "$THIS_PROFILE" ]; then
+        echo "unable to read $THIS_PROFILE" 1>&2
+        return 127
+    fi
+
+    if [ $# -eq 0 ]; then
+        cat "$THIS_PROFILE" | grep -v -E "^#"
+        return 0;
+    fi
+
+    for key in $@; do
+        grep -E "^${key}=" "$THIS_PROFILE"  | cut -d "=" -f 2- | tail -n 1
+            #
+            # force last entry (tail -n 1) to be returned, to *force* sanity.
+            # there should never be duplicates unless the user dicked with it.
+    done
+}
+
+write_this_profile() {
+    local key value
+
+    key="$1"
+    value="$2"
+
+    # erase the key
+    if [ -z "$value" ]; then
+        ed -s "$THIS_PROFILE" >/dev/null <<EOF
+    g/^${key}=/d
+EOF
+    fi
+
+    # test if value already exists
+    if [ -n "`echo_this_profile $key`" ]; then
+        # and replace
+        ed -s "$THIS_PROFILE" >/dev/null <<EOF
+        #cat <<EOF
+    $
+    ?^${key}=?
+    c
+${key}=${value}
+.
+    w
+    q
+EOF
+        return $?
+    fi
+
+    # else we can just append it.
+    #
+    # ed doesn't do locking so >> is just as safe \o/.
+    #
+    echo "${key}=${value}" >> $THIS_PROFILE
 }
 

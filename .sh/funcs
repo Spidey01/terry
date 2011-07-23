@@ -8,7 +8,7 @@ find_in_normpath() {
     #
     # Search in the usual paths for the indicated programs. If found print the
     # full path to the program to standard output, else print a nount found
-    # message to standard output.
+    # message to standard output. The output is suitable to run the program.
     #
     # params: 
     #   $@  = a list of programs to search for
@@ -19,8 +19,9 @@ find_in_normpath() {
     #
 
     for _progname; do
-        for _P in /bin /usr/bin /usr/local/bin "${HOME}/bin" "${HOME}/sh" \
-                 /sbin /usr/sbin /usr/local/sbin "${HOME}/sbin"
+        for _P in /bin /usr/bin /usr/local/bin \
+                  "${HOME}/sw/bin" "${HOME}/sw/sh" "${HOME}/sw/sh.local" \
+                  /sbin /usr/sbin /usr/local/sbin "${HOME}/sw/sbin"
         do
             _name="${_P}/${_progname}"
             if [ -x "$_name" ]; then

@@ -16,5 +16,6 @@ HISTFILE="${HOME}/.bash_history"
 
 # enable bash completion where vailable
 if [ -f /etc/bash_completion ]; then
-	source /etc/bash_completion
+    source /etc/bash_completion
 fi
+

@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# executes either ~/.sh/monitors.d/{hostname}.{network_profile} or
+# ~/.sh/monitors.d/{hostname} based on the current display configuration.
+#
+
+MY_PROFILE_PATH="${MY_PROFILE_PATH:-${HOME}/.sh}"; export MY_PROFILE_PATH
+THIS_PROFILE="${THIS_PROFILE:-${MY_PROFILE_PATH}/this-profile}"
+
+# include some utility functions
+#
+. "$MY_PROFILE_PATH/services.d/lib"
+assert_sh_services_environment
+
+
+monitors="`xrandr -q | grep -E '^\w* connected ' | cut -d ' ' -f 1`"
+
+override_file="${MY_PROFILE_PATH}/monitors.d/`uname -n`.`echo_this_profile NETWORK_PROFILE`"
+default_file="${MY_PROFILE_PATH}/monitors.d/`uname -n`"
+
+if [ -x "$override_file" ]; then
+    monitor_setup="$override_file"
+elif [ -x "$default_file" ]; then
+    monitor_setup="$default_file"
+else
+    exit 0; # nothing to do
+fi
+
+exec "$monitor_setup" $monitors
+

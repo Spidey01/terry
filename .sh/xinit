@@ -18,14 +18,17 @@ which dbus-launch >/dev/null && if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     eval `dbus-launch --sh-syntax --exit-with-session`
 fi
 
-
 # configure startup services based on network
 #
 # this assumes nmcli and Network Manager (common for Linux) which means we may
 # NOT have a network connection setup until sometime after login. So run this
 # as an external script in the background.
 #
-~/.sh/services start &
+~/.sh/services start 
+
+# configure monitors; this depends on ~/.sh/services having finished
+#
+~/.sh/monitors 
 
 
 
@@ -34,9 +37,14 @@ fi
 #
 xcompmgr -cfF &
 
-# start the big kahuna
+# Freaking Basic Panel
+#
 fbpanel &
+
+# Start the big kahuna
+#
 exec xmonad
 
 # clean up
+#
 echo "X-Session terminated"

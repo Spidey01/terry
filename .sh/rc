@@ -3,18 +3,17 @@
 # My personal Bourne-style Shell resource configuration profile.
 #
 # This should be portable across virtually all Bourne shells and operating
-# systems, as long as alias and functions are supported.
+# systems, as long as aliases and functions are supported.
 #
-# portable environment data is sourced from ~/.sh_env
-# portable functions are sourced from ~/.sh_funcs
-# portable aliases are sourced from ~/.sh_aliases
+# portable environment data is sourced from ~/.sh/env
+# portable functions are sourced from ~/.sh/funcs
+# portable aliases are sourced from ~/.sh/aliases
 #
-# system specific environment data is sourced from ~/.sh_env.osname
-# system specific functions are sourced from ~/.sh_funcs.osname
-# system specific alias are sourced from ~/.sh_aliases.osname
+# system specific environment data is sourced from ~/.sh/env.d/osname
+# system specific functions are sourced from ~/.sh/funcs.d/osname
+# system specific alias are sourced from ~/.sh/aliases.d/osname
 #
-# .site_shrc is sourced after everything else, to privide system local changes.
-# For version control purposes .site_shrc is usually a symlink or a stub.
+# ~/.sh/rc.local is sourced after everything else, to privide system local changes.
 #
 
 
@@ -31,7 +30,7 @@
     OS_ARCH=`uname -m`
     OS_NAME=`uname -s`
     OS_RELLVL=`uname -r`
-    export OS_ARCH OS_NAME_OS_RELLVL
+    export OS_ARCH OS_NAME OS_RELLVL
 #
 # Cache the current machines hostname. hostname -s is not portable enough for
 # getting the short form of our current machines hostname, so do this instead
@@ -44,8 +43,12 @@
 # set shell specific settings
 #
     case `basename $SHELL` in
-        'sh') . ~/.sh/rc.d/sh ;; # sh
-        'bash') . ~/.sh/rc.d/bash ;; # bash
+        'sh')
+            . ~/.sh/rc.d/sh
+            ;;
+        'bash')
+            . ~/.sh/rc.d/bash
+            ;;
         'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
             set -o emacs 
             set -o ignoreeof
@@ -114,7 +117,9 @@
             alias pushd=emulate_pushd
 
             ;; # ksh family
-        'zsh') . ~/.sh/rc.d/zsh
+        'zsh')
+            . ~/.sh/rc.d/zsh
+            ;;
     esac
 
 
@@ -126,8 +131,8 @@
     [ -f "${HOME}/.sh/aliases.d/${OS_NAME}" ] && . "${HOME}/.sh/aliases.d/${OS_NAME}"
 
 #
-# give a few fortune cookie and the current date/time on login.
-# non-interactive SSH sessions excluded.
+# give a fortune cookie and the current date/time on login.
+# unless it is a non-interactive SSH session.
 #
 if [ -n "$SSH_TTY" -o -z "$SSH_CONNECTION" ]; then
     [ -x /usr/games/fortune ] && /usr/games/fortune -aes

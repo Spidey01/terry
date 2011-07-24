@@ -17,6 +17,9 @@ if [ "$1" = "start" ]; then
 
     ~/sw/sh.local/myterm $termargs &
 
+    make_profile_link mutt/account
+    make_profile_link mutt/aliases
+
     # only run these by default, if not using mobile Internet
     #
     if [ "`echo_this_profile MY_NETWORK_PROFILE`" != "mobile" ]; then
@@ -26,8 +29,14 @@ if [ "$1" = "start" ]; then
 
 elif [ "$1" = "stop" ]; then
     dropbox stop
+
     pkill gnubiff
     rm_profile_link gnubiffrc 
+
+    rm_profile_link mutt/aliases
+    rm_profile_link mutt/account
+
     pkill gnome-volume-control-applet
+
     # tmux?
 fi

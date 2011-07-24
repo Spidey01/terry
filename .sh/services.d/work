@@ -4,7 +4,6 @@
 assert_sh_services_environment
 
 if [ "$1" = "start" ]; then
-    ln -sf ~/.mutt/accounts.d/work ~/.mutt/account
 
     # my workstation should run pidgin off my netbook
     if [ "`uname -n`" = "terry-Precision-WorkStation-T3400" ]; then
@@ -12,5 +11,4 @@ if [ "$1" = "start" ]; then
     fi
 
 elif [ "$1" = "stop" ]; then
-    rm_profile_link mutt/account
 fi

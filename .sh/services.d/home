@@ -4,9 +4,7 @@
 assert_sh_services_environment
 
 if [ "$1" = "start" ]; then
-    ln -sf ~/.mutt/accounts.d/gmail ~/.mutt/account
     pidgin -n &
 elif [ "$1" = "stop" ]; then
-    rm_profile_link mutt/account
     ~/sw/sh/xkillbyname "Buddy List" || pkill pidgin
 fi

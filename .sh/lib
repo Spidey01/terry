@@ -97,7 +97,7 @@ services_d() {
 make_profile_link() {
     local w
 
-    w="${MY_PROFILE_PATH}/config.d/`basename $1`.`echo_this_profile NETWORK_PROFILE`"
+    w="${MY_PROFILE_PATH}/config.d/${1}.`echo_this_profile NETWORK_PROFILE`"
     if [ -f "$w" ]; then
         ln -sf "$w" "${HOME}/.$1"
         return 0

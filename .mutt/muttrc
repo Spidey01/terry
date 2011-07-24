@@ -17,15 +17,16 @@ set fast_reply = yes
 set prompt_after = no
 
 # cache stuff where possible
-set header_cache = "~/.mutt/cache/headers"
-set message_cachedir = "~/.mutt/cache/bodies"
+set header_cache = "~/.cache/mutt/headers"
+set message_cachedir = "~/.cache/mutt//bodies"
 
 # simple query command for looking up aliases
 set query_command = "grep %s ~/.mutt/aliases"
 
+# local: my X session scripts make this a link to ~/.sh/mutt/aliases.network_profile
 source '~/.mutt/aliases'
 
-# local: my X session scripts make this a link to ~/.mutt/accounts.d/name
+# local: my X session scripts make this a link to ~/.mutt/account.network_profile
 source '~/.mutt/account'
 
 

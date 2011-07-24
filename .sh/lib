@@ -2,23 +2,81 @@
 #
 # This file is designed to be sourced for its functions.
 #
+# It is assumed to be apart of ~/.sh/* framework and can be sourced accordingly.
+#
 # You should be able to comply with assert_sh_services_environment() before
 # executing any of these functions.
 #
 
-# assert that the environment these functions need is exported
-#
+
+find_in_normpath() {
+    #
+    # Search in the usual paths for the indicated programs. If found print the
+    # full path to the program to standard output, else print a nount found
+    # message to standard output. The output is suitable to run the program.
+    #
+    # params: 
+    #   $@  = a list of programs to search for
+    #
+    # exit status:
+    #   0	= found
+    #   >0	= not found
+    #
+
+    for _progname; do
+        for _P in "${HOME}/sw/sh.local" "${HOME}/sw/sh" "${HOME}/sw/bin" \
+                  "${HOME}/sw/sbin" \
+                  /usr/local/bin /usr/local/sbin \
+                  /usr/bin /usr/sbin \
+                  /bin /sbin
+        do
+            _name="${_P}/${_progname}"
+            if [ -x "$_name" ]; then
+                echo "$_name"
+                continue 2
+            fi
+        done
+        echo "not found: $_progname"
+    done
+    unset P name progname
+    return 127
+}
+
+set_default_sh_services_environment() {
+    #
+    # Call for the side effect of setting a few vars to ~/.sh values.
+    #
+
+    MY_PROFILE_PATH="${HOME}/.sh"
+    THIS_PROFILE="${MY_PROFILE_PATH}/this-profile"
+
+    export MY_PROFILE_PATH THIS_PROFILE
+    assert_sh_services_environment
+}
+
+maybe_set_default_sh_services_environment() {
+    if ! check_sh_services_environment; then
+        set_default_sh_services_environment
+    fi
+}
+
 assert_sh_services_environment() {
+    #
+    # assert that the environment these functions need is exported
+    #
+
     if ! check_sh_services_environment; then
         echo "sh services environment is missconfigured, abborting"
         exit 1
     fi
 }
 
-# check if the environment these functions need is exported
-# returns 0 if ok, > 0 if not ok
-#
 check_sh_services_environment() {
+    #
+    # check if the environment these functions need is exported
+    # returns 0 if ok, > 0 if not ok
+    #
+
     [ -z "$MY_PROFILE_PATH" ] && return 1
     [ -z "$THIS_PROFILE" ] && return 1
     return 0
@@ -54,9 +112,10 @@ rm_profile_link() {
 	fi
 }
 
-# Maps NETWORK_NAME's to NETWORK_PROFILE's
-#
 echo_network_profile() {
+    #
+    # Maps NETWORK_NAME's to NETWORK_PROFILE's and pritns NETWORK_PROFILE
+    #
     case "$1" in
         "BSDNet")
             echo "home"
@@ -73,9 +132,11 @@ echo_network_profile() {
     esac
 }
 
-# Displays the name of the network connection, e.g. Auto BSDNet.
-#
 echo_network_connection() {
+    #
+    # Displays the name of the network connection, e.g. Auto BSDNet.
+    #
+
     local output
 
 	# network specific stuff
@@ -97,12 +158,14 @@ echo_network_connection() {
     echo "$output"
 }
 
-# extract info from the this-profile file.
-#
-# if no arguments: dump it sans comments.
-# for each argument (key), print the corrisonding value
-#
 echo_this_profile() {
+    #
+    # extract info from the this-profile file.
+    #
+    # if no arguments: dump it sans comments.
+    # for each argument (key), print the corrisonding value
+    #
+
     local key
 
     if [ ! -r "$THIS_PROFILE" ]; then

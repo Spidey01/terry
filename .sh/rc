@@ -16,12 +16,16 @@
 # ~/.sh/rc.local is sourced after everything else, to privide system local changes.
 #
 
+#
+# include library functions for the ~/.sh setup in general.
+#
+    . "${HOME}/.sh/lib"
 
 #
 # set my standard environment, functions, and aliases
 #
+    . "${HOME}/.sh/env"
     . "${HOME}/.sh/funcs"
-    . "${HOME}/.sh/env"     # depends on funcs
     . "${HOME}/.sh/aliases"
 
 #

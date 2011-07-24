@@ -4,39 +4,6 @@
 #
 #
 
-find_in_normpath() {
-    #
-    # Search in the usual paths for the indicated programs. If found print the
-    # full path to the program to standard output, else print a nount found
-    # message to standard output. The output is suitable to run the program.
-    #
-    # params: 
-    #   $@  = a list of programs to search for
-    #
-    # exit status:
-    #   0	= found
-    #   >0	= not found
-    #
-
-    for _progname; do
-        for _P in "${HOME}/sw/sh.local" "${HOME}/sw/sh" "${HOME}/sw/bin" \
-                  "${HOME}/sw/sbin" \
-                  /usr/local/bin /usr/local/sbin \
-                  /usr/bin /usr/sbin \
-                  /bin /sbin
-        do
-            _name="${_P}/${_progname}"
-            if [ -x "$_name" ]; then
-                echo "$_name"
-                continue 2
-            fi
-        done
-        echo "not found: $_progname"
-    done
-    unset P name progname
-    return 127
-}
-
 test_dns() {
     #
     # quick test of each name server on unix box.

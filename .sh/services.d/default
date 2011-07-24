@@ -3,7 +3,7 @@
 # default services to run on login to X
 #
 
-. "${MY_PROFILE_PATH:-$HOME/.sh}/services.d/lib"
+. "${MY_PROFILE_PATH:-$HOME/.sh}/lib"
 assert_sh_services_environment
 
 if [ "$1" = "start" ]; then

@@ -19,14 +19,11 @@
 ########
 
 
-MY_PROFILE_PATH="${HOME}/.sh"; export MY_PROFILE_PATH
-THIS_PROFILE="${MY_PROFILE_PATH}/this-profile"
-export MY_PROFILE_PATH THIS_PROFILE
 
 # include some utility functions
 #
-. "$MY_PROFILE_PATH/services.d/lib"
-assert_sh_services_environment
+. "${MY_PROFILE_PATH:-$HOME/.sh}/lib"; maybe_set_default_sh_services_environment
+
 
 # ensure environment is ok
 #

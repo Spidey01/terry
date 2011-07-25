@@ -87,6 +87,10 @@ services_d() {
 
     w="$MY_PROFILE_PATH/services.d/$1"
     shift 1
+    if [ -x "${w}.`uname -n`" ]; then # use host-specific override if available
+        w="${w}.`uname -n`"
+    fi
+
 	if [ -x "$w" ]; then
 	    "$w" "$@"
 	else

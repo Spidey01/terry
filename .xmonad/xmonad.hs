@@ -18,8 +18,5 @@ main = xmonad $ defaultConfig {
         -- use this when running in gnome
         --("M-S-q", spawn "gnome-session-save --gui --logout-dialog"),
 
-        --("M-p", spawn "gmrun"),
-        --("M-S-p", spawn "dmenu"),
-
         ("M-S-w", spawn "google-chrome")
     ]

@@ -196,6 +196,8 @@ write_this_profile() {
     if [ -z "$value" ]; then
         ed -s "$THIS_PROFILE" >/dev/null <<EOF
     g/^${key}=/d
+    w
+    q
 EOF
     fi
 

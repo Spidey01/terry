@@ -238,7 +238,7 @@ get_ruby_major_version() {
 
 get_python_version() {
     # groan, python seems to use stderr here.
-    "`find_in_normpath python`" -V 2>&1 | cut -d ' ' 2
+    "`find_in_normpath python`" -V 2>&1 | cut -d ' ' -f 2
 }
 
 get_python_major_version() {

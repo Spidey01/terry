@@ -43,7 +43,9 @@ fbpanel &
 
 # Start the big kahuna
 #
-exec xmonad
+exec \
+  env PATH="${HOME}/sw/sh.local:${HOME}/sw/sh:${HOME}/sw/bin:${HOME}/sw/sbin:$PATH" \
+  xmonad
 
 # clean up
 #

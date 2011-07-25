@@ -7,6 +7,8 @@
 assert_sh_services_environment
 
 if [ "$1" = "start" ]; then
+    nm-applet &
+
     gnome-volume-control-applet &
 
     # Usually I run tmux on all systems but my work station
@@ -37,6 +39,8 @@ elif [ "$1" = "stop" ]; then
     rm_profile_link mutt/account
 
     pkill gnome-volume-control-applet
+
+    pkill nm-applet
 
     # tmux?
 fi

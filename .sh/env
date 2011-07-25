@@ -60,5 +60,11 @@ export LD_LIBRARY_PATH
 
 # Pick up programs/modules from Ruby gems
 #
-RUBYLIB="$HOME/.gem/ruby/1.8/lib:$RUBYLIB"; export RUBYLIB
-PATH="$HOME/.gem/ruby/1.8/bin:$PATH"
+RUBYLIB="$HOME/.gem/ruby/`get_ruby_major_version`/lib:$RUBYLIB"; export RUBYLIB
+PATH="$HOME/.gem/ruby/`get_ruby_major_version`/bin:$PATH"
+
+# Python stuff
+#
+PYTHONSTARTUP="${HOME}/.pythonrc"
+export PYTHONSTARTUP
+

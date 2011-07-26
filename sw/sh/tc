@@ -1,0 +1,74 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]; then
+    echo "usage: $0 [-h host] [-w | -p] {command} [args]"
+    echo ""
+    echo "    runs command with args in a new tmux window (-w; default)"
+    echo "    or pane (-p) echo "and optionally via ssh on host (-h)."
+    echo "    dtach support is wip"
+fi
+
+while getopts "dh:wp" opt; do
+    case $opt in
+        d)
+            dtach=yes
+            ;;
+        h)
+            host="$OPTARG"
+            ;;
+        w)
+            how="window"
+            ;;
+        p)
+            how="pane"
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            ;;
+    esac
+done
+shift `expr $OPTIND - 1`
+
+do_cmd() {
+    local tmuxcmd
+
+    if [ "$how" = "pane" ]; then
+        tmuxcmd="tmux split-window"
+    elif [ "$how" = "window" ]; then
+        tmuxcmd="tmux new-window"
+    fi
+    $tmuxcmd "$@; echo '$0: press enter to close'; read NULL"
+}
+
+local_cmd() {
+    do_cmd $@
+}
+
+remote_cmd() {
+
+    # if [ -n "$dtach" ]; then
+        # printf "enter name of dtach socket file to place in $host:~/dsocks/: "
+        # read sockname
+
+        # if [ -z "$sockname" ]; then
+            # echo "NO name entered, I will not create a dtach'd shell then!"
+            # args="$@"
+        # else
+            # ssh "$host" dtach -n "~/dsocks/$sockname" "$@"
+            # echo "run dtach -a ~/dsocks/${sockname} to access this shell"
+            # args=""
+        # fi
+    # fi
+
+    do_cmd "ssh $host $@"
+}
+
+
+
+[ -z "$how" ] && how="window"
+
+if [ -z "$host" ]; then # running locally
+    local_cmd $@
+else
+    remote_cmd $@
+fi

@@ -54,73 +54,8 @@
             . ~/.sh/rc.d/bash
             ;;
         'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
-            set -o emacs 
-            set -o ignoreeof
-
-            #
-            # The various korn shells handle escape codes in prompts 
-            # rather differently from one another. This method appears
-            # to work on all ksh implementations and plays nicely with
-            # VT102 emulators like rxvt perfectly fine.
-            #
-            # Special thanks to Scotto for this technique.
-            #
-            PS1='${USER}@[1;37m${HOSTNAME}[0;36m$[0;0m '
-
-            # As used by the classic  korn shell
-            HISTFILE="${HOME}/.sh_history"
-
-            #
-            # Check if we're using a public domain ksh, which supports the 
-            # nifty 'bind' command, plus an extended command set
-            #
-            echo $KSH_VERSION | egrep 'MIRBSD|PD KSH' >/dev/null
-            if [ $? -eq 0 ]; then 
-                # assume we have a pd-style korn
-
-                #
-                # make sure tab completion works (where possible)
-                # XXX do not use complete-{command,file} - they break it!
-                #
-                bind "^I=complete"
-                # needed to display the completion list, where applicable.
-                bind "^I=complete-list"
-            else
-                # assume we have a real korn
-
-                #
-                # define a function (keybind) that we can use to map keys.
-                # this will only work on Korn Shell 1993 & up
-                #
-                typeset -A Keytable
-                trap 'eval "${Keytable[${.sh.edchar}]}"' KEYBD
-                keybind() { # key [action]
-                    typeset key=$(print -f "%q" "$2")
-                    case $# in
-                        2) Keytable[$1]=' .sh.edchar=${.sh.edmode}'"$key" ;;
-                        1) unset Keytable[$1] ;;
-                        *) print -u2 "Usage: $0 key [action]"
-                           return 2;; # usage errors return 2 by default
-                    esac
-
-                }
-                # allow one <tab> to do completion work.
-                #keybind $'\t' $'\E\E' #<-- use this if shell uses <esc><esc>
-                keybind $'\t' $'\t\t'  #<-- use this if shell uses <tab><tab>
-
-                # clear the screen on ^L    (control char)
-                # rather then just reprinting the prompt.
-                keybind  $'clear\n'
-            fi
-
-            # ksh doesn't support C-style directory stacks, emulate them
-            DIRSTACK="$HOME"
-            export DIRSTACK
-            alias dirs=emulate_dirs
-            alias popd=emulate_popd
-            alias pushd=emulate_pushd
-
-            ;; # ksh family
+            . ~/.sh/rc.d/ksh
+            ;;
         'zsh')
             . ~/.sh/rc.d/zsh
             ;;
@@ -147,6 +82,6 @@ fi
 #
 # parse site local additions
 #
-    [ -f "${HOME}/.sh/rc.local" ] && . "${HOME}/.sh/rc.local"
+#    [ -f "${HOME}/.sh/rc.local" ] && . "${HOME}/.sh/rc.local"
 
 

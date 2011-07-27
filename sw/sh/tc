@@ -2,10 +2,11 @@
 
 if [ $# -eq 0 ]; then
     echo "usage: $0 [-h host] [-w | -p] {command} [args]"
-    echo ""
-    echo "    runs command with args in a new tmux window (-w; default)"
-    echo "    or pane (-p) echo "and optionally via ssh on host (-h)."
-    echo "    dtach support is wip"
+    echo ''
+    echo '    runs command with args in a new tmux window (-w; default)'
+    echo '    or pane (-p) echo "and optionally via ssh on host (-h).'
+    echo '    dtach support is wip'
+    echo ''
 fi
 
 while getopts "dh:wp" opt; do

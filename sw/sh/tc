@@ -42,7 +42,7 @@ do_cmd() {
 }
 
 local_cmd() {
-    do_cmd $@
+    do_cmd "$@"
 }
 
 remote_cmd() {

@@ -1,4 +1,4 @@
-# vim : set ft=sh :
+# vim: set ft=sh :
 set bell-style none
 set -o emacs 
 shopt -s checkwinsize

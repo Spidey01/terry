@@ -14,8 +14,10 @@ shopt -s histappend
 
 HISTFILE="${HOME}/.bash_history"
 
-# enable bash completion where vailable
-if [ -f /etc/bash_completion ]; then
+# enable bash completion where vailable, if the system profile hasn't already
+# enabled it on this system. (Usually /etc/profile.d/... or sth.)
+#
+if [ -z "$BASH_COMPLETION" -a -r /etc/bash_completion ]; then
     source /etc/bash_completion
 fi
 

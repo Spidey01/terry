@@ -22,6 +22,7 @@
         alias   ack='ack-grep'
     fi
 
+    alias   tman='tcmd man'
 
 #
 # Define fail safe aliases that should work on POSIX/SUS systems.

@@ -38,7 +38,7 @@ do_cmd() {
     elif [ "$how" = "window" ]; then
         tmuxcmd="tmux new-window"
     fi
-    $tmuxcmd "$*; echo '`basename $0`: press enter to close'; read NULL"
+    $tmuxcmd "tmux rename-window '$1'; $*; echo '`basename $0`: press enter to close'; read NULL"
 }
 
 local_cmd() {

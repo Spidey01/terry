@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# 
+
+usage() {
+    echo "usage: "
+    printf "\t`basename $0` VGA1 on 1920x1080\n"
+    printf "\t`basename $0` LVDS1 off\n"
+    echo "any following arguments will be forwarded to a suitable xrandr call"
+    exit
+}
+
+name="`basename $0`"
+state="$2"
+mode="$3"
+output="$1"
+
+
+if [ $# -eq 0 -o "$1" = "--help" ]; then
+    usage
+fi
+
+if echo "$state" | grep -i on >/dev/null; then
+    [ $# -ge 3 ] || usage
+    shift 3
+    xrandr --output "$output" --mode "$mode"
+elif echo "$state" | grep -i off >/dev/null; then
+    [ $# -ge 2 ] || usage
+    shift 2
+    xrandr --output "$output" --off
+else
+    echo "dunno how to handle command line arguments: $@"
+    usage
+fi
+
+if [ $# -gt 0 ]; then
+    xrandr --output "$output" $@
+fi

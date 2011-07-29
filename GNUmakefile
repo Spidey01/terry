@@ -18,7 +18,7 @@ push:
 	git push origin
 	git push vectra
 
-rc_files: .mutt .vimrc .gvimrc
+rc_files: .mutt .vimrc .gvimrc .pythonrc
 
 .mutt: .sh/config.d/mutt .cache/mutt
 	$(MKDIR)
@@ -31,6 +31,10 @@ rc_files: .mutt .vimrc .gvimrc
 
 .gvimrc: .vim/gvimrc
 	$(LINK)
+
+# non version controlled (yet). Just make sure it exists.
+.pythonrc:
+	touch .pythonrc
 
 dropbox_dirs: Dropbox docs n projs sw/sh.local w
 
@@ -94,4 +98,4 @@ hosts:
 tmp:
 	$(MKDIR)
 
-.PHONY: status pull push .cache .config .local/share Desktop dls music pics Public Templates vids hosts tmp sw
+.PHONY: status pull push .cache .config .local/share .pythonrc Desktop dls music pics Public Templates vids hosts tmp sw

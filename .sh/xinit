@@ -31,6 +31,13 @@ fi
 ~/.sh/monitors 
 
 
+# if running on a laptop, try to disable the touch pad while typing
+#
+if laptop-detect; then
+    # [ ! -f "${HOME}/tmp/syndaemon.pid" ] &&
+    syndaemon -d -tK -i 0.5 #-p "${HOME}/tmp/syndaemon.pid"
+    # TODO: a way of trapping logout events for cleanup
+fi
 
 #
 # Fancy shadows and things

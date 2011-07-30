@@ -11,5 +11,5 @@ if [ "$1" = "start" ]; then
     fi
 
 elif [ "$1" = "stop" ]; then
-    
+    echo nothing to do >/dev/null    
 fi

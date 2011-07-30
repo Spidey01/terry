@@ -85,8 +85,8 @@ pics:
 Public:
 	$(MKDIR)
 
-Templates:
-	$(MKDIR)
+Templates: Dropbox/Templates
+	$(LINK)
 
 vids:
 	$(MKDIR)
@@ -98,4 +98,4 @@ hosts:
 tmp:
 	$(MKDIR)
 
-.PHONY: status pull push .cache .config .local/share .pythonrc Desktop dls music pics Public Templates vids hosts tmp sw
+.PHONY: status pull push .cache .config .local/share .pythonrc Desktop dls music pics Public vids hosts tmp sw

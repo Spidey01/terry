@@ -196,6 +196,11 @@ write_this_profile() {
     key="$1"
     value="$2"
 
+    if [ -z "$key" ]; then
+        echo "KEY should be a scalar word, not the empty string!"
+        return 1
+    fi
+
     # erase the key
     if [ -z "$value" ]; then
         ed -s "$THIS_PROFILE" >/dev/null <<EOF
@@ -225,7 +230,9 @@ EOF
     #
     # ed doesn't do locking so >> is just as safe \o/.
     #
-    echo "${key}=${value}" >> $THIS_PROFILE
+    if [ -n "$value" ]; then
+        echo "${key}=${value}" >> $THIS_PROFILE
+    fi
 }
 
 get_ruby_version() {

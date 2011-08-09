@@ -10,6 +10,7 @@ import XMonad.Util.EZConfig
 --        where fadeAmount = 0x99999999 -- 60% rgba
 
 main = xmonad $ defaultConfig {
+        modMask = mod4Mask,
         manageHook = manageDocks <+> manageHook defaultConfig,
         layoutHook = avoidStruts $ layoutHook defaultConfig,
         terminal = "/home/terry/sw/sh.local/myterm"

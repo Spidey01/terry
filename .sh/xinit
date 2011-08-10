@@ -46,7 +46,7 @@ xcompmgr -cfF &
 
 # Freaking Basic Panel
 #
-fbpanel &
+env TZ="America/New_York" fbpanel &
 
 # Start the big kahuna
 #

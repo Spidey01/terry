@@ -1,11 +1,20 @@
 #!/bin/sh
 # mounter for SSHFS
 #
-# mnt-sshfs ssh-host-name
 #
-# Mounts or unmounts ~/ on ssh-host-name to ~/hosts/ssh-host-name. Be sure to
-# configure things in ~/.ssh/config so that `ssh host` works!
-#
+
+if [ -z "$1" ]; then
+    # simple reminder
+    echo "usage: `basename $0` {hostname}"
+    exit 0
+elif [ "$1" = "-h" -o "$1" = "--help" ]; then
+    # detailed help
+    echo "usage: `basename $0` {hostname}"
+    echo
+    echo "Mounts or unmounts ~/ on hostname to ~/hosts/hostname. Be sure to"
+    echo 'configure things in ~/.ssh/config so that `ssh hostname` works!'
+    exit 0
+fi
 
 # where to mount hosts
 where="$HOME/hosts/$1"

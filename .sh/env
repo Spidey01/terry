@@ -66,5 +66,6 @@ PATH="$HOME/.gem/ruby/`get_ruby_major_version`/bin:$PATH"
 # Python stuff
 #
 PYTHONSTARTUP="${HOME}/.pythonrc"
-export PYTHONSTARTUP
+PYTHONPATH="${HOME}/sw/lib/python`get_python_major_version`/site-packages:$PYTHONPATH"
+export PYTHONSTARTUP PYTHONPATH
 

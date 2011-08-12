@@ -2,7 +2,11 @@
 OS_NAME="`uname -s`"
 
 linuxsnore() {
-    sudo sh -c 'echo disk > /sys/power/state'
+    if [ `id -u` = 0 ]; then
+        echo disk > /sys/power/state
+    else
+        sudo sh -c 'echo disk > /sys/power/state'
+    fi
 }
 
 # FreeBSD:

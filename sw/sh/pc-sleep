@@ -2,7 +2,11 @@
 OS_NAME="`uname -s`"
 
 linuxsleep() {
-    sudo sh -c 'echo mem > /sys/power/state'
+    if [ `id -u` = 0 ]; then
+        echo mem > /sys/power/state
+    else
+        sudo sh -c 'echo mem > /sys/power/state'
+    fi
 }
 
 # FreeBSD:

@@ -1,0 +1,4 @@
+#!/bin/sh
+#
+
+#echo "runing '$0 $*' to setup power profile"

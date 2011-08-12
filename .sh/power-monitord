@@ -9,78 +9,18 @@
 # state: adapter, battery, or unknown. Your script should be safe to call multiple times.
 #
 
-unknown_impl() {
-    echo "`basename $0`: unsupported platform: `uname -o`"
-    exit
-}
-
-# called to report power state
-#
-linux_impl() {
-    #
-    # acpi can be used to detect power state on linux:
-    #
-    # [ terry@alice ]() acpi -a
-    # Adapter 0: on-line
-    # [ terry@alice ]() acpi -a
-    # Adapter 0: off-line
-    # [ terry@alice ]() acpi -b
-    # Battery 0: Discharging, 100%, 05:30:04 remaining
-    # [ terry@alice ]() acpi -b
-    # Battery 0: Charging, 98%, 00:06:23 until charged
-    # [ terry@alice ]() acpi -b
-    # Battery 0: Full, 100%
-    # [ terry@alice ]()
-    #
-    case `acpi -b | cut -d , -f 1 | cut -d : -f 2` in
-        *Charging|*Full)
-            echo 'adapter'
-            ;;
-        *Discharging)
-            echo 'battery'
-            ;;
-        *)
-            echo 'unknown'
-            ;;
-    esac
-}
-
-set_power_profile() {
-    local which_profile 
-
-    if [ -x "$network_power_profile" ]; then
-        which_profile="$network_power_profile"
-    elif [ -x "$default_power_profile" ]; then
-        which_profile="$default_power_profile"
-    else
-        echo "`basename $0`: no power profile available!" > /dev/stderr
-        return 1
-    fi
-
-    "$which_profile" "$*" 
-    write_this_profile POWER_PROFILE `basename "$which_profile"`
-}
-
 . "${MY_PROFILE_PATH:-$HOME/.sh}/lib"; maybe_set_default_sh_services_environment
 
-hostname="`uname -n`"
-power_dir="${MY_PROFILE_PATH}/power.d"
-network_power_profile="${power_dir}/`echo_this_profile  NETWORK_PROFILE`.$hostname"
-default_power_profile="${power_dir}/default.$hostname"
+shutdown_pmd() {
+    # TODO: figure out how to shutdown the thing.
+    #       we should probably do `set_power_profile shutdown` or something.
+}
 
 
-case `uname -o` in
-    GNU/Linux)
-        power_impl="linux"
-        ;;
-    *)
-        power_impl="unknown"
-        ;;
-esac
-
+trap shutdown_pmd 0 INT TERM 
 
 while true; do
-    set_power_profile `${power_impl}_impl`
+    set_power_profile `get_power_state`
 
     # default wait of 7min between ticks should be OK
     sleep "${1:-420}"

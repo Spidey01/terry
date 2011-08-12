@@ -24,7 +24,7 @@ fi
 # NOT have a network connection setup until sometime after login. So run this
 # as an external script in the background.
 #
-~/.sh/services start 
+sh-services start 
 
 # configure monitors; this depends on ~/.sh/services having finished
 #
@@ -50,9 +50,7 @@ env TZ="America/New_York" fbpanel &
 
 # Start the big kahuna
 #
-exec \
-  env PATH="${HOME}/sw/sh.local:${HOME}/sw/sh:${HOME}/sw/bin:${HOME}/sw/sbin:$PATH" \
-  xmonad
+exec xmonad
 
 # clean up
 #

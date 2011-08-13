@@ -23,6 +23,9 @@ rc_files: .mutt .vimrc .gvimrc .pythonrc
 .mutt: .sh/config.d/mutt .cache/mutt
 	$(MKDIR)
 
+.sh/config.d/mutt: .sh/config.d
+	$(MKDIR)
+
 .cache/mutt: .cache
 	$(MKDIR)
 

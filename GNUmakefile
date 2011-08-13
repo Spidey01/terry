@@ -40,7 +40,7 @@ rc_files: .mutt .vimrc .gvimrc .pythonrc
 .pythonrc:
 	touch .pythonrc
 
-dropbox_dirs: Dropbox docs n projs sw/sh.local w
+dropbox_dirs: Dropbox docs n projs sw/sh.local w .ssh/keys
 
 docs: Dropbox/Documents
 	$(LINK)
@@ -56,6 +56,9 @@ sw/sh.local: sw Dropbox/sh/$(shell uname -n)
 
 w: Dropbox/Wegener
 	$(LINK)
+
+.ssh/keys: Dropbox/SshKeys
+	sh -c "mkdir -p .ssh && cd .ssh && ln -s ../Dropbox/SshKeys keys"
 
 #
 # Some of these are my personal preferences and mated to Dropbox.

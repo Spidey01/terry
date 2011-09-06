@@ -21,7 +21,7 @@ while getopts "hl:" opt; do
             LABELS="--tags '$OPTARG'"
             ;;
         \?)
-            echo "Invalid option: -$OPTARG" >&2
+            echo "Invalid option: -$OPTARG"
             ;;
     esac
 done
@@ -35,7 +35,7 @@ fi
 BLOGITDIR="/tmp/blogit/"
 SUBJECT="$1"
 FILE="${BLOGITDIR}${SUBJECT}.html"
-mkdir -p "${BLOGITDIR}" 2&>1 >/dev/null
+mkdir -p "${BLOGITDIR}" 2>&1 >/dev/null
 "$EDITOR" "$FILE"
 if [ -e "$FILE" ]; then
     echo "Posting to blogger"

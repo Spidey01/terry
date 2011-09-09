@@ -39,6 +39,11 @@ if laptop-detect; then
     # TODO: a way of trapping logout events for cleanup
 fi
 
+# run jwz's screen saver and locking program
+#
+xscreensaver -no-splash &
+
+
 #
 # Fancy shadows and things
 #

@@ -387,6 +387,10 @@
 		" make useless shift+tab do auto completion -- great for XML !
 		inoremap <S-Tab> <C-x><C-o>
 
+		" Make \sn open my scratch notes
+		nnoremap <leader>osn <esc>:e ~/n/ScratchNotes.viki<cr>
+
+
 	" !MAPS }}}
 
 	" *FUNCTIONS* {{{

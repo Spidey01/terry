@@ -19,10 +19,11 @@ newtmuxsession() {
 #
 tmsl="`tmux ls 2>/dev/null | sed -e 's/:.*$//g'`"
 
-if [ -z "$tmsl" ]; then
-    newtmuxsession
-    exit
-fi
+# Uncomment to go straight to new session prompt if not running any servers
+#if [ -z "$tmsl" ]; then
+#    newtmuxsession
+#    exit
+#fi
 
 select tms in "new-session" $tmsl; do
     if [ "$tms" = "new-session" ]; then

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec env TZ="America/New_York" date +"%M/%d/%Y %l:%m %p" 

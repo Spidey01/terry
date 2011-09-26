@@ -12,3 +12,12 @@ alias 	la='ls --color=auto -aHh'
 alias   ectags=/usr/bin/ctags-exuberant
 alias	exctags=/usr/bin/ctags-exuberant
 alias   bc='bc -q'
+
+# these systems call their ack package 'ack-grep' to avoid collision with
+# some other program called ack, that I'll likely never even need to hear
+# exists.
+#
+if uname -a | grep -Ei 'debian|ubuntu' >/dev/null; then
+	alias   ack='ack-grep'
+fi
+

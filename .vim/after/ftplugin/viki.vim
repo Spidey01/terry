@@ -1,6 +1,6 @@
 call PreHandlerHook()
 
-setl tabstop=4 shiftwidth=4 softtabstop=4 expandtab autoindent
+setl tabstop=4 shiftwidth=4 softtabstop=4 expandtab autoindent nonumber
 
 " mapping to promote (less *) a heading; in emacs org-mode this is {C-c C-x or M} Left
 "

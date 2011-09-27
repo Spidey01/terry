@@ -1,15 +1,15 @@
 #!/bin/sh
 
 if [ $# -eq 0 ]; then
-    echo "usage: $0 [-h host] [-w | -p] {command} [args]"
+    echo "usage: $0 [-t index] [-h host] [-w | -p] {command} [args]"
     echo ''
     echo '    runs command with args in a new tmux window (-w; default)'
-    echo '    or pane (-p) echo "and optionally via ssh on host (-h).'
-    echo '    dtach support is wip'
+    echo '    or pane (-p) and optionally via ssh on host (-h).'
+    echo '    use -t index to specify the -t option to tmux new-window'
     echo ''
 fi
 
-while getopts "dh:wp" opt; do
+while getopts "dh:wpt:" opt; do
     case $opt in
         d)
             dtach=yes
@@ -22,6 +22,9 @@ while getopts "dh:wp" opt; do
             ;;
         p)
             how="pane"
+            ;;
+        t)
+            tmuxflags="-t $OPTARG"
             ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
@@ -38,7 +41,7 @@ do_cmd() {
     elif [ "$how" = "window" ]; then
         tmuxcmd="tmux new-window"
     fi
-    $tmuxcmd "tmux rename-window '$1'; $*; echo '`basename $0`: press enter to close'; read NULL"
+    $tmuxcmd $tmuxflags "tmux rename-window '$1'; $*; echo '`basename $0`: press enter to close'; read NULL"
 }
 
 local_cmd() {
@@ -65,6 +68,7 @@ remote_cmd() {
 }
 
 
+echo "args to pass: $@ # $#"
 
 [ -z "$how" ] && how="window"
 

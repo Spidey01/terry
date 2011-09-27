@@ -68,7 +68,7 @@ remote_cmd() {
 }
 
 
-echo "args to pass: $@ # $#"
+#echo "args to pass: $@ # $#"
 
 [ -z "$how" ] && how="window"
 

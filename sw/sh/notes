@@ -4,4 +4,4 @@ if [ -n "$TMUX" ]; then
     tmux rename-window notes
 fi
 
-cd ~/n && vim ~/n/ScratchNotes.viki
+cd ~/n && vim -c 'normal zM' ~/n/ScratchNotes.viki

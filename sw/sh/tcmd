@@ -1,18 +1,21 @@
 #!/bin/sh
 
 if [ $# -eq 0 ]; then
-    echo "usage: $0 [-t index] [-h host] [-w | -p] {command} [args]"
+    echo "usage: $0 [-d] [-t index] [-h host] [-w | -p] {command} [args]"
     echo ''
-    echo '    runs command with args in a new tmux window (-w; default)'
+    echo '    Runs command with args in a new tmux window (-w; default)'
     echo '    or pane (-p) and optionally via ssh on host (-h).'
-    echo '    use -t index to specify the -t option to tmux new-window'
+    echo ''
+    echo '    The -d and -t index options are passed to the tmux new-window'
+    echo '    and split-window commands.'
     echo ''
 fi
 
 while getopts "dh:wpt:" opt; do
     case $opt in
         d)
-            dtach=yes
+            #dtach=yes
+            tmuxflags="$tmuxflags -d"
             ;;
         h)
             host="$OPTARG"
@@ -24,7 +27,7 @@ while getopts "dh:wpt:" opt; do
             how="pane"
             ;;
         t)
-            tmuxflags="-t $OPTARG"
+            tmuxflags="$tmuxflags -t $OPTARG"
             ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2

@@ -12,7 +12,11 @@ PS1="[ \u@\h ]$ "; export PS1
 # append to history file rather than overwrite
 shopt -s histappend
 
+# don't say in history if current command is same as last
+HISTCONTROL=ignoredups
 HISTFILE="${HOME}/.bash_history"
+# number of lines to save in the history file; 64kl should be <= 1mb
+HISTFILESIZE=64000
 
 # enable bash completion where vailable, if the system profile hasn't already
 # enabled it on this system. (Usually /etc/profile.d/... or sth.)

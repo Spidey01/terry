@@ -1,7 +1,29 @@
 #!/usr/bin/env bash
 
 if [ -n "$TMUX" ]; then
+    # for some reason if I redir this to /dev/null or any other file on
+    # andrea, I get a long blocking event...
+    #
+    tmux set-window-option automatic-rename
     tmux rename-window notes
 fi
 
-cd ~/n && vim -c 'normal zM' ~/n/ScratchNotes.viki
+if ! cd ~/n; then
+    echo "$0: failed to cd to notes dir, exiting"
+    exit
+fi
+
+my_dsock="${HOME}/notes.sock"
+if [ -S "$my_dsock" ]; then
+    dtach -a "$my_dsock"
+else
+    dtach -c "$my_dsock" vim -c 'normal zM' ~/n/ScratchNotes.viki
+fi
+
+if [ -n "$TMUX" ]; then
+    # oddly if I have two windows attached (in same session; idk about diff'
+    # sessions) only one will be renamed when exiting vim :-/
+    #
+    tmux set-window-option automatic-rename
+fi
+

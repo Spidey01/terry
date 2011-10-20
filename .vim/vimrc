@@ -26,16 +26,15 @@
 " |MACROS|              --- Macro instructions
 "   |ABBREVIATIONS|     --- Abbreviations for insert, command, or all modes
 "   |AUTOCMDS|          ---	Auto commands for event handling
-"   |COMMANDS|          --- Ex commands
-"   |MAPS|              --- Key mappings
+"   |COMMANDS|          --- 	Ex commands
+"   |MAPS|              --- 	Key mappings
 "   |FUNCTIONS|         ---	Global functions
-"   |HANDLERS|          --- Handler functions for various file formats
+"   |HANDLERS|          --- 	Handler functions for various file formats
 " |PLUGINS|             --- Plugin specific configuration 
-"   |BuiltIn|           --- Options for built in plugin/syntax files/etc.
-"   |CSApprox|          --- Color Scheme Approximate
-"   |NERDTree|          --- Enhanced file system tree navigator
-"   |NERDCommenter|     --- All things comment related
-"   |netlib|            --- A snazzy NetRW replacement
+"   |BuiltIn|           --- 	Options for built in plugin/syntax files/etc.
+"   |NERDTree|          --- 	Enhanced file system tree navigator
+"   |NERDCommenter|     --- 	All things comment related
+"   |netlib|            --- 	A snazzy NetRW replacement
 " |play|                --- Misc stuff, usually notes / code snippets
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -591,30 +590,6 @@
 		endif
 
 	" !BuiltIn}}}
-
-	" *CSApprox* {{{
-	" Colour Scheme Approximator for console
-
-		" skip if the terminal can't handle it
-		if &t_Co < 88
-			let g:CSApprox_loaded=1
-		endif
-
-		if !has("gui")	" only load plugin if gui support is available.
-			let g:CSApprox_verbose_level=0
-			let g:CSApprox_loaded=1
-		else
-			if &term == 'screen' && g:hostname == 'dixie' 
-				let g:CSApprox_loaded=1
-			" Other wise we likely want transparency, and CSApprox
-			else
-				let g:CSApprox_hook_none_post = 
-							\['hi Normal  ctermbg=NONE ctermfg=NONE',
-							\ 'hi NonText ctermbg=NONE ctermfg=NONE' ]
-			endif
-		endif
-
-	" }}} !CSApprox
 
 	" *NERDTree* {{{
 	" A very nerdy file system tree browser window

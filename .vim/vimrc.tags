@@ -3,7 +3,6 @@ AUTOCMDS	$MYVIMRC	/" *AUTOCMDS* {{{$/
 BINDS	$MYVIMRC	/" *BINDS* {{{$/
 BuiltIn	$MYVIMRC	/" *BuiltIn* {{{$/
 COMMANDS	$MYVIMRC	/" *COMMANDS* {{{$/
-CSApprox	$MYVIMRC	/" *CSApprox* {{{$/
 FORMATS	$MYVIMRC	/" *FORMATS* {{{$/
 FUNCTIONS	$MYVIMRC	/" *FUNCTIONS* {{{$/
 GENERAL	$MYVIMRC	/" *GENERAL* {{{$/

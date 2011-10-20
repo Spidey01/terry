@@ -374,6 +374,7 @@
 		cnoremap <C-B> <Left>
 		cnoremap <Esc>b <S-Left>
 		cnoremap <Esc>f <S-Right>
+		cnoremap <C-D> <Del>
 	
 		" make useless shift+tab do auto completion -- great for XML !
 		inoremap <S-Tab> <C-x><C-o>

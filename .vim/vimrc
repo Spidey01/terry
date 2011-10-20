@@ -33,7 +33,6 @@
 " |PLUGINS|             --- Plugin specific configuration 
 "   |BuiltIn|           --- Options for built in plugin/syntax files/etc.
 "   |CSApprox|          --- Color Scheme Approximate
-"   |Taglist|           --- Tags file navigator plugin
 "   |NERDTree|          --- Enhanced file system tree navigator
 "   |NERDCommenter|     --- All things comment related
 "   |netlib|            --- A snazzy NetRW replacement
@@ -616,24 +615,6 @@
 		endif
 
 	" }}} !CSApprox
-
-	" *Taglist* {{{
-	" Exuberant Ctags capable tags browser window
-
-		map <silent><leader>tl :TlistToggle<CR>
-		let g:Tlist_Auto_Open=0
-		let g:Tlist_GainFocus_On_ToggleOpen=1
-		let g:Tlist_Enable_Fold_Column=0
-		let g:Tlist_Exit_OnlyWindow=1
-		let g:Tlist_Display_Prototype=1
-		let g:Tlist_Show_Menu=1
-		let g:Tlist_Use_Right_Window=1
-		let g:Tlist_WinWidth=24
-		let g:Tlist_Inc_WinWidth=0
-		if g:hostname == 'sal1600'
-			let g:Tlist_Ctags_Cmd='C:/DevFiles/Tools/ctags58/ctags.exe'
-		endif
-	" !Taglist }}}
 
 	" *NERDTree* {{{
 	" A very nerdy file system tree browser window

@@ -639,7 +639,7 @@
 	" A very nerdy file system tree browser window
 
 		map <silent><leader>nt :NERDTreeToggle<CR>
-		let g:NERDTreeWinPos="right"
+		let g:NERDTreeWinPos="left"
 		let g:NERDTreeWinSize=24
 
 	" !NERDTree }}}

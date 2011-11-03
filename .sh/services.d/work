@@ -5,11 +5,6 @@ assert_sh_services_environment
 
 if [ "$1" = "start" ]; then
 
-    # my workstation should run pidgin off my netbook
-    if [ "`uname -n`" = "terry-Precision-WorkStation-T3400" ]; then
-        ssh -X -f alice pidgin -n
-    fi
-
 elif [ "$1" = "stop" ]; then
-    echo nothing to do >/dev/null    
+
 fi

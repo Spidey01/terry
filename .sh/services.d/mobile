@@ -4,3 +4,8 @@
 assert_sh_services_environment
 
 # just a stub so far
+if [ "$1" = "start" ]; then
+
+elif [ "$1" = "stop" ]; then
+
+fi

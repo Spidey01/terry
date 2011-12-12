@@ -4,13 +4,15 @@
 #
 
 if [ -z "$MY_DTACH_SOCKET_DIR" ]; then
-    MY_DTACH_SOCKET_DIR="${HOME}/dsocks"
+    #MY_DTACH_SOCKET_DIR="${HOME}/dsocks"
+    MY_DTACH_SOCKET_DIR="/tmp/${LOGNAME}/dsocks"
 fi
+[ ! -d "$MY_DTACH_SOCKET_DIR" ] && mkdir -p "$MY_DTACH_SOCKET_DIR"
 
 echo "Select a dtach'd socket to connect to"
-select DSOCK in "new dtach socket" $(ls "${MY_DTACH_SOCKET_DIR}"); do
+select DSOCK in "new dtach socket" $(ls "${MY_DTACH_SOCKET_DIR}/"); do
     if [ "$DSOCK" = "new dtach socket" ]; then
-        printf "enter session name ("${MY_DTACH_SOCKET_DIR}/"): "
+        printf "enter session name (${MY_DTACH_SOCKET_DIR}/): "
         read DSOCK
         if [ -z "$DSOCK" ]; then
             printf "\n$0: no name entered, exiting\n"
@@ -18,6 +20,10 @@ select DSOCK in "new dtach socket" $(ls "${MY_DTACH_SOCKET_DIR}"); do
         fi
         preargs="-c"
         postargs="bash -li"
+
+        printf "enter command to run [$postargs]: "
+        read userpostargs
+        [ -n "$userpostargs" ] && postargs="$userpostargs"
     fi
     exec dtach ${preargs:--a} "${MY_DTACH_SOCKET_DIR}/${DSOCK}" -z $postargs
     echo "$0: FAILED"

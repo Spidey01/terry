@@ -3,10 +3,29 @@
 
 
 cpufreq() {
-    local _CPU
-    
+    local _CPU _MAYBE _CMD
+
+    _CMD="cat"
+
+    if [ ! -r /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq ]; then
+        # seems only root can access this stuff, so deal with it.
+        if [ -t 1 ]; then
+            printf "try using sudo? y/n: "
+            read _MAYBE
+            if echo $_MAYBE | grep -i -E '^y' > /dev/null; then
+                _CMD="sudo $_CMD"
+            else
+                return 2
+            fi
+        else
+            echo "Can't read cpuinfo_cur_freq under /sys; aborting"
+            return 2
+        fi
+    fi
+
+
     for _CPU in /sys/devices/system/cpu/cpu?; do
-        # echo "`basename $_CPU`: `cat ${_CPU}/cpufreq/cpuinfo_cur_freq` hz"
-        echo "`basename $_CPU`: `cat ${_CPU}/cpufreq/cpuinfo_cur_freq | sed -e 's/000$//'` Mhz"
+        # echo "`basename $_CPU`: `$_CMD ${_CPU}/cpufreq/cpuinfo_cur_freq` hz"
+        echo "`basename $_CPU`: `$_CMD ${_CPU}/cpufreq/cpuinfo_cur_freq | sed -e 's/000$//'` Mhz"
     done
 }

@@ -1,0 +1,12 @@
+# vim: set ft=sh :
+#
+
+
+cpufreq() {
+    local _CPU
+    
+    for _CPU in /sys/devices/system/cpu/cpu?; do
+        # echo "`basename $_CPU`: `cat ${_CPU}/cpufreq/cpuinfo_cur_freq` hz"
+        echo "`basename $_CPU`: `cat ${_CPU}/cpufreq/cpuinfo_cur_freq | sed -e 's/000$//'` Mhz"
+    done
+}

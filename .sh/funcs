@@ -1,4 +1,4 @@
-# vim: set ft=sh :
+# vim: set ft=sh 
 #
 # General functions that should be fairly portable
 #
@@ -159,6 +159,14 @@ dirsize() {
     # report the disk usage for $@ in human readable format
 
     du -ch "$@" | tail -n 1 | cut -f 1
+}
+
+where() {
+    # report where I am
+
+	echo "`whoami`@`uname -n`:`pwd`"
+    echo '-----'
+    ls
 }
 
 doneat() {

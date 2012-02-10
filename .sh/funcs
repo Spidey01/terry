@@ -166,7 +166,7 @@ where() {
 
 	echo "`whoami`@`uname -n`:`pwd`"
     echo '-----'
-    ls
+    ls -F
 }
 
 doneat() {

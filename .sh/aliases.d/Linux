@@ -4,9 +4,9 @@
 # Bourne shell aliases for Linux systems
 #
 
-alias 	ls='ls --color=auto -Hh'
-alias 	ll='ls --color=auto -laHho'
-alias 	la='ls --color=auto -aHh'
+alias 	ls='ls --color=auto -Hhp'
+alias 	ll='ls --color=auto -laHhop'
+alias 	la='ls --color=auto -aHhp'
 
 
 alias   ectags=/usr/bin/ctags-exuberant

@@ -9,6 +9,12 @@ if [ -z "$MY_DTACH_SOCKET_DIR" ]; then
 fi
 [ ! -d "$MY_DTACH_SOCKET_DIR" ] && mkdir -p "$MY_DTACH_SOCKET_DIR"
 
+if [ -n "$1" ]; then
+    exec dtach -a "${MY_DTACH_SOCKET_DIR}/${1}" -z
+    echo "%0: FAILED to attach to session $1, exiting."
+    exit 1
+fi
+
 echo "Select a dtach'd socket to connect to"
 select DSOCK in "new dtach socket" $(ls "${MY_DTACH_SOCKET_DIR}/"); do
     if [ "$DSOCK" = "new dtach socket" ]; then
@@ -27,5 +33,6 @@ select DSOCK in "new dtach socket" $(ls "${MY_DTACH_SOCKET_DIR}/"); do
     fi
     exec dtach ${preargs:--a} "${MY_DTACH_SOCKET_DIR}/${DSOCK}" -z $postargs
     echo "$0: FAILED"
+    exit 1
 done
 

@@ -41,6 +41,7 @@ iab <buffer> table TABLE
 iab <buffer> top TOP
 iab <buffer> truncate TRUNCATE
 iab <buffer> union UNION
+iab <buffer> unique UNIQUE
 iab <buffer> update UPDATE
 iab <buffer> view VIEW
 iab <buffer> where WHERE

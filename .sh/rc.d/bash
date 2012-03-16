@@ -7,7 +7,11 @@ shopt -s checkwinsize
 bind 'set show-all-if-ambiguous on'
 
 # prompt is: [ user@host:pwd ]$
-PS1="[ \u@\h ]$ "; export PS1
+# only set if it exists.
+if [ -n "$PS1" ]; then
+    PS1="[ \u@\h ]$ "
+    export PS1
+fi
 
 # append to history file rather than overwrite
 shopt -s histappend
@@ -21,7 +25,7 @@ HISTFILESIZE=64000
 # enable bash completion where vailable, if the system profile hasn't already
 # enabled it on this system. (Usually /etc/profile.d/... or sth.)
 #
-if [ -z "$BASH_COMPLETION" -a -r /etc/bash_completion ]; then
+if [ -n "$PS1" -a -z "$BASH_COMPLETION" -a -r /etc/bash_completion ]; then
     source /etc/bash_completion
 fi
 

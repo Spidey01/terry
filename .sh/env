@@ -22,8 +22,12 @@ fi
 #
 PATH="${PATH}:${HOME}/sw/sh.local:${HOME}/sw/sh:${HOME}/sw/bin"
 
-# my standard issue prompt  (overriden later, based on $SHELL)
-PS1="${USER}@${HOSTNAME}-$ "; export PS1
+# only set if it exists.
+if [ -n "$PS1" ]; then
+    # my standard issue prompt  (overriden later, based on $SHELL)
+    PS1="${USER}@${HOSTNAME}-$ "
+    export PS1
+fi
 
 # Attempt to override default timezone; I prefer UTC
 TZ='Etc/UTC'; export TZ

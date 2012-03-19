@@ -31,7 +31,12 @@ select DSOCK in "new dtach socket" $(ls "${MY_DTACH_SOCKET_DIR}/"); do
         read userpostargs
         [ -n "$userpostargs" ] && postargs="$userpostargs"
     fi
-    exec dtach ${preargs:--a} "${MY_DTACH_SOCKET_DIR}/${DSOCK}" -z $postargs
+
+    # Use this so we can tell that we're running in a dtach socket.
+    MY_DTACH_SOCKET="${MY_DTACH_SOCKET_DIR}/${DSOCK}"
+    export MY_DTACH_SOCKET
+
+    exec dtach ${preargs:--a} "$MY_DTACH_SOCKET" -z $postargs
     echo "$0: FAILED"
     exit 1
 done

@@ -1,0 +1,19 @@
+
+
+# useful macros for changing folders. ~/.mutt/account sets the variables.
+# these mimic gmail
+#
+macro index ga "<change-folder>$my_archive_folder<enter>" "Go to Archived/All Mail"
+macro index gs "<change-folder>$my_starred_folder<enter>" "Go to Starred"
+macro index gi "<change-folder>$spoolfile<enter>" "Go to Inbox"
+macro index gt "<change-folder>$record<enter>" "Go to Sent Mail"
+macro index gd "<change-folder>$postponed<enter>" "Go to Drafts"
+macro index gt "<change-folder>$trash<enter>" "Go to Trash"
+macro index gl "<change-folder>+" "Go to Folder"
+
+
+# for some reason g=reply all is effectively unbound by the above g. macros.
+# so make it the default for r=reply.
+bind index r group-reply
+bind index a group-reply
+

@@ -19,7 +19,7 @@ set prompt_after = no
 
 # cache stuff where possible
 set header_cache = "~/.cache/mutt/headers"
-set message_cachedir = "~/.cache/mutt//bodies"
+set message_cachedir = "~/.cache/mutt/bodies"
 
 # simple query command for looking up aliases
 set query_command = "grep %s ~/.mutt/aliases"
@@ -30,15 +30,5 @@ source '~/.mutt/aliases'
 # local: my X session scripts make this a link to ~/.mutt/account.network_profile
 source '~/.mutt/account'
 
+source '~/.mutt/keybinds'
 
-# useful macros for changing folders. ~/.mutt/account sets the variables.
-# It should also create a suitable "ga" macro for going to archived mail.
-#
-macro index gi "<change-folder>$spoolfile<enter>" "Go to Inbox"
-macro index gs "<change-folder>$record<enter>" "Go to Sent Mail"
-macro index gd "<change-folder>$postponed<enter>" "Go to Drafts"
-macro index gt "<change-folder>$trash<enter>" "Go to Trash"
-
-# for some reason g=reply all is effectively unbound by the above g. macros.
-# so make it the default for r=reply.
-bind index r group-reply

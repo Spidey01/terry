@@ -1,0 +1,120 @@
+# vim: set et ts=4 sw=4 ai :
+
+install() {
+	echo apt-get install -sy `get_apt_names $1`
+    return 1
+}
+
+# translates from a name like foo to the desired packages to install it.
+#
+# Shame there's no hash table of arrays we can count on in dash.
+#
+get_apt_names() {
+    local n
+
+    case "$@" in
+        vim)
+            case "$gui" in
+                gnome)
+                    n=vim-gnome
+                    ;;
+                nox)
+                    n=vim-nox
+                    ;;
+                *)
+                    n=vim-gtk
+                    ;;
+            esac
+            ;;
+        wget)
+            n="wget"
+            ;;
+        curl)
+            # picking what libs to install for this may be a pain, sort of maybe a post install hook
+            # that checks curl --version and then tries to guess what based on our params, like $langs
+            n="curl"
+            ;;
+        emacs)
+            # this makes me wonder how many debian emacs users who don't have x,
+            # also want the latest emacs from apt.
+            if [ "$gui" == "nox" ]; then
+                n="emacs23-nox"
+            else
+                n="emacs"
+            fi
+            ;;
+        lynx)
+            n="lynx-cur"
+            ;;
+        # links, links2, elinks?
+        mutt)
+            n="mutt urview antiword"
+            ;;
+        git)
+            n="git git-doc"
+            [ "$gui" != "nox" ] && n="$n gitk"
+            in_var vcs git:arch && n="$n git-arch"
+            in_var vcs git:cvs && n="$n git-cvs"
+            in_var vcs git:svn && n="$n git-svn"
+            ;;
+        hg)
+            n="mercurial"
+            in_var vcs mercurial:git && n="$n mercurial-git"
+            ;;
+        svn)
+            n="subversion subversion-tools"
+            in_var vcs bzr:svn && n="$n bzr-svn"
+            ;;
+        bzr)
+            # TODO
+            n="bzr bzr-doc bzrtools"
+            in_var vcs bzr:svn && n="$n bzr-svn"
+            in_var vcs bzr:git && n="$n bzr-git"
+            in_var vcs bzr:hg && n="$n bzr-hg"
+            ;;
+        cvs)
+            # maybe some tools?
+            n="cvs"
+            ;;
+        perl)
+            n="perl perl-doc"
+            in_var toolkits wx && n="$n libwx-perl"
+            in_var toolkits tk && n="$n perl-tk"
+            ;;
+        python)
+            n="python python-doc python-dev"
+            [ "$gui" != "nox" ] && n="$n python-tk idle"
+            #TODO
+            #in_var toolkits qt && n="$n "
+            in_var toolkits wx && n="$n python-wxgtk2.8 python-wxtools python-wxversion"
+            ;;
+        ruby)
+            n="ruby-full"
+            #TODO
+            #in_var toolkits wx && n="$n "
+            #in_var toolkits qt && n="$n liqt4"
+            ;;
+        gnu-compiler-collection)
+            # build essential is gcc, g++, (gnu)make, and e.g. libc headers.
+            n="build-essential gdb binutils"
+            ;;
+        gnu-autotools)
+            # autoheader, autoreconf is in the autoconf package
+            # idk what package autoscan, autotoolset, autoupdate is in.
+            n="autoconf autoheader automake autoproject autoreconf libtool"
+            ;;
+        wx)
+            n="libwxgtk2.8-dev libwxgtk2.8-dbg wx-common wx2.8-doc wx2.8-examples wx2.8-i18n"
+            ;;
+        qt)
+            #TODO
+            n=""
+            ;;
+        *)
+            n="$@"
+            ;;
+    esac
+
+    [ -n "$n" ] && echo $n
+}
+

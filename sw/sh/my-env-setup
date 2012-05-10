@@ -1,0 +1,173 @@
+#!/bin/sh
+# vim: set et ts=4 sw=4 ai :
+#
+# usage: my-env-setup target=debian gui=nox ...
+#
+# documentation on the vars is below.
+#
+#
+# TODO:
+#
+#        fix instances of [ "$1" == "-x" ] -> seems it picks up -x as a test flag when applicable :@
+#        sub tests.
+#           e.g. if setup with python and run again with gui, check if idle present even if python *IS*
+#
+#        sub in_var.
+#           e.g. in_var toolkits wx:python == true even when toolkits=wx:native,python,ruby,perl.
+#           e.g. in_var vcs git:svn to test if we want git-svn but e.g. not git-bzr when like
+#                vcs="svn git:svn,arch bzr arch"
+#           right now it'd have to be sth like vcs="svn git git:svn hg"
+#
+#        maybe make sth like in_var langs noperl possible for fine tuning?
+#
+#        post install hooks
+#           e.g. perl is installed, use cpan to get cpanm if cpanminus package not avail
+#
+
+install() {
+    echo "No install() defined for $target or sourcing it failed. Aborting"
+    exit 1
+}
+
+# educated guess at what target should be, and sets it too
+guess_target() {
+    local file found
+
+    # the good life
+    if [ -f /etc/lsb-release ]; then
+        . /etc/lsb-release
+
+        target="$DISTRIB_ID"
+        return 0
+    fi
+
+    case `uname -s` in
+        SunOS)
+            found=Solaris
+            ;;
+        Linux)
+            # *groan*
+            ;;
+        *) # prolly ok
+            found="`uname -s`"
+            ;;
+    esac
+
+    if [ -z "$found" ]; then
+        # XXX I've not used all of this distros, or not all of them recently.
+        for file in /etc/debian_version /etc/debian_release \
+                    /etc/redhat-release /etc/fedora-release \
+                    /etc/slackware-release /etc/slackware-version \
+                    /etc/SUSE-release \
+                    /etc/gentoo-release
+        do
+            if [ -f "$file" ]; then
+                case "`basename $file`" in
+                    redhat-release|fedora-release)
+                        found=RedHat
+                        break
+                        ;;
+                    debian_version)
+                        found=Debian
+                        break
+                        ;;
+                    SUSE-release) # or so I've heard
+                        found=SUSE
+                        break;
+                    # I've not met any Mandrake/Mandriva in a lot of years.
+                esac
+            fi
+        done
+    fi
+
+    [ -n "$found" ] && target="$found" && return 0
+
+    # of course I could just loop over some names and grep /etc/motd
+    # for them but eh, what fun is that?
+
+    return 1
+}
+
+
+# find specified program and return 0/1 if found/not found.
+# saves path it was found at in $found_program.
+# 
+find_program() {
+    local found prog dir
+
+    prog="$1"
+
+    if type which >/dev/null; then # try which
+        found=`which $prog`
+        [ -n "$found" ] && found_program="$found" && return 0
+    fi
+
+    for dir in `echo $PATH | sed -e 's/:/ /g'`; do
+        [ -x "${dir}/${prog}" ] && found_program="${dir}/${prog}" && return 0
+        break 
+    done
+
+    return 127
+}
+
+# usage: in_var VARNAME value
+# checks if value is in in a variable named VARNAME
+in_var() {
+    eval echo \"\$`echo $1`\" | grep " $2 " >/dev/null
+}
+
+main() {
+    local p
+
+    for p in $CHECK_FOR; do
+        if ! find_program "$p"
+        then
+            install "$p"
+        else
+            echo "$p is $found_program"
+        fi
+    done
+}
+
+
+# needs to become more servicable somehow.
+CHECK_FOR="\
+    less \
+    wget \
+    curl \
+    vim \
+    mutt \
+    git \
+    svn \
+    perl \
+    python \
+    ruby \
+    gnu-compiler-collection \
+    gnu-autotools \
+"
+
+# called with vars like 'scalar=value list="e1 e2 e3 e..." that become $scalar and $list
+#
+while [ $# -gt 0 ]; do
+    eval `echo $1 | sed -e 's/ /\\\\ /g'`
+    shift
+done
+
+# setup default values as needed.
+#
+gui="${gui:-nox}"
+langs="${langs:-perl python ruby lua javascript java haskell}"
+vcs="${vcs:-git}"
+# qt, gtk, wx
+toolkits="${targets:-}"
+
+if [ -z "$target" ] && ! guess_target; then
+    echo "You must specify target=which setup.d script to use. Bye"
+    exit 3
+fi
+
+. "${HOME}/.sh/setup.d/${target}"
+
+main
+
+

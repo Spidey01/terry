@@ -31,6 +31,9 @@ get_apt_names() {
                     ;;
             esac
             ;;
+        bash)
+            n="bash bash-completion"
+            ;;
         wget)
             n="wget"
             ;;
@@ -117,6 +120,9 @@ get_apt_names() {
             ;;
         ssh)
             n="openssh"
+            ;;
+        ncurses)
+            n="libncurses5-dev libncursesw5-dev"
             ;;
         *)
             n="$@"

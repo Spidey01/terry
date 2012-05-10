@@ -145,7 +145,8 @@ CHECK_FOR="\
     ruby \
     gnu-compiler-collection \
     gnu-autotools \
-    ssh
+    ssh \
+    ncurses
 "
 
 # called with vars like 'scalar=value list="e1 e2 e3 e..." that become $scalar and $list

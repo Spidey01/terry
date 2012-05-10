@@ -1,2 +1,4 @@
 vimrc.local
 gvimrc.local
+# used by dr chips' built in netrw plugin as a history file
+.netrwhist

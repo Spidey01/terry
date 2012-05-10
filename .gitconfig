@@ -1,0 +1,5 @@
+[user]
+	email = BigBoss1964@gmail.com
+	name = Terry M. Poulin
+[alias]
+	st = !git status -s | grep -v '??'

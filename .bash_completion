@@ -1,0 +1,10 @@
+# slurp up my own dir of completion stuff
+
+source_user_completions() {
+    local f
+    for f in $(ls ~/.bash_completion.d/); do
+        . "${HOME}/.bash_completion.d/${f}"
+    done
+}
+
+source_user_completions

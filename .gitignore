@@ -1,0 +1,6 @@
+# vim swap files
+*.sw?
+# various history files
+.history
+*_istory
+.lesshst

@@ -1,7 +1,12 @@
 # vim: set et ts=4 sw=4 ai :
 
 install() {
-	echo apt-get install -sy `get_apt_names $1`
+    local c
+
+    c="apt-get install -y `get_apt_names $1`"
+    echo $c
+    $c
+
     return 1
 }
 
@@ -48,7 +53,7 @@ get_apt_names() {
             ;;
         # links, links2, elinks?
         mutt)
-            n="mutt urview antiword"
+            n="mutt urlview antiword"
             ;;
         git)
             n="git git-doc"
@@ -101,7 +106,7 @@ get_apt_names() {
         gnu-autotools)
             # autoheader, autoreconf is in the autoconf package
             # idk what package autoscan, autotoolset, autoupdate is in.
-            n="autoconf autoheader automake autoproject autoreconf libtool"
+            n="autoconf automake autoproject libtool"
             ;;
         wx)
             n="libwxgtk2.8-dev libwxgtk2.8-dbg wx-common wx2.8-doc wx2.8-examples wx2.8-i18n"
@@ -109,6 +114,9 @@ get_apt_names() {
         qt)
             #TODO
             n=""
+            ;;
+        ssh)
+            n="openssh"
             ;;
         *)
             n="$@"

@@ -8,6 +8,7 @@
 #
 # TODO:
 #
+#        don't skip packages if installed as a dependency of another one.
 #        fix instances of [ "$1" == "-x" ] -> seems it picks up -x as a test flag when applicable :@
 #        sub tests.
 #           e.g. if setup with python and run again with gui, check if idle present even if python *IS*
@@ -144,6 +145,7 @@ CHECK_FOR="\
     ruby \
     gnu-compiler-collection \
     gnu-autotools \
+    ssh
 "
 
 # called with vars like 'scalar=value list="e1 e2 e3 e..." that become $scalar and $list

@@ -275,9 +275,13 @@
 			iabbrev insert_date <c-r>=strftime("%Y-%m-%d T%H:%M:%S %Z")<cr>
 		endif
 
+		" Fix common typos...
 		iabbrev teh the
 		iabbrev swtich switch
  
+		" allow downcased versions of my ScratchBuffer() commands
+		cabbrev sc SC
+		cabbrev vsc VSC
 	
 	" !ABBREVIATIONS }}}
 

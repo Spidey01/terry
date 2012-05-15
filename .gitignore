@@ -1,4 +1,5 @@
-# vim swap files
+# vim stuff
+.viminfo
 *.sw?
 # various history files
 .history

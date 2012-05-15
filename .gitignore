@@ -3,5 +3,5 @@
 *.sw?
 # various history files
 .history
-*_istory
+*_history
 .lesshst

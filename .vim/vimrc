@@ -314,14 +314,14 @@
 		"
 		com! Markdown	call Convert2Format(expand("%"), "markdown", "html")
 
-		" Commands that run their arguments as in :! but display the results
-		" in a split buffer, as opposed to following a hit enter prompt.
+		" Commands that open scratch buffers and run any arguments as in :!
+		" but display the results in a split buffer, as opposed to following a
+		" hit enter prompt.
 		"
-		com! -nargs=+ -complete=shellcmd SC call
-		                                 \ Bang2Buffer("split", <f-args>)
-		com! -nargs=+ -complete=shellcmd VSC call
-		                                 \ Bang2Buffer("vsplit", <f-args>)
-
+		com! -nargs=* -complete=shellcmd SC call
+		                                 \ ScratchBuffer("split", <f-args>)
+		com! -nargs=* -complete=shellcmd VSC call
+		                                 \ ScratchBuffer("vsplit", <f-args>)
 		" See |viki|
 
 	" !COMMANDS }}}
@@ -444,29 +444,28 @@
 			exe "! ".l:r
 		endfunction
 
+		" Opens a scratch buffer and optionally fills it with the result of
+		" shell commands.
+		" The first argument is 
 		" Runs a "! ..." command and transfers its output to a buffer.
 		"
 		" 	buftype = this | split | vsplit	- type of window to display in
 		"	... = arguments to :! out to.
 		"
-		function! Bang2Buffer(buftype, ...)
-			let l:buf = ""
+		function! ScratchBuffer(buftype, ...)
 
-			if a:buftype == "split"
-				let l:buf = "new"
-			elseif a:buftype == "vsplit"
-				let l:buf = "vnew"
-			elseif a:buftype == "this"
-				let l:buf = "enew"
-			else
-				echomsg "Bang2Buffer: invalid buftype ".a:buftype
+			if index(['split', 'vsplit', 'enew'], a:buftype) == -1
+				echomsg 'ScratchBuffer(buftype,...) -- dunno buftype='.a:buftype
 				return
 			endif
 
-			let l:markings = "setlocal buftype=nofile bufhidden=hide "
-			let l:markings .= "noswapfile nobuflisted"
+			let l:flags = "setlocal buftype=nofile bufhidden=hide noswapfile nobuflisted"
+			let l:cmds = ''
+			if a:0 > 0
+				let l:cmds = ' | silent 0r! '.join(a:000, ' ')
+			endif
 
-			exe l:buf . " | " . l:markings . " | silent 0r! " . join(a:000, ' ')
+			exe a:buftype." | enew | ".l:flags.l:cmds
 
 		endfunction
 

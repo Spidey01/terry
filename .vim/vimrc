@@ -548,6 +548,7 @@
 " *PLUGINS* {{{
 
 	" add plugins in ~/.vim/bundle/<dir> to rtp
+	runtime bundle/vim-pathogen/autoload/pathogen.vim
 	call pathogen#runtime_append_all_bundles()
 
 	" *BuiltIn* {{{

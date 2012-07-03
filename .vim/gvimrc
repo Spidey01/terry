@@ -66,6 +66,9 @@ let g:Tlist_Show_Menu=1
 " load ~/.vim/gvimrc.local if available.
 "
 let g:local_gvimrc = expand("~/.vim/gvimrc.local")
+if has('windows')
+	let g:local_gvimrc = expand("~/vimfiles/gvimrc.local")
+endif
 if filereadable(g:local_gvimrc)
 	exe "source ".g:local_gvimrc
 endif

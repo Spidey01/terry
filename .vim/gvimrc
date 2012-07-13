@@ -40,33 +40,18 @@ endif
 
 " X11: Specifics for GVim
 if has("x11")
-	if g:hostname == 'dixie'
-		set guifont=Inconsolata\ 10
-		set columns=85
-		set lines=32
-	endif
 
 " WINDOWS: Specifics for GVim
 elseif has("win32")
-	if g:hostname == 'sal1600'
-		set guifont=Droid_Sans_Mono:h10:cANSI 
-	endif
-	set lines=35
-	set columns=80
 
 endif
 
-" adjust nerd tree options
-let g:Tlist_Inc_Winwidth=1
-let g:Tlist_WinHeight=7
-let g:Tlist_WinWidth=25
-let g:Tlist_Show_Menu=1
 
 "
 " load ~/.vim/gvimrc.local if available.
 "
 let g:local_gvimrc = expand("~/.vim/gvimrc.local")
-if has('windows')
+if has('win16') || has('win32') || has('win64')
 	let g:local_gvimrc = expand("~/vimfiles/gvimrc.local")
 endif
 if filereadable(g:local_gvimrc)

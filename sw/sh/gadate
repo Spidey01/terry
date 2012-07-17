@@ -1,2 +1,2 @@
 #!/bin/sh
-exec env TZ="America/New_York" date +"%M/%d/%Y %l:%m %p" 
+exec env TZ="America/New_York" date +"%m/%d/%Y %l:%M %p" 

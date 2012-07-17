@@ -164,7 +164,7 @@ dirsize() {
 where() {
     # report where I am
 
-	echo "`whoami`@`uname -n`:`pwd`"
+    echo "`whoami`@`uname -n`:`pwd`"
     echo '-----'
     ls -F
 }

@@ -636,6 +636,9 @@
 " load ~/.vim/vimrc.local if available.
 "
 let g:local_vimrc = expand("~/.vim/vimrc.local")
+if has('win16') || has('win32') || has('win64')
+	let g:local_vimrc = expand("~/vimfiles/vimrc.local")
+endif
 if filereadable(g:local_vimrc)
 	exe "source ".g:local_vimrc
 endif

@@ -1,0 +1,34 @@
+#!/bin/sh
+OS_NAME="`uname -s`"
+
+linuxhalt() {
+
+    if [ `id -u` = 0 ]; then
+        shutdown -hP now
+    else
+        sudo sh -c 'shutdown -hP now'
+    fi
+}
+
+freebsdhalt() {
+
+    if [ `id -u` = 0 ]; then
+        shutdown -hp now
+    else
+        sudo sh -c 'shutdown -hp now'
+    fi
+}
+
+case "$OS_NAME" in
+	Linux)
+        linuxhalt
+		;;
+    FreeBSD)
+        freebsdhalt
+        ;;
+	*)
+		echo "I dunno how to power down OS_NAME=$OS_NAME yet"
+        exit 1
+		;;
+esac
+

@@ -1,20 +1,10 @@
 #!/bin/sh
+
 OS_NAME="`uname -s`"
-
-linuxsnore() {
-    if [ `id -u` = 0 ]; then
-        echo disk > /sys/power/state
-    else
-        sudo sh -c 'echo disk > /sys/power/state'
-    fi
-}
-
-# FreeBSD:
-#   ?
 
 case "$OS_NAME" in
 	Linux)
-        linuxsnore
+        sudo sh -c 'echo disk > /sys/power/state'
 		;;
 	*)
 		echo "I dunno how to put OS_NAME=$OS_NAME into hibernate yet"

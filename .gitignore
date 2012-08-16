@@ -1,11 +1,11 @@
 # vim stuff
 .viminfo
 *.sw?
+.vimrc
+_vimrc
+.gvimrc
+_gvimrc
 # various history files
 .history
 *_history
 .lesshst
-# vim files for unix/windows
-_vimrc
-.vimrc
-_gvimrc

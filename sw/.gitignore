@@ -1,9 +1,6 @@
-# ignore my projects, they have their own repo's.
-workspace
 # ignore stuff installed here
 bin
 include
 lib
 sbin
 share
-src

@@ -24,12 +24,13 @@ fi
 # NOT have a network connection setup until sometime after login. So run this
 # as an external script in the background.
 #
-sh-services start 
+# sh-services start 
 
 # configure monitors; this depends on ~/.sh/services having finished
 #
-~/.sh/monitors 
+# ~/.sh/monitors 
 
+    dropbox start -i &
 
 # if running on a laptop, try to disable the touch pad while typing
 #

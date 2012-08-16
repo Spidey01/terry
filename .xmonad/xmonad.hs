@@ -13,7 +13,7 @@ main = xmonad $ defaultConfig {
         modMask = mod4Mask,
         manageHook = manageDocks <+> manageHook defaultConfig,
         layoutHook = avoidStruts $ layoutHook defaultConfig,
-        terminal = "/home/terry/sw/sh.local/myterm"
+        terminal = "xterm"
     }
     `additionalKeysP` [
         -- use this when running in gnome

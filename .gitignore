@@ -5,3 +5,7 @@
 .history
 *_history
 .lesshst
+# vim files for unix/windows
+_vimrc
+.vimrc
+_gvimrc

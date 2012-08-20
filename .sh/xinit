@@ -10,6 +10,8 @@
 #
 xrdb -quiet ~/.Xresources
 
+# fix the wonky mouse cursor X -> arrow.
+xsetroot -cursor_name left_ptr
 
 #
 # launch a D-Bus channel for this session
@@ -53,6 +55,12 @@ xcompmgr -cfF &
 # Freaking Basic Panel
 #
 env TZ="America/New_York" fbpanel &
+
+# Start XTerm/tmux with a delay. Other wise some window managers may get the
+# layout wrong in relation to fbpanel.
+#
+(sleep 3; if type tmux; then xterm -e ~/sw/sh/mytmux & 
+ else xterm & fi)
 
 # Start the big kahuna
 #

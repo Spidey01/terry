@@ -186,3 +186,21 @@ runinscript() {
     eval "script -c \"$1\" \"$2\""
 }
 
+eval_for_each() {
+    # eval it's arguments in a for loop style.
+    #
+    # $1        = command to run
+    # $2..$#    = words for for loop.
+    #
+
+    local cmd what
+
+    cmd="$1"
+    shift 1
+    echo '$1 = '$1' $@ = '"$@"
+
+    for what in $@; do
+        eval "$cmd" "$what"
+    done
+}
+

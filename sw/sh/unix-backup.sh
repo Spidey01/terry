@@ -162,6 +162,8 @@ do_dump() {
 
     for dump_path 
     do
+        echo "dumping $dump_path"
+
         # check if the path is a file system or a directory.
         # dump can only update the dumpdates file for devices, not subdirs.
         if grep "$dump_path" /etc/fstab >/dev/null
@@ -171,7 +173,6 @@ do_dump() {
             dump_args=""
         fi
 
-        # echo dump $dump_args $dump_path $OUTDIR/`echo $dump_path | sed -e 's/\(.\)\//\1-/g' | sed -e 's/-$//'`.dump
         if [ -n "$DUMP_COMPRESS_FORMAT" ]
         then
             dump $dump_args -$dump_level -h $dump_level -f - "$dump_path" | \
@@ -188,6 +189,8 @@ do_tar() {
 
     for tar_path
     do
+        echo "taping $tar_path"
+
         if [ -n "$TAR_COMPRESS_FORMAT" ]
         then
             tar cf - "$tar_path" | \
@@ -206,6 +209,8 @@ do_zip() {
 
     for zip_path
     do
+        echo "zipping $zip_path"
+
         zip -r $zip_args $OUTDIR/`make_archive_name $zip_path`.zip $zip_path 
     done
 }

@@ -1,0 +1,8 @@
+OUTDIR="~/Backups/hosts/`uname -n`"
+# OUTDIR="/tmp/`uname -n`"
+# DUMP_PATHS="/usr/local/"
+DUMP_COMPRESS_FORMAT="xz"
+# TAR_PATHS="/usr/local"
+TAR_COMPRESS_FORMAT="xz"
+# ZIP_PATHS="/tmp/gunk"
+ZIP_NO_COMPRESS=".gz:.bz2:.xz:.Z:.tar:.tar.gz:.tar.bz2:.tar.xz:.tar.Z:.tgz:.tbz2:.txz:.jar:.apk"

@@ -156,7 +156,9 @@ get_ext() {
 }
 
 do_dump() {
-    local dump_path dump_args
+    local dump_path dump_args dump_level
+
+    dump_level=0
 
     for dump_path 
     do
@@ -172,11 +174,11 @@ do_dump() {
         # echo dump $dump_args $dump_path $OUTDIR/`echo $dump_path | sed -e 's/\(.\)\//\1-/g' | sed -e 's/-$//'`.dump
         if [ -n "$DUMP_COMPRESS_FORMAT" ]
         then
-            dump $dump_args -0 -f - "$dump_path" | \
+            dump $dump_args -$dump_level -h $dump_level -f - "$dump_path" | \
                 "$DUMP_COMPRESS_FORMAT" -c \
                 > "$OUTDIR/`make_archive_name $dump_path`.dump.`get_ext $DUMP_COMPRESS_FORMAT`"
         else
-            dump $dump_args -0 -f "$OUTDIR/`make_archive_name $dump_path`.dump" "$dump_path"
+            dump $dump_args -$dump_level -h $dump_level -f "$OUTDIR/`make_archive_name $dump_path`.dump" "$dump_path"
         fi
     done
 }

@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-
-
 if [ $# -ne 0 ]; then
     echo "usage: `basename $0`"
     echo
@@ -133,7 +131,9 @@ add_to_path() {
 
 make_archive_name() {
     # convert a name like /usr/local/ into usr-local.
-    echo "$@" | sed -e 's/\//-/g' | sed -e 's/^-//' | sed -e 's/-$//'
+    # also .foo -> dot-foo
+    echo "$@" | sed -e 's/\//-/g' | sed -e 's/^-//' | sed -e 's/-$//' \
+        | sed -e 's/^\./dot-/g'
 }
 
 get_ext() {
@@ -232,7 +232,7 @@ debug_echo "PATH=$PATH"
 
 # ensure required utilities are available.
 #
-for app in dump tar zip xz fooa
+for app in dump tar zip xz gzip bzip2 compress
 do
     if ! type $app
     then
@@ -243,7 +243,6 @@ mkdir -p "$OUTDIR"
 
 # Find out what needs to be backed up.
 #
-
 
 # TODO:
 # decide if we need to do backups incrementally or not based on rc files and dump -w output.

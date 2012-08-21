@@ -53,6 +53,7 @@ no_dump:
 	if [ -d ./Dropbox ]; then $(NODUMP) ./Dropbox ; else true; fi
 	if [ -d ./.cache ]; then $(NODUMP) ./.cache ; else true; fi
 	if [ -d ./.dbus/session-bus ]; then $(NODUMP) ./.dbus/session-bus ; else true; fi
+	if [ -d ./.m2/repository ]; then $(NODUMP) ./.m2/repository ; else true; fi
 
 .PHONY: status pull push dropbox_files vim-helptags no_dump
 

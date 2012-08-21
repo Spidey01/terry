@@ -1,12 +1,12 @@
 
-OUTDIR="${HOME}/Backups/Hosts/`uname -n`"
-# OUTDIR="/tmp/Backups/Hosts/`uname -n`"
+OUTDIR="${HOME}/Backups/Hosts/`uname -n`/`date +'%Y-%m-%d'`"
+# OUTDIR="/tmp/Backups/Hosts/`uname -n`/`date +'%Y-%m-%d'`"
 
 DUMP_PATHS="/home"
 DUMP_COMPRESS_FORMAT="xz"
 
-TAR_PATHS="/usr/local /root"
+TAR_PATHS="/etc /usr/local /root"
 TAR_COMPRESS_FORMAT="xz"
 
-ZIP_PATHS="${HOME}/.m2/repository/android/"
+ZIP_PATHS="${HOME}/.m2/repository/android/ ${HOME}/sw/workspace/*"
 ZIP_NO_COMPRESS=".gz:.bz2:.xz:.Z:.tar:.tar.gz:.tar.bz2:.tar.xz:.tar.Z:.tgz:.tbz2:.txz:.jar:.apk"

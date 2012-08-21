@@ -28,6 +28,10 @@ fi
 #
 # DUMP_LEVEL=0
 #
+# What level to honor for the `nodump` flag. Dump's default is level 1.
+#
+# DUMP_HONOR_LEVEL=1
+#
 # A gzip like program to pass through. 
 # Must work like dump f - ... | $DUMP_COMPRESS_FORMAT -c > filename.
 #   
@@ -172,18 +176,24 @@ do_dump() {
         # dump can only update the dumpdates file for devices, not subdirs.
         if grep "$dump_path" /etc/fstab >/dev/null
         then
-            dump_args="-u"
-        else
-            dump_args=""
+            dump_args="-u $dump_args"
+        # else
+            # dump_args=""
+        fi
+
+        # see if we're overriding the nodump handling.
+        if [ -n "$DUMP_HONOR_LEVEL" ]
+        then
+            dump_args="-h $DUMP_HONOR_LEVEL $dump_args"
         fi
 
         if [ -n "$DUMP_COMPRESS_FORMAT" ]
         then
-            dump $dump_args -$dump_level -h $dump_level -f - "$dump_path" | \
+            dump $dump_args -$dump_level -f - "$dump_path" | \
                 "$DUMP_COMPRESS_FORMAT" -c \
                 > "$OUTDIR/`make_archive_name $dump_path`.dump.`get_ext $DUMP_COMPRESS_FORMAT`"
         else
-            dump $dump_args -$dump_level -h $dump_level -f "$OUTDIR/`make_archive_name $dump_path`.dump" "$dump_path"
+            dump $dump_args -$dump_level -f "$OUTDIR/`make_archive_name $dump_path`.dump" "$dump_path"
         fi
     done
 }

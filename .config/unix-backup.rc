@@ -3,6 +3,7 @@ OUTDIR="${HOME}/Backups/Hosts/`uname -n`/`date +'%Y-%m-%d'`"
 # OUTDIR="/tmp/Backups/Hosts/`uname -n`/`date +'%Y-%m-%d'`"
 
 DUMP_PATHS="/home"
+DUMP_HONOR_LEVEL=0
 DUMP_COMPRESS_FORMAT="xz"
 
 TAR_PATHS="/etc /usr/local /root"

@@ -6,8 +6,10 @@ MKDIR = mkdir -p $@
 LINK = ln -s $< $@
 HOSTNAME = `uname -n`
 
+# command to set the nodump attribute
+NODUMP = chattr +d 
 
-all: rc_files dropbox_files
+all: rc_files dropbox_files no_dump
 
 rc_files: .vimrc .gvimrc .pythonrc .irbrc
 
@@ -46,5 +48,11 @@ push:
 vim-helptags:
 	for _D in .vim/bundle/*/doc; do vim -e --cmd "helptags $$_D | q"; done
 
-.PHONY: status pull push vim-helptags
+# stuff that we don't really want in a dump
+no_dump:
+	if [ -d ./Dropbox ]; then $(NODUMP) ./Dropbox ; else true; fi
+	if [ -d ./.cache ]; then $(NODUMP) ./.cache ; else true; fi
+	if [ -d ./.dbus/session-bus ]; then $(NODUMP) ./.dbus/session-bus ; else true; fi
+
+.PHONY: status pull push dropbox_files vim-helptags no_dump
 

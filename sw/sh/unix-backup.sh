@@ -24,6 +24,10 @@ fi
 #
 # DUMP_PATHS="/ /home /tmp /usr /var"
 #
+# The level of dump to take. The default is 0.
+#
+# DUMP_LEVEL=0
+#
 # A gzip like program to pass through. 
 # Must work like dump f - ... | $DUMP_COMPRESS_FORMAT -c > filename.
 #   
@@ -158,7 +162,7 @@ get_ext() {
 do_dump() {
     local dump_path dump_args dump_level
 
-    dump_level=0
+    dump_level="${DUMP_LEVEL:-0}"
 
     for dump_path 
     do

@@ -191,9 +191,9 @@ do_dump() {
         then
             dump $dump_args -$dump_level -f - "$dump_path" | \
                 "$DUMP_COMPRESS_FORMAT" -c \
-                > "$OUTDIR/`make_archive_name $dump_path`.dump.`get_ext $DUMP_COMPRESS_FORMAT`"
+                > "$OUTDIR/`make_archive_name $dump_path`.${dump_level}.dump.`get_ext $DUMP_COMPRESS_FORMAT`"
         else
-            dump $dump_args -$dump_level -f "$OUTDIR/`make_archive_name $dump_path`.dump" "$dump_path"
+            dump $dump_args -$dump_level -f "$OUTDIR/`make_archive_name $dump_path`.${dump_level}.dump" "$dump_path"
         fi
     done
 }

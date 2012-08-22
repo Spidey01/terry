@@ -163,10 +163,16 @@ get_ext() {
     esac
 }
 
+get_date() {
+    date +'%Y-%m-%dT%H:%M%z'
+}
+
 do_dump() {
-    local dump_path dump_args dump_level
+    local dump_path dump_args dump_level dump_name dump_date
 
     dump_level="${DUMP_LEVEL:-0}"
+
+    echo '# ${dump_name}:${dump_level}:${dump_date}' >> $OUTDIR/dump.index
 
     for dump_path 
     do
@@ -187,45 +193,86 @@ do_dump() {
             dump_args="-h $DUMP_HONOR_LEVEL $dump_args"
         fi
 
+        dump_name="$OUTDIR/`make_archive_name $dump_path`.${dump_level}.dump"
+        dump_date="`get_date`"
+
+        dump $dump_args -$dump_level -f "$dump_name" "$dump_path"
+
+        if [ $? -ne 0 ]; then
+            echo "dumping $dump_path failed!"
+            continue
+        fi
+
+        # we have to do compression second, other wise we can't detect failure above.
         if [ -n "$DUMP_COMPRESS_FORMAT" ]
         then
-            dump $dump_args -$dump_level -f - "$dump_path" | \
-                "$DUMP_COMPRESS_FORMAT" -c \
-                > "$OUTDIR/`make_archive_name $dump_path`.${dump_level}.dump.`get_ext $DUMP_COMPRESS_FORMAT`"
-        else
-            dump $dump_args -$dump_level -f "$OUTDIR/`make_archive_name $dump_path`.${dump_level}.dump" "$dump_path"
+                $DUMP_COMPRESS_FORMAT $dump_name
+                dump_name="${dump_name}.`get_ext $DUMP_COMPRESS_FORMAT`"
+                if [ ! -f "$dump_name" ]; then
+                    echo "Can't find ${DUMP_COMPRESS_FORMAT}'d dump at ${dump_name}."
+                    echo "There may be sanity problems with the index."
+                fi
         fi
+        echo "$dump_path was dumped to $dump_name"
+
+        echo "${dump_name}:${dump_level}:${dump_date}" >> $OUTDIR/dump.index
     done
 }
 
 do_tar() {
-    local tar_path
+    local tar_path tar_name tar_date
+
+    echo '# ${tar_name}:${tar_path}:${tar_date}' >> $OUTDIR/tar.index
 
     for tar_path
     do
         echo "taping $tar_path"
 
+        tar_name="$OUTDIR/`make_archive_name $tar_path`.tar"
+        tar_date="`get_date`"
+
         if [ -n "$TAR_COMPRESS_FORMAT" ]
         then
-            tar cf - "$tar_path" | \
-                "$TAR_COMPRESS_FORMAT" -c \
-                > "$OUTDIR/`make_archive_name $tar_path`.tar.`get_ext $TAR_COMPRESS_FORMAT`"
+            tar_name="${tar_name}.`get_ext $TAR_COMPRESS_FORMAT`"
+
+            tar cf - "$tar_path" | "$TAR_COMPRESS_FORMAT" -c > "$tar_name"
         else
-            tar cf "$OUTDIR/`make_archive_name $tar_path`.tar" "$tar_path"
+            tar cf "$tar_name" "$tar_path"
+        fi
+
+        if [ $? -eq 0 ]; then
+            echo "$tar_path was taped to $tar_name"
+            echo "${tar_name}:${tar_path}:${tar_date}" >> $OUTDIR/tar.index
+        else
+            echo "tar of $tar_path failed"
+            continue
         fi
     done
 }
 
 do_zip() {
-    local zip_path zip_args
+    local zip_path zip_args zip_name zip_date
 
     [ -n "$ZIP_NO_COMPRESS" ] && zip_args="-n $ZIP_NO_COMPRESS"
+
+    echo '# ${zip_name}:${zip_path}:${zip_date}' >> $OUTDIR/zip.index
 
     for zip_path
     do
         echo "zipping $zip_path"
 
-        zip -r $zip_args $OUTDIR/`make_archive_name $zip_path`.zip $zip_path 
+        zip_name="$OUTDIR/`make_archive_name $zip_path`.zip"
+        zip_date="`get_date`"
+
+        zip -r $zip_args "$zip_name" "$zip_path"
+
+        if [ $? -eq 0 ]; then
+            echo "$zip_path was zipped to $zip_name"
+            echo "${zip_name}:${zip_path}:${zip_date}" >> $OUTDIR/zip.index
+        else
+            echo "zip of $zip_path failed!"
+            continue
+        fi
     done
 }
 

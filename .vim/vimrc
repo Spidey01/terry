@@ -60,6 +60,9 @@
 	" Also skip loading .exrc and friends in the CWD.
 	set noexrc
 
+	" Do handle modelines.
+	set modeline
+
 	" Set Vi compatibility options
 	"
 	" v = don't update the line more then needed          - like vi

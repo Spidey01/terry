@@ -20,5 +20,8 @@ main = xmonad $ defaultConfig {
         --("M-S-q", spawn "gnome-session-save --gui --logout-dialog"),
 
         ("M-S-w", spawn "google-chrome"),
-        ("M-S-o", spawn "opera")
+        ("M-S-o", spawn "opera"),
+
+	-- triggle screen saver. "Lock" when set as I normally have it.
+	("M-S-l", spawn "xscreensaver-command -activate")
     ]

@@ -91,11 +91,13 @@ if &bg == "light"
     hi StatusLine       guibg=black     guifg=#ce8639
     hi StatusLineNC     ctermfg=black   ctermbg=white 
     hi StatusLineNC     guifg=#008080   guibg=#fff5ee
+    hi Search           ctermfg=white   ctermbg=green
 elseif &bg == "dark"
     hi StatusLine       ctermfg=white   ctermbg=black 
     hi StatusLine       guibg=#ffffff   guifg=#ce8639
     hi StatusLineNC     ctermfg=black   ctermbg=white 
     hi StatusLineNC     guifg=#008080   guibg=#fff5ee
+    hi Search           ctermfg=white   ctermbg=green
 endif
 
 "hi StatusLine* Question Search

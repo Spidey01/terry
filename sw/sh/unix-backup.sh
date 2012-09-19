@@ -206,12 +206,13 @@ do_dump() {
         # we have to do compression second, other wise we can't detect failure above.
         if [ -n "$DUMP_COMPRESS_FORMAT" ]
         then
-                $DUMP_COMPRESS_FORMAT $dump_name
-                dump_name="${dump_name}.`get_ext $DUMP_COMPRESS_FORMAT`"
-                if [ ! -f "$dump_name" ]; then
-                    echo "Can't find ${DUMP_COMPRESS_FORMAT}'d dump at ${dump_name}."
-                    echo "There may be sanity problems with the index."
-                fi
+            echo "Compressing with $DUMP_COMPRESS_FORMAT"
+            $DUMP_COMPRESS_FORMAT $dump_name
+            dump_name="${dump_name}.`get_ext $DUMP_COMPRESS_FORMAT`"
+            if [ ! -f "$dump_name" ]; then
+                echo "Can't find ${DUMP_COMPRESS_FORMAT}'d dump at ${dump_name}."
+                echo "There may be sanity problems with the index."
+            fi
         fi
         echo "$dump_path was dumped to $dump_name"
 

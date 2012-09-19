@@ -20,7 +20,7 @@ fi
 
 # append ~/sw/{sh.local,sh,bin} to path
 #
-PATH="${PATH}:${HOME}/sw/sh.local:${HOME}/sw/sh:${HOME}/sw/bin"
+PATH="${PATH}:${HOME}/sw/sh.local:${HOME}/sw/sh:${HOME}/sw/bin:${HOME}/sw/sbin"
 
 # only set if it exists.
 if [ -n "$PS1" ]; then

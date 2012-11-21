@@ -1,0 +1,13 @@
+#!/bin/sh
+# simple helper to wrap local jython install.
+
+MY_JYTHON_PREFIX=${MY_JYTHON_PREFIX:-/usr/local/jython}
+
+if echo "$1" | grep -E '^-\d*' >/dev/null
+then
+	VER=`echo "$1" | sed -e 's/^-//'`
+else
+	VER=`ls "$MY_JYTHON_PREFIX" | grep '[0-9]' | tail -n 1`
+fi
+shift
+exec "${MY_JYTHON_PREFIX}/${VER}/jython" "$@"

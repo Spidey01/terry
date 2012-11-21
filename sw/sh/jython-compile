@@ -1,0 +1,41 @@
+#!/usr/bin/env jython
+
+"""
+Author:Kalyan (18-Jun-10)
+Usage: $jython jcompile.py
+Source: http://kalyanchakravarthy.net/?p=429
+"""
+
+from java.io import *
+import _py_compile
+import imp as pyimp
+import org.python.core.imp as jimp
+import os.path
+import sys
+
+#Show info
+def jcompile_usage():
+	print "Usage $:jython jcompile.py"
+	print "file.py gets compiled to file$py.class"
+
+#Compile .py to .class
+def jcompile_compile( fname ):
+	#java file object
+	jfile = File( fname )
+	#Get module name
+	mname = _py_compile.getModuleName( jfile )
+	#Compile and get bytes
+	bytes = jimp.compileSource( mname, jfile )
+	#Dump bytecode into a file
+	jimp.cacheCompiledSource( os.path.abspath( fname ), os.path.abspath( "./" + mname + "$py.class" ), bytes )
+
+if( len(sys.argv) != 2 ):
+	jcompile_usage();	#insufficient arguments
+	sys.exit(0)			#exit
+
+if( os.path.exists( sys.argv[1] ) ):
+	print "compiling %s" % sys.argv[1]
+	jcompile_compile( sys.argv[1] )
+else:
+	print "Given file doesn't exist"
+	jcompile_usage();

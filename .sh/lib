@@ -12,8 +12,7 @@
 find_in_normpath() {
     #
     # Search in the usual paths for the indicated programs. If found print the
-    # full path to the program to standard output, else print a nount found
-    # message to standard output. The output is suitable to run the program.
+    # full path to the program to standard output.
     #
     # params: 
     #   $@  = a list of programs to search for
@@ -36,7 +35,7 @@ find_in_normpath() {
                 continue 2
             fi
         done
-        echo "not found: $_progname"
+        # echo "not found: $_progname"
     done
     unset P name progname
     return 127
@@ -236,7 +235,10 @@ EOF
 }
 
 get_ruby_version() {
-    "`find_in_normpath ruby`" -v | cut -d ' ' -f 2
+    local p
+    
+    p="`find_in_normpath ruby`"
+    [ -n "$p" ] && "$p" -v | cut -d ' ' -f 2
 }
 
 get_ruby_major_version() {
@@ -244,8 +246,11 @@ get_ruby_major_version() {
 }
 
 get_python_version() {
+    local p
+    
+    p="`find_in_normpath python`"
     # groan, python seems to use stderr here.
-    "`find_in_normpath python`" -V 2>&1 | cut -d ' ' -f 2
+    [ -n "$p" ] && "$p" -V 2>&1 | cut -d ' ' -f 2
 }
 
 get_python_major_version() {

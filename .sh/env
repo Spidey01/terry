@@ -78,3 +78,12 @@ if find_in_normpath python; then
     export PYTHONSTARTUP PYTHONPATH
 fi
 
+# test for ssh to local host and assume GUI. Unset in rc.local if needed!
+if [ -z "$DISPLAY" ]; then
+	if [ "`echo $SSH_CONNECTION | cut -f1 -d' '`" = "127.0.0.1" -a \
+         "`echo $SSH_CONNECTION | cut -f3 -d' '`" = "127.0.0.1" ]; then
+        DISPLAY=":0.0"
+        export DISPLAY
+	fi
+fi
+

@@ -17,7 +17,7 @@ alias   bc='bc -q'
 # collision with some other program called ack, that I'll likely never even
 # need to hear exists.
 #
-if find_in_normpath ack-grep; then
+if find_in_normpath ack-grep >/dev/null; then
 	alias   ack='ack-grep'
 fi
 

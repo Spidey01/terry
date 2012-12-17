@@ -8,6 +8,45 @@
 # executing any of these functions.
 #
 
+ensure_path() {
+    #
+    # usage: ensure_path {path}
+    #
+    # Ensure that its argument is in path.
+    #
+    # options: 
+    #   -p prepend.
+    #   -a append (default).
+    #
+    local newpath what p
+    case "$1" in
+        -p|-a)
+            what="$2"
+            ;;
+        -*)
+            echo "error: unknown option: $1"
+            ;;
+        *)
+            what="$1"
+            ;;
+    esac
+
+    if [ "$1" = "-p" ]; then
+        newpath="$what:$PATH"
+    else
+        newpath="$PATH:$what"
+    fi
+
+    # echo "$PATH" | grep -q "$what" || PATH="$newpath"
+    #
+    # we need to do sth like this, or we'll get confused by things like 'sw/sh'
+    # if 'sw/sh.local is in PATH.
+    #
+    for p in `echo $PATH | sed -e 's/:/\n/g'`; do
+        [ "$p" = "$what" ] && return
+    done
+    PATH="$newpath"
+}
 
 find_in_normpath() {
     #

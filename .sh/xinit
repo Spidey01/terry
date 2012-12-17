@@ -1,20 +1,25 @@
 #!/bin/sh
-
+#
 # My personal X-Session initialization file.
 #
 #
 
 
 #
-# Force parsing of our current X resources file
+# Force parsing of our current X resources file.
+# -> This should only be needed on old Xorg versions.
+# -> Modern Xorg versions should automate this in XSession.
 #
 xrdb -quiet ~/.Xresources
 
-# fix the wonky mouse cursor X -> arrow.
+# Fix the wonky mouse cursor X -> arrow.
+# -> This should only be needed on newer Xorg versions.
+#
 xsetroot -cursor_name left_ptr
 
 #
-# launch a D-Bus channel for this session
+# Launch a D-Bus channel for this session if missing.
+# -> Modern Xorg versions should automate this in XSession.
 #
 which dbus-launch >/dev/null && if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     eval `dbus-launch --sh-syntax --exit-with-session`

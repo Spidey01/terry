@@ -18,9 +18,12 @@ if [ -z "$PATH" ]; then
     PATH="/bin:/sbin:/usr/bin:/usr/sbin"; export PATH
 fi
 
-# append ~/sw/{sh.local,sh,bin} to path
+# prepend ~/sw/ directories to path
 #
-PATH="${PATH}:${HOME}/sw/sh.local:${HOME}/sw/sh:${HOME}/sw/bin:${HOME}/sw/sbin"
+ensure_path -p "$HOME/sw/bin"
+ensure_path -p "$HOME/sw/sbin"
+ensure_path -p "$HOME/sw/sh"
+ensure_path -p "$HOME/sw/sh.local"
 
 # only set if it exists.
 if [ -n "$PS1" ]; then
@@ -43,7 +46,7 @@ export PAGER LESS
 #
 # set my default editor, if not found then go in on order of preference.
 #
-EDITOR="`find_in_normpath vim nvi vi mg ed | grep -v 'not found:' | head -n 1`"
+EDITOR="`find_in_normpath vim nvi vi mg ed | head -n 1`"
 VISUAL="$EDITOR"
 export EDITOR VISUAL
 
@@ -59,7 +62,7 @@ export IRCNICK IRCNAME IRCSERVER
 # use (Linux, *BSD). Other systems should use ~/.sh/env.d/$OS_NAME to set the
 # correct value from this variable and/or unset this one.
 #
-LD_LIBRARY_PATH="${HOME}/sw/lib"
+LD_LIBRARY_PATH="${HOME}/sw/lib:$LD_LIBRARY_PATH"
 export LD_LIBRARY_PATH
 
 # Pick up programs/modules from Ruby gems

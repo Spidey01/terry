@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if ps x | grep -v grep | grep -q xscreensaver; then
+    xscreensaver-command -activate
+else
+    echo "$LOGNAME doesn't seem to be running xscreensaver."
+    exit 127
+fi

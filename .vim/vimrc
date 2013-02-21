@@ -263,7 +263,7 @@
 			autocmd filetype cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set ft=python
 			autocmd BufNewFile,BufRead *.rakefile set filetype=ruby
-	
+			autocmd BufNewFile,BufRead *.gradle set filetype=groovy	
 		endif
 
 " !FORMATS }}}

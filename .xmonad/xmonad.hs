@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig
 
@@ -9,8 +10,9 @@ import XMonad.Util.EZConfig
 --myLogHook = fadeInactiveLogHook fadeAmount
 --        where fadeAmount = 0x99999999 -- 60% rgba
 
-main = xmonad $ defaultConfig {
+main = xmonad $ ewmh defaultConfig {
         modMask = mod4Mask,
+        --handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook,
         manageHook = manageDocks <+> manageHook defaultConfig,
         layoutHook = avoidStruts $ layoutHook defaultConfig,
         terminal = "xterm"

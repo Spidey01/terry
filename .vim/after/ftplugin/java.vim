@@ -12,11 +12,11 @@ set wildignore+=*.class
 
 " Setup :make to use the common build systems.
 if filereadable("./build.gradle")
-	set makeprg=gradle
+	compiler gradle
 elseif filereadable("./pom.xml")
-	set makeprg=mvn
+	compiler maven3
 elseif filereadable("./build.xml")
-	set makeprg=ant
+	compiler ant
 endif
 
 call PostHandlerHook()

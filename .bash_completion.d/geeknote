@@ -1,0 +1,38 @@
+# Based on tmux's bash_completion example.
+
+# START geeknote completion
+# This file is in the public domain
+# See: http://www.debian-administration.org/articles/317 for how to write more.
+_geeknote() 
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    
+    opts=" \
+
+    tag-edit \
+    show \
+    notebook-list \
+    tag-list \
+    logout \
+    user \
+    find \
+    settings \
+    edit \
+    create \
+    remove \
+    notebook-create \
+    login \
+    notebook-edit \
+    tag-create"
+
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))  
+    return 0
+
+}
+complete -F _geeknote geeknote
+
+# END geeknote completion
+

@@ -1,38 +1,17 @@
-# Based on tmux's bash_completion example.
+# taken from https://github.com/VitaliyRodnenko/geeknote/blob/master/bash_completion/geeknote 
 
-# START geeknote completion
-# This file is in the public domain
-# See: http://www.debian-administration.org/articles/317 for how to write more.
-_geeknote() 
+_geeknote_command()
 {
-    local cur prev opts
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    SAVE_IFS=$IFS
+    IFS=" "
+    args="${COMP_WORDS[*]:1}"
+    IFS=$SAVE_IFS
     
-    opts=" \
-
-    tag-edit \
-    show \
-    notebook-list \
-    tag-list \
-    logout \
-    user \
-    find \
-    settings \
-    edit \
-    create \
-    remove \
-    notebook-create \
-    login \
-    notebook-edit \
-    tag-create"
-
-    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))  
+    COMPREPLY=( $(compgen -W "`geeknote autocomplete ${args}`" -- ${cur}) )
+    
     return 0
-
 }
-complete -F _geeknote geeknote
-
-# END geeknote completion
-
+complete -F _geeknote_command geeknote

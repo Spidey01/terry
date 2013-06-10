@@ -35,7 +35,7 @@ ensure_path() {
     #   -p prepend.
     #
     local path aflag eflag pflag
-    unset OPTIND
+    OPTIND=1
     while getopts "aehp" option; do
         case "$option" in
             a)
@@ -114,9 +114,12 @@ fuzzy_ensure_path() {
     #
     local basepath dirname binname trydir trysubdir ext tryext option flags
 
-    unset OPTIND
-    while getopts "aehp" option; do
+    OPTIND=1
+    while getopts "b:aehp" option; do
         case "$option" in
+            b)
+                binname="$OPTARG"
+                ;;
             h)
                 echo "usage: fuzzy_ensure_path [OPTION] BASEPATH"
                 return
@@ -134,7 +137,7 @@ fuzzy_ensure_path() {
 
     for basepath in $@; do
         dirname="`dirname $basepath`"
-        binname="`basename $basepath`"
+        binname="${binname:-`basename $basepath`}"
         exts="sh py pl rb" 
 
 
@@ -142,12 +145,12 @@ fuzzy_ensure_path() {
             for trydir in "${basepath}" "${basepath}/`ls ${basepath} | sort | tail -n 1`"; do
                 for trysubdir in "$trydir" "${trydir}/bin"; do
                     if [ -x "${trysubdir}/${binname}" ]; then
-                        ensure_path "$flags" "${trysubdir}"
+                        ensure_path $flags "${trysubdir}"
                         return
                     fi
                     for tryext in $exts; do
                         if [ -x "${trysubdir}/${binname}.${tryext}" ]; then
-                            ensure_path "$flags" "${trysubdir}"
+                            ensure_path $flags "${trysubdir}"
                             return
                         fi
                     done

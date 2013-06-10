@@ -142,16 +142,15 @@ fuzzy_ensure_path() {
             for trydir in "${basepath}" "${basepath}/`ls ${basepath} | sort | tail -n 1`"; do
                 for trysubdir in "$trydir" "${trydir}/bin"; do
                     if [ -x "${trysubdir}/${binname}" ]; then
-                        echo ensure_path "$flags" "${trysubdir}"
+                        ensure_path "$flags" "${trysubdir}"
                         return
                     fi
                     for tryext in $exts; do
                         if [ -x "${trysubdir}/${binname}.${tryext}" ]; then
-                            echo ensure_path "$flags" "${trysubdir}"
+                            ensure_path "$flags" "${trysubdir}"
                             return
                         fi
                     done
-                    echo "not in $trysubdir"
                 done
                 # echo "try $trydir/$binname"
                 # echo "try $trydir/${binname}.sh"

@@ -176,23 +176,23 @@ find_in_normpath() {
     #   0	= found
     #   >0	= not found
     #
+    local progname p name
 
-    for _progname; do
-        for _P in "${HOME}/sw/sh.local" "${HOME}/sw/sh" "${HOME}/sw/bin" \
+    for progname; do
+        for p in "${HOME}/sw/sh.local" "${HOME}/sw/sh" "${HOME}/sw/bin" \
                   "${HOME}/sw/sbin" \
                   /usr/local/bin /usr/local/sbin \
                   /usr/bin /usr/sbin \
                   /bin /sbin
         do
-            _name="${_P}/${_progname}"
-            if [ -x "$_name" ]; then
-                echo "$_name"
+            name="${p}/${progname}"
+            if [ -x "$name" ]; then
+                echo "$name"
                 continue 2
             fi
         done
-        # echo "not found: $_progname"
+        # echo "not found: $progname"
     done
-    unset P name progname
     return 127
 }
 

@@ -8,6 +8,20 @@
 # executing any of these functions.
 #
 
+dump_path() {
+    echo $PATH | sed -e 's/:/\n/g'
+}
+
+
+append_path() {
+    PATH="$PATH:$1"
+}
+
+
+prepend_path() {
+    PATH="$1:$PATH"
+}
+
 ensure_path() {
     #
     # usage: ensure_path {path}
@@ -15,37 +29,141 @@ ensure_path() {
     # Ensure that its argument is in path.
     #
     # options: 
-    #   -p prepend.
     #   -a append (default).
+    #   -e only if exists.
+    #   -h help message.
+    #   -p prepend.
     #
-    local newpath what p
-    case "$1" in
-        -p|-a)
-            what="$2"
-            ;;
-        -*)
-            echo "error: unknown option: $1"
-            ;;
-        *)
-            what="$1"
-            ;;
-    esac
+    local path aflag eflag pflag
+    unset OPTIND
+    while getopts "aehp" option; do
+        case "$option" in
+            a)
+                aflag=1
+                ;;
+            e)
+                eflag=1
+                ;;
+            h)
+                echo "usage: ensure_path [OPTION] PATH"
+                return
+                ;;
+            p)
+                pflag=1
+                ;;
+            \?)
+                # bad option
+                return
+                ;;
+        esac
+    done
+    shift `expr $OPTIND - 1`
+    path="$1"
+    # default to -a (append).
+    [ -z "$pflag" -a -z "$aflag" ] && aflag=1
 
-    if [ "$1" = "-p" ]; then
-        newpath="$what:$PATH"
-    else
-        newpath="$PATH:$what"
+    # -e => only if exists.
+    [ -n "$eflag" -a ! -d "$path" ] && return
+
+    # already in path
+    if dump_path | grep -q '^'"$path"'$'; then
+        # echo "$path is in PATH"
+        return
     fi
 
-    # echo "$PATH" | grep -q "$what" || PATH="$newpath"
+
+    if [ -n "$aflag" ]; then
+        echo "append_path $path"
+        append_path "$path"
+    elif [ -n "$pflag" ]; then
+        echo "prepend_path $path"
+        prepend_path "$path"
+    else
+        echo "ensure_path: internal error!."
+        return 1
+    fi
+
+}
+
+
+fuzzy_ensure_path() {
     #
-    # we need to do sth like this, or we'll get confused by things like 'sw/sh'
-    # if 'sw/sh.local is in PATH.
+    # usage: fuzzy_ensure_path [OPTION] BASEPATH
     #
-    for p in `echo $PATH | sed -e 's/:/\n/g'`; do
-        [ "$p" = "$what" ] && return
+    # OPTION is the same as ensure_path.
+    #
+    # Given a BASEPATH like /usr/local/foo:
+    #
+    #   0. Check if /usr/local/foo/foo (or foo.sh) exists.
+    #   2. Check if /usr/local/foo/bin/foo (or foo.sh) exists.
+    #   x. Check if /usr/local/foo/(last dir by sort)/foo (or foo.sh) exists.
+    #   x. Check if /usr/local/foo/(last dir by sort)/bin/foo (or foo.sh) exists.
+    #
+    # This is useful for things stored in groups, e.g. if you have a tree like
+    #   /usr/local/foo/
+    #       1.1
+    #       1.2
+    #       foo-1.3
+    #       e.t.c.
+    #
+    # TODO:
+    #
+    #   -d foo,bar,... list of subdirs to check, e.g. -d sbin /usr/local/foo 
+    #   -x sh,py,pl,... list of extensions to check, e.g. -x py /usr/local/foo
+    #
+    local basepath dirname binname trydir trysubdir ext tryext option flags
+
+    unset OPTIND
+    while getopts "aehp" option; do
+        case "$option" in
+            h)
+                echo "usage: fuzzy_ensure_path [OPTION] BASEPATH"
+                return
+                ;;
+            \?)
+                # bad option
+                return
+                ;;
+            *)
+                flags="$flags -$option"
+                ;;
+        esac
     done
-    PATH="$newpath"
+    shift `expr $OPTIND - 1`
+
+    basepath="$1"
+    dirname="`dirname $basepath`"
+    binname="`basename $basepath`"
+    exts="sh py pl rb" 
+
+
+    if [ -d "$basepath" ]; then
+        for trydir in "${basepath}" "${basepath}/`ls ${basepath} | sort | tail -n 1`"; do
+            for trysubdir in "$trydir" "${trydir}/bin"; do
+                if [ -x "${trysubdir}/${binname}" ]; then
+                    echo ensure_path "$flags" "${trysubdir}"
+                    return
+                fi
+                for tryext in $exts; do
+                    if [ -x "${trysubdir}/${binname}.${tryext}" ]; then
+                        echo ensure_path "$flags" "${trysubdir}"
+                        return
+                    fi
+                done
+            done
+            # echo "try $trydir/$binname"
+            # echo "try $trydir/${binname}.sh"
+            # echo "try $trydir/bin/${binname}"
+            # echo "try $trydir/bin/${binname}.sh"
+        done
+
+        # if [ -x "${basepath}/${binname}" -o -x "${basepath}/${binname}.sh" ]; then
+            # ensure_path "${basepath}/${binname}"
+        # fi
+        # if [ -x ${basepath}`ls ${basepath} | sort | tail -n 1`/bin/${binname} ]; then
+            # echo foo
+        # fi
+    fi
 }
 
 find_in_normpath() {

@@ -42,7 +42,7 @@ xsetroot -cursor_name left_ptr
 
 # if running on a laptop, try to disable the touch pad while typing
 #
-if laptop-detect; then
+if in_path -b laptop-detect && laptop-detect; then
     # [ ! -f "${HOME}/tmp/syndaemon.pid" ] &&
     syndaemon -d -tK -i 0.5 #-p "${HOME}/tmp/syndaemon.pid"
     # TODO: a way of trapping logout events for cleanup
@@ -71,7 +71,7 @@ fi
 
     # if blueman is present, then I probably want to run the applet.
     #
-    if type blueman-applet; then
+    if in_path blueman-applet; then
         blueman-applet&
     fi
 

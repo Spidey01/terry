@@ -12,6 +12,64 @@ dump_path() {
     echo $PATH | sed -e 's/:/\n/g'
 }
 
+in_path() {
+    #
+    # usage: in_path [OPTION] WHAT...
+    #
+    # Searches PATH for WHAT.
+    #
+    # options: 
+    #   
+    #   -d = WHAT refers to directories. (Default.)
+    #   -b = WHAT refers to programs.
+    #
+    # exit status:
+    #   0	= found
+    #   >0	= not found
+    # 
+    #
+    local what bin dir prog
+
+    OPTIND=1
+    while getopts "bdh" option; do
+        case "$option" in
+            b)
+                bin=1
+                ;;
+            d)
+                dir=1
+                ;;
+            h)
+                echo "usage: in_path [-b | -d] NAME"
+                echo "Check for  binary (-b) or directory (-d) in PATH."
+                return
+                ;;
+            \?)
+                # bad option
+                return
+                ;;
+        esac
+    done
+    shift `expr $OPTIND - 1`
+
+    # default to -d (directory).
+    [ -z "$bin" -a -z "$dir" ] && dir=1
+
+    if [ -n "$bin" ]; then
+        for bin; do
+            for dir in `dump_path`; do
+                [ -x "${dir}/${bin}" ] && return 0
+            done
+        done
+    elif [ -n "$dir" ]; then
+        for dir; do
+            dump_path | grep -q '^'"$dir"'$' && return 0
+        done
+    else
+        echo "in_path: internal error!"
+        return 127
+    fi
+}
 
 append_path() {
     PATH="$PATH:$1"
@@ -68,7 +126,7 @@ ensure_path() {
         [ -n "$eflag" -a ! -d "$path" ] && return
 
         # already in path
-        if dump_path | grep -q '^'"$path"'$'; then
+        if in_path -d "$path"; then
             # echo "$path is in PATH"
             return
         fi

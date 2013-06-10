@@ -67,14 +67,14 @@ export LD_LIBRARY_PATH
 
 # Pick up programs/modules from Ruby gems
 #
-if find_in_normpath ruby >/dev/null; then
+if in_path -b ruby; then
     RUBYLIB="$HOME/.gem/ruby/`get_ruby_major_version`/lib:$RUBYLIB"; export RUBYLIB
-    PATH="$HOME/.gem/ruby/`get_ruby_major_version`/bin:$PATH"
+    prepend_path "$HOME/.gem/ruby/`get_ruby_major_version`/bin"
 fi
 
 # Python stuff
 #
-if find_in_normpath python >/dev/null; then
+if in_path -b python; then
     PYTHONSTARTUP="${HOME}/.pythonrc"
     [ ! -f "$PYTHONSTARTUP" ] && touch "$PYTHONSTARTUP"
     PYTHONPATH="${HOME}/sw/lib/python`get_python_major_version`/site-packages:$PYTHONPATH"

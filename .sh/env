@@ -81,7 +81,33 @@ if find_in_normpath python >/dev/null; then
     export PYTHONSTARTUP PYTHONPATH
 fi
 
-# test for ssh to local host and assume GUI. Unset in rc.local if needed!
+
+#
+# Java - this should work for Debian and Fedora.
+# 
+[ -z "$JAVA_HOME" -a -d /usr/lib/jvm/default-java ] && JAVA_HOME="/usr/lib/jvm/default-java"
+#
+# My preferred locations for the Android SDK.
+#
+[ -d "~/sw/android-sdk-linux" ] && ANDROID_HOME="~/android-sdk-linux/android-sdk-linux"
+[ -z "$ANDROID_HOME" -a -d /usr/local/android-sdk-linux ] \
+    && ANDROID_HOME="/usr/local/android-sdk-linux"
+#
+# Java/Android tools.
+#
+fuzzy_ensure_path -ep "~/sw/gradle" /usr/local/gradle
+fuzzy_ensure_path -b mvn -ep "~/sw/apache-maven" /usr/local/apache-maven
+if [ -n "$ANDROID_HOME" ]; then
+    append_path "${ANDROID_HOME}/tools"
+    append_path "${ANDROID_HOME}/platform-tools"
+    [ -d "${ANDROID_HOME}/build-tools" ] \
+        && append_path "${ANDROID_HOME}/build-tools/`ls ${ANDROID_HOME}/build-tools/ | sort | tail -n 1`"
+fi
+
+
+# Test for ssh to local host and assume a GUI is present. E.g. Chrome Secure Shell app.
+# Unset in rc.local if needed!
+#
 if [ -z "$DISPLAY" ]; then
 	if [ "`echo $SSH_CONNECTION | cut -f1 -d' '`" = "127.0.0.1" -a \
          "`echo $SSH_CONNECTION | cut -f3 -d' '`" = "127.0.0.1" ]; then

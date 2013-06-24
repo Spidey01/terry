@@ -85,13 +85,14 @@ fi
 #
 # Java - this should work for Debian and Fedora.
 # 
-[ -z "$JAVA_HOME" -a -d /usr/lib/jvm/default-java ] && JAVA_HOME="/usr/lib/jvm/default-java"
+[ -z "$JAVA_HOME" -a -d /usr/lib/jvm/default-java ] \
+    && JAVA_HOME="/usr/lib/jvm/default-java" && export JAVA_HOME
 #
 # My preferred locations for the Android SDK.
 #
 [ -d "~/sw/android-sdk-linux" ] && ANDROID_HOME="~/android-sdk-linux/android-sdk-linux"
 [ -z "$ANDROID_HOME" -a -d /usr/local/android-sdk-linux ] \
-    && ANDROID_HOME="/usr/local/android-sdk-linux"
+    && ANDROID_HOME="/usr/local/android-sdk-linux" && export ANDROID_HOME
 #
 # Java/Android tools.
 #

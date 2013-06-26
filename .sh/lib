@@ -31,9 +31,9 @@ in_path() {
     local what bin dir prog
 
     OPTIND=1
-    while getopts "bdh" option; do
+    while getopts "bedh" option; do
         case "$option" in
-            b)
+            b|e)
                 bin=1
                 ;;
             d)

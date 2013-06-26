@@ -71,7 +71,7 @@ fi
 
     # if blueman is present, then I probably want to run the applet.
     #
-    if in_path blueman-applet; then
+    if in_path -b blueman-applet; then
         blueman-applet&
     fi
 

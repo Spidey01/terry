@@ -74,9 +74,11 @@
 # unless it is a non-interactive SSH session.
 #
 if [ -n "$SSH_TTY" -o -z "$SSH_CONNECTION" ]; then
+    echo ''
     [ -x /usr/games/fortune ] && /usr/games/fortune -aes
     echo ''; echo ''
     echo "To days date is: `date`"
+    echo ''
 fi
 
 #

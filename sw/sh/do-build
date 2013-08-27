@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+#
+# Helper script for doing some builds in a (s)chroot. It's a make wrapper with
+# logging (script) and support for notifying the user. E.g. run a build on a
+# faster build server and make your workstation beep on completion.
+#
+
+#
+# default beep oughta be around 750hz IAW man beep; so 900 sounds diff enough on my boxen. YMMV!
+#
+BEEP_COMMAND="beep -l 600 -n -f 900 -l 200 -n -l 600"
+
+
+while getopts "bh:c:" opt; do
+    case $opt in
+        b)
+            want_callback=true
+            ;;
+        c)
+            want_chroot=$OPTARG
+            ;;
+        h)
+            ssh_host=$OPTARG
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            echo "usage: `basename $0` [options] [make args]"
+            exit $OPTERR
+            ;;
+    esac
+done
+shift `expr $OPTIND - 1`
+
+
+notify_user() {
+    if [ -n "$ssh_host" ]; then
+        echo ssh "$ssh_host" "$BEEP_COMMAND"
+    else
+        echo eval "$BEEP_COMMAND"
+    fi
+}
+
+
+build_it() {
+    # exec script -c "schroot -c $chroot make $@" ihateyou
+    [ -f ihateyou ] && mv ihateyou ihateyou.before
+    script -c "schroot -c $chroot make $@" ihateyou
+    [ -n "$want_callback" ] && notify_user
+}
+
+
+if [ -z "$want_chroot" ]; then
+    echo "Select chroot to run make in"
+
+    select chroot in `schroot -l`; do
+        break
+    done
+else
+    chroot=$want_chroot
+fi
+build_it "$@"
+echo "Back to normal shell."

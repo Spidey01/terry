@@ -34,9 +34,9 @@ shift `expr $OPTIND - 1`
 
 notify_user() {
     if [ -n "$ssh_host" ]; then
-        echo ssh "$ssh_host" "$BEEP_COMMAND"
+        ssh "$ssh_host" "$BEEP_COMMAND"
     else
-        echo eval "$BEEP_COMMAND"
+        eval "$BEEP_COMMAND"
     fi
 }
 

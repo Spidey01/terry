@@ -14,7 +14,12 @@ _gvimrc
 .Xauthority
 .xsession-errors
 .xsession-errors.old
+# Desktop / GUI related stuff
+.cache
+.dbus
+Desktop
+Downloads
 # Dropbox stuff
-Dropbox/*
+Dropbox
 .dropbox
 .dropbox-dist

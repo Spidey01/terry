@@ -15,14 +15,14 @@ rc_files: .vimrc .gvimrc .pythonrc .irbrc
 
 # Most of these are optional.
 dropbox_files: 
-	if [ -d ./Dropbox/Backups -a ! -d ./Backups ]; then ln -s ./Dropbox/Backups ./Backups; else true; fi
-	if [ -d ./Dropbox/Documents -a ! -d ./Documents ]; then ln -s ./Dropbox/Documents ./Documents; else true; fi
-	if [ ! -h ./.ssh/keys -a ! -e ./.ssh/keys ]; then \
-		ln -s ./Dropbox/Ssh/keys ./.ssh/keys; \
-		find ./.ssh/keys/ -type d -exec chmod 0700 '{}' \; ; \
-		find ./.ssh/keys/ -type f -exec chmod 0600 '{}' \; ; fi
+	if [ -d ~/Dropbox/Backups -a ! -d ~/Backups ]; then ln -s ~/Dropbox/Backups ~/Backups; else true; fi
+	if [ -d ~/Dropbox/Documents -a ! -d ~/Documents ]; then ln -s ~/Dropbox/Documents ~/Documents; else true; fi
+	if [ ! -h ~/.ssh/keys -a ! -e ~/.ssh/keys ]; then \
+		ln -s ~/Dropbox/Ssh/keys ~/.ssh/keys; \
+		find ~/.ssh/keys/ -type d -exec chmod 0700 '{}' \; ; \
+		find ~/.ssh/keys/ -type f -exec chmod 0600 '{}' \; ; fi
 	if [ ! -h .ssh/config -a ! -f .ssh/config ]; then \
-		ln -s ./Dropbox/Ssh/config ./.ssh/config; fi
+		ln -s ~/Dropbox/Ssh/config ~/.ssh/config; fi
 
 status:
 	git status | $(PAGER)
@@ -54,10 +54,10 @@ vim-helptags:
 
 # stuff that we don't really want in a dump
 no_dump:
-	if [ -d ./Dropbox ]; then $(NODUMP) ./Dropbox ; else true; fi
-	if [ -d ./.cache ]; then $(NODUMP) ./.cache ; else true; fi
-	if [ -d ./.dbus/session-bus ]; then $(NODUMP) ./.dbus/session-bus ; else true; fi
-	if [ -d ./.m2/repository ]; then $(NODUMP) ./.m2/repository ; else true; fi
+	if [ -d ~/Dropbox ]; then $(NODUMP) ~/Dropbox ; else true; fi
+	if [ -d ~/.cache ]; then $(NODUMP) ~/.cache ; else true; fi
+	if [ -d ~/.dbus/session-bus ]; then $(NODUMP) ~/.dbus/session-bus ; else true; fi
+	if [ -d ~/.m2/repository ]; then $(NODUMP) ~/.m2/repository ; else true; fi
 
 .PHONY: status pull push dropbox_files vim-helptags no_dump
 

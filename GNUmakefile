@@ -9,7 +9,7 @@ HOSTNAME = `uname -n`
 # command to set the nodump attribute
 NODUMP = chattr +d 
 
-all: rc_files dropbox_files no_dump
+all: rc_files dropbox_files no_dump vim-helptags
 
 rc_files: .vimrc .gvimrc .pythonrc .irbrc
 
@@ -17,11 +17,12 @@ rc_files: .vimrc .gvimrc .pythonrc .irbrc
 dropbox_files: 
 	if [ -d ./Dropbox/Backups -a ! -d ./Backups ]; then ln -s ./Dropbox/Backups ./Backups; else true; fi
 	if [ -d ./Dropbox/Documents -a ! -d ./Documents ]; then ln -s ./Dropbox/Documents ./Documents; else true; fi
-	if [ -h ./.ssh/keys ]; then true; else \
-		if [ -d ./Dropbox/SshKeys -a ! -d .ssh/keys ]; then \
-			ln -s ../Dropbox/SshKeys ./.ssh/keys; \
-			find .ssh/keys/ -type d -exec chmod 0700 '{}' \; ; \
-			find .ssh/keys/ -type f -exec chmod 0600 '{}' \; ; fi; fi
+	if [ ! -h ./.ssh/keys -a ! -e ./.ssh/keys ]; then \
+		ln -s ./Dropbox/Ssh/keys ./.ssh/keys; \
+		find ./.ssh/keys/ -type d -exec chmod 0700 '{}' \; ; \
+		find ./.ssh/keys/ -type f -exec chmod 0600 '{}' \; ; fi
+	if [ ! -h .ssh/config -a ! -f .ssh/config ]; then \
+		ln -s ./Dropbox/Ssh/config ./.ssh/config; fi
 
 status:
 	git status | $(PAGER)
@@ -46,7 +47,10 @@ push:
 	touch .irbrc
 
 vim-helptags:
-	for _D in .vim/bundle/*/doc; do vim -e --cmd "helptags $$_D | q"; done
+	if type vim >/dev/null 2>/dev/null; then \
+		for _D in .vim/bundle/*/doc; do \
+			echo "vim :helptags $$_D" ; \
+			vim -e --cmd "helptags $$_D | q"; done; fi
 
 # stuff that we don't really want in a dump
 no_dump:

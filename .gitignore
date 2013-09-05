@@ -14,3 +14,7 @@ _gvimrc
 .Xauthority
 .xsession-errors
 .xsession-errors.old
+# Dropbox stuff
+Dropbox/*
+.dropbox
+.dropbox-dist

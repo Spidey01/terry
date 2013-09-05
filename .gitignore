@@ -9,3 +9,8 @@ _gvimrc
 .history
 *_history
 .lesshst
+# xsession stuff.
+.ICEauthority
+.Xauthority
+.xsession-errors
+.xsession-errors.old

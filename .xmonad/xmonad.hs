@@ -25,7 +25,7 @@ myManageHooks = composeAll
 
 -- smartBorders: don't stuff boards on e.g. full screen window.
 -- avoidStruts: for making the panel work.
-myLayoutHooks = smartBorders (avoidStruts $ layoutHook defaultConfig)
+myLayoutHooks = noBorders $ avoidStruts $ layoutHook defaultConfig
 
 -- Fixes some full screen apps, namely Google Chrome.
 myHandleEventHooks = handleEventHook defaultConfig <+> fullscreenEventHook

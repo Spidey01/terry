@@ -66,8 +66,17 @@ fi
 
     # Freaking Basic Panel.
     # -> Set TZ to desired clock setting.
+    # Use local profile if present.
     #
-    env TZ="America/New_York" fbpanel &
+    env TZ="America/New_York" fbpanel -p $(
+        if [ -f "$HOME/.config/fbpanel/local" ]; then
+            echo local
+        else
+            echo default
+        fi
+    )
+
+    )&
 
     # if blueman is present, then I probably want to run the applet.
     #

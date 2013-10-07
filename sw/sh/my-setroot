@@ -1,0 +1,62 @@
+#!/bin/sh
+
+setroot_app=
+arg=$1
+wp=$2
+
+if [ -z "$arg" ]; then
+    xsetroot -gray
+    exit $?
+fi
+
+if [ "$arg" = "-h" -o "$arg" = "-help" -o "$arg" = "--help" ]; then
+    echo "usage: $0 {arg} {wp}"
+    echo "arg is one of center, tile, full, fill, solid"
+fi
+
+for app in `which hsetroot bsetroot xsetroot`; do
+    setroot_app="`basename $app`"
+    break
+done
+
+no_backend() {
+    echo "$0: can't use $arg with $setroot_app, sorry!"
+    exit 1
+}
+
+case $setroot_app in
+    hsetroot)
+        arg="-$arg"
+        ;;
+    bsetroot)
+        case $arg in
+            solid)
+                arg="-solid"
+                ;;
+            *)
+                no_backend
+                ;;
+        esac
+        ;;
+    xsetroot)
+        case $arg in
+            solid)
+                arg="-solid"
+                ;;
+            tile)
+                arg="-bitmap"
+                ;;
+            *)
+                no_backend
+                ;;
+        esac
+        ;;
+    *)
+        echo "$0: no set root program found!"
+        exit 127
+        ;;
+esac
+
+echo $setroot_app $arg "$wp"
+$setroot_app $arg "$wp"
+

@@ -74,8 +74,6 @@ fi
         else
             echo default
         fi
-    )
-
     )&
 
     # if blueman is present, then I probably want to run the applet.

@@ -92,7 +92,10 @@ fi
 #
 [ -d "~/sw/android-sdk-linux" ] && ANDROID_HOME="~/android-sdk-linux/android-sdk-linux"
 [ -z "$ANDROID_HOME" -a -d /usr/local/android-sdk-linux ] \
-    && ANDROID_HOME="/usr/local/android-sdk-linux" && export ANDROID_HOME
+    && ANDROID_HOME="/usr/local/android-sdk-linux" 
+[ -z "$ANDROID_HOME" -a -d /opt/android-studio/sdk ] && ANDROID_HOME="/opt/android-studio/sdk" 
+export ANDROID_HOME
+
 #
 # Java/Android tools.
 #

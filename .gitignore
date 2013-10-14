@@ -17,6 +17,7 @@ _gvimrc
 # Desktop / GUI related stuff
 .cache
 .dbus
+.config/fbpanel/local*
 Desktop
 Downloads
 # Dropbox stuff

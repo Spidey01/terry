@@ -48,59 +48,10 @@ if in_path -b laptop-detect && laptop-detect; then
     # TODO: a way of trapping logout events for cleanup
 fi
 
-#
-# Startup programs and services.
-#
-(
-    sleep 1
-
-    #
-    # run jwz's screen saver and locking program
-    #
-    xscreensaver -no-splash &
-
-    #
-    # Fancy shadows and things
-    #
-    xcompmgr -cfF &
-
-    # Freaking Basic Panel.
-    # -> Set TZ to desired clock setting.
-    # Use local profile if present.
-    #
-    env TZ="America/New_York" fbpanel -p $(
-        if [ -f "$HOME/.config/fbpanel/local" ]; then
-            echo local
-        else
-            echo default
-        fi
-    )&
-
-    # if blueman is present, then I probably want to run the applet.
-    #
-    if in_path -b blueman-applet; then
-        blueman-applet&
-    fi
-
-    pidgin&
-    dropbox start -i &
-
-
-    # Start terminal with a delay. Other wise some window managers may get the
-    # layout wrong in relation to fbpanel.
-    #
-    # (sleep 3; if type tmux; then xterm -e ~/sw/sh/mytmux & 
-    #  else xterm & fi)
-    #
-    # Google Chrome takes so long to start up that we shouldn't need a delay.
-    # -> 2012-12-17: this is now in a sub shell block.
-    #
-    google-chrome&
-)
 
 # Start the big kahuna
 #
-exec xmonad
+[ -x ~/.sh/xsession.local ] && exec ~/.sh/xsession.d/local
 
 # clean up
 #

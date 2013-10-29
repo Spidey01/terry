@@ -15,6 +15,17 @@ BEEP_COMMAND="beep -l 600 -n -f 900 -l 200 -n -l 600"
 #
 log_file=ihateyou
 
+usage() {
+    echo "usage: `basename $0` [options] [make args]"
+    echo
+    echo "  -b          Beep when done."
+    echo "  -c CHROOT   Run command in CHROOT via schroot."
+    echo "  -h HOST     SSH into HOST for -b / beep when done."
+    echo "  -l FILE     Save transcript to FILE."
+    # echo "  "
+    echo
+}
+
 while getopts "bh:c:l:" opt; do
     case $opt in
         b)
@@ -31,13 +42,15 @@ while getopts "bh:c:l:" opt; do
             ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
-            echo "usage: `basename $0` [options] [make args]"
+            usage
             exit $OPTERR
             ;;
     esac
 done
 shift `expr $OPTIND - 1`
 
+# no args: display usage.
+[ $# -eq 0 ] && usage && exit 0
 
 notify_user() {
     if [ -n "$ssh_host" ]; then

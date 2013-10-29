@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+# Quick, dirty, lazy shell script to count lines of text in a project.
+# It's not intended to be a Ph.D engineered version.
+#
+
+echo "Generating code base line count statistics"
+
+cache="code-count.tmp"
+
+wc_l_count() {
+    wc -l "$@" | awk '{ print $1 }'
+}
+
+count() {
+    local file_type ext names list_of_files line sum count
+
+    file_type=$1
+    shift
+    names="-name \*.$1"
+    shift
+    for ext; do
+        names="$names -o -name \*.$ext"
+    done
+    list_of_files="$cache/$file_type.files"
+    eval "find . $names" > "$list_of_files"
+    if [ ! -f "$list_of_files" ]; then
+        # or directory 'cuz it clues the user to what we mean.
+        echo "error: $file_type: cached at '$list_of_Files': No such file or directory" >/dev/stderr
+    fi
+
+    sum='0'
+    while read line; do
+        sum="$(expr "$sum" + "$(wc_l_count $line)")"
+    done < "$list_of_files"
+    printf "${sum}\tlines of $file_type in `wc_l_count $list_of_files` files."
+}
+
+if [ ! -d "$cache" ] && ! mkdir "$cache"; then
+    echo "Failed to make cache directory ($cache)."
+    exit 1
+fi
+
+count c_and_cpp c h cpp hpp cc hh cxx hxx 
+count csharp cs
+count elisp elisp
+count groovy groovy gradle
+count haskell hs lhs
+count java java
+count javascript js ejs
+count lisp lisp
+count lua lua
+count perl pl pm
+count php php
+count python py
+count ruby rb erb
+count scala scala
+count scheme scm ss 
+count shell sh
+count vimscript vim
+
+echo "Finished."

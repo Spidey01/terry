@@ -10,8 +10,12 @@
 #
 BEEP_COMMAND="beep -l 600 -n -f 900 -l 200 -n -l 600"
 
+#
+# default log file name because I hate compiler errors.
+#
+log_file=ihateyou
 
-while getopts "bh:c:" opt; do
+while getopts "bh:c:l:" opt; do
     case $opt in
         b)
             want_callback=true
@@ -21,6 +25,9 @@ while getopts "bh:c:" opt; do
             ;;
         h)
             ssh_host=$OPTARG
+            ;;
+        l)
+            log_file=$OPTARG
             ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
@@ -42,9 +49,9 @@ notify_user() {
 
 
 build_it() {
-    # exec script -c "schroot -c $chroot make $@" ihateyou
-    [ -f ihateyou ] && mv ihateyou ihateyou.before
-    script -c "schroot -c $chroot make $@" ihateyou
+    # exec script -c "schroot -c $chroot make $@" "$log_file"
+    [ -f "$log_file" ] && mv "$log_file" "${log_file}.before"
+    script -c "schroot -c $chroot make $@" "$log_file"
     [ -n "$want_callback" ] && notify_user
 }
 

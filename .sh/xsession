@@ -51,7 +51,7 @@ fi
 
 # Start the big kahuna
 #
-[ -x ~/.sh/xsession.local ] && exec ~/.sh/xsession.d/local
+[ -x ~/.sh/xsession.d/local ] && exec ~/.sh/xsession.d/local
 
 # clean up
 #

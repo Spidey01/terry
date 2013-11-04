@@ -11,7 +11,7 @@ NODUMP = chattr +d
 
 all: rc_files dropbox_files insync_files no_dump vim-helptags
 
-rc_files: .vimrc .gvimrc .pythonrc .irbrc
+rc_files: .vimrc .gvimrc .irbrc
 
 # Most of these are optional.
 dropbox_files: 
@@ -42,9 +42,7 @@ push:
 .gvimrc: .vim/gvimrc
 	$(LINK)
 
-# non version controlled (yet). Just make sure they exist.
-.pythonrc:
-	touch .pythonrc
+# non version controlled (yet). Just make sure it exists.
 .irbrc:
 	touch .irbrc
 

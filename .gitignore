@@ -24,3 +24,5 @@ Downloads
 Dropbox
 .dropbox
 .dropbox-dist
+# misc stuff
+.pythonrc.local

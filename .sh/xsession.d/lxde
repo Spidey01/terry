@@ -1,2 +1,7 @@
 #!/bin/sh
+# force a private umask because daemons like Dropbox will use it when
+# syncronizing data, and who wants their private files world readable? >:P.
+#
+umask 0027
+
 exec startlxde

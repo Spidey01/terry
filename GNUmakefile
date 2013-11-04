@@ -9,7 +9,7 @@ HOSTNAME = `uname -n`
 # command to set the nodump attribute
 NODUMP = chattr +d 
 
-all: rc_files dropbox_files no_dump vim-helptags
+all: rc_files dropbox_files insync_files no_dump vim-helptags
 
 rc_files: .vimrc .gvimrc .pythonrc .irbrc
 
@@ -23,6 +23,8 @@ dropbox_files:
 		find ~/.ssh/keys/ -type f -exec chmod 0600 '{}' \; ; fi
 	if [ ! -h .ssh/config -a ! -f .ssh/config ]; then \
 		ln -s ~/Dropbox/Ssh/config ~/.ssh/config; fi
+
+insync_files:
 
 status:
 	git status | $(PAGER)
@@ -55,9 +57,10 @@ vim-helptags:
 # stuff that we don't really want in a dump
 no_dump:
 	if [ -d ~/Dropbox ]; then $(NODUMP) ~/Dropbox ; else true; fi
+	if [ -d ~/bigboss1964@gmail.com ]; then $(NODUMP) ~/bigboss1964@gmail.com ; else true; fi
 	if [ -d ~/.cache ]; then $(NODUMP) ~/.cache ; else true; fi
 	if [ -d ~/.dbus/session-bus ]; then $(NODUMP) ~/.dbus/session-bus ; else true; fi
 	if [ -d ~/.m2/repository ]; then $(NODUMP) ~/.m2/repository ; else true; fi
 
-.PHONY: status pull push dropbox_files vim-helptags no_dump
+.PHONY: status pull push dropbox_files insync_files vim-helptags no_dump
 

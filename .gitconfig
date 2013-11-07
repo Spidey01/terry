@@ -3,5 +3,6 @@
 	name = Terry M. Poulin
 [alias]
 	st = !git status -s | grep -v '??'
+	pp = log --graph --abbrev-commit --decorate --full-history --all
 [color]
 	ui = auto

@@ -32,7 +32,6 @@ pull:
 
 push:
 	git push origin
-	git push vectra
 
 .vimrc: .vim/vimrc
 	$(LINK)

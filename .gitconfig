@@ -4,5 +4,8 @@
 [alias]
 	st = !git status -s | grep -v '??'
 	pp = log --graph --abbrev-commit --decorate --full-history --all
+	# n.b. older versions of git lack the --cherry-mark flag.
+	#      (1.7.0.x lacks it; 1.7.10.x has it.)
+	history = log --graph --abbrev-commit --decorate --cherry-mark --full-history --all
 [color]
 	ui = auto

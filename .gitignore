@@ -26,3 +26,5 @@ Dropbox
 .dropbox-dist
 # misc stuff
 .pythonrc.local
+# don't import my evershare config.
+.config/evershare.rc

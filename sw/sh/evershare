@@ -1,0 +1,220 @@
+#!/usr/bin/env bash
+
+#
+# where we copy notes from. Export your notes as HTML here.
+#
+source="$1"
+#
+# where to copy notes to. Anything valid to rsync.
+#
+# You probably want a dir like ~/foo, if you want results like ~/foo/notebook_name.
+# Put RSYNC_RSH=ssh in your $config if you want to use a SSH/SCP style $dest.
+#
+dest="$2"
+#
+# Will be sent to a temporary place to put notes, to be processed before
+# sending it to $dest.
+#
+tmpdir=
+#
+# Script to source for info. Like what notebooks to share from $source to $dest.
+#
+config="${HOME}/.config/evershare.rc"
+
+
+
+ls_dirs() { # ls dir's in $1.
+    ls -F "$1" | sort | grep '/$'
+}
+
+stripper() { # strip $1 off stdin and send to stdout.
+    sed -e "s:$1/::"
+}
+
+
+make_notes_list() { # generate <li> entries for notes in $1.
+    local target file
+
+    target="$1"
+
+    while read file; do
+        echo "<li><a href=\"$file\">$(basename "$file" | sed -e 's/.html$//')</a></li>"
+    done <<EOF
+    $(ls "$target"/*.html | grep -v '\.utf-8\.html$' | stripper "$target")
+EOF
+}
+
+
+make_notebooks_list() { # generate <li> entries for notebooks in $1.
+    local target dir
+
+    target="$1"
+
+    while read dir; do
+        # if it's a stack, make a sub list with it's dirs.
+        echo "<li>"
+        if echo "$dir" | grep -q "Stack/$"; then
+            echo "$dir" | sed -e 's/\(.*\)/<a href="\1index.html">\1<\/a>/'
+            echo "<ol>"
+                while read subdir; do
+                    echo "<li><a href=\"${dir}${subdir}index.html\">$subdir</a></li>"
+                done <<STACK
+                $(ls_dirs "$target/$dir")
+STACK
+            echo "</ol>"
+        else
+            echo "<a href=\"${dir}/index.html\">$dir</a>"
+        fi
+        echo '</li>'
+    done << LOOP
+    $(ls_dirs "$target" | stripper "$target")
+LOOP
+}
+
+
+make_list() { # make a <ol> of notes/notebooks at $1.
+    local target file dir
+    target="$1"
+
+
+    if ls "$target" | grep -v index.html | grep -q '.html$'; then
+        # echo "make note index for $target" >/dev/stderr
+        echo "<h2>Index of Notes</h2>"
+        echo "<ol>"
+        make_notes_list "$target"
+        echo "</ol>"
+    else
+        # echo "make notebook index for $target" >/dev/stderr
+        echo "<h2>Index of Notebooks</h2>"
+        echo "<ol>"
+        make_notebooks_list "$target"
+        echo "</ol>"
+    fi
+}
+
+
+make_index() { # make an index.html for $2 with <title> of $1.
+    local target title stack_or_notebook
+    title="$1"
+    target="$2"
+    # echo make_index "'$target'" "'$title'" == "'$target/index.html'" >/dev/stderr
+
+    #
+    # Generate an Index page.
+    #
+    cat <<EOF > "$target/index.html"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+  <head>
+    <title>${title}</title>
+  </head>
+  <body>
+      <h1>${title}</h1>
+      <p>
+        This content is automatically generated. A script takes a directory
+        full of HTML/TEXT exported notes, cleans them up, and goes about
+        rsync'ing them here.  Sorry that pretty styles, tags, and search isn't
+        included but at least I'm a chronic organizer, right?  The list of
+        notebooks are what I've opted to share from my private collection.
+      </p>
+      <p>
+        $cfg_index_message
+      </p>
+      <p>
+        To view a plain text version of content, change the file extension form
+        .html to .txt.
+      </p>
+      <hr />
+      $(make_list "$target")
+      <hr />
+      <p>
+        Note:<br />
+
+        Content gets exported to UTF-8. Web browsers don't like UTF-8, so my
+        script copies them to name.utf8.{html,txt} and converts to
+        ISO-8659-1/Latin1. You can view the original UTF-8 encoded version by
+        way of changing the file name accordingly. I.e. change .html to
+        .utf-8.html or change .txt to .utf-8.txt.
+      </p>
+  </body>
+</html>
+EOF
+
+}
+
+
+###########################################################
+#
+# main program starts here.
+#
+###########################################################
+
+if [ -z "$source" -o -z "$dest" ]; then
+    echo "usage: `basename $0` {source} {dest}"
+fi
+
+#
+# load config
+#
+[ -f "$config" ] || {
+    echo "`basename $config`: no such file or directory."
+    echo "put config in $config"
+    echo "exiting."
+    exit 127
+}
+. "$config"
+
+[ -z "${cfg_notebooks[0]}" ] && {
+    echo "No notebooks to share."
+    echo 'Goodbye!'
+    exit 0
+}
+
+tmpdir=`mktemp -d`
+# tmpdir=/tmp/tmp.2xrmZe3xoX
+
+# yay, works! -- rsync to tmp place for processing.
+for nb in "${cfg_notebooks[@]}"; do
+    rsync -rtp --delete "$source/$nb" "$tmpdir/"
+done
+
+#
+# Input is utf-8 but we need latin1/iso-8659-1 to appease web browsers.
+# May as well keep the utf-8 version too.
+#
+while read note; do
+    if ! file "$note" | grep -q "UTF-8 Unicode text"; then
+        [ -n "$DEBUG" ] && echo "$note not in UTF-8? Skipping."
+        continue
+    fi
+
+    utf8_name="$(echo "$note" | sed -e 's/\.\(html\|txt\)$/.utf-8&/')"
+
+    mv "$note" "$utf8_name"
+    iconv -f UTF-8 -t ISO8859-1//TRANSLIT -o "$note" "$utf8_name"
+done << EOF
+$(find "$tmpdir" -type f -name \*.html -o -name \*.txt)
+EOF
+
+#
+# Generate indexes for stuff
+#
+make_index "Terry Poulin's Notes" "$tmpdir" 
+for nb in "${cfg_notebooks[@]}"; do
+    make_index "$nb" "$tmpdir/$nb"
+    if echo "$nb" | grep -q ' Stack$'; then
+        while read subnb; do
+            make_index "$subnb" "$tmpdir/$nb/$subnb"
+        done <<EOF
+        $(ls_dirs "$tmpdir/$nb")
+EOF
+    fi
+done
+
+
+#
+# Send it to the destination.
+#
+rsync -rtp --delete "$tmpdir"/* "$dest"
+rm -rf "$tmpdir"
+

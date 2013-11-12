@@ -246,7 +246,7 @@ find_in_normpath() {
             name="${p}/${progname}"
             if [ -x "$name" ]; then
                 echo "$name"
-                continue 2
+                return 0
             fi
         done
         # echo "not found: $progname"

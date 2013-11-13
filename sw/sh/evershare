@@ -40,7 +40,7 @@ make_notes_list() { # generate <li> entries for notes in $1.
     while read file; do
         echo "<li><a href=\"$file\">$(basename "$file" | sed -e 's/\.\(html\|pdf\)$//')</a></li>"
     done <<EOF
-    $(ls "$target"/*.{html,pdf} | grep -v '\.utf-8\.html$' | stripper "$target")
+    $(ls "$target"/*.{html,pdf} 2>/dev/null | grep -v '\.utf-8\.html$' | stripper "$target")
 EOF
 }
 
@@ -225,9 +225,10 @@ done
 # it as `hook filename`..
 #
 if [ -d "$config_hook_dir" ]; then
-    echo cp -r "$config_hook_dir" "$tmpdir/.hooks"
+    mkdir "$tmpdir/.hooks"
+    cp -r "$config_hook_dir"/* "$tmpdir/.hooks/"
     cd "$tmpdir"
-    for hook_program in "$config_hook_dir"/*; do
+    for hook_program in "$tmpdir"/.hooks/*; do
         [ ! -x "$hook_program" ] && continue
         find "$tmpdir" \
             -name \*.html \
@@ -241,6 +242,6 @@ fi
 #
 # Send it to the destination.
 #
-rsync -rtp --delete $cfg_rsync_flags "$tmpdir"/* "$dest"
+rsync -rtp --delete $cfg_rsync_flags "$tmpdir"/* "$tmpdir"/.hooks "$dest"
 rm -rf "$tmpdir"
 

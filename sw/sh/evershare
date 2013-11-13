@@ -128,13 +128,20 @@ make_index() { # make an index.html for $2 with <title> of $1.
       $(make_list "$target")
       <hr />
       <p>
-        Note:<br />
-
-        Content gets exported to UTF-8. Web browsers don't like UTF-8, so my
-        script copies them to name.utf8.{html,txt} and converts to
-        ISO-8659-1/Latin1. You can view the original UTF-8 encoded version by
-        way of changing the file name accordingly. I.e. change .html to
-        .utf-8.html or change .txt to .utf-8.txt.
+        Notes:<br />
+        <ol>
+          <li>To view plain text version of a note, change .html to .txt.</li>
+          $(if [ -n "$cfg_western_output" ]; then
+              echo "<li>"
+              echo "Content gets exported to UTF-8. Web browsers don't like"
+              echo "UTF-8, so my script copies them to name.utf8.{html,txt} and"
+              echo "converts to ISO-8659-1/Latin1. You can view the original"
+              echo "UTF-8 encoded version by way of changing the file name"
+              echo "accordingly. I.e. change .html to .utf-8.html or change"
+              echo ".txt to .utf-8.txt."
+              echo "</li>"
+          fi)
+        </ol>
       </p>
   </body>
 </html>

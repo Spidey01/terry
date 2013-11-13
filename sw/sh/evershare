@@ -38,9 +38,9 @@ make_notes_list() { # generate <li> entries for notes in $1.
     target="$1"
 
     while read file; do
-        echo "<li><a href=\"$file\">$(basename "$file" | sed -e 's/.html$//')</a></li>"
+        echo "<li><a href=\"$file\">$(basename "$file" | sed -e 's/\.\(html\|pdf\)$//')</a></li>"
     done <<EOF
-    $(ls "$target"/*.html | grep -v '\.utf-8\.html$' | stripper "$target")
+    $(ls "$target"/*.{html,pdf} | grep -v '\.utf-8\.html$' | stripper "$target")
 EOF
 }
 
@@ -229,7 +229,11 @@ if [ -d "$config_hook_dir" ]; then
     cd "$tmpdir"
     for hook_program in "$config_hook_dir"/*; do
         [ ! -x "$hook_program" ] && continue
-        find "$tmpdir" -name \*.html -o -name \*.txt -exec "$hook_program" '{}' \;
+        find "$tmpdir" \
+            -name \*.html \
+            -o -name \*.txt \
+            -o -name \*.pdf \
+                -exec "$hook_program" '{}' \;
     done
 fi
 

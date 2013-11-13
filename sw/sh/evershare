@@ -230,11 +230,8 @@ if [ -d "$config_hook_dir" ]; then
     cd "$tmpdir"
     for hook_program in "$tmpdir"/.hooks/*; do
         [ ! -x "$hook_program" ] && continue
-        find "$tmpdir" \
-            -name \*.html \
-            -o -name \*.txt \
-            -o -name \*.pdf \
-                -exec "$hook_program" '{}' \;
+        # find . -type f \( -name '\*.html' -o -name '\*.txt' -o -name '\*.pdf' \) -exec "$hook_program" '{}' \;
+        find . -type f -exec "$hook_program" '{}' \;
     done
 fi
 

@@ -20,7 +20,7 @@ tmpdir=
 # Script to source for info. Like what notebooks to share from $source to $dest.
 #
 config="${HOME}/.config/evershare.rc"
-
+config_hook_dir="${HOME}/.local/share/evershare/hooks"
 
 
 ls_dirs() { # ls dir's in $1.
@@ -219,6 +219,19 @@ for nb in "${cfg_notebooks[@]}"; do
 EOF
     fi
 done
+
+#
+# If it exists, include the users cfg_hook_dir, cd to the copy of it and run
+# it as `hook filename`..
+#
+if [ -d "$config_hook_dir" ]; then
+    echo cp -r "$config_hook_dir" "$tmpdir/.hooks"
+    cd "$tmpdir"
+    for hook_program in "$config_hook_dir"/*; do
+        [ ! -x "$hook_program" ] && continue
+        find "$tmpdir" -name \*.html -o -name \*.txt -exec "$hook_program" '{}' \;
+    done
+fi
 
 
 #

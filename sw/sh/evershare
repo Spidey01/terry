@@ -208,7 +208,7 @@ fi
 #
 # Generate indexes for stuff
 #
-make_index "Terry Poulin's Notes" "$tmpdir" 
+make_index "$cfg_first_index_title" "$tmpdir" 
 for nb in "${cfg_notebooks[@]}"; do
     make_index "$nb" "$tmpdir/$nb"
     if echo "$nb" | grep -q ' Stack$'; then

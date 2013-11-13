@@ -179,22 +179,24 @@ for nb in "${cfg_notebooks[@]}"; do
 done
 
 #
-# Input is utf-8 but we need latin1/iso-8659-1 to appease web browsers.
+# Input is utf-8 but we may need latin1/iso-8659-1 to appease web browsers.
 # May as well keep the utf-8 version too.
 #
-while read note; do
-    if ! file "$note" | grep -q "UTF-8 Unicode text"; then
-        [ -n "$DEBUG" ] && echo "$note not in UTF-8? Skipping."
-        continue
-    fi
+if [ -n "$cfg_western_output" ]; then
+    while read note; do
+        if ! file "$note" | grep -q "UTF-8 Unicode text"; then
+            [ -n "$DEBUG" ] && echo "$note not in UTF-8? Skipping."
+            continue
+        fi
 
-    utf8_name="$(echo "$note" | sed -e 's/\.\(html\|txt\)$/.utf-8&/')"
+        utf8_name="$(echo "$note" | sed -e 's/\.\(html\|txt\)$/.utf-8&/')"
 
-    mv "$note" "$utf8_name"
-    iconv -f UTF-8 -t ISO8859-1//TRANSLIT -o "$note" "$utf8_name"
-done << EOF
-$(find "$tmpdir" -type f -name \*.html -o -name \*.txt)
+        mv "$note" "$utf8_name"
+        iconv -f UTF-8 -t ISO8859-1//TRANSLIT -o "$note" "$utf8_name"
+    done << EOF
+    $(find "$tmpdir" -type f -name \*.html -o -name \*.txt)
 EOF
+fi
 
 #
 # Generate indexes for stuff

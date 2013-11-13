@@ -224,6 +224,6 @@ done
 #
 # Send it to the destination.
 #
-rsync -rtp --delete "$tmpdir"/* "$dest"
+rsync -rtp --delete $cfg_rsync_flags "$tmpdir"/* "$dest"
 rm -rf "$tmpdir"
 

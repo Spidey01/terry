@@ -17,7 +17,6 @@ _gvimrc
 # Desktop / GUI related stuff
 .cache
 .dbus
-.config/fbpanel/local*
 Desktop
 Downloads
 # Dropbox stuff
@@ -26,5 +25,3 @@ Dropbox
 .dropbox-dist
 # misc stuff
 .pythonrc.local
-# don't import my evershare config.
-.config/evershare.rc

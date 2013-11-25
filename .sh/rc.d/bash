@@ -29,3 +29,17 @@ if [ -n "$PS1" -a -z "$BASH_COMPLETION" -a -r /etc/bash_completion ]; then
     source /etc/bash_completion
 fi
 
+# Bash 4.2 changed the freaking behaviour.
+#
+# When completing file names, 
+#
+#   $PWD/foo<tab> now becomes \$PWD/foo.....
+#
+# I don't mind getting $PWD expanded on tab, as much as I might getting $PWD
+# escaped on tab!
+#
+#
+if [ "${BASH_VERSINFO[0]}" -eq 4 -a "${BASH_VERSINFO[1]}" -eq 2 ]; then
+    shopt -s direxpand
+fi
+

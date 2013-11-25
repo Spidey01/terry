@@ -1,0 +1,51 @@
+#!/bin/sh
+
+my_name="`basename $0`"
+my_config="${XDG_CONFIG_HOME:-${HOME}/.config}/${my_name}.rc"
+
+help() {
+    echo "usage: $my_name"
+    echo
+    echo "Create $my_config and put lines like this:"
+    echo
+    echo "{tunnel_arg} {host} [bg | fg] [extra flags for ssh]"
+    echo
+    echo "where:"
+    echo
+    echo "      tunnel_arg is -L..., -R..., or -D... {required}"
+    echo "      host is the host for ssh {required}"
+    echo "      fg | bg means fg or bg [optional; default is bg]"
+    echo "      extra flags is passed to ssh [optional]"
+}
+
+base_ssh_flags() {
+    echo '-nNTx'
+}
+
+
+fg_tunnel() {
+    ssh `base_ssh_flags` $*
+}
+
+
+bg_tunnel() {
+    ssh -f `base_ssh_flags` $*
+}
+
+if [ ! -f "$my_config" ]; then
+    help
+    exit
+fi
+
+while read tunnel_arg host fg_or_bg extra_flags; do
+    # echo "debug: tunnel_arg=$tunnel_arg" "host=$host fg_or_bg=${fg_or_bg:-bg} extra_flags=$extra_flags"
+
+    if [ "${fg_or_bg:-bg}" = 'bg' ]; then
+        bg_tunnel "$tunnel_arg" "$extra_flags" "$host" 
+    elif [ "${fg_or_bg}" = "fg" ]; then
+        fg_tunnel "$tunnel_arg" "$extra_flags" "$host" 
+    else
+        echo "bad line: fg_or_bg must be fg or bg: $tunnel_arg $host $fg_or_bg"
+    fi
+done < "$my_config"
+

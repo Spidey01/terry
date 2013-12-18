@@ -64,7 +64,10 @@ notify_user() {
 build_it() {
     # exec script -c "schroot -c $chroot make $@" "$log_file"
     [ -f "$log_file" ] && mv "$log_file" "${log_file}.before"
-    script -c "schroot -c $chroot make $@" "$log_file"
+    # echo "log_file=$log_file"
+    # echo "chroot=$chroot"
+    # echo "make args=$*"
+    script -c "schroot -c $chroot make $*" "$log_file"
     [ -n "$want_callback" ] && notify_user
 }
 

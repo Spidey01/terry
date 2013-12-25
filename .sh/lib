@@ -511,9 +511,9 @@ set_power_profile() {
 
 
 
-# Load OS specific library code
+# Load OS specific library code if present.
 #
-    if [ -n "$OS_NAME" ]; then
+    if [ -n "$OS_NAME" -a -f "${HOME}/.sh/lib.d/${OS_NAME}" ]; then
         . "${HOME}/.sh/lib.d/${OS_NAME}"
     fi
 

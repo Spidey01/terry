@@ -5,7 +5,7 @@
 #
 
 alias 	ls='ls --color=auto -Hhp'
-alias 	ll='ls --color=auto -laHhop'
+alias 	ll='ls --color=auto -laHhp'
 alias 	la='ls --color=auto -aHhp'
 
 

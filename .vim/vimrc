@@ -554,8 +554,11 @@
 " *PLUGINS* {{{
 
 	" add plugins in ~/.vim/bundle/<dir> to rtp
-	runtime bundle/vim-pathogen/autoload/pathogen.vim
-	call pathogen#runtime_append_all_bundles()
+	if version >= 700
+		runtime bundle/vim-pathogen/autoload/pathogen.vim
+		" Used to be #runtime_append_all_bundles().
+		call pathogen#infect()
+	endif
 
 	" *BuiltIn* {{{
 

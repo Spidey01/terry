@@ -220,6 +220,11 @@ EOF
     fi
 done
 
+# In some cases the umask may interfer with the web servers needs. Fix it ;).
+if [ -n "$cfg_chmod_modes" ]; then
+    chmod -R "$cfg_chmod_modes" "$tmpdir"
+fi
+
 #
 # If it exists, include the users cfg_hook_dir, cd to the copy of it and run
 # it as `hook filename`..

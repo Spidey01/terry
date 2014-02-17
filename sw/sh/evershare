@@ -38,7 +38,7 @@ make_notes_list() { # generate <li> entries for notes in $1.
     target="$1"
 
     while read file; do
-        echo "<li><a href=\"$file\">$(basename "$file" | sed -e 's/\.\(html\|pdf\)$//')</a></li>"
+        echo "<li><a href=\"$file\">$(basename "$file" | sed -e 's/\.\(html\|pdf\|jpeg\)$//')</a></li>"
     done <<EOF
     $(ls "$target"/*.{html,pdf} 2>/dev/null | grep -v '\.utf-8\.html$' | stripper "$target")
 EOF

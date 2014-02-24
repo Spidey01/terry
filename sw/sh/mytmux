@@ -10,7 +10,7 @@
 newtmuxsession() {
     local defname tmsn
     
-    defname="TMUX.$$"
+    defname="TMUX-$$"
     printf "choose a name for this session [$defname]: "; read tmsn
     exec tmux new-session -s "${tmsn:-$defname}"
 }

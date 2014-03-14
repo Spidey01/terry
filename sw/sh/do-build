@@ -67,8 +67,10 @@ build_it() {
     # echo "log_file=$log_file"
     # echo "chroot=$chroot"
     # echo "make args=$*"
-    script -c "schroot -c $chroot make $*" "$log_file"
+    script -e -c "schroot -c $chroot make $*" "$log_file"
+    es=$?
     [ -n "$want_callback" ] && notify_user
+    return $es
 }
 
 
@@ -82,4 +84,6 @@ else
     chroot=$want_chroot
 fi
 build_it "$@"
+es=$?
 echo "Back to normal shell."
+exit $es

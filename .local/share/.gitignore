@@ -1,2 +1,9 @@
 recently-used.xbel
-Trash/*
+Trash
+applications
+desktop-directories
+gegl-*
+gvfs-metadata
+icons
+mime
+vlc

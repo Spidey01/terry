@@ -4,3 +4,5 @@ include
 lib
 sbin
 share
+# Sort of often dumped or linked here.
+android-sdk-linux

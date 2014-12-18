@@ -25,3 +25,36 @@ Dropbox
 .dropbox-dist
 # misc stuff
 .pythonrc.local
+# Crap I'm sure to never want committed to git.
+.IdeaIC13
+.VirtualBox
+.android
+.dmenu_cache
+.dmrc
+.esd_auth
+.evolution
+.fontconfig
+.gconf
+.gconfd
+.gegl-*
+.gimp-*
+.gitk
+.gnome*
+.gradle
+.gstreamer-*
+.gtk-bookmarks
+.icedtea
+.java
+.jline-jython.history
+.jython-cache
+.m2
+.mplayer
+.nvidia-settings-rc
+.pulse-cookie
+.pulse
+.purple
+.putty
+.recently-used
+.subversion
+.thumbnails
+.wine

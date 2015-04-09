@@ -19,16 +19,22 @@ _gvimrc
 .dbus
 Desktop
 Downloads
+Pictures
 # Dropbox stuff
 Dropbox
 .dropbox
 .dropbox-dist
+# Insync / Google Drive stuff
+*@gmail.com
 # misc stuff
+.gtk-bookmarks
 .pythonrc.local
+.selected_editor
 # Crap I'm sure to never want committed to git.
 .IdeaIC13
 .VirtualBox
 .android
+.cinnamon
 .dmenu_cache
 .dmrc
 .esd_auth
@@ -39,22 +45,27 @@ Dropbox
 .gegl-*
 .gimp-*
 .gitk
+.gksu.lock
 .gnome*
 .gradle
 .gstreamer-*
-.gtk-bookmarks
 .icedtea
 .java
 .jline-jython.history
 .jython-cache
 .m2
+.mozilla
 .mplayer
 .nvidia-settings-rc
-.pulse-cookie
+.pki
 .pulse
+.pulse-cookie
 .purple
 .putty
 .recently-used
+.steam
+.steampath
+.steampid
 .subversion
 .thumbnails
 .wine

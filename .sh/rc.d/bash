@@ -9,6 +9,21 @@ bind 'set show-all-if-ambiguous on'
 # prompt is: [ user@host:pwd ]$
 # only set if it exists.
 if [ -n "$PS1" ]; then
+    # Colors that might be in rc.local as well as below.
+
+    # Reset
+    PS1_Color_Off='\e[0m'
+
+    # Regular Colors
+    PS1_Black='\e[0;30m'
+    PS1_Red='\e[0;31m'
+    PS1_Green='\e[0;32m'
+    PS1_Yellow='\e[0;33m'
+    PS1_Blue='\e[0;34m'
+    PS1_Purple='\e[0;35m'
+    PS1_Cyan='\e[0;36m'
+    PS1_White='\e[0;37m'
+
     PS1="[ \u@\h ]$ "
     export PS1
 fi

@@ -17,9 +17,9 @@ zstyle :compinstall filename "$HOME/.zshrc"
 autoload -Uz compinit
 compinit
 # I like color in my zsh prompt ;-)
-fg_no_colour=$'%{\e[0m%}'
-fg_green=$'%{\e[0;32m%}'
-PS1="${USER}@%B%m%b${fg_green}$ ${fg_no_colour}"; export PS1
+PS1_Color_Off=$'%{\e[0m%}'
+PS1_Green=$'%{\e[0;32m%}'
+PS1="${USER}@%B%m%b${PS1_Green}$ ${PS1_Color_Off}"; export PS1
 # display the (24h) time in the right-prompt`
 #RPS1="%T"; export RPS1
 

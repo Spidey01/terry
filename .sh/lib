@@ -28,7 +28,7 @@ in_path() {
     #   >0	= not found
     # 
     #
-    local what bin dir prog
+    local what bin dir prog option
 
     OPTIND=1
     while getopts "bedh" option; do
@@ -92,7 +92,7 @@ ensure_path() {
     #   -h help message.
     #   -p prepend.
     #
-    local path aflag eflag pflag
+    local path aflag eflag pflag option
     OPTIND=1
     while getopts "aehp" option; do
         case "$option" in
@@ -170,7 +170,7 @@ fuzzy_ensure_path() {
     #   -d foo,bar,... list of subdirs to check, e.g. -d sbin /usr/local/foo 
     #   -x sh,py,pl,... list of extensions to check, e.g. -x py /usr/local/foo
     #
-    local basepath dirname binname trydir trysubdir ext tryext option flags
+    local basepath dirname binname trydir trysubdir exts tryext option flags
 
     OPTIND=1
     while getopts "b:aehp" option; do

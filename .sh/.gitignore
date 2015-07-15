@@ -1,4 +1,2 @@
 # site local version of rc
 rc.local
-# used for maintaining state via the services script
-this-profile

@@ -50,7 +50,7 @@ fi
 #
 #   $PWD/foo<tab> now becomes \$PWD/foo.....
 #
-# I don't mind getting $PWD expanded on tab, as much as I might getting $PWD
+# I don't mind getting $PWD expanded on tab, as much as I mind getting $PWD
 # escaped on tab!
 #
 #

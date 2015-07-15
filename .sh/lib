@@ -4,9 +4,6 @@
 #
 # It is assumed to be apart of ~/.sh/* framework and can be sourced accordingly.
 #
-# You should be able to comply with assert_sh_services_environment() before
-# executing any of these functions.
-#
 
 dump_path() {
     echo $PATH | sed -e 's/:/\n/g'
@@ -252,80 +249,6 @@ find_in_normpath() {
         # echo "not found: $progname"
     done
     return 127
-}
-
-set_default_sh_services_environment() {
-    #
-    # Call for the side effect of setting a few vars to ~/.sh values.
-    #
-
-    MY_PROFILE_PATH="${HOME}/.sh"
-    THIS_PROFILE="${MY_PROFILE_PATH}/this-profile"
-
-    export MY_PROFILE_PATH THIS_PROFILE
-    assert_sh_services_environment
-}
-
-maybe_set_default_sh_services_environment() {
-    if ! check_sh_services_environment; then
-        set_default_sh_services_environment
-    fi
-}
-
-assert_sh_services_environment() {
-    #
-    # assert that the environment these functions need is exported
-    #
-
-    if ! check_sh_services_environment; then
-        echo "sh services environment is missconfigured, abborting"
-        exit 1
-    fi
-}
-
-check_sh_services_environment() {
-    #
-    # check if the environment these functions need is exported
-    # returns 0 if ok, > 0 if not ok
-    #
-
-    [ -z "$MY_PROFILE_PATH" ] && return 1
-    [ -z "$THIS_PROFILE" ] && return 1
-    return 0
-}
-
-services_d() {
-    local w
-
-    w="$MY_PROFILE_PATH/services.d/$1"
-    shift 1
-    if [ -x "${w}.`uname -n`" ]; then # use host-specific override if available
-        w="${w}.`uname -n`"
-    fi
-
-	if [ -x "$w" ]; then
-	    "$w" "$@"
-	else
-	    echo "no $1 profile to execute! ($w)"
-	fi
-}
-
-make_profile_link() {
-    local w
-
-    w="${MY_PROFILE_PATH}/config.d/${1}.`echo_this_profile NETWORK_PROFILE`"
-    if [ -f "$w" ]; then
-        ln -sf "$w" "${HOME}/.$1"
-        return 0
-    else
-        return 1
-    fi
-}
-
-rm_profile_link() {
-	if [ -L "${HOME}/.$1" ]; then
-		unlink "${HOME}/.$1"
-	fi
 }
 
 echo_this_profile() {

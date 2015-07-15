@@ -1,24 +1,18 @@
 #!/bin/sh
 #
-# executes either ~/.sh/monitors.d/{hostname}.{network_profile} or
-# ~/.sh/monitors.d/{hostname} based on the current display configuration.
+# Executes ~/.sh/monitors.d/{hostname} with the name of each connected monitor
+# as an argument. The names are the same as given by xrandr.
 #
 
-. "${MY_PROFILE_PATH:-$HOME/.sh}/lib"; maybe_set_default_sh_services_environment
+. "${HOME}/.sh/lib"
 
+monitors="`xrandr -q | grep ' connected ' | cut -d ' ' -f 1`"
 
-monitors="`xrandr -q | grep -E '^\w* connected ' | cut -d ' ' -f 1`"
+monitor_setup="${HOME}/.sh/monitors.d/`uname -n`"
 
-override_file="${MY_PROFILE_PATH}/monitors.d/`uname -n`.`echo_this_profile NETWORK_PROFILE`"
-default_file="${MY_PROFILE_PATH}/monitors.d/`uname -n`"
-
-if [ -x "$override_file" ]; then
-    monitor_setup="$override_file"
-elif [ -x "$default_file" ]; then
-    monitor_setup="$default_file"
+if [ -x "$monitor_setup" ]; then
+    exec "$monitor_setup" $monitors
 else
     exit 0; # nothing to do
 fi
-
-exec "$monitor_setup" $monitors
 

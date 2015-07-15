@@ -1,17 +1,17 @@
 #!/bin/sh
 
 if [ $# -eq 1 ]; then
-    # only the onboard monitor; nothing to do (usually)
+    # only the onboard monitor; nothing to do (usually).
 	exit 0
 fi
 
 for monitor; do
 
     case $monitor in
-        LVDS1)
+        LVDS1) # onboard monitor.
             xrandr --output $monitor --off
             ;;
-        VGA1)
+        VGA1) # external monitor.
             xrandr --output $monitor --mode 1920x1080 --left-of LVDS1
             ;;
         *)

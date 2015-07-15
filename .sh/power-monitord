@@ -9,7 +9,7 @@
 # state: adapter, battery, or unknown. Your script should be safe to call multiple times.
 #
 
-. "${MY_PROFILE_PATH:-$HOME/.sh}/lib"
+. "${HOME}/.sh/lib"
 
 shutdown_pmd() {
     # TODO: figure out how to shutdown the thing.

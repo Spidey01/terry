@@ -4,9 +4,8 @@
 #
 # Run it like: power-monitord [secs]
 #
-# Write a power profile as a ${MY_PROFILE_PATH:-$HOME/.sh}/power.d/{network
-# profile name}.{hostname} shell script. It will be called with the power
-# state: adapter, battery, or unknown. Your script should be safe to call multiple times.
+# Write a power profile as per set_power_profile and it will be called with the
+# current power state every [secs]. One of adapter, battery, or unknown.
 #
 
 . "${HOME}/.sh/lib"

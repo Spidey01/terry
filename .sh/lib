@@ -288,29 +288,19 @@ get_power_state() {
 
 set_power_profile() {
     #
-    # invokes ${MY_PROFILE_PATH}/power.d/{network profile}.{host name} with any
-    # arguments given to us. The profile and arguments are recorded using
-    # write_this_profile.
+    # invokes ~/.sh/power.d/{host name} with any arguments given to us.
     #
 
-    local hostname power_dir network_power_profile default_power_profile which_profile
+    local p
 
-    hostname="`uname -n`"
-    power_dir="${MY_PROFILE_PATH}/power.d"
-    network_power_profile="${power_dir}/`echo_this_profile  NETWORK_PROFILE`.$hostname"
-    default_power_profile="${power_dir}/default.$hostname"
+    p="${HOME}/.sh/power.d/`uname -n`"
 
-    if [ -x "$network_power_profile" ]; then
-        which_profile="$network_power_profile"
-    elif [ -x "$default_power_profile" ]; then
-        which_profile="$default_power_profile"
+    if [ -x "$p" ]; then
+        "$p" "$*" 
     else
         echo "`basename $0`: no power profile available!" > /dev/stderr
         return 1
     fi
-
-    "$which_profile" "$*" 
-    write_this_profile POWER_PROFILE "`basename "$which_profile"` $*"
 }
 
 

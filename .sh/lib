@@ -280,7 +280,7 @@ get_power_state() {
             ${OS_NAME}_get_power_state
             ;;
         *)
-            echo "`basename $0`: unsupported platform: `uname -o` / OS_NAME=${OS_NAME}"
+            echo "get_power_state: unsupported platform: `uname -o` / OS_NAME=${OS_NAME}"
             return 127
             ;;
     esac
@@ -298,7 +298,7 @@ set_power_profile() {
     if [ -x "$p" ]; then
         "$p" "$*" 
     else
-        echo "`basename $0`: no power profile available!" > /dev/stderr
+        echo "set_power_profile: no power profile available!" > /dev/stderr
         return 1
     fi
 }

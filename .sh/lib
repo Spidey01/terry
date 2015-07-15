@@ -328,52 +328,6 @@ rm_profile_link() {
 	fi
 }
 
-echo_network_profile() {
-    #
-    # Maps NETWORK_NAME's to NETWORK_PROFILE's and pritns NETWORK_PROFILE
-    #
-    case "$1" in
-        "BSDNet")
-            echo "home"
-            ;;
-        "wegnet")
-            echo "work"
-            ;;
-        "engineering")
-            echo "work"
-            ;;
-        *)
-            echo "$1"
-            ;;
-    esac
-}
-
-echo_network_connection() {
-    #
-    # Displays the name of the network connection, e.g. Auto BSDNet.
-    #
-
-    local output
-
-	# network specific stuff
-	#
-	if ! which nmcli > /dev/null; then
-	    echo "no supported network tool found"
-	    return 1
-	fi
-
-	while [ -z "$output" ]; do
-	    # network specific issues
-	    output="`nmcli -t -f NAME con status | head -n 1`"
-
-        if [ -z "$output" ]; then # unknown or unconnected
-		    sleep 5
-        fi
-	done
-
-    echo "$output"
-}
-
 echo_this_profile() {
     #
     # extract info from the this-profile file.

@@ -32,42 +32,39 @@ new_script() {
 
 emulate_pushd() {
     DIRSTACK="$1 ${DIRSTACK:-`pwd`}"
-    cd $1 && emulate-dirs
+    cd $1 && emulate_dirs
 }
 
 emulate_popd() {
-    [ "$1" = "-n" ] && _n=$1
-
     set -- $DIRSTACK
     shift
     DIRSTACK="$*"
 
     # done this way in case of an error with chdir
-    if [ -z "$_n" ]; then
-        unset _n
-        cd $1 && emulate-dirs
+    if [ -z "$1" ]; then
+        cd $1 && emulate_dirs
     else
-        unset _n
-        emulate-dirs
+        emulate_dirs
     fi
 }
 
 emulate_dirs() {
+    local args i
 
-    _args=`getopt clpv $* 2> /dev/null`
+    args=`getopt clpv $* 2> /dev/null`
     if [ $? -ne 0 ]; then
         # handle wrong options here.
-        echo "usage: emulate-dirs [-cplv]"
+        echo "usage: emulate_dirs [-cplv]"
     fi
-    set -- $_args
+    set -- $args
 
-    for _args do
-        case $_args in
-           # print with ~'s
+    for args do
+        case $args in
+           # no args; print with ~'s
            --)  type perl >/dev/null 2>/dev/null
                 if [ $? -ne 0 ]; then
                     # perl not found, fall back on dirs -l
-                    emulate-dirs -l
+                    emulate_dirs -l
                     return
                 fi
                 echo $DIRSTACK | perl -pe 's%$ENV{HOME}%~%g'
@@ -82,17 +79,17 @@ emulate_dirs() {
                 shift; break
                 ;;
            # print on own line
-           -p)  for _args in $DIRSTACK
+           -p)  for args in $DIRSTACK
                 do
-                    echo $_args
+                    echo $args
                 done
                 shift; break
                 ;;
            # print on own line with indexes and tabulators
-           -v)  for _args in $DIRSTACK
+           -v)  for args in $DIRSTACK
                   do
-                      printf "%d\t%s\n" "$_i" "$_args"
-                      _i=`expr "$_i" + 1`
+                      printf "%d\t%s\n" "$i" "$args"
+                      i=`expr $i + 1`
                   done
                 shift; break
                 ;;
@@ -102,7 +99,6 @@ emulate_dirs() {
                 ;;
         esac
     done
-    unset _args _i
 }
 
 get_ipaddr() { # TODO this should become .sh/funcs.d/$OS_NAME specific

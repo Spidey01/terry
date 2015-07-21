@@ -32,7 +32,8 @@ my_cpu_status() {
 
     for temp in /sys/devices/virtual/thermal/thermal_zone[0-9]*/temp; do
         if [ -f "$temp" ]; then
-            echo "$(basename $(dirname $temp)): $(expr $(cat "$temp") / 1000) C"
+            echo "$(basename $(dirname $temp)):"
+            printf "\ttemp: $(expr $(cat "$temp") / 1000) C\n"
         fi
     done
 }

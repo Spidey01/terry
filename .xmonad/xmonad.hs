@@ -37,7 +37,7 @@ main = xmonad $ ewmh defaultConfig { modMask = mod4Mask
         -- , logHook = myLogHook
 
         -- set terminal for mond-shift-enter
-        , terminal = "xterm"
+        , terminal = "x-terminal-emulator"
     }
     `additionalKeysP` [
         -- use this when running in gnome

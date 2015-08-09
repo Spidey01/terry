@@ -7,51 +7,70 @@
 # force a private umask because daemons like Dropbox will use it when
 # syncronizing data, and who wants their private files world readable? >:P.
 #
-umask 0027
+# XXX commented out for now for testing.
+# umask 0027
 
 
 #
 # Startup programs and services.
 #
-(
-    sleep 1
+# (
+#     sleep 1
+# 
+#     #
+#     # run the screen saver and locking program from jwz
+#     #
+#     xscreensaver -no-splash &
+# 
+#     #
+#     # Fancy shadows and things
+#     #
+#     if in_path -b compton; then
+#         echo "TODO: compton"
+#     elif in_path -b xcompmgr; then
+#         xcompmgr -cfF &
+#     else
+#         echo "$0: No supported compositor found."
+#     fi
+# 
+#     # Freaking Basic Panel.
+#     # -> Set TZ to desired clock setting.
+#     # Use local profile if present.
+#     #
+#     env TZ="America/New_York" fbpanel -p $(
+#         if [ -f "$HOME/.config/fbpanel/local" ]; then
+#             echo local
+#         else
+#             echo default
+#         fi
+#     )&
+# 
+#     # if blueman is present, then I probably want to run the applet.
+#     #
+#     if in_path -b blueman-applet; then
+#         blueman-applet&
+#     fi
+# )
 
-    #
-    # run the screen saver and locking program from jwz
-    #
-    xscreensaver -no-splash &
+xscreensaver -no-splash&
 
-    #
-    # Fancy shadows and things
-    #
-    if in_path -b compton; then
-        echo "TODO: compton"
-    elif in_path -b xcompmgr; then
-        xcompmgr -cfF &
-    else
-        echo "$0: No supported compositor found."
-    fi
+if in_path -b compton; then
+    compton -b
+elif in_path -b xcompmgr; then
+    xcompmgr -cfF &
+else
+    echo "$0: No supported compositor found."
+fi
 
-    # Freaking Basic Panel.
-    # -> Set TZ to desired clock setting.
-    # Use local profile if present.
-    #
-    env TZ="America/New_York" fbpanel -p $(
-        if [ -f "$HOME/.config/fbpanel/local" ]; then
-            echo local
-        else
-            echo default
-        fi
-    )&
-
-    # if blueman is present, then I probably want to run the applet.
-    #
-    if in_path -b blueman-applet; then
-        blueman-applet&
-    fi
-)
-
-# Start the big kahuna
+# if blueman is present, then I probably want to run the applet.
 #
-exec xmonad
+if in_path -b blueman-applet; then
+    blueman-applet &
+fi
+
+
+
+# Start the big kahuna unless we were run from my xmonad-session-rc script.
+#
+[ "$XMONAD_SESSION_RC" = "true" ] || exec xmonad
 

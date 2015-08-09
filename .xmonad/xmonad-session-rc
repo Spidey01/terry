@@ -1,0 +1,7 @@
+# vim: set ft=sh :
+
+# If our local session is xmonad: slurp, slurp!
+if cmp ${HOME}/.sh/xsession.d/{local,xmonad}; then
+    env XMONAD_SESSION_RC=true "${HOME}/.xsession"
+fi
+

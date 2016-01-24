@@ -43,7 +43,10 @@ if has("x11")
 
 " WINDOWS: Specifics for GVim
 elseif has("win32")
-
+	" Font preferences.
+	" Note: Fixedsys is the gvim default and dates back to Windows 1.0!
+	"       The others are standard issue on Windows, in order of preference.
+	set guifont=Consolas:h11:cDEFAULT,Courier_New:h11:cDEFAULT,Fixedsys:h9:cDEFAULT
 endif
 
 

@@ -9,3 +9,5 @@
 	history = log --graph --abbrev-commit --decorate --cherry-mark --full-history --all
 [color]
 	ui = auto
+[core]
+	autocrlf = input

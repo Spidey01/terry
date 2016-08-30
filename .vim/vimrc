@@ -600,6 +600,10 @@
 		let g:NERDTreeWinPos="left"
 		let g:NERDTreeWinSize=24
 
+		" Messes up most of my terminal environments.
+		" Just use ASCII.
+		let g:NERDTreeDirArrows=0
+
 	" !NERDTree }}}
 
 	" *NERDCommenter* {{{

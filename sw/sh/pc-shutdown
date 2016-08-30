@@ -3,16 +3,15 @@
 OS_NAME="`uname -s`"
 
 case "$OS_NAME" in
-	Linux)
+    Linux)
         sudo shutdown -hP now
-		;;
-    FreeBSD)
-        sudo shutdown -hp now
-
         ;;
-	*)
-		echo "I dunno how to power down OS_NAME=$OS_NAME yet"
+    FreeBSD)
+        sudo shutdown -p now
+        ;;
+    *)
+        echo "I dunno how to power down OS_NAME=$OS_NAME yet"
         exit 1
-		;;
+        ;;
 esac
 

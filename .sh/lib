@@ -276,7 +276,7 @@ get_python_major_version() {
 
 get_power_state() {
     case "$OS_NAME" in
-        Linux)
+        Linux|FreeBSD)
             ${OS_NAME}_get_power_state
             ;;
         *)

@@ -6,6 +6,14 @@ case "$OS_NAME" in
 	Linux)
         sudo sh -c 'echo disk > /sys/power/state'
 		;;
+    FreeBSD)
+        if sysctl hw.acpi.supported_sleep_state | grep -q S4; then
+            sudo acpiconf -s 4
+        else
+            echo 'Sorry, can't do that!'
+            echo "Looks like S4 sleep state is unsupported."
+        fi
+        ;;
 	*)
 		echo "I dunno how to put OS_NAME=$OS_NAME into hibernate yet"
         exit 1

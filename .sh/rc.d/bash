@@ -40,8 +40,15 @@ HISTFILESIZE=64000
 # enable bash completion where vailable, if the system profile hasn't already
 # enabled it on this system. (Usually /etc/profile.d/... or sth.)
 #
-if [ -n "$PS1" -a -z "$BASH_COMPLETION" -a -r /etc/bash_completion ]; then
-    source /etc/bash_completion
+if [ -n "$PS1" -a -z "$BASH_COMPLETION" ]; then
+    for my_try_bash_completion in \
+        /etc/bash_completion \
+        /usr/local/share/bash-completion/bash_completion.sh
+    do
+        if [ -r "$my_try_bash_completion" ]; then
+            source "$my_try_bash_completion"
+        fi
+    done
 fi
 
 # Bash 4.2 changed the freaking behaviour.

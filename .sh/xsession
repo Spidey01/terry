@@ -24,7 +24,7 @@ ensure_path -p "$HOME/sw/sh.local"
 # -> This should only be needed on old Xorg versions.
 # -> Modern Xorg versions should automate this in XSession.
 #
-xrdb -quiet ~/.Xresources
+xrdb -quiet -merge ~/.Xresources
 
 # Fix the wonky mouse cursor X -> arrow.
 # -> This should only be needed on newer Xorg versions.

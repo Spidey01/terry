@@ -3,21 +3,20 @@
 OS_NAME="`uname -s`"
 
 case "$OS_NAME" in
-	Linux)
+    Linux)
         sudo sh -c 'echo mem > /sys/power/state'
-		;;
-# FreeBSD:
-#   sysctl hw.acpi.supported_sleep_state: should include S3 state and acpiconf -s S3 should put us to sleep
-    FreeBSD)
-        if sysctl hw.acpi.supported_sleep_state | grep -q S; then
-            sudo acpiconf -s `sysctl hw.acpi.sleep_button_state | cut -dS -f2`
-        else
-            echo 'Sorry, no sleep state configured.'
-        fi
         ;;
-	*)
-		echo "I dunno how to put OS_NAME=$OS_NAME to sleep yet"
+    FreeBSD)
+        #
+        # zzz respects the system's sleep state choices: use it rather than enforcing our own code.
+        # Basically the sysctl hw.acpi.supported_sleep_state should contain S3 (suspend to RAM), and hw.acpi.suspend_state the intended state for this system.
+        # zzz also supports apm on the old farts of the sea.
+        #
+        sudo zzz
+        ;;
+    *)
+        echo "I dunno how to put OS_NAME=$OS_NAME to sleep yet"
         exit 1
-		;;
+        ;;
 esac
 

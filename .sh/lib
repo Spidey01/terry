@@ -6,7 +6,11 @@
 #
 
 dump_path() {
-    echo $PATH | sed -e 's/:/\n/g'
+    local entry
+
+    for entry in `echo $PATH | sed -e 's/:/ /g'`; do
+        echo "$entry"
+    done
 }
 
 in_path() {

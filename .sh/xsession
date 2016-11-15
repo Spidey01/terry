@@ -33,12 +33,12 @@ xsetroot -cursor_name left_ptr
 
 #
 # Launch a D-Bus channel for this session if missing.
-# -> Modern Xorg versions should automate this in XSession.
-# -> This doesn't seem to be working anymore (Debian/2012-12-17).
+# -> Modern systems automate this as part of Xorg's XSession.
+# -> Or in through the init system.
 #
-# which dbus-launch >/dev/null && if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-    # eval `dbus-launch --sh-syntax --exit-with-session`
-# fi
+which dbus-launch >/dev/null && if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+    eval `dbus-launch --sh-syntax --exit-with-session`
+fi
 
 # if running on a laptop, try to disable the touch pad while typing
 #

@@ -17,6 +17,14 @@
 #
 
 #
+# Set a string of OS_* variables to the portable subset of uname outputs
+#
+    OS_ARCH=`uname -m`
+    OS_NAME=`uname -s`
+    OS_RELLVL=`uname -r`
+    export OS_ARCH OS_NAME OS_RELLVL
+
+#
 # include library functions for the ~/.sh setup in general.
 #
     . "${HOME}/.sh/lib"
@@ -28,13 +36,6 @@
     . "${HOME}/.sh/funcs"
     . "${HOME}/.sh/aliases"
 
-#
-# Set a string of OS_* variables to the portable subset of uname outputs
-#
-    OS_ARCH=`uname -m`
-    OS_NAME=`uname -s`
-    OS_RELLVL=`uname -r`
-    export OS_ARCH OS_NAME OS_RELLVL
 #
 # Cache the current machines hostname. hostname -s is not portable enough for
 # getting the short form of our current machines hostname, so do this instead

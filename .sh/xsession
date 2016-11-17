@@ -40,6 +40,16 @@ which dbus-launch >/dev/null && if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     eval `dbus-launch --sh-syntax --exit-with-session`
 fi
 
+
+# I want gnome-keyring to unlock when I login to my session.
+#
+# Requires PAM suitably configured and keyring password to match user account.
+#
+if in_path -b gnome-keyring-daemon; then
+    eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+    export SSH_AUTH_SOCK
+fi
+
 # if running on a laptop, try to disable the touch pad while typing
 #
 if in_path -b laptop-detect && laptop-detect; then

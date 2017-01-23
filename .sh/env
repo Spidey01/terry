@@ -25,6 +25,13 @@ ensure_path -p "$HOME/sw/sbin"
 ensure_path -p "$HOME/sw/sh"
 ensure_path -p "$HOME/sw/sh.local"
 
+# Common unix paths.
+# Not every system includes 'sbin' in default user PATH.
+#
+ensure_path -e -a \
+    /usr/local/bin /usr/bin /bin \
+    /usr/local/sbin /usr/sbin /sbin
+
 # only set if it exists.
 if [ -n "$PS1" ]; then
     # my standard issue prompt  (overriden later, based on $SHELL)

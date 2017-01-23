@@ -124,12 +124,12 @@ ensure_path() {
         [ -z "$pflag" -a -z "$aflag" ] && aflag=1
 
         # -e => only if exists.
-        [ -n "$eflag" -a ! -d "$path" ] && return
+        [ -n "$eflag" -a ! -d "$path" ] && continue
 
         # already in path
         if in_path -d "$path"; then
             # echo "$path is in PATH"
-            return
+            continue
         fi
 
 

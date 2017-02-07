@@ -13,8 +13,10 @@ wc_l_count() {
 }
 
 count() {
-    local file_type ext names list_of_files line sum count
+    local where file_type ext names list_of_files line sum count
 
+    where=${1:-.}
+    shift
     file_type=$1
     shift
     names="-name \*.$1"
@@ -23,7 +25,7 @@ count() {
         names="$names -o -name \*.$ext"
     done
     list_of_files="$cache/$file_type.files"
-    eval "find . $names" > "$list_of_files"
+    eval "find $where $names" > "$list_of_files"
     if [ ! -f "$list_of_files" ]; then
         # or directory 'cuz it clues the user to what we mean.
         echo "error: $file_type: cached at '$list_of_Files': No such file or directory" >/dev/stderr
@@ -41,22 +43,22 @@ if [ ! -d "$cache" ] && ! mkdir "$cache"; then
     exit 1
 fi
 
-count c_and_cpp c h cpp hpp cc hh cxx hxx 
-count csharp cs
-count elisp elisp
-count groovy groovy gradle
-count haskell hs lhs
-count java java
-count javascript js ejs
-count lisp lisp
-count lua lua
-count perl pl pm
-count php php
-count python py
-count ruby rb erb
-count scala scala
-count scheme scm ss 
-count shell sh
-count vimscript vim
+count ${1:-$PWD} c_and_cpp c h cpp hpp cc hh cxx hxx 
+count ${1:-$PWD} csharp cs
+count ${1:-$PWD} elisp elisp
+count ${1:-$PWD} groovy groovy gradle
+count ${1:-$PWD} haskell hs lhs
+count ${1:-$PWD} java java
+count ${1:-$PWD} javascript js ejs
+count ${1:-$PWD} lisp lisp
+count ${1:-$PWD} lua lua
+count ${1:-$PWD} perl pl pm
+count ${1:-$PWD} php php
+count ${1:-$PWD} python py
+count ${1:-$PWD} ruby rb erb
+count ${1:-$PWD} scala scala
+count ${1:-$PWD} scheme scm ss 
+count ${1:-$PWD} shell sh
+count ${1:-$PWD} vimscript vim
 
 echo "Finished."

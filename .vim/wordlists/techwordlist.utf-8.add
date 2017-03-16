@@ -47,3 +47,5 @@ plugin
 plugins
 ctor
 dtor
+HDMI/=
+USB/=

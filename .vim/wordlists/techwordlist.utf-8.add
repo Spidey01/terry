@@ -22,6 +22,9 @@ rxvt
 unix
 blackbox
 mplayer
+mpv
+VLC/=
+vlc/?
 FVWM 
 PHP
 netmask

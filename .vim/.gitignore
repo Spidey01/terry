@@ -2,3 +2,5 @@ vimrc.local
 gvimrc.local
 # used by dr chips' built in netrw plugin as a history file
 .netrwhist*
+# compiled form of vim spellfiles.
+*.add.spl

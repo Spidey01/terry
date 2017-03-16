@@ -9,7 +9,7 @@ HOSTNAME = `uname -n`
 # command to set the nodump attribute
 NODUMP = chattr +d 
 
-all: rc_files dropbox_files insync_files no_dump ssh-perms vim-helptags
+all: rc_files dropbox_files insync_files no_dump ssh-perms vim-helptags vim-spellfiles
 
 rc_files: .vimrc .gvimrc .irbrc
 
@@ -54,6 +54,12 @@ vim-helptags:
 		for _D in .vim/bundle/*/doc; do \
 			echo "vim :helptags $$_D" ; \
 			vim -e --cmd "helptags $$_D | q"; done; fi
+
+vim-spellfiles:
+	if type vim >/dev/null 2>/dev/null; then \
+		for _F in .vim/wordlists/*.add; do \
+			echo "vim :mkspell $${_F}.spl $$_F" ; \
+			vim -e --cmd ":mkspell! $${_F}.spl $$_F | q"; done; fi
 
 # stuff that we don't really want in a dump
 no_dump:

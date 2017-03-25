@@ -14,3 +14,12 @@ unmute() {
     # list. `echo $old` or `cat tmpfile` will work.
     mixer `echo $OLD_VOLUME` $*
 }
+
+free() {
+    if in_path -b freecolor; then
+        freecolor -o $*
+    else
+        echo "Please install freecolor." 2>/dev/null
+    fi
+}
+

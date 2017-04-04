@@ -23,3 +23,35 @@ free() {
     fi
 }
 
+my_cpu_status() {
+    local ncpu i
+
+    ncpu=$(sysctl -n hw.ncpu)
+
+    # for each cpu
+        # cur freq
+        # max freq
+        # min freq
+        # available frequences
+        # scaling driver
+        # scaling governors
+        # available governors
+        # affected/related cpus
+        # thermals
+
+    i=0
+    while [ "$i" -lt "$ncpu" ]; do
+        echo "cpu${i}"
+
+        printf "\tcur freq: $(sysctl -n dev.cpu.${i}.freq) Mhz\n"
+        printf "\tavailable frequencies: $(sysctl -n dev.cpu.${i}.freq_levels)\n"
+        printf "\tscaling driver: $(sysctl -n dev.cpufreq.${i}.%driver)\n"
+
+        i=$(expr "$i" + 1)
+    done
+
+    # thermal zones (tz%d) are just listed in the order from ACPI. Can't tell
+    # which are CPU and which are other things.
+    sysctl hw.acpi.thermal
+}
+

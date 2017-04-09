@@ -1,0 +1,33 @@
+# Example account file based on Gmail.
+
+set realname = 'Terry Poulin'
+
+# IMAP Login via app password.
+set imap_user =  'USERNAME@gmail.com'
+set imap_pass = 'PASSWORD'
+
+# SMTP Login via app password.
+set smtp_url = 'smtps://USERNAME@smtp.gmail.com'
+set smtp_pass = 'PASSWORD'
+
+# Folder config.
+set folder = imap://imap.gmail.com
+set folder = imaps://imap.gmail.com/
+set spoolfile = +INBOX
+
+# These variables are used by .mutt/keybinds to emulate gmail.
+set my_starred = "[Gmail]/Starred"
+set my_archived = "[Gmail]/All Mail"
+set my_sent = "[Gmail]/Sent Mail"
+set my_thrash = "[Gmail]/Trash"
+set my_spam = "[Gmail]/Spam"
+set my_important = "[Gmail]/Important"
+
+# IMAP folder for sent
+# set record = "+[Gmail]/Sent Mail"
+# Empty = let SMTP server handle it.
+set record = ''
+set postponed = "[Gmail]/Drafts"
+# Not in all versions.
+set trash="imaps://imap.gmail.com/$my_trash"
+

@@ -29,8 +29,9 @@ set query_command = "grep %s ~/.mutt/aliases"
 # Local aliases file. This is .gitignore'd.
 source '~/.mutt/aliases'
 
-# Local account file. This is .gitignore'd.
+# Local account and signature files. These are .gitignore'd.
 source '~/.mutt/account'
+set signature = '~/.mutt/signature'
 
 source '~/.mutt/keybinds'
 

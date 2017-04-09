@@ -1,9 +1,13 @@
 Mutt-Quick-Reference-Letter.pdf
+cache/*
 
 # these files should NEVER fall under version control
 account
 accounts.d/*
-cache/*
+
+# Probably don't want these in version control either.
+signature
+signatures.d/*
 
 # would be rude to put this under version control, publicly
 aliases

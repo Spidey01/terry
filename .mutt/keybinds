@@ -1,19 +1,60 @@
-
-
-# useful macros for changing folders. ~/.mutt/account sets the variables.
-# these mimic gmail
 #
-macro index ga "<change-folder>$my_archive_folder<enter>" "Go to Archived/All Mail"
-macro index gs "<change-folder>$my_starred_folder<enter>" "Go to Starred"
-macro index gi "<change-folder>$spoolfile<enter>" "Go to Inbox"
-macro index gt "<change-folder>$record<enter>" "Go to Sent Mail"
-macro index gd "<change-folder>$postponed<enter>" "Go to Drafts"
-macro index gt "<change-folder>$trash<enter>" "Go to Trash"
-macro index gl "<change-folder>+" "Go to Folder"
+# Gmail's keybinds are what I like.
+# They are kinda mutt/vi like but not exactly.
+# Leash the mutt to the propeller hat.
+#
+
+# helps folders with spaces in names.
+bind editor <space> noop
+
+# Compose message.
+bind index,pager c mail
+
+# Reply all.
+bind index,pager a group-reply
+
+# Delete
+bind index,pager \# delete-thread
+
+# Label
+bind index,pager l copy-message
+
+# Move
+bind index,pager v save-message
+
+# Read / unread.
+macro index,pager I <set-flag>O "Mark as read"
+macro index,pager U <clear-flag>O "Mark as unread"
+
+# Select conversation.
+#
+bind generic x tag-entry
+bind index x tag-thread
+bind pager x tag-message
+
+# Star message.
+bind index,pager s flag-message
+
+# mark important
+macro index,pager + "<save-message>=$my_important<enter><enter>" "Mark as important"
+
+# Mark as spam.
+macro index,pager ! "<save-message>=$my_spam<enter><enter>" "Report spam"
 
 
-# for some reason g=reply all is effectively unbound by the above g. macros.
-# so make it the default for r=reply.
-bind index r group-reply
-bind index a group-reply
+# Archive.
+macro index,pager e "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive conversation"
+
+# Change to folder.
+macro index,pager ga "<change-folder>=$my_archived<enter>" "Goto All Mail"
+macro index,pager gs "<change-folder>=$my_starred<enter>" "Goto Starred"
+macro index,pager gd "<change-folder>=$postponed<enter>" "Goto Drafts"
+macro index,pager gl <change-folder>? "Goto Label"
+macro index,pager gi <change-folder>=INBOX<enter> "Goto Inbox"
+macro index,pager gt "<change-folder>=$my_sent<enter>" "Goto Sent Mail"
+
+# TODO: check with gmail help.
+# folder-hook +INBOX 'macro index,pager y "<save-message>=$my_archived<enter><enter>" "Archive conversation"'
+# folder-hook +[Gmail]/Trash macro index,pager y <save-message>=INBOX<enter><enter> "Move to inbox"
+# folder-hook +[Gmail]/Starred bind  index,pager y flag-message #"Toggle star"
 

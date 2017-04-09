@@ -2,6 +2,8 @@
 
 set index_format = "%4C %Z %D    %L        %s"
 set date_format = "%Y-%m-%d"
+set sort = 'reverse-threads'
+set sort_aux = 'last-date-received'
 set mail_check = 240
 set edit_headers = yes
 #set pager = "view"

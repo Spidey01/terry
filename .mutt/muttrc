@@ -26,10 +26,10 @@ set message_cachedir = "~/.cache/mutt/bodies"
 # simple query command for looking up aliases
 set query_command = "grep %s ~/.mutt/aliases"
 
-# local: my X session scripts make this a link to ~/.sh/mutt/aliases.network_profile
+# Local aliases file. This is .gitignore'd.
 source '~/.mutt/aliases'
 
-# local: my X session scripts make this a link to ~/.mutt/account.network_profile
+# Local account file. This is .gitignore'd.
 source '~/.mutt/account'
 
 source '~/.mutt/keybinds'

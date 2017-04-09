@@ -1,0 +1,11 @@
+# vim: set filetype=muttrc :
+
+# Deleted messages.
+color index red default "~D"
+
+# Flagged messages.
+color index yellow default "~F"
+
+# Tagged messages.
+color index magenta default "~T"
+

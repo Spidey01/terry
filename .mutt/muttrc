@@ -35,3 +35,4 @@ set signature = '~/.mutt/signature'
 
 source '~/.mutt/keybinds'
 
+source '~/.mutt/theme'

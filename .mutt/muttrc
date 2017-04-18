@@ -26,6 +26,11 @@ set message_cachedir = "~/.cache/mutt/bodies"
 # simple query command for looking up aliases
 set query_command = "grep %s ~/.mutt/aliases"
 
+# Prefer text to HTML in multipart messages.
+alternative_order text/plain text/html
+# Auto open HTML-only email via ~/.mailcap.
+auto_view text/html
+
 # Local aliases file. This is .gitignore'd.
 source '~/.mutt/aliases'
 

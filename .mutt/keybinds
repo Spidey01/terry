@@ -16,7 +16,9 @@ bind index,pager c mail
 bind index,pager a group-reply
 
 # Delete
-bind index,pager \# delete-thread
+# XXX: delete-* is nice but doesn't expunge; purge-message does!
+#bind index,pager \# delete-thread
+bind index,pager \# purge-message
 
 # Label
 bind index,pager l copy-message

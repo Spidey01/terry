@@ -61,7 +61,9 @@ fi
 
 # Start the big kahuna
 #
+gst-play-1.0 --no-interactive --quiet /usr/local/etc/startup.ogg &
 [ -x ~/.sh/xsession.d/local ] && . ~/.sh/xsession.d/local
+gst-play-1.0 --no-interactive --quiet /usr/local/etc/shutdown.ogg &
 
 # clean up
 #

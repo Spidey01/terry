@@ -55,6 +55,6 @@ my_cpu_status() {
 
     # thermal zones (tz%d) are just listed in the order from ACPI. Can't tell
     # which are CPU and which are other things.
-    sysctl hw.acpi.thermal
+    sysctl hw.acpi.thermal | grep tz[0-9]*.temperature
 }
 

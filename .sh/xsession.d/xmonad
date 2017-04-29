@@ -4,34 +4,11 @@
 #
 #
 
-# force a private umask because daemons like Dropbox will use it when
-# syncronizing data, and who wants their private files world readable? >:P.
-#
-# XXX commented out for now for testing.
-# umask 0027
-
-
 #
 # Startup programs and services.
 #
 # (
 #     sleep 1
-# 
-#     #
-#     # run the screen saver and locking program from jwz
-#     #
-#     xscreensaver -no-splash &
-# 
-#     #
-#     # Fancy shadows and things
-#     #
-#     if in_path -b compton; then
-#         echo "TODO: compton"
-#     elif in_path -b xcompmgr; then
-#         xcompmgr -cfF &
-#     else
-#         echo "$0: No supported compositor found."
-#     fi
 # 
 #     # Freaking Basic Panel.
 #     # -> Set TZ to desired clock setting.
@@ -44,12 +21,6 @@
 #             echo default
 #         fi
 #     )&
-# 
-#     # if blueman is present, then I probably want to run the applet.
-#     #
-#     if in_path -b blueman-applet; then
-#         blueman-applet&
-#     fi
 # )
 
 xscreensaver -no-splash&

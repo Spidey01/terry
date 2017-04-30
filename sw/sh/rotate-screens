@@ -27,17 +27,22 @@ for display in $rotate_list; do
     case $(get_orientation $display) in
         right|left)
             orientation=normal
+            tablet=none
             ;;
         normal)
             orientation=right
+            tablet=cw
             ;;
         *)
             orientation=IGNORE
             ;;
     esac
 
-    echo "output: $display orientation: $orientation"
+    echo "output: $display orientation: $orientation tablet: $tablet"
 
     xrandr --output "$display" --rotate "$orientation"
+
+    pen=$(xsetwacom --list devices 2> /dev/null  | cut -f 1 -d ' ')
+    [ -n "$pen" ] && xsetwacom --set "$pen" Rotate "$tablet"
 done
 

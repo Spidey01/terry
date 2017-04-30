@@ -15,6 +15,7 @@ alias   bc='bc -q'
 alias   ectags=exctags
 
 # system specific alias for displaying temps
-alias   temp='sysctl hw.acpi.thermal | egrep "tz.*\.temperature"'
+alias   temperature='sysctl hw.acpi.thermal | egrep "tz.*\.temperature"'
+alias   battery='acpiconf -i 0'
 
 alias   lint='lint -a -aa -ceghnuxz'

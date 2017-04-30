@@ -56,7 +56,7 @@ fi
 
 # if running on a laptop, try to disable the touch pad while typing
 #
-if in_path -b laptop-detect && laptop-detect; then
+if in_path -b laptop-detect && laptop-detect && in_path -b syndaemon; then
     # [ ! -f "${HOME}/tmp/syndaemon.pid" ] &&
     syndaemon -d -tK -i 0.5 #-p "${HOME}/tmp/syndaemon.pid"
     # TODO: a way of trapping logout events for cleanup

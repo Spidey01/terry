@@ -1,0 +1,6 @@
+#!/usr/bin/env /bin/sh
+
+# For now we assume the presence of wacom driver on a laptop = Tablet PC.
+
+laptop-detect && grep -q -i 'wacom' /var/log/Xorg.0.log
+

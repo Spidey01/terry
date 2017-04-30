@@ -1,0 +1,10 @@
+#!/usr/bin/env /bin/sh
+
+case $(uname -s) in
+    FreeBSD)
+        sysctl -i hw.acpi.battery.life > /dev/null
+        ;;
+    Linux)
+        echo "$0: TODO: LINUX SUPPORT"
+        ;;
+esac

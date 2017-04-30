@@ -31,6 +31,10 @@ xrdb -quiet -merge ~/.Xresources
 #
 xsetroot -cursor_name left_ptr
 
+# Load custom X key maps.
+#
+xmodmap ~/.Xmodmap
+
 #
 # Launch a D-Bus channel for this session if missing.
 # -> Modern systems automate this as part of Xorg's XSession.

@@ -1,0 +1,43 @@
+#!/usr/bin/env /bin/sh
+#
+# Rotate first conected screen, specified screens, or all connected screens.
+#
+
+rotate_list=""
+
+get_displays() {
+    xrandr -q | grep ' connected ' | cut -f 1 -d ' '
+}
+get_orientation() {
+    xrandr -q | grep "$1" | cut -d ' ' -f 4 | sed -e 's/(//'
+}
+
+if [ "$1" = "--all" ]; then
+    rotate_list=$(get_displays)
+elif [ $# -eq 0 ]; then
+    rotate_list=$(get_displays | head -n 1)
+elif [ $# -gt 0 ]; then
+    rotate_list="$*"
+fi
+
+# echo 'rotate_list: ' $rotate_list
+
+for display in $rotate_list; do
+
+    case $(get_orientation $display) in
+        right|left)
+            orientation=normal
+            ;;
+        normal)
+            orientation=right
+            ;;
+        *)
+            orientation=IGNORE
+            ;;
+    esac
+
+    echo "output: $display orientation: $orientation"
+
+    xrandr --output "$display" --rotate "$orientation"
+done
+

@@ -1,6 +1,9 @@
+# Explicitly ignore these
 Insync
 QtProject.conf
+Thunar
 Trolltech.conf
+autostart
 brasero
 caja
 calibre
@@ -16,6 +19,7 @@ gtk-2.0
 gtk-3.0
 hexchat
 htop
+inkscape
 libfm
 libreoffice
 linuxmint
@@ -23,10 +27,13 @@ lxpanel
 lxsession
 lxterminal
 menus
+midori
+mypaint
 nemo
 openbox
 pcmanfm
 pop3-watcherrc
+psi
 pulse
 ssh-tunneller.rc
 totem

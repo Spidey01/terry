@@ -1,0 +1,9 @@
+#!/bin/sh
+
+xscreensaver -no-splash&
+
+if in_path -b bbkeys; then
+    bbkeys &
+fi
+
+blackbox

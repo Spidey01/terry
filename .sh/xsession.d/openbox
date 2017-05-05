@@ -1,0 +1,4 @@
+#!/bin/sh
+
+xscreensaver -no-splash&
+openbox

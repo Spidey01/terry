@@ -43,8 +43,8 @@ my_cpu_status() {
     while [ "$i" -lt "$ncpu" ]; do
         echo "cpu${i}"
 
-        printf "\tcur freq: $(sysctl -n dev.cpu.${i}.freq) Mhz\n"
-        printf "\tavailable frequencies: $(sysctl -n dev.cpu.${i}.freq_levels)\n"
+        printf "\tcur freq: $(sysctl -n dev.cpu.${i}.freq 2> /dev/null) Mhz\n"
+        printf "\tavailable frequencies: $(sysctl -n dev.cpu.${i}.freq_levels 2> /dev/null)\n"
         printf "\tscaling driver: $(sysctl -n dev.cpufreq.${i}.%driver)\n"
         printf "\tC-state methods: $(sysctl -n dev.cpu.${i}.cx_method)\n"
         printf "\tC-state usages: "; sysctl -n dev.cpu.${i}.cx_usage

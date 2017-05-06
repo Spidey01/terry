@@ -33,7 +33,8 @@ xsetroot -cursor_name left_ptr
 
 # Load custom X key maps.
 #
-xmodmap ~/.Xmodmap
+[ -f ~/.Xmodmap ] && xmodmap ~/.Xmodmap
+[ -f "${HOME}/.sh/xmodmap.d/$(hostname -s)" ] && xmodmap ~/.sh/xmodmap.d/$(hostname -s)
 
 #
 # Launch a D-Bus channel for this session if missing.

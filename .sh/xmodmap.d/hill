@@ -1,0 +1,21 @@
+!
+! X61T tablet buttons for Hill.
+! Most of these have no default mapping and just send raw keycode.
+! This will fix that :-).
+!
+
+! Map tablet d-pad to arrows and enter.
+! N.B. orientation matters ;).
+keycode 200 = Return
+keycode 205 = Up
+keycode 206 = Down
+keycode 207 = Right
+keycode 209 = Left
+! Map tablet escape to escape.
+keycode 203 = Escape
+! Map tablet toolbox / menu to menu.
+keycode 199 = Menu
+! Map tablet oriention toggle
+! default: XF86Eject
+! keycode 204 = XF86Launch0
+keycode 204 = XF86RotateWindows

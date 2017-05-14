@@ -301,6 +301,11 @@ eval_for_each \
 USR_RCFILE="${XDG_CONFIG_HOME:-${HOME}/.config}/unix-backup.rc"
 source_file "$USR_RCFILE"
 
+if [ -z "$OUTDIR" ]; then
+    echo "$0: OUTDIR must be specified in my config files."
+    exit 127
+fi
+
 # ensure path is setup.
 #
 eval_for_each \

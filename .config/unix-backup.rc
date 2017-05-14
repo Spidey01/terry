@@ -1,10 +1,11 @@
 
-OUTDIR="${HOME}/Backups/Hosts/`uname -n`/`date +'%Y-%m-%d'`"
-# OUTDIR="/tmp/Backups/Hosts/`uname -n`/`date +'%Y-%m-%d'`"
-
 DUMP_HONOR_LEVEL=0
-DUMP_COMPRESS_FORMAT="xz"
-TAR_COMPRESS_FORMAT="xz"
+DUMP_COMPRESS_FORMAT="gzip"
+
+TAR_COMPRESS_FORMAT="gzip"
+# Common things I don't need or want bloating tarballs.
+TAR_EXCLUDES=".cache .dbus/session-bus .m2"
+
 ZIP_NO_COMPRESS=".gz:.bz2:.xz:.Z:.tar:.tar.gz:.tar.bz2:.tar.xz:.tar.Z:.tgz:.tbz2:.txz:.jar:.apk"
 
 # source local machine config.

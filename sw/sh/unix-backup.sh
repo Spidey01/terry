@@ -60,6 +60,11 @@ fi
 #
 # TAR_COMPRESS_FORMAT="xz"
 #
+# For each word create an --exclude "word". Requires a version of tar that supports this.
+# Don't expect things with spaces in it to work!
+#
+# TAR_EXCLUDES=""
+#
 # Paths to backup with zip.
 #
 # ZIP_PATHS=""
@@ -225,7 +230,7 @@ do_dump() {
 }
 
 do_tar() {
-    local tar_path tar_name tar_date
+    local tar_path tar_name tar_date pattern tar_excludes
 
     echo '# ${tar_name}:${tar_path}:${tar_date}' >> $OUTDIR/tar.index
 
@@ -236,13 +241,18 @@ do_tar() {
         tar_name="$OUTDIR/`make_archive_name $tar_path`.tar"
         tar_date="`get_date`"
 
+        for pattern in $TAR_EXCLUDES
+        do
+            tar_excludes="$tar_excludes --exclude $pattern "
+        done
+
         if [ -n "$TAR_COMPRESS_FORMAT" ]
         then
             tar_name="${tar_name}.`get_ext $TAR_COMPRESS_FORMAT`"
 
-            tar cf - "$tar_path" | "$TAR_COMPRESS_FORMAT" -c > "$tar_name"
+            tar $tar_excludes -cf - "$tar_path" \| "$TAR_COMPRESS_FORMAT" -c \> "$tar_name"
         else
-            tar cf "$tar_name" "$tar_path"
+            tar $tar_excludes -cf "$tar_name" "$tar_path"
         fi
 
         if [ $? -eq 0 ]; then

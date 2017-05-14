@@ -13,15 +13,6 @@ all: rc_files no_dump ssh-perms vim-helptags vim-spellfiles
 
 rc_files: .vimrc .gvimrc .irbrc
 
-status:
-	git status | $(PAGER)
-
-pull:
-	git pull origin
-
-push:
-	git push origin
-
 .vimrc: .vim/vimrc
 	$(LINK)
 
@@ -58,5 +49,5 @@ no_dump:
 	if [ -d ~/.dbus/session-bus ]; then $(NODUMP) ~/.dbus/session-bus ; else true; fi
 	if [ -d ~/.m2/repository ]; then $(NODUMP) ~/.m2/repository ; else true; fi
 
-.PHONY: status pull push ssh-perms vim-helptags no_dump
+.PHONY: ssh-perms vim-helptags no_dump
 

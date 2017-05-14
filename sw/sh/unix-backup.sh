@@ -5,6 +5,10 @@ if [ $# -ne 0 ]; then
     echo
     echo "I consume all unix-backup.rc in XDG_CONFIG_HOME and XDG_CONFIG_DIRS."
     echo "All settings are done in those files. See source of $0 for comments."
+    echo
+    echo "XDG_CONFIG_HOME: $XDG_CONFIG_HOME"
+    echo "XDG_CONFIG_DIRS: $XDG_CONFIG_DIRS"
+    echo
     exit 0
 fi
 

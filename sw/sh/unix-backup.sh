@@ -250,7 +250,7 @@ do_tar() {
         then
             tar_name="${tar_name}.`get_ext $TAR_COMPRESS_FORMAT`"
 
-            tar $tar_excludes -cf - "$tar_path" \| "$TAR_COMPRESS_FORMAT" -c \> "$tar_name"
+            tar $tar_excludes -cf - "$tar_path" | "$TAR_COMPRESS_FORMAT" -c > "$tar_name"
         else
             tar $tar_excludes -cf "$tar_name" "$tar_path"
         fi

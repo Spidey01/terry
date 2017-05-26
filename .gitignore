@@ -14,6 +14,9 @@ _gvimrc
 .Xauthority
 .xsession-errors
 .xsession-errors.old
+# csh/tcsh stuff I don't care about.
+.cshrc
+.login
 # Desktop / GUI related stuff
 .cache
 .dbus
@@ -48,11 +51,14 @@ Dropbox
 .gegl-*
 .gimp-*
 .gitk
+.gkrellm2
 .gksu.lock
 .gnome*
 .gradle
 .gstreamer-*
+.hplip
 .icedtea
+.irbrc
 .java
 .jline-jython.history
 .jython-cache
@@ -66,9 +72,12 @@ Dropbox
 .purple
 .putty
 .recently-used
+.rhosts
 .steam
 .steampath
 .steampid
 .subversion
 .thumbnails
 .wine
+.xmms
+.xscreensaver

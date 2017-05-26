@@ -3,6 +3,7 @@ Insync
 QtProject.conf
 Thunar
 Trolltech.conf
+abiword
 autostart
 brasero
 caja
@@ -35,6 +36,7 @@ pcmanfm
 pop3-watcherrc
 psi
 pulse
+squeeze
 ssh-tunneller.rc
 totem
 unix-backup.rc.local

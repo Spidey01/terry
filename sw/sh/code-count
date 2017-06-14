@@ -37,9 +37,19 @@ count() {
     done < "$list_of_files"
     [ "$sum" -eq 0 ] && return
     count="$(wc_l_count $list_of_files)"
-    printf "${sum}\tlines of $file_type in $count files.\n"
+    [ -z "$suppress" ] && printf "${sum}\tlines of $file_type in $count files.\n"
     [ -s "$list_of_files" ] && echo "$sum $count" >> "${list_of_files}.total"
 }
+
+
+while getopts "s" opt; do
+    case "$opt" in
+        s)
+            suppress=true
+            ;;
+    esac
+done
+shift $(expr $OPTIND - 1)
 
 
 if [ ! -d "$cache" ] && ! mkdir "$cache"; then
@@ -48,7 +58,7 @@ if [ ! -d "$cache" ] && ! mkdir "$cache"; then
 fi
 
 for dir in ${@:-$PWD}; do
-    echo "Code count in $dir"
+    [ -z "$suppress" ] && echo "Code count in $dir"
     count ${dir} c_and_cpp c h cpp hpp cc hh cxx hxx 
     count ${dir} csharp cs
     count ${dir} elisp elisp

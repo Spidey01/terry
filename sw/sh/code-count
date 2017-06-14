@@ -35,6 +35,7 @@ count() {
     while read line; do
         sum="$(expr "$sum" + "$(wc_l_count $line)")"
     done < "$list_of_files"
+    [ "$sum" -eq 0 ] && return
     printf "${sum}\tlines of $file_type in `wc_l_count $list_of_files` files.\n"
 }
 

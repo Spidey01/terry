@@ -76,6 +76,7 @@ for dir in ${@:-$PWD}; do
     count ${dir} scheme scm ss 
     count ${dir} shell sh
     count ${dir} vimscript vim
+    count ${dir} markdown markdown mdown mkdn md
 done
 
 if [ $# -gt 1 ]; then

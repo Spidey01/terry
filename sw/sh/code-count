@@ -36,7 +36,9 @@ count() {
         sum="$(expr "$sum" + "$(wc_l_count $line)")"
     done < "$list_of_files"
     [ "$sum" -eq 0 ] && return
-    printf "${sum}\tlines of $file_type in `wc_l_count $list_of_files` files.\n"
+    count="$(wc_l_count $list_of_files)"
+    printf "${sum}\tlines of $file_type in $count files.\n"
+    [ -s "$list_of_files" ] && echo "$sum $count" >> "${list_of_files}.total"
 }
 
 
@@ -66,4 +68,16 @@ for dir in ${@:-$PWD}; do
     count ${dir} vimscript vim
 done
 
-echo "Finished."
+if [ $# -gt 1 ]; then
+    echo
+    echo "TOTALS FROM: $*"
+    echo
+
+    for total in $cache/*.total; do
+        sum=$(awk '{ sum += $1 } END { print sum }' "$total")
+        count=$(awk '{ count += $1 } END { print count }' "$total")
+
+        printf "${sum}\tlines of $(basename $total | sed -e 's/.files.total$//') in $count files.\n"
+    done
+fi
+

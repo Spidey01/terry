@@ -38,27 +38,31 @@ count() {
     printf "${sum}\tlines of $file_type in `wc_l_count $list_of_files` files.\n"
 }
 
+
 if [ ! -d "$cache" ] && ! mkdir "$cache"; then
     echo "Failed to make cache directory ($cache)."
     exit 1
 fi
 
-count ${1:-$PWD} c_and_cpp c h cpp hpp cc hh cxx hxx 
-count ${1:-$PWD} csharp cs
-count ${1:-$PWD} elisp elisp
-count ${1:-$PWD} groovy groovy gradle
-count ${1:-$PWD} haskell hs lhs
-count ${1:-$PWD} java java
-count ${1:-$PWD} javascript js ejs
-count ${1:-$PWD} lisp lisp
-count ${1:-$PWD} lua lua
-count ${1:-$PWD} perl pl pm
-count ${1:-$PWD} php php
-count ${1:-$PWD} python py
-count ${1:-$PWD} ruby rb erb
-count ${1:-$PWD} scala scala
-count ${1:-$PWD} scheme scm ss 
-count ${1:-$PWD} shell sh
-count ${1:-$PWD} vimscript vim
+for dir in ${@:-$PWD}; do
+    echo "Code count in $dir"
+    count ${dir} c_and_cpp c h cpp hpp cc hh cxx hxx 
+    count ${dir} csharp cs
+    count ${dir} elisp elisp
+    count ${dir} groovy groovy gradle
+    count ${dir} haskell hs lhs
+    count ${dir} java java
+    count ${dir} javascript js ejs
+    count ${dir} lisp lisp
+    count ${dir} lua lua
+    count ${dir} perl pl pm
+    count ${dir} php php
+    count ${dir} python py
+    count ${dir} ruby rb erb
+    count ${dir} scala scala
+    count ${dir} scheme scm ss 
+    count ${dir} shell sh
+    count ${dir} vimscript vim
+done
 
 echo "Finished."

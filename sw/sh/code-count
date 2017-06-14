@@ -13,7 +13,9 @@ wc_l_count() {
 }
 
 count() {
-    local where file_type ext names list_of_files line sum count
+    local where file_type ext names list_of_files line sum count maybe_exclude
+
+    [ -n "$excludes" ] && maybe_exclude="| grep -E -v '${where}/(${excludes})/'"
 
     where=${1:-.}
     shift
@@ -25,7 +27,7 @@ count() {
         names="$names -o -name \*.$ext"
     done
     list_of_files="$cache/$file_type.files"
-    eval "find $where $names" > "$list_of_files"
+    eval "find $where $names" $maybe_exclude > "$list_of_files"
     if [ ! -f "$list_of_files" ]; then
         # or directory 'cuz it clues the user to what we mean.
         echo "error: $file_type: cached at '$list_of_Files': No such file or directory" >/dev/stderr
@@ -42,15 +44,20 @@ count() {
 }
 
 
-while getopts "s" opt; do
+while getopts "se:" opt; do
     case "$opt" in
         s)
             suppress=true
             ;;
+        e)
+            if [ -z "$excludes" ]; then
+                excludes="${OPTARG}"
+            else
+                excludes="${excludes}|${OPTARG}"
+            fi
     esac
 done
 shift $(expr $OPTIND - 1)
-
 
 if [ ! -d "$cache" ] && ! mkdir "$cache"; then
     echo "Failed to make cache directory ($cache)."

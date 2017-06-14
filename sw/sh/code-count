@@ -81,3 +81,5 @@ if [ $# -gt 1 ]; then
     done
 fi
 
+rm -rf "$cache"
+

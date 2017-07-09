@@ -81,3 +81,17 @@ Dropbox
 .wine
 .xmms
 .xscreensaver
+# crap that only shows up in Windows land.
+AppData
+Contacts
+Favorites
+Links
+NTUSER.DAT*
+OneDrive
+Saved Games
+Searches
+_viminfo
+_viminfo
+ntuser.dat*
+ntuser.ini*
+vimfiles

@@ -1,0 +1,11 @@
+
+# Linux systems sometimes argue about en_US.UTF-8 and en_US.utf8.
+#
+# For example my Debian systems set LANG=en_US.UTF-8 from the get go.  And then
+# I ssh into another Debian system and perl moans about LANG because it wants
+# en_US.utf8 \o/.
+#
+# Well behaved linux systems, both Debian and Red Hat, will use either.
+#
+LANG=en_US.utf-8
+

@@ -93,7 +93,7 @@ if [ $# -gt 1 ]; then
 
     for total in $cache/*.total; do
         sum=$(awk '{ sum += $1 } END { print sum }' "$total")
-        count=$(awk '{ count += $1 } END { print count }' "$total")
+        count=$(awk '{ count += $2 } END { print count }' "$total")
 
         printf "${sum}\tlines of $(basename $total | sed -e 's/.files.total$//') in $count files.\n"
     done

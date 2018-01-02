@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Simple remuxer.
+# Needs a non antique version of ffmpeg or avconv.
+#
+
+infile="$1"
+outfile="$2"
+
+app=`which ffmpeg`
+[ -z "$app" ] && app=`which avconv`
+
+if [ -z "$infile" -o -z "$outfile" ]; then
+    echo "usage: $0 {INFILE} {OUTFILE}"
+    echo "You have $app for ffmpeg."
+fi
+
+set -x
+$app -i "$infile" -codec copy "$outfile"
+

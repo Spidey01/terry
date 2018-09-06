@@ -264,6 +264,8 @@
 			autocmd BufNewFile,BufRead SConscript,SConfig set filetype=python
 			autocmd BufNewFile,BufRead *.rakefile set filetype=ruby
 			autocmd BufNewFile,BufRead *.gradle set filetype=groovy	
+	"	XXX special extensions
+			autocmd BufNewFile,BufRead *.rpy set filetype=python
 		endif
 
 " !FORMATS }}}

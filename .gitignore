@@ -19,6 +19,7 @@ _gvimrc
 .login
 # Desktop / GUI related stuff
 .cache
+.ccache
 .dbus
 Desktop
 Documents
@@ -46,6 +47,7 @@ Dropbox
 .esd_auth
 .evolution
 .fontconfig
+.gnupg
 .gconf
 .gconfd
 .gegl-*
@@ -78,9 +80,13 @@ Dropbox
 .steampid
 .subversion
 .thumbnails
+.wget-hsts
 .wine
 .xmms
+.xfce4-session.verbose-log
+.xfce4-session.verbose-log.last
 .xscreensaver
+
 # crap that only shows up in Windows land.
 AppData
 Contacts

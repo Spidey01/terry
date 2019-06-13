@@ -13,6 +13,7 @@ brasero
 caja
 calibre
 chromium
+cros-garcon.conf
 dconf
 devilspie2
 enchant
@@ -50,6 +51,7 @@ unix-backup.rc.local
 user-dirs.dirs
 user-dirs.locale
 vlc
+weston.ini
 xarchiver
 xfburn
 xfce4

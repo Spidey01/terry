@@ -9,7 +9,11 @@ HOSTNAME = `uname -n`
 # command to set the nodump attribute
 NODUMP = chattr +d 
 
-all: rc_files no_dump ssh-perms vim-helptags vim-spellfiles
+all: submodules rc_files no_dump ssh-perms vim-helptags vim-spellfiles
+
+submodules:
+	git submodule init
+	git submodule update
 
 rc_files: .vimrc .gvimrc .irbrc
 
@@ -49,5 +53,5 @@ no_dump:
 	if [ -d ~/.dbus/session-bus ]; then $(NODUMP) ~/.dbus/session-bus ; else true; fi
 	if [ -d ~/.m2/repository ]; then $(NODUMP) ~/.m2/repository ; else true; fi
 
-.PHONY: ssh-perms vim-helptags no_dump
+.PHONY: submodules ssh-perms vim-helptags no_dump
 

@@ -9,3 +9,11 @@
 #
 LANG=en_US.utf-8
 
+#
+# Debian systems use this file to indicate a chroot environment. Such as using
+# schroot -c some_chroot = /etc/debian_chroot contains 'some_chroot'.
+#
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+

@@ -5,18 +5,22 @@
 _vimrc
 .gvimrc
 _gvimrc
+
 # various history files
 .history
 *_history
 .lesshst
+
 # xsession stuff.
 .ICEauthority
 .Xauthority
 .xsession-errors
 .xsession-errors.old
+
 # csh/tcsh stuff I don't care about.
 .cshrc
 .login
+
 # Desktop / GUI related stuff
 .cache
 .ccache
@@ -27,27 +31,32 @@ Download*
 Music
 Pictures
 Videos
+
 # Dropbox stuff
 Dropbox
 .dropbox
 .dropbox-dist
 # Insync / Google Drive stuff
 *@gmail.com
+
 # misc stuff
+.NERDTreeBookmarks
 .gtk-bookmarks
 .pythonrc.local
 .selected_editor
+
 # Crap I'm sure to never want committed to git.
 .IdeaIC13
+.MakeMKV
 .VirtualBox
 .android
+.atom
 .cinnamon
 .dmenu_cache
 .dmrc
 .esd_auth
 .evolution
 .fontconfig
-.gnupg
 .gconf
 .gconfd
 .gegl-*
@@ -56,6 +65,7 @@ Dropbox
 .gkrellm2
 .gksu.lock
 .gnome*
+.gnupg
 .gradle
 .gstreamer-*
 .hplip
@@ -68,6 +78,7 @@ Dropbox
 .mozilla
 .mplayer
 .nvidia-settings-rc
+.oracle_jre_usage
 .pki
 .pulse
 .pulse-cookie
@@ -80,22 +91,29 @@ Dropbox
 .steampid
 .subversion
 .thumbnails
+.vscode
 .wget-hsts
 .wine
-.xmms
 .xfce4-session.verbose-log
 .xfce4-session.verbose-log.last
+.xmms
 .xscreensaver
 
 # crap that only shows up in Windows land.
+.dnx
+3D Objects
 AppData
 Contacts
+Evernote
 Favorites
+IntelGraphicsProfiles
 Links
+My Games
 NTUSER.DAT*
 OneDrive
 Saved Games
 Searches
+Thumbs.db
 _viminfo
 _viminfo
 ntuser.dat*

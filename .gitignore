@@ -52,6 +52,7 @@ Dropbox
 .android
 .atom
 .cinnamon
+.davmail.properties
 .dmenu_cache
 .dmrc
 .esd_auth
@@ -91,7 +92,10 @@ Dropbox
 .steampid
 .subversion
 .thumbnails
+.thunderbird
 .vscode
+.vscode
+.vscode-server
 .wget-hsts
 .wine
 .xfce4-session.verbose-log
@@ -119,3 +123,8 @@ _viminfo
 ntuser.dat*
 ntuser.ini*
 vimfiles
+
+# Special
+*.log
+*.chroot
+

@@ -8,12 +8,14 @@
 #
 
 newtmuxsession() {
-    local defname tmsn
+    local defname tmsn actual
     
     # defname="TMUX-$$"
     defname="$(basename $PWD)"
     printf "choose a name for this session [$defname]: "; read tmsn
-    exec tmux new-session -s "${tmsn:-$defname}"
+    actual="${tmsn:-$defname}"
+    set-xterm-title.sh "$actual"
+    exec tmux new-session -s "$actual"
 }
 
 # for some reason bash doesn't like this unless I use a var.
@@ -30,6 +32,7 @@ select tms in "new-session" $tmsl; do
     if [ "$tms" = "new-session" ]; then
         newtmuxsession
     else
+        set-xterm-title.sh "$tms"
         exec tmux attach -t "$tms"
     fi
 done

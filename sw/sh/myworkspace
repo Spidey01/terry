@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Using bash because dash became popular and is probably the only major /bin/sh
+# left that does not support select.
+
+# my normal place
+default_root="${HOME}/sw/workspace/"
+
+cd "${1:-$default_root}"
+
+project_list=$(ls -F | grep / | cut -d/ -f1 | sort)
+
+select project in $project_list; do
+    if [ -z "$project" ]; then
+        echo "Not a valid project."
+        continue
+    fi
+
+    break
+done
+
+echo "Running mytmux in $project"
+cd "$project"
+exec mytmux

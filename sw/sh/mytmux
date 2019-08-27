@@ -10,10 +10,15 @@
 newtmuxsession() {
     local defname tmsn actual
     
-    # defname="TMUX-$$"
-    defname="$(basename $PWD)"
-    printf "choose a name for this session [$defname]: "; read tmsn
-    actual="${tmsn:-$defname}"
+    if [ -z "$1" ]; then
+        # defname="TMUX-$$"
+        defname="$(basename $PWD)"
+        printf "choose a name for this session [$defname]: "; read tmsn
+        actual="${tmsn:-$defname}"
+    else
+        actual="$1"
+    fi
+
     set-xterm-title.sh "$actual"
     exec tmux new-session -s "$actual"
 }
@@ -29,15 +34,23 @@ attachtmuxsession() {
 #
 tmsl="`tmux ls 2>/dev/null | sed -e 's/:.*$//g'`"
 
-# Uncomment to go straight to new session prompt if not running any servers
-#if [ -z "$tmsl" ]; then
-#    newtmuxsession
-#    exit
-#fi
-
 if [ $# -gt 0 ]; then
-    echo "args: $1"
-    attachtmuxsession "$1"
+    name=""
+    if [ -z "$tmsl" ]; then
+        for existing in $(tmux ls | cut -d: -f1); do
+            if [ "$existing" = "$1" ]; then
+                name="$1"
+                break
+            fi
+        done
+    fi
+
+    if [ -z "$name" ]; then
+        newtmuxsession "$1"
+    else
+        attachtmuxsession "$name"
+    fi
+
     exit
 fi
 

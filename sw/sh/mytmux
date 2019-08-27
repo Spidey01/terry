@@ -18,6 +18,13 @@ newtmuxsession() {
     exec tmux new-session -s "$actual"
 }
 
+
+attachtmuxsession() {
+    set-xterm-title.sh "$1"
+    exec tmux attach -t "$1"
+}
+
+
 # for some reason bash doesn't like this unless I use a var.
 #
 tmsl="`tmux ls 2>/dev/null | sed -e 's/:.*$//g'`"
@@ -28,11 +35,16 @@ tmsl="`tmux ls 2>/dev/null | sed -e 's/:.*$//g'`"
 #    exit
 #fi
 
+if [ $# -gt 0 ]; then
+    echo "args: $1"
+    attachtmuxsession "$1"
+    exit
+fi
+
 select tms in "new-session" $tmsl; do
     if [ "$tms" = "new-session" ]; then
         newtmuxsession
     else
-        set-xterm-title.sh "$tms"
-        exec tmux attach -t "$tms"
+        attachtmuxsession "tms"
     fi
 done

@@ -20,4 +20,4 @@ done
 
 echo "Running mytmux in $project"
 cd "$project"
-exec mytmux
+exec mytmux "$project"

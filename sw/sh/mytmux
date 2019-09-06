@@ -58,6 +58,6 @@ select tms in "new-session" $tmsl; do
     if [ "$tms" = "new-session" ]; then
         newtmuxsession
     else
-        attachtmuxsession "tms"
+        attachtmuxsession "$tms"
     fi
 done

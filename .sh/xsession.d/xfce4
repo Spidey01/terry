@@ -1,3 +1,8 @@
 #!/bin/sh
 
-startxfce4 --with-ck-launch
+if type ck-launch-session > /dev/null ; then
+	startxfce4 --with-ck-launch
+else
+	startxfce4
+fi
+

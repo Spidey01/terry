@@ -6,3 +6,5 @@ sbin
 share
 # Sort of often dumped or linked here.
 android-sdk-linux
+# shortcut to my web server files.
+htdocs

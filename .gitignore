@@ -53,6 +53,7 @@ Dropbox
 .atom
 .cinnamon
 .davmail.properties
+davmail.log*
 .dmenu_cache
 .dmrc
 .esd_auth
@@ -94,7 +95,7 @@ Dropbox
 .thumbnails
 .thunderbird
 .vscode
-.vscode
+.vscode-cpptools
 .vscode-server
 .wget-hsts
 .wine

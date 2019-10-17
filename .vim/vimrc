@@ -648,7 +648,7 @@
 " load ~/.vim/vimrc.local if available.
 "
 let g:local_vimrc = expand("~/.vim/vimrc.local")
-if has('win16') || has('win32') || has('win64')
+if has('win16') || has('win32') || has('win64') || has('ios')
 	let g:local_vimrc = expand("~/vimfiles/vimrc.local")
 endif
 if filereadable(g:local_vimrc)

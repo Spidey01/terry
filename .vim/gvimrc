@@ -54,7 +54,7 @@ endif
 " load ~/.vim/gvimrc.local if available.
 "
 let g:local_gvimrc = expand("~/.vim/gvimrc.local")
-if has('win16') || has('win32') || has('win64')
+if has('win16') || has('win32') || has('win64') || has('ios')
 	let g:local_gvimrc = expand("~/vimfiles/gvimrc.local")
 endif
 if filereadable(g:local_gvimrc)

@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+#
+# usage: update-git-submodule [...]
+#
+# Whatever is not given will be asked interactively.
+#
+#   update-git-submodule [submodule] [tag|commit|branch] [value]
+#
+
+submodule="$1"
+pin="$2"
+commit="$3"
+
+git submodule init
+git submodule update
+
+echo "Select git submodule to update: $submodule"
+if [ -z "$submodule" ]; then
+    select submodule in $(git submodule status | awk '{print $2}'); do
+        [ -z "$submodule" ] && continue
+        break
+    done
+fi
+
+if ! cd "$submodule"; then
+    echo "Failed to cd $submodule"
+    exit 1
+fi
+# pwd
+
+echo "Set $submodule to: $pin"
+if [ -z "$pin" ]; then
+    select pin in tag commit branch; do
+        [ -z "$pin" ] && continue
+        break
+    done
+fi
+case "$pin" in
+    commit|branch|tag)
+        ;;
+    *)
+        echo "Unknown $commit"
+        exit
+        ;;
+esac
+
+
+echo "Select $pin from $submodule remote: $commit"
+while [ -z "$commit" ]; do
+    if [ "$pin" = "commit" ]; then
+        max_count=10
+        echo "last $max_count commits in $submodule remote: "
+        echo
+        git log -n $max_count --oneline | tac
+        echo
+        read -p "Enter commit id from $submodule repo: " commit
+    elif [ "$pin" = "branch" ]; then
+        git branch -a
+        echo
+        echo "Use the base name. E.g. foo for remotes/orgin/foo."
+        echo
+        read -p "Enter branch id from $submodule repo: " commit
+    elif [ "$pin" = "tag" ]; then
+        git tag
+        echo
+        read -p "Enter tag id from $submodule repo: " commit
+    fi
+done
+
+echo "PWD: $PWD"
+echo git checkout "$commit"
+git checkout "$commit"
+
+if ! cd "$OLDPWD"; then
+    echo "Failed to cd $OLDPWD"
+    exit 1
+fi
+echo "PWD: $PWD"
+
+echo git commit
+git commit
+

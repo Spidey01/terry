@@ -45,14 +45,19 @@ case "$pin" in
         ;;
 esac
 
+echo "git fetch --all"
+git fetch --all
 
 echo "Select $pin from $submodule remote: $commit"
 while [ -z "$commit" ]; do
     if [ "$pin" = "commit" ]; then
         max_count=10
-        echo "last $max_count commits in $submodule remote: "
+        # assuming origin/current branch
+        upstream=origin/$(git branch | grep '^*' | awk '{print $2}')
+
+        echo "last $max_count commits in $submodule remote $Upstream: "
         echo
-        git log -n $max_count --oneline | tac
+        git log -n $max_count --oneline $upstream | tac
         echo
         read -p "Enter commit id from $submodule repo: " commit
     elif [ "$pin" = "branch" ]; then
@@ -79,5 +84,5 @@ fi
 echo "PWD: $PWD"
 
 echo git commit
-git commit
+git commit "$submodule"
 

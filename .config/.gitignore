@@ -1,6 +1,7 @@
 # Explicitly ignore these
 Code
 Insync
+Kitware
 Mousepad
 Qt
 QtProject.conf

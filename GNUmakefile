@@ -48,10 +48,11 @@ vim-spellfiles:
 # stuff that we don't really want in a dump
 no_dump:
 	if [ -d ~/Dropbox ]; then $(NODUMP) ~/Dropbox ; else true; fi
-	if [ -d ~/bigboss1964@gmail.com ]; then $(NODUMP) ~/bigboss1964@gmail.com ; else true; fi
+	if [ -d ~/Insync ]; then $(NODUMP) ~/Insync ; else true; fi
 	if [ -d ~/.cache ]; then $(NODUMP) ~/.cache ; else true; fi
 	if [ -d ~/.dbus/session-bus ]; then $(NODUMP) ~/.dbus/session-bus ; else true; fi
 	if [ -d ~/.m2/repository ]; then $(NODUMP) ~/.m2/repository ; else true; fi
+	if [ -d ~/.npm ]; then $(NODUMP) ~/.npm ; else true; fi
 
 .PHONY: submodules ssh-perms vim-helptags no_dump
 

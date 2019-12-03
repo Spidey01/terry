@@ -141,6 +141,10 @@
 		set ignorecase
 		set smartcase
 
+		" Make gf, :find, and their friends recurse.
+		if has("path_extra")
+			set path+=**
+		endif
 
 		" Use the system clipboard as the default register, '*'
 		if has("clipboard")

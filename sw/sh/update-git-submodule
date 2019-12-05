@@ -52,10 +52,14 @@ echo "Select $pin from $submodule remote: $commit"
 while [ -z "$commit" ]; do
     if [ "$pin" = "commit" ]; then
         max_count=10
-        # assuming origin/current branch
-        upstream=origin/$(git branch | grep '^*' | awk '{print $2}')
+        # assuming origin/current branch or head.
+        if git branch | grep -q detached; then
+            upstream=origin/HEAD
+        else
+            upstream=origin/$(git branch | grep '^*' | awk '{print $2}')
+        fi
 
-        echo "last $max_count commits in $submodule remote $Upstream: "
+        echo "last $max_count commits in $submodule remote $upstream: "
         echo
         git log -n $max_count --oneline $upstream | tac
         echo

@@ -1,10 +1,12 @@
 # Explicitly ignore these
 Code
+GIMP
 Insync
 Kitware
 Mousepad
 Qt
 QtProject.conf
+Slack
 Thunar
 Trolltech.conf
 Unknown Organization

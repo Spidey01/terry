@@ -53,7 +53,6 @@ Dropbox
 .atom
 .cinnamon
 .davmail.properties
-davmail.log*
 .dmenu_cache
 .dmrc
 .esd_auth
@@ -79,6 +78,7 @@ davmail.log*
 .m2
 .mozilla
 .mplayer
+.npm
 .nvidia-settings-rc
 .oracle_jre_usage
 .pki
@@ -103,6 +103,7 @@ davmail.log*
 .xfce4-session.verbose-log.last
 .xmms
 .xscreensaver
+davmail.log*
 
 # crap that only shows up in Windows land.
 .dnx

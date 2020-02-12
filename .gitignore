@@ -109,16 +109,26 @@ davmail.log*
 .dnx
 3D Objects
 AppData
+Application Data/
 Contacts
+Cookies/
 Evernote
 Favorites
 IntelGraphicsProfiles
 Links
+Local Settings/
+My Documents/
 My Games
 NTUSER.DAT*
+NetHood/
 OneDrive
+PrintHood/
+Recent/
 Saved Games
 Searches
+SendTo/
+Start Menu/
+Templates/
 Thumbs.db
 _viminfo
 _viminfo

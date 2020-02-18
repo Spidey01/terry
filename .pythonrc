@@ -6,6 +6,7 @@ Set crap up for interactive python!
 
 import datetime
 import os, os.path
+import random
 import subprocess
 import sys
 import time

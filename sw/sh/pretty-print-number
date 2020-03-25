@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+
+# usage:
+#	$0 ... numbers ...
+#
+# Someday this would be nice too:
+#	$0
+#	  .. stdin ...
+#	EOF
+#
+# deciamls like:    1,2,3
+# hexadecimal like: 0x1,0x2,0x3
+# binary like:      0b001,0b010,0b11
+# octal like:       01,02,03
+
+for my $n (@ARGV) {
+	if ($n =~ /^0x/) {
+		$n = hex($n);
+	} elsif ($n =~ /^0/) {
+		$n = oct($n);
+	}
+	# binary just works.
+	# decimal too, ofc
+
+	# dec hex bin oct
+	printf "%d\t0x%02x\t0b%08b\t0%o\n", $n, $n, $n, $n;
+}
+

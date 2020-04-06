@@ -260,7 +260,8 @@
 		if has("autocmd")
 	"	XXX Document based formats
 			" make new.txt files dos/win friendly
-			autocmd BufNewFile *.txt set ff=dos
+			" Notepad learned unix EOL :P.
+			"autocmd BufNewFile *.txt set ff=dos
 			autocmd BufNewFile,BufRead *.txt call TextFileHandler()
 			autocmd BufNewFile,BufRead *.outline call My_OutlineMode()
 	"	XXX for use with other programs

@@ -86,6 +86,7 @@ Dropbox
 .pulse-cookie
 .purple
 .putty
+.pylint.d
 .recently-used
 .rhosts
 .steam
@@ -107,6 +108,8 @@ davmail.log*
 
 # crap that only shows up in Windows land.
 .dnx
+.dotnet
+.git-for-windows-updater
 3D Objects
 AppData
 Application Data/
@@ -117,6 +120,7 @@ Favorites
 IntelGraphicsProfiles
 Links
 Local Settings/
+MicrosoftEdgeBackups
 My Documents/
 My Games
 NTUSER.DAT*

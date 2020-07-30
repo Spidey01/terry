@@ -1,0 +1,27 @@
+/encoding=utf-8
+/regions=en
+#
+# words that are valid (for me) but not found in Vi IMproved regular spell 
+# files for English.
+#
+# this word file is for wegener things
+#
+#    #		Comment
+#    =		Case must match exactly.
+#    ?		Rare word.
+#    !		Bad (wrong) word.
+#
+Compel
+PCMI
+USW
+WS
+audiocaster
+i6400
+i6420
+i715
+i725
+i761
+i762
+i8640
+iPump
+u550

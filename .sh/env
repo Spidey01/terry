@@ -25,6 +25,9 @@ ensure_path -p "$HOME/sw/sbin"
 ensure_path -p "$HOME/sw/sh"
 ensure_path -p "$HOME/sw/sh.local"
 
+# and ~/.local/bin for things from pip, etc.
+ensure_path -p "$HOME/.local/bin"
+
 # Common unix paths.
 # Not every system includes 'sbin' in default user PATH.
 #

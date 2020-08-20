@@ -17,3 +17,14 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+#
+# If it looks like a Windows Subsystem for Linux: add some WINDOWS_* vars
+# - Looks like WSL_DISTRO_NAME is typical; WSLENV and WSL_INTEROP usually set.
+# - IS_WSL set to `grep -i microsoft /proc/version` from /etc/profile.
+# - And uname usually reports microsoft in the kernel release.
+#
+if [ -n "$WSL_DISTRO_NAME" -o "$IS_WSL" ]; then
+    # no other feedback if %SystemDrive% != C: - unless you wanta analyze $PATH.
+    [ -d /mnt/c ] && WINDOWS_SYSTEMDRIVE=/mnt/c
+fi
+

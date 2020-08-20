@@ -44,6 +44,7 @@ Dropbox
 .gtk-bookmarks
 .pythonrc.local
 .selected_editor
+.docker/*
 
 # Crap I'm sure to never want committed to git.
 .IdeaIC13

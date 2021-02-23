@@ -49,6 +49,11 @@ elseif has("win32")
 	set guifont=Consolas:h11:cDEFAULT,Courier_New:h11:cDEFAULT,Fixedsys:h9:cDEFAULT
 endif
 
+" Unicode all the GUI way.
+if has("multi_byte_encoding")
+	set encoding=utf-8
+endif
+
 
 "
 " load ~/.vim/gvimrc.local if available.

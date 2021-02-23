@@ -8,6 +8,7 @@
 	#      (1.7.0.x lacks it; 1.7.10.x has it.)
 	history = log --graph --abbrev-commit --decorate --cherry-mark --full-history --all
 	oneline = log --oneline
+	graph = log --oneline --graph --decorate --cherry-mark
 [color]
 	ui = auto
 [core]

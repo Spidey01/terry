@@ -50,7 +50,7 @@ elseif has("win32")
 endif
 
 " Unicode all the GUI way.
-if has("multi_byte_encoding")
+if has("multi_byte_encoding") || has("win32")
 	set encoding=utf-8
 endif
 

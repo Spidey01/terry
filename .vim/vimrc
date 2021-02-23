@@ -91,6 +91,11 @@
 	set nobackup
 	set writebackup
 
+	" Unicode - use vimrc.local for systems that lack unicode.
+	if has("multi_byte_encoding")
+		set encoding=utf-8
+	endif
+
 	" *GENERAL* {{{
 
 		" Indentation settings (explicitly)

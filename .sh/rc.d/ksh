@@ -54,3 +54,5 @@ alias dirs=emulate_dirs
 alias popd=emulate_popd
 alias pushd=emulate_pushd
 
+PS1="[ \u@\h ]$ "
+export PS1

@@ -9,6 +9,9 @@ case "$OS_NAME" in
     FreeBSD)
         sudo shutdown -p now
         ;;
+    OpenBSD)
+        doas shutdown -hp now
+        ;;
     *)
         echo "I dunno how to power down OS_NAME=$OS_NAME yet"
         exit 1

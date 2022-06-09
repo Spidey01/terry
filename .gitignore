@@ -56,6 +56,13 @@ Dropbox
 .docker/*
 
 # Crap I'm sure to never want committed to git.
+/.anyconnect
+/.cisco
+/.dlv
+/.ssh
+/.zsh_sessions
+/Parallels
+/go
 .IdeaIC13
 .MakeMKV
 .VirtualBox

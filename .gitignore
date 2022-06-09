@@ -32,6 +32,15 @@ Music
 Pictures
 Videos
 
+# Macintosh stuff.
+.DS_Store
+.CFUserTextEncoding
+/.Trash
+/Library
+/Applications*
+/Movies
+/Public
+
 # Dropbox stuff
 Dropbox
 .dropbox

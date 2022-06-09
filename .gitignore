@@ -1,36 +1,37 @@
 # vim stuff
 .viminfo
+_viminfo
 *.sw?
-.vimrc
-_vimrc
-.gvimrc
-_gvimrc
+/.vimrc
+/_vimrc
+/.gvimrc
+/_gvimrc
 
 # various history files
-.history
-*_history
-.lesshst
+/.history
+/*_history
+/.lesshst
 
 # xsession stuff.
-.ICEauthority
-.Xauthority
-.xsession-errors
-.xsession-errors.old
+/.ICEauthority
+/.Xauthority
+/.xsession-errors
+/.xsession-errors.old
 
 # csh/tcsh stuff I don't care about.
-.cshrc
-.login
+/.cshrc
+/.login
 
 # Desktop / GUI related stuff
-.cache
-.ccache
-.dbus
-Desktop
-Documents
-Download*
-Music
-Pictures
-Videos
+/.cache
+/.ccache
+/.dbus
+/Desktop
+/Documents
+/Download*
+/Music
+/Pictures
+/Videos
 
 # Macintosh stuff.
 .DS_Store
@@ -41,121 +42,119 @@ Videos
 /Movies
 /Public
 
+# Windows stuff
+/.dnx
+/.dotnet
+/.git-for-windows-updater
+/3D Objects
+/AppData
+/Application Data/
+/Contacts
+/Cookies/
+/Evernote
+/Favorites
+/IntelGraphicsProfiles
+/Links
+/Local Settings/
+/MicrosoftEdgeBackups
+/My Documents/
+/My Games
+/NTUSER.DAT*
+/NetHood/
+/OneDrive
+/PrintHood/
+/Recent/
+/Saved Games
+/Searches
+/SendTo/
+/Start Menu/
+/Templates/
+/ntuser.dat*
+/ntuser.ini*
+/vimfiles
+Thumbs.db
+
+
 # Dropbox stuff
-Dropbox
-.dropbox
-.dropbox-dist
+/Dropbox
+/.dropbox
+/.dropbox-dist
+
 # Insync / Google Drive stuff
-*@gmail.com
+/*@gmail.com
 
 # misc stuff
-.NERDTreeBookmarks
-.gtk-bookmarks
-.pythonrc.local
-.selected_editor
-.docker/*
-
-# Crap I'm sure to never want committed to git.
+/.IdeaIC13
+/.MakeMKV
+/.NERDTreeBookmarks
+/.VirtualBox
+/.android
 /.anyconnect
+/.atom
+/.cinnamon
 /.cisco
+/.davmail.properties
 /.dlv
+/.dmenu_cache
+/.dmrc
+/.docker
+/.esd_auth
+/.evolution
+/.fontconfig
+/.gconf
+/.gconfd
+/.gegl-*
+/.gimp-*
+/.gitk
+/.gkrellm2
+/.gksu.lock
+/.gnome*
+/.gnupg
+/.gradle
+/.gstreamer-*
+/.gtk-bookmarks
+/.hplip
+/.icedtea
+/.irbrc
+/.java
+/.jline-jython.history
+/.jython-cache
+/.m2
+/.mozilla
+/.mplayer
+/.npm
+/.nvidia-settings-rc
+/.oracle_jre_usage
+/.pki
+/.pulse
+/.pulse-cookie
+/.purple
+/.putty
+/.pylint.d
+/.pythonrc.local
+/.recently-used
+/.rhosts
+/.selected_editor
 /.ssh
+/.steam
+/.steampath
+/.steampid
+/.subversion
+/.thumbnails
+/.thunderbird
+/.vscode
+/.vscode-cpptools
+/.vscode-server
+/.wget-hsts
+/.wine
+/.xfce4-session.verbose-log
+/.xfce4-session.verbose-log.last
+/.xmms
+/.xscreensaver
 /.zsh_sessions
 /Parallels
 /go
-.IdeaIC13
-.MakeMKV
-.VirtualBox
-.android
-.atom
-.cinnamon
-.davmail.properties
-.dmenu_cache
-.dmrc
-.esd_auth
-.evolution
-.fontconfig
-.gconf
-.gconfd
-.gegl-*
-.gimp-*
-.gitk
-.gkrellm2
-.gksu.lock
-.gnome*
-.gnupg
-.gradle
-.gstreamer-*
-.hplip
-.icedtea
-.irbrc
-.java
-.jline-jython.history
-.jython-cache
-.m2
-.mozilla
-.mplayer
-.npm
-.nvidia-settings-rc
-.oracle_jre_usage
-.pki
-.pulse
-.pulse-cookie
-.purple
-.putty
-.pylint.d
-.recently-used
-.rhosts
-.steam
-.steampath
-.steampid
-.subversion
-.thumbnails
-.thunderbird
-.vscode
-.vscode-cpptools
-.vscode-server
-.wget-hsts
-.wine
-.xfce4-session.verbose-log
-.xfce4-session.verbose-log.last
-.xmms
-.xscreensaver
 davmail.log*
-
-# crap that only shows up in Windows land.
-.dnx
-.dotnet
-.git-for-windows-updater
-3D Objects
-AppData
-Application Data/
-Contacts
-Cookies/
-Evernote
-Favorites
-IntelGraphicsProfiles
-Links
-Local Settings/
-MicrosoftEdgeBackups
-My Documents/
-My Games
-NTUSER.DAT*
-NetHood/
-OneDrive
-PrintHood/
-Recent/
-Saved Games
-Searches
-SendTo/
-Start Menu/
-Templates/
-Thumbs.db
-_viminfo
-_viminfo
-ntuser.dat*
-ntuser.ini*
-vimfiles
 
 # archive formats.
 *.tgz

@@ -2,24 +2,24 @@
 #
 # set my various options
 
-HISTFILE="${HOME}/.histfile"
-HISTSIZE=768
-SAVEHIST=512
-setopt appendhistory autocd extendedglob 
-setopt incappendhistory
+HISTFILE="${HOME}/.zsh_history"
+HISTSIZE=64000
+
+### Haven't used zsh in so many years, I'll roll with defaults for now.
+#setopt appendhistory autocd extendedglob 
+#setopt incappendhistory
 # dont' beep !
-unsetopt beep
+#unsetopt beep
 # emacs bindings
-bindkey -e
+#bindkey -e
 # use vi ^W behaviour rather then emacs mode default
-bindkey "^W" vi-backward-kill-word
-zstyle :compinstall filename "$HOME/.zshrc"
-autoload -Uz compinit
-compinit
-# I like color in my zsh prompt ;-)
-PS1_Color_Off=$'%{\e[0m%}'
-PS1_Green=$'%{\e[0;32m%}'
-PS1="${USER}@%B%m%b${PS1_Green}$ ${PS1_Color_Off}"; export PS1
+#bindkey "^W" vi-backward-kill-word
+#zstyle :compinstall filename "$HOME/.zshrc"
+#autoload -Uz compinit
+#compinit
+
+PS1="[ %n@%m ]$ "
+export PS1
 # display the (24h) time in the right-prompt`
 #RPS1="%T"; export RPS1
 

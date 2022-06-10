@@ -15,8 +15,17 @@ HISTSIZE=64000
 # use vi ^W behaviour rather then emacs mode default
 #bindkey "^W" vi-backward-kill-word
 #zstyle :compinstall filename "$HOME/.zshrc"
-#autoload -Uz compinit
-#compinit
+####
+
+# Real tab completion.
+#
+# If compinit complains about permissions (see compaudit), -C will skip
+# asking again if there is already a ~/.zcompdump file.
+#
+autoload -Uz compinit && compinit -C
+
+# Compat with bash-completion.
+autoload -Uz bashcompinit && bashcompinit
 
 PS1="[ %n@%m ]$ "
 export PS1

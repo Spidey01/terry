@@ -34,11 +34,13 @@ _viminfo
 /Videos
 
 # Macintosh stuff.
-.DS_Store
 .CFUserTextEncoding
+.DS_Store
 /.Trash
-/Library
+/.bash_sessions
+/.zsh_sessions
 /Applications*
+/Library
 /Movies
 /Public
 
@@ -151,7 +153,7 @@ Thumbs.db
 /.xfce4-session.verbose-log.last
 /.xmms
 /.xscreensaver
-/.zsh_sessions
+/.zcompdump
 /Parallels
 /go
 davmail.log*

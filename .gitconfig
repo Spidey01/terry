@@ -13,3 +13,8 @@
 	ui = auto
 [core]
 	autocrlf = input
+
+# Create ~/.gitconfig.local to hold system local overrides.
+# Requires >= Git 2.13 (2018) but great way to store e-mail address.
+[includeIf "gitdir:~/sw/workspace/"]
+	path = .gitconfig.local

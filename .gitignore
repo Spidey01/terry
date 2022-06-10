@@ -7,6 +7,9 @@ _viminfo
 /.gvimrc
 /_gvimrc
 
+# Typically my e-mail address and any system specific overrides.
+/.gitconfig.local
+
 # various history files
 /.history
 /*_history

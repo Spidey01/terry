@@ -93,7 +93,7 @@ ensure_path() {
     #   -h help message.
     #   -p prepend.
     #
-    local path aflag eflag pflag option
+    local newpath aflag eflag pflag option
     OPTIND=1
     while getopts "aehp" option; do
         case "$option" in
@@ -118,25 +118,25 @@ ensure_path() {
     done
     shift `expr $OPTIND - 1`
 
-    for path in $@; do
+    for newpath in $@; do
 
         # default to -a (append).
         [ -z "$pflag" -a -z "$aflag" ] && aflag=1
 
         # -e => only if exists.
-        [ -n "$eflag" -a ! -d "$path" ] && continue
+        [ -n "$eflag" -a ! -d "$newpath" ] && continue
 
         # already in path
-        if in_path -d "$path"; then
-            # echo "$path is in PATH"
+        if in_path -d "$newpath"; then
+            # echo "$newpath is in PATH"
             continue
         fi
 
 
         if [ -n "$aflag" ]; then
-            append_path "$path"
+            append_path "$newpath"
         elif [ -n "$pflag" ]; then
-            prepend_path "$path"
+            prepend_path "$newpath"
         else
             echo "ensure_path: internal error!."
             return 1

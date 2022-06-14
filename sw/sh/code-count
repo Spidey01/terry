@@ -69,12 +69,14 @@ for dir in ${@:-$PWD}; do
     count ${dir} c_and_cpp c h cpp hpp cc hh cxx hxx 
     count ${dir} csharp cs
     count ${dir} elisp elisp
+    count ${dir} go go
     count ${dir} groovy groovy gradle
     count ${dir} haskell hs lhs
     count ${dir} java java
     count ${dir} javascript js ejs
     count ${dir} lisp lisp
     count ${dir} lua lua
+    count ${dir} markdown markdown mdown mkdn md
     count ${dir} perl pl pm
     count ${dir} php php
     count ${dir} python py
@@ -83,7 +85,6 @@ for dir in ${@:-$PWD}; do
     count ${dir} scheme scm ss 
     count ${dir} shell sh
     count ${dir} vimscript vim
-    count ${dir} markdown markdown mdown mkdn md
 done
 
 if [ $# -gt 1 ]; then

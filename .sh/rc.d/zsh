@@ -5,18 +5,10 @@
 # Don't beep the system bell!
 unsetopt beep
 
+set -o emacs
+
 HISTFILE="${HOME}/.zsh_history"
 HISTSIZE=64000
-
-### Haven't used zsh in so many years, I'll roll with defaults for now.
-#setopt appendhistory autocd extendedglob 
-#setopt incappendhistory
-# emacs bindings
-#bindkey -e
-# use vi ^W behaviour rather then emacs mode default
-#bindkey "^W" vi-backward-kill-word
-#zstyle :compinstall filename "$HOME/.zshrc"
-####
 
 # Real tab completion.
 #

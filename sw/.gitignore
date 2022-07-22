@@ -1,10 +1,12 @@
 # ignore stuff installed here
-bin
-include
-lib
-sbin
-share
+/bin
+/include
+/lib
+/sbin
+/share
 # Sort of often dumped or linked here.
-android-sdk-linux
+/android-sdk-linux
 # shortcut to my web server files.
-htdocs
+/htdocs
+# Good place for apps that are their own bundle instead of unix style install.
+/Applications

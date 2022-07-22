@@ -15,6 +15,9 @@ _viminfo
 /*_history
 /.lesshst
 
+# Never commit this.
+.netrc
+
 # xsession stuff.
 /.ICEauthority
 /.Xauthority

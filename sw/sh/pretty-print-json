@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+
+import argparse
+import json
+import sys
+
+def options():
+    """Return the populated namespace from argparse.
+
+    indent: number of spaces to indent.
+    files: the input args.
+    """
+
+    parser = argparse.ArgumentParser(description="Pretty Print JSON.")
+    parser.add_argument('-i', '--indent',
+            type=int, default=4,
+            metavar='N',
+            help="Indent output by N spaces.")
+    parser.add_argument("files",
+            action="extend", nargs='*', default=[],
+            metavar='FILES',
+            help="Parse specified input files. Default is '-' for stdin.")
+    args = parser.parse_args()
+
+    if not args.files:
+        args.files.append('-')
+
+    #  print("args.indent:", args.indent)
+    #  print("args.files:", args.files)
+
+    return args
+
+def dump(f, indent):
+    """Dump the file handle with specified indentation.
+    f: the file to json.load().
+    indent: number of spaces to indent for json.dump().
+    """
+
+    j = json.load(f)
+    json.dump(j, sys.stdout, indent=indent)
+
+if __name__ == "__main__":
+    args = options()
+
+    showMarker = len(args.files) > 1
+
+    for name in args.files:
+        if showMarker:
+            print("==>", name, "<==")
+        if name == '-':
+            dump(sys.stdin, args.indent)
+        else:
+            with open(name) as fp:
+                dump(fp, args.indent)
+

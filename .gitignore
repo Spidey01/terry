@@ -150,6 +150,8 @@ Thumbs.db
 /.subversion
 /.thumbnails
 /.thunderbird
+/.vcpkg
+/.vnc
 /.vscode
 /.vscode-cpptools
 /.vscode-server

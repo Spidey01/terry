@@ -1,0 +1,135 @@
+#!/bin/sh
+
+verbose() {
+    [ -n "$verbose" ] && echo $*
+}
+
+usage() { # Usage message.
+    echo "$(basename $0): [options]"
+    echo
+    echo "-h,           Print this help."
+    echo
+    echo "-c,           Use prlctl to list and shutdown VMs."
+    echo "              Sends an ACPI shutdown to selected VMs."
+    echo "              Default if prlctl in PATH."
+    echo
+    echo "-s,           Use ssh and guess from parallels dir."
+    echo "              Logs into selected VMs and runs shutdown command."
+    echo
+    echo "-p PATTERN,   Only operate on VMs named for PATTERN."
+    echo "              Pattern is processed with egrep."
+    echo "              Default: '$vm_pattern'"
+    echo
+    echo "-d DIR,       Parallels dir where the VMs are stored."
+    echo "              Default: '${parallels_dir}'"
+    echo
+    echo "-u NAME,      User name to  use for ssh to VM."
+    echo "              Default: '$ssh_user'"
+    echo
+    echo "-C CMD        Command to shutdown VM after ssh."
+    echo "              Default: '$shutdown_cmd'"
+    echo "-n,           Dry run. Just print."
+}
+
+is_dry_run() { # true if just printing.
+    [ -n "$dry_run" ]
+}
+
+using_prlctl() { # true if using prlctl method.
+    [ -n "$use_prlctl" ] && which -s prlctl
+}
+
+using_ssh() { # true if using ssh method.
+    [ -n "$use_ssh" ] && which -s ssh
+}
+
+do_prlctl() { # make the magic happen /w prlctl
+    local vm
+
+     prlctl list -o name | egrep "$vm_pattern" | while read vm; do
+        [ "$vm" = "NAME" ] && continue
+        echo "prlctl stop $vm --acpi"
+        is_dry_run && continue
+        prlctl stop "$vm" --acpi
+    done
+}
+
+pvm_to_host() { # Guess host name from VM bundle name.
+    local arg name
+    for arg; do
+        # Parallels downcases, replaces space with dash, and I forget how it handles dashes.
+        # Such that "Foo Bar" becomes "foo-bar".
+        name=$(echo "$arg" | sed -e 's/.pvm$//g' -e 's/ /-/g' | tr '[:upper:]' '[:lower:]')
+
+        # Parallels writes them to /etc/hosts while booted.
+        grep -q "$name" /etc/hosts && echo "$name"
+    done
+}
+
+do_ssh() { # make the magic happen /w ssh
+    local vm host
+    (cd "$parallels_dir" && ls) | grep '\.pvm$' | egrep "$vm_pattern" | while read vm; do
+        host=$(pvm_to_host "$vm")
+        [ -z "$host" ] && continue
+        verbose "VM: $vm HOST: $host"
+        echo "ssh ${ssh_user}@${host} \"$shutdown_cmd\""
+        is_dry_run && continue
+        ssh "${ssh_user}@${host}" "$shutdown_cmd"
+        # for some reason we're exiting the loop right here???
+    done
+}
+
+parallels_dir=${HOME}/Parallels/
+vm_pattern=".*"
+ssh_user=root
+shutdown_cmd="shutdown -hP now"
+which -s prlctl && use_prlctl=true
+which -s ssh && use_ssh=true
+
+while getopts hvcsp:d:u:n args; do
+    case $args in
+        c)
+            use_prlctl=true
+            use_ssh=
+            ;;
+        s)
+            use_prlctl=
+            use_ssh=true
+            ;;
+        p)
+            vm_pattern="$OPTARG"
+            ;;
+        d)
+            parallels_dir="$OPTARG"
+            ;;
+        u)
+            ssh_user="$OPTARG"
+            ;;
+        C)
+            shutdown_cmd="$OPTARG"
+            ;;
+        v)
+            verbose=true
+            ;;
+        n)
+            dryrun=true
+            ;;
+        h|\?)
+            usage
+            exit 1
+            ;;
+    esac
+done
+shift `expr $OPTIND - 1`
+
+verbose "Using Parallels directory $parallels_dir"
+verbose "Using VM pattern '$vm_pattern'"
+is_dry_run && verbose "Dry run / just printing"
+if using_prlctl ; then
+    verbose "Using prlctl"
+    do_prlctl
+elif using_ssh ; then
+    verbose "Using ssh"
+    do_ssh
+fi
+

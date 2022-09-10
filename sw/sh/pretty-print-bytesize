@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+
+import sys
+import os.path
+from collections import OrderedDict
+from argparse import ArgumentParser
+
+# powers of 2, e.g., 1024=KiB.
+binary_units = {
+    'B': 0,
+    'KiB': 1,
+    'MiB': 2,
+    'GiB': 3,
+    'TiB': 4,
+    'PiB': 5,
+    'EiB': 6,
+    'ZiB': 7,
+    'YiB': 8,
+}
+
+# powers of 10, e.g., 1000=Kb.
+decimal_units = {
+    'B': 0,
+    'kB': 1,    # lower case k recommended for legacy reasons.
+    'MB': 2,
+    'GB': 3,
+    'TB': 4,
+    'PB': 5,
+    'EB': 6,
+    'ZB': 7,
+    'YB': 8,
+}
+
+
+def pp(n, base, units):
+    """Pretty print number 'n' based on the 'units' table.
+
+    units should be a dictionary of string names to exponents.
+    Such that base**some_units_value is the number for some_units_key.
+    """
+
+    for name, exp in units.items():
+        result = n / (base**exp)
+        if result < 0.95:
+            continue
+        if result >= base:
+            continue
+        print("{0:4.2f}\t{1}\t{2}\tbytes".format(result, name, n))
+        return
+
+
+def usage():
+    """Print usage and return an exit status."""
+
+    prog = os.path.basename(sys.argv[0])
+    print("usage: {0} [-h|-H] NUMBER...".format(prog))
+    print("-h\thuman readable using base 2. (default)")
+    print("\t\tE.g., KiB of 1024 bytes.")
+    print("-H\tHuman readable using base 10.")
+    print("\t\tE.g., kB of 1000 bytes.")
+
+    return 64
+
+
+def parse_args(argv):
+    """Returns the base and units based on options."""
+
+    base = 1024
+    units = binary_units
+    values = argv[1:]
+
+    if len(sys.argv) > 1:
+        a = argv[1]
+        if a == '--help':
+            sys.exit(usage())
+        elif a == '-h':
+            base = 1024
+            units = binary_units
+            values = argv[2:]
+        elif a == '-H':
+            base = 1000
+            units = decimal_units
+            values = argv[2:]
+    else:
+        sys.exit(usage())
+
+    return (base, units, values)
+
+
+if __name__ == "__main__":
+    (base, units, values) = parse_args(sys.argv)
+
+    for value in values:
+        try:
+            number = int(value)
+            pp(number, base, units)
+        except ValueError as ex:
+            print(ex)
+

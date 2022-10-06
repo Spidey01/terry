@@ -27,11 +27,14 @@ rc_files: .vimrc .gvimrc .irbrc
 .irbrc:
 	touch .irbrc
 
-ssh-perms:
-		chmod -R u=rwX,g=,o= ~/.ssh/keys
-		chmod 0700 ~/.ssh/config
-		chmod 0700 ~/.ssh/authorized_keys
-		chmod 0700 ~/.ssh/known_hosts
+.ssh:
+	mkdir ~/.ssh
+ssh-perms: .ssh
+	    -chmod 0700 ~/.ssh
+		-chmod -R u=rwX,g=,o= ~/.ssh/keys
+		-chmod 0700 ~/.ssh/config
+		-chmod 0700 ~/.ssh/authorized_keys
+		-chmod 0700 ~/.ssh/known_hosts
 
 vim-helptags:
 	if type vim >/dev/null 2>/dev/null; then \

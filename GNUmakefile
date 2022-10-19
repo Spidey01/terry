@@ -36,6 +36,9 @@ ssh-perms: .ssh
 		-chmod 0700 ~/.ssh/authorized_keys
 		-chmod 0700 ~/.ssh/known_hosts
 
+netrc-perms:
+	-chmod 0600 .netrc
+
 vim-helptags:
 	if type vim >/dev/null 2>/dev/null; then \
 		for _D in .vim/bundle/*/doc; do \
@@ -57,5 +60,5 @@ no_dump:
 	if [ -d ~/.m2/repository ]; then $(NODUMP) ~/.m2/repository ; else true; fi
 	if [ -d ~/.npm ]; then $(NODUMP) ~/.npm ; else true; fi
 
-.PHONY: submodules ssh-perms vim-helptags no_dump
+.PHONY: submodules ssh-perms netrc-perms vim-helptags no_dump
 

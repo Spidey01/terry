@@ -270,7 +270,7 @@
 			autocmd BufNewFile,BufRead *.txt call TextFileHandler()
 			autocmd BufNewFile,BufRead *.outline call My_OutlineMode()
 	"	XXX for use with other programs
-			autocmd filetype cvs,svn,git,bzr set autoindent
+			autocmd FileType cvs,svn,git,bzr set autoindent
 			autocmd BufNewFile,BufRead SConscript,SConfig set filetype=python
 			autocmd BufNewFile,BufRead *.rakefile set filetype=ruby
 			autocmd BufNewFile,BufRead *.gradle set filetype=groovy	

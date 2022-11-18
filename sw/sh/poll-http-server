@@ -1,0 +1,85 @@
+#!/bin/sh
+#
+# Generate orderly requests to a web server.
+#
+
+usage() {
+    [ $# -gt 0 ] && echo "$@" && echo
+    echo "$(basename $0) [options] URL"
+    echo
+    echo "  -n NUM      Number of requests to make."
+    echo "              Default: ${n_requests}"
+    echo "  -f NUM      First request number to use."
+    echo "              Default: ${request_number}"
+    echo "  -i SEC      How many seconds between requests."
+    echo "              Default: ${interval}"
+    echo "  -p NAME     Param to append to URL."
+    echo "              Default: '${param}'"
+    echo "  -m SEC      Run curl with -m SEC."
+    echo "              Sets max time for curl."
+    echo "  -v          Run curl in verbose mode."
+    echo
+    echo "URL:"
+    echo "  Either '?${param}=n' or '&${param}=n' will be appended to the URL."
+    echo
+    echo "Examples:"
+    echo
+    echo "  $(basename $0) -p id -n 10 -i 1 'http://example.com/?action=print'"
+    echo
+    echo "      Will hit 'http://example.com/?action=print&id=n' once per second for n := 1...10."
+    exit
+}
+
+interval=0
+n_requests=1
+request_number=1
+param='request_number'
+
+while getopts hvn:i:f:p:m: args; do
+    case $args in
+        n)
+            n_requests="$OPTARG"
+            ;;
+        f)
+            request_number="$OPTARG"
+            ;;
+        i)
+            interval="$OPTARG"
+            ;;
+        p)
+            param="$OPTARG"
+            ;;
+        v)
+            verbose='-v'
+            ;;
+        m)
+            max_time="-m $OPTARG"
+            ;;
+        h|\?)
+            usage
+            ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+[ $# -lt 1 ] && usage "must specify the URL"
+
+baseurl="${1}"
+marker='?'
+if echo "$baseurl" | grep -q '\?'; then
+    marker='&'
+fi
+url="${baseurl}${marker}${param}="
+
+[ -n "$verbose" ] && echo "n_requests: $n_requests request_number: $request_number interval: $interval url: $url - baseurl: $baseurl marker: $marker"
+
+while [ $n_requests -gt ${counter:-0} ]; do
+    actual_url="${url}${request_number}"
+    curl $verbose $max_time "${actual_url}"
+    [ -n "$verbose" ] && echo "Request $request_number - url: ${actual_url}"
+
+    counter=$((${counter:-0} + 1))
+    request_number=$((${request_number} + 1))
+    sleep ${interval}
+done
+

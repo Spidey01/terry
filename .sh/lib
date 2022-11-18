@@ -56,20 +56,17 @@ in_path() {
     # default to -d (directory).
     [ -z "$bin" -a -z "$dir" ] && dir=1
 
-    if [ -n "$bin" ]; then
-        for bin; do
-            for dir in `dump_path`; do
-                [ -x "${dir}/${bin}" ] && return 0
-            done
+    # needle
+    for dir_or_bin; do
+        # haystacks
+        for from_path in `dump_path`; do
+            # magnet
+            [ -z "$bin" -a -x "${dir}/${bin}" ] && return 0
+            [ -z "$dir" -a -d "${dir}" ]        && return 0
         done
-    elif [ -n "$dir" ]; then
-        for dir; do
-            dump_path | grep -q '^'"$dir"'$' && return 0
-        done
-    else
-        echo "in_path: internal error!"
-        return 127
-    fi
+    done
+
+    return 127
 }
 
 append_path() {

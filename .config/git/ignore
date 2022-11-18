@@ -1,0 +1,12 @@
+# Patterns to be globally ignored, in addition to local .gitignore files.
+
+# Vim stuff to universally ignore.
+.viminfo
+_viminfo
+*.sw?
+
+# MacOS stuff to universally ignore.
+.DS_Store
+
+# Windows stuff to universally ignore.
+Thumbs.db

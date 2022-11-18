@@ -104,7 +104,8 @@ ensure_path() {
                 eflag=1
                 ;;
             h)
-                echo "usage: ensure_path [OPTION] PATH"
+                echo "usage: ensure_path [-e] [-a|-p] PATH"
+                echo "append (-a) or prepend (-p) PATH, if exists (-e)"
                 return
                 ;;
             p)

@@ -58,3 +58,22 @@ my_cpu_status() {
     sysctl hw.acpi.thermal | grep tz[0-9]*.temperature
 }
 
+get_power_state() {
+    #
+    # acpi can be used to detect power state on FreeBSD:
+    #
+    # hw.acpi.acline will be 0 = battery; 1 = charger.
+    #
+    #
+    case `sysctl hw.acpi.acline | cut -d' ' -f 2` in
+        1)
+            echo 'adapter'
+            ;;
+        0)
+            echo 'battery'
+            ;;
+        *)
+            echo 'unknown'
+            ;;
+    esac
+}

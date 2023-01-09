@@ -38,3 +38,31 @@ my_cpu_status() {
     done
 }
 
+get_power_state() {
+    #
+    # acpi can be used to detect power state on linux:
+    #
+    # [ terry@alice ]() acpi -a
+    # Adapter 0: on-line
+    # [ terry@alice ]() acpi -a
+    # Adapter 0: off-line
+    # [ terry@alice ]() acpi -b
+    # Battery 0: Discharging, 100%, 05:30:04 remaining
+    # [ terry@alice ]() acpi -b
+    # Battery 0: Charging, 98%, 00:06:23 until charged
+    # [ terry@alice ]() acpi -b
+    # Battery 0: Full, 100%
+    # [ terry@alice ]()
+    #
+    case `acpi -b | cut -d , -f 1 | cut -d : -f 2` in
+        *Charging|*Full)
+            echo 'adapter'
+            ;;
+        *Discharging)
+            echo 'battery'
+            ;;
+        *)
+            echo 'unknown'
+            ;;
+    esac
+}

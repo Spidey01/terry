@@ -1,6 +1,6 @@
-# vim: set ft=sh :
 #
-
+# Environment variables.
+#
 
 #
 # default file permissions -rw------- / drwx------
@@ -48,86 +48,12 @@ TZ='Etc/UTC'; export TZ
 # prefer megabytes over 512 byte blocks.
 BLOCKSIZE='M'; export BLOCKSIZE
 
-# set my pager
-PAGER="`find_in_normpath less`"
-# default options to less
-#
-# -F: quit if one screen.
-# -i: ignore case in search unless starts with capital.
-# -J: display status column at left edge.
-# -q: quiet: prefer visual bell to terminal bell.
-# -R: allow escapes for ANSI colors / OSC hyperlink references.
-# -X: disable termcap init/deinit strings, like if they clear screen.
-#
-LESS='-FiJqR'  # default options to less
-export PAGER LESS
-
-#
-# set my default editor, if not found then go in on order of preference.
-#
-EDITOR="`find_in_normpath vim nvi vi mg ed | head -n 1`"
-VISUAL="$EDITOR"
-export EDITOR VISUAL
-
-#
-# for ircII
-#
-IRCNICK=Spidey01
-IRCNAME=TMPS01
-IRCSERVER=chat.freenode.net
-export IRCNICK IRCNAME IRCSERVER
-
 # Set a variable to work like LD_LIBRARY_PATH. This is used by most systems I
 # use (Linux, *BSD). Other systems should use ~/.sh/env.d/$OS_NAME to set the
 # correct value from this variable and/or unset this one.
 #
 LD_LIBRARY_PATH="${HOME}/sw/lib:$LD_LIBRARY_PATH"
 export LD_LIBRARY_PATH
-
-# Pick up programs/modules from Ruby gems
-#
-if in_path -b ruby; then
-    RUBYLIB="$HOME/.gem/ruby/`get_ruby_major_version`/lib:$RUBYLIB"; export RUBYLIB
-    prepend_path "$HOME/.gem/ruby/`get_ruby_major_version`/bin"
-fi
-
-# Python stuff
-#
-if in_path -b python; then
-    PYTHONSTARTUP="${HOME}/.pythonrc"
-    [ ! -f "$PYTHONSTARTUP" ] && touch "$PYTHONSTARTUP"
-    PYTHONPATH="${HOME}/sw/lib/python`get_python_major_version`/site-packages:$PYTHONPATH"
-    export PYTHONSTARTUP PYTHONPATH
-fi
-
-
-#
-# Java - this should work for Debian and Fedora.
-# 
-[ -z "$JAVA_HOME" -a -d /usr/lib/jvm/default-java ] \
-    && JAVA_HOME="/usr/lib/jvm/default-java" && export JAVA_HOME
-#
-# My preferred locations for the Android SDK.
-#
-[ -d "$HOME/sw/android-sdk-linux" ] && ANDROID_HOME="$HOME/sw/android-sdk-linux"
-[ -z "$ANDROID_HOME" -a -d /usr/local/sdk/android-sdk-linux ] \
-    && ANDROID_HOME="/usr/local/sdk/android-sdk-linux" 
-[ -z "$ANDROID_HOME" -a -d /usr/local/android-sdk-linux ] \
-    && ANDROID_HOME="/usr/local/android-sdk-linux" 
-[ -z "$ANDROID_HOME" -a -d /opt/android-studio/sdk ] && ANDROID_HOME="/opt/android-studio/sdk" 
-export ANDROID_HOME
-
-#
-# Java/Android tools.
-#
-fuzzy_ensure_path -ep "$HOME/sw/gradle" /usr/local/gradle
-fuzzy_ensure_path -b mvn -ep "$HOME/sw/apache-maven" /usr/local/apache-maven
-if [ -n "$ANDROID_HOME" ]; then
-    append_path "${ANDROID_HOME}/tools"
-    append_path "${ANDROID_HOME}/platform-tools"
-    [ -d "${ANDROID_HOME}/build-tools" ] \
-        && append_path "${ANDROID_HOME}/build-tools/`ls ${ANDROID_HOME}/build-tools/ | sort | tail -n 1`"
-fi
 
 
 # Test for ssh to local host and assume a GUI is present. E.g. Chrome Secure Shell app.
@@ -141,3 +67,10 @@ if [ -z "$DISPLAY" ]; then
 	fi
 fi
 
+[ -f "${HOME}/.sh/env.d/`uname -s`.sh" ] && . "${HOME}/.sh/env.d/`uname -s`.sh"
+. "${HOME}/.sh/env.d/pager.sh"
+. "${HOME}/.sh/env.d/editor.sh"
+. "${HOME}/.sh/env.d/java.sh"
+. "${HOME}/.sh/env.d/ruby.sh"
+. "${HOME}/.sh/env.d/python.sh"
+. "${HOME}/.sh/env.d/irc.sh"

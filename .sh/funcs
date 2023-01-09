@@ -1,19 +1,7 @@
-# vim: set ft=sh 
 #
 # General functions that should be fairly portable
 #
 #
-
-test_dns() {
-    #
-    # quick test of each name server on unix box.
-    #
-    for _IP in `cat /etc/resolv.conf | awk '/^nameserver/ { print $2 }'`
-    do
-        ping -c ${1:-3} "$_IP" | tail -n 1
-    done
-    unset _IP
-}
 
 new_script() {
     #
@@ -30,95 +18,6 @@ new_script() {
     printf "#!/usr/bin/env $1\n\n" >> "$2" && chmod +x "$2"
 }
 
-emulate_pushd() {
-    DIRSTACK="$1 ${DIRSTACK:-`pwd`}"
-    cd $1 && emulate_dirs
-}
-
-emulate_popd() {
-    set -- $DIRSTACK
-    shift
-    DIRSTACK="$*"
-
-    # done this way in case of an error with chdir
-    if [ -z "$1" ]; then
-        cd $1 && emulate_dirs
-    else
-        emulate_dirs
-    fi
-}
-
-emulate_dirs() {
-    local args i
-
-    args=`getopt clpv $* 2> /dev/null`
-    if [ $? -ne 0 ]; then
-        # handle wrong options here.
-        echo "usage: emulate_dirs [-cplv]"
-    fi
-    set -- $args
-
-    for args do
-        case $args in
-           # no args; print with ~'s
-           --)  type perl >/dev/null 2>/dev/null
-                if [ $? -ne 0 ]; then
-                    # perl not found, fall back on dirs -l
-                    emulate_dirs -l
-                    return
-                fi
-                echo $DIRSTACK | perl -pe 's%$ENV{HOME}%~%g'
-                shift; break
-                ;;
-           # erase dir stack
-           -c)  DIRSTACK=""
-                shift; break
-                ;;
-           # list with ~'s expanded, our normal behavour
-           -l)  echo $DIRSTACK
-                shift; break
-                ;;
-           # print on own line
-           -p)  for args in $DIRSTACK
-                do
-                    echo $args
-                done
-                shift; break
-                ;;
-           # print on own line with indexes and tabulators
-           -v)  for args in $DIRSTACK
-                  do
-                      printf "%d\t%s\n" "$i" "$args"
-                      i=`expr $i + 1`
-                  done
-                shift; break
-                ;;
-            # handled above
-            *)  echo "$0: Programmer error if you ever see this"
-                shift; break
-                ;;
-        esac
-    done
-}
-
-get_ipaddr() { # TODO this should become .sh/funcs.d/$OS_NAME specific
-    #
-    # Prints the current machines IP address.
-    #
-    # params: 
-    #   $1  = interface to query
-    #   $2  = prefix, default is 'inet'
-    #
-    #
-    
-    type ifconfig >/dev/null 2>/dev/null && \
-         ifconfig | grep $1 >/dev/null 2>/dev/null
-    if [ $? -eq 0 ]; then
-        ifconfig "$1" | grep "${2:-inet} " | awk '{ print $2 }' | head -n 1
-    fi
-
-}
-
 vimhelp() {
     vim -c "help $@ | only"
 }
@@ -127,11 +26,10 @@ swaptwofiles() {
     mv "$1" "${2}.new" && \
     mv "$2" "${1}" && \
     mv "${2}.new" "$2"
-    echo "'$1' '${2}.new' -> '$2' '${1}' -> '${2}.new' '$2'"
+    echo "'$1' -> '${2}.new' -> '$2' '${1}' -> '${2}.new' '$2'"
 }
 
 swapfiles() {
-
     type expr >/dev/null 2>&1
     if [ $? -ne 0 ]; then
         echo "$0: error: can't find 'expr' in PATH"
@@ -158,7 +56,7 @@ dirsize() {
     du -ch "${@:-.}" | tail -n 1 | cut -f 1
 }
 
-where() {
+whereami() {
     # report where I am
 
     echo "`whoami`@`uname -n`:`pwd`"
@@ -172,15 +70,6 @@ doneat() {
     printf "started at "; date
     eval "$@"
     printf "done at "; date
-}
-
-runinscript() {
-    if [ $# -eq 0 ]; then
-        echo "usage: $0 {command} {logfile}"
-        return
-    fi
-
-    eval "script -c \"$1\" \"$2\""
 }
 
 eval_for_each() {
@@ -201,3 +90,8 @@ eval_for_each() {
     done
 }
 
+# System specific.
+[ -f "${HOME}/.sh/funcs.d/`uname -s`.sh" ] && . "${HOME}/.sh/funcs.d/`uname -s`.sh"
+
+# Emulated dirs, pushd, and popd.
+. "${HOME}/.sh/funcs.d/dirstack.sh"

@@ -1,8 +1,5 @@
-# vim: set ft=sh :
 #
-# This file is designed to be sourced for its functions.
-#
-# It is assumed to be apart of ~/.sh/* framework and can be sourced accordingly.
+# Library functions needed before env is sourced by rc.
 #
 
 dump_path() {
@@ -276,40 +273,6 @@ get_python_major_version() {
     get_python_version | cut -d '.' -f 1-2
 }
 
-get_power_state() {
-    case "$OS_NAME" in
-        Linux|FreeBSD)
-            ${OS_NAME}_get_power_state
-            ;;
-        *)
-            echo "get_power_state: unsupported platform: `uname -o` / OS_NAME=${OS_NAME}"
-            return 127
-            ;;
-    esac
-}
-
-set_power_profile() {
-    #
-    # invokes ~/.sh/power.d/{host name} with any arguments given to us.
-    #
-
-    local p
-
-    p="${HOME}/.sh/power.d/`uname -n`"
-
-    if [ -x "$p" ]; then
-        "$p" "$*" 
-    else
-        echo "set_power_profile: no power profile available!" > /dev/stderr
-        return 1
-    fi
-}
-
-
-
 # Load OS specific library code if present.
 #
-    if [ -n "$OS_NAME" -a -f "${HOME}/.sh/lib.d/${OS_NAME}" ]; then
-        . "${HOME}/.sh/lib.d/${OS_NAME}"
-    fi
-
+[ -f "${HOME}/.sh/lib.d/`uname -s`.sh" ] && . "${HOME}/.sh/lib.d/`uname -s`.sh"

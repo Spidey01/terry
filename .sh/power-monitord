@@ -8,7 +8,83 @@
 # current power state every [secs]. One of adapter, battery, or unknown.
 #
 
-. "${HOME}/.sh/lib"
+FreeBSD_get_power_state() {
+    #
+    # acpi can be used to detect power state on FreeBSD:
+    #
+    # hw.acpi.acline will be 0 = battery; 1 = charger.
+    #
+    #
+    case `sysctl hw.acpi.acline | cut -d' ' -f 2` in
+        1)
+            echo 'adapter'
+            ;;
+        0)
+            echo 'battery'
+            ;;
+        *)
+            echo 'unknown'
+            ;;
+    esac
+}
+
+Linux_get_power_state() {
+    #
+    # acpi can be used to detect power state on linux:
+    #
+    # [ terry@alice ]() acpi -a
+    # Adapter 0: on-line
+    # [ terry@alice ]() acpi -a
+    # Adapter 0: off-line
+    # [ terry@alice ]() acpi -b
+    # Battery 0: Discharging, 100%, 05:30:04 remaining
+    # [ terry@alice ]() acpi -b
+    # Battery 0: Charging, 98%, 00:06:23 until charged
+    # [ terry@alice ]() acpi -b
+    # Battery 0: Full, 100%
+    # [ terry@alice ]()
+    #
+    case `acpi -b | cut -d , -f 1 | cut -d : -f 2` in
+        *Charging|*Full)
+            echo 'adapter'
+            ;;
+        *Discharging)
+            echo 'battery'
+            ;;
+        *)
+            echo 'unknown'
+            ;;
+    esac
+}
+
+get_power_state() {
+    case "$OS_NAME" in
+        Linux|FreeBSD)
+            ${OS_NAME}_get_power_state
+            ;;
+        *)
+            echo "get_power_state: unsupported platform: `uname -o` / OS_NAME=${OS_NAME}"
+            return 127
+            ;;
+    esac
+}
+
+set_power_profile() {
+    #
+    # invokes ~/.sh/power.d/{host name} with any arguments given to us.
+    #
+
+    local p
+
+    p="${HOME}/.sh/power.d/`uname -n`"
+
+    if [ -x "$p" ]; then
+        "$p" "$*" 
+    else
+        echo "set_power_profile: no power profile available!" > /dev/stderr
+        return 1
+    fi
+}
 
 shutdown_pmd() {
     # TODO: figure out how to shutdown the thing.

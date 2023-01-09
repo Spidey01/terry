@@ -1,11 +1,14 @@
-# vim : set ft=sh :
+#
+# Bourne shell runtime configuration.
+#
 
 # older versions of the sh lack line editing (i.e. < sys 3)
-if [ "$OS_NAME" = FreeBSD -o "$OS_NAME" = OpenBSD -o "$OS_NAME" = NetBSD \
-      -o "$OS_NAME" = Linux ]
-then
-    set -o emacs
-fi
+# depending on version it may not be enabled by default.
+case `uname -s` in
+    FreeBSD|OpenBSD|NetBSD|Linux)
+        set -o emacs
+        ;;
+esac
 
 # sh doesn't support C-style directory stacks, emulate them
 DIRSTACK="$HOME"
@@ -14,3 +17,7 @@ alias dirs=emulate_dirs
 alias popd=emulate_popd
 alias pushd=emulate_pushd
 
+# my standard issue prompt.
+PS1_HOSTNAME="`echo ${HOSTNAME:-\`uname -n\`} | sed 's/\..*//'`"
+PS1="${USER}@${PS1_HOSTNAME}-$ "
+export PS1

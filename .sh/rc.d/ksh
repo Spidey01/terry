@@ -1,6 +1,8 @@
+#
+# Korn shell runtime configuration.
+#
 
 set -o emacs 
-
 
 # As used by the classic  korn shell
 HISTFILE="${HOME}/.`basename $SHELL`_history"

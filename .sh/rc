@@ -1,74 +1,51 @@
-# vim: set ft=sh ai si ts=4 sw=4 et :
 #
 # My personal Bourne-style Shell resource configuration profile.
 #
 # This should be portable across virtually all Bourne shells and operating
 # systems, as long as aliases and functions are supported.
 #
-# portable environment data is sourced from ~/.sh/env
-# portable functions are sourced from ~/.sh/funcs
-# portable aliases are sourced from ~/.sh/aliases
+# - Library functions needed early on.
+# - Shell runtime configuration from ~/.sh/$SHELL.
+# - Environment data is sourced from ~/.sh/env.
+# - Functions are sourced from ~/.sh/funcs.
+# - Aliases are sourced from ~/.sh/aliases.
 #
-# system specific environment data is sourced from ~/.sh/env.d/osname
-# system specific functions are sourced from ~/.sh/funcs.d/osname
-# system specific alias are sourced from ~/.sh/aliases.d/osname
+# If it exists, most of these source associated those.d directories for the
+# current OS name as per `uname -s` with a .sh extension added.
+#
 #
 # ~/.sh/rc.local is sourced after everything else, to privide system local changes.
 #
 
 #
-# Set a string of OS_* variables to the portable subset of uname outputs
+# include library functions that are required by ./env.
 #
-    OS_ARCH=`uname -m`
-    OS_NAME=`uname -s`
-    OS_RELLVL=`uname -r`
-    export OS_ARCH OS_NAME OS_RELLVL
+. "${HOME}/.sh/lib"
 
 #
-# include library functions for the ~/.sh setup in general.
+# set shell specific settings.
 #
-    . "${HOME}/.sh/lib"
+case `basename $SHELL` in
+    'sh')
+        . "${HOME}~/.sh/rc.d/sh"
+        ;;
+    'bash')
+        . "${HOME}~/.sh/rc.d/bash"
+        ;;
+    'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
+        . "${HOME}~/.sh/rc.d/ksh"
+        ;;
+    'zsh')
+        . "${HOME}/.sh/rc.d/zsh"
+        ;;
+esac
 
 #
-# set my standard environment, functions, and aliases
+# set my standard environment, functions, and aliases.
 #
-    . "${HOME}/.sh/env"
-    . "${HOME}/.sh/funcs"
-    . "${HOME}/.sh/aliases"
-
-#
-# Cache the current machines hostname. hostname -s is not portable enough for
-# getting the short form of our current machines hostname, so do this instead
-# of invoking hostname -s whenever needed. 
-#
-    HOSTNAME="`echo ${HOSTNAME:-\`uname -n\`} | sed 's/\..*//'`"
-    export HOSTNAME
-
-#
-# set shell specific settings
-#
-    case `basename $SHELL` in
-        'sh')
-            . ~/.sh/rc.d/sh
-            ;;
-        'bash')
-            . ~/.sh/rc.d/bash
-            ;;
-        'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
-            . ~/.sh/rc.d/ksh
-            ;;
-        'zsh')
-            . ~/.sh/rc.d/zsh
-            ;;
-    esac
-
-
-#
-# parse platform specific environment, functions, and aliases
-#
-    [ -f "${HOME}/.sh/env.d/${OS_NAME}" ]     && . "${HOME}/.sh/env.d/${OS_NAME}"
-    [ -f "${HOME}/.sh/funcs.d/${OS_NAME}" ]   && . "${HOME}/.sh/funcs.d/${OS_NAME}"
-    [ -f "${HOME}/.sh/aliases.d/${OS_NAME}" ] && . "${HOME}/.sh/aliases.d/${OS_NAME}"
+. "${HOME}/.sh/env"
+. "${HOME}/.sh/funcs"
+. "${HOME}/.sh/aliases"
 
 #
 # give a fortune cookie and the current date/time on login.
@@ -76,8 +53,7 @@
 #
 if [ -n "$SSH_TTY" -o -z "$SSH_CONNECTION" ]; then
     echo ''
-    [ -x /usr/games/fortune ] && /usr/games/fortune -aes
-    echo ''; echo ''
+    [ -x /usr/games/fortune ] && /usr/games/fortune -aes && echo '' && echo ''
     echo "To days date is: `date`"
     echo ''
 fi
@@ -85,6 +61,4 @@ fi
 #
 # parse site local additions
 #
-    [ -f "${HOME}/.sh/rc.local" ] && . "${HOME}/.sh/rc.local"
-
-
+[ -f "${HOME}/.sh/rc.local" ] && . "${HOME}/.sh/rc.local"

@@ -35,13 +35,6 @@ ensure_path -e -a \
     /usr/local/bin /usr/bin /bin \
     /usr/local/sbin /usr/sbin /sbin
 
-# only set if it exists.
-if [ -n "$PS1" ]; then
-    # my standard issue prompt  (overriden later, based on $SHELL)
-    PS1="${USER}@${HOSTNAME}-$ "
-    export PS1
-fi
-
 # Attempt to override default timezone; I prefer UTC
 TZ='Etc/UTC'; export TZ
 

@@ -1,5 +1,3 @@
-# vim: set ft=sh :
-#
 #
 # Bourne shell aliases for Linux systems
 #
@@ -7,7 +5,6 @@
 alias 	ls='ls --color=auto -hp'
 alias 	ll='ls --color=auto -lahp'
 alias 	la='ls --color=auto -ahp'
-
 
 alias   ectags=/usr/bin/ctags-exuberant
 alias	exctags=/usr/bin/ctags-exuberant
@@ -20,4 +17,3 @@ alias   bc='bc -q'
 if find_in_normpath ack-grep >/dev/null; then
 	alias   ack='ack-grep'
 fi
-

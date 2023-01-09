@@ -1,4 +1,3 @@
-# vim: set ft=sh :
 #
 # Windows 7 (NT 6.1).
 #

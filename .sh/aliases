@@ -1,20 +1,20 @@
-# vim: set ft=sh :
 #
 # define some standard aliases for programs. 
 #
+
+#
 # These should be fairly portable where said programs are installed.
 #
-    alias   bye='echo "bye"; exit'
-    alias   cls='clear'
-    alias   copy='cp -i'
-    alias   del='rm -i'
-    alias   igrep='grep -i'
-    alias   limeric='fortune /usr/share/games/fortune/limerick'
-    alias   move='mv -i'
-    alias   pd='perldoc'
-    alias   pgr='$PAGER'
-
-    alias   tman='tcmd man'
+alias   bye='echo "bye"; exit'
+alias   cls='clear'
+alias   copy='cp -i'
+alias   del='rm -i'
+alias   igrep='grep -i'
+alias   limeric='fortune /usr/share/games/fortune/limerick'
+alias   move='mv -i'
+alias   pd='perldoc'
+alias   pgr='$PAGER'
+alias   tman='tcmd man'
 
 #
 # Define fail safe aliases that should work on POSIX/SUS systems.
@@ -23,3 +23,8 @@
 alias   ls='ls -FH'
 alias   ll='ls -laH'
 alias   la='ls -aF'
+
+#
+# Source system specific aliases.
+#
+[ -f "${HOME}/.sh/alias.d/`uname -s`.sh" ] && . "${HOME}/.sh/alias.d/`uname -s`.sh"

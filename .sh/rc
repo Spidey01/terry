@@ -27,13 +27,13 @@
 #
 case `basename $SHELL` in
     'sh')
-        . "${HOME}~/.sh/rc.d/sh"
+        . "${HOME}/.sh/rc.d/sh"
         ;;
     'bash')
-        . "${HOME}~/.sh/rc.d/bash"
+        . "${HOME}/.sh/rc.d/bash"
         ;;
     'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
-        . "${HOME}~/.sh/rc.d/ksh"
+        . "${HOME}/.sh/rc.d/ksh"
         ;;
     'zsh')
         . "${HOME}/.sh/rc.d/zsh"

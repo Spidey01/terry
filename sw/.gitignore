@@ -10,3 +10,5 @@
 /htdocs
 # Good place for apps that are their own bundle instead of unix style install.
 /Applications
+# Versions of workspace that are case specific.
+workspace.*

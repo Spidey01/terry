@@ -418,7 +418,7 @@
 
 		" ROT13 encode/decode the current file
 		function! ROT13()
-			<esc>ggvGg?
+			normal ggvGg?
 		endfunction
 		command! Rot13 call ROT13()
 

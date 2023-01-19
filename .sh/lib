@@ -58,8 +58,8 @@ in_path() {
         # haystacks
         for from_path in `dump_path`; do
             # magnet
-            [ -z "$bin" -a -x "${dir}/${bin}" ] && return 0
-            [ -z "$dir" -a -d "${dir}" ]        && return 0
+            [ -n "$bin" -a -x "${from_path}/${dir_or_bin}" ] && return 0
+            [ -n "$dir" -a -d "${dir_or_bin}" -a "${from_path}" = "${dir_or_bin}" ] && return 0
         done
     done
 

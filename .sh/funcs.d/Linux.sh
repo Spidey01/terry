@@ -1,4 +1,5 @@
-# vim: set ft=sh :
+#
+# Functions for Linux.
 #
 
 my_cpu_status() {

@@ -1,5 +1,3 @@
-# vim: set ft=sh :
-
 
 # OpenBSD seems to lack the UTF-8 locale, so fall back
 # Not having this problem with 6.9?

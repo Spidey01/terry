@@ -1,6 +1,6 @@
-# vim: set ft=sh :
 #
-
+# Functions for FreeBSD.
+#
 
 # quick commands to mute/unmute the sound system
 #

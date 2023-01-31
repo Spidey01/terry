@@ -35,6 +35,9 @@ ensure_path -e -a \
     /usr/local/bin /usr/bin /bin \
     /usr/local/sbin /usr/sbin /sbin
 
+# Search path for manual pages.
+export MANPATH
+
 # Attempt to override default timezone; I prefer UTC
 TZ='Etc/UTC'; export TZ
 

@@ -66,10 +66,18 @@ in_path() {
     return 127
 }
 
+append_pathlike() {
+    # If this doesn't make your eyes hurt then it's been a long time since your shell was bourne.
+    eval `echo $1='${'$1'}${'$1':+:}'$2`
+}
+
 append_path() {
     PATH="${PATH}${PATH:+:}$1"
 }
 
+prepend_pathlike() {
+    eval `echo $1=$2'${'$1':+:}${'$1'}'`
+}
 
 prepend_path() {
     PATH="$1${PATH:+:}$PATH"

@@ -2,12 +2,24 @@
 # Library functions needed before env is sourced by rc.
 #
 
-dump_path() {
-    local entry
+dump_pathlike() {
+    # usage: dump_pathlike VARNAME
+    #
+    # Prints the specified variable with :'s converted to new lines.
+    #
+    local value entry
 
-    for entry in `echo $PATH | sed -e 's/:/ /g'`; do
-        echo "$entry"
-    done
+    value=`eval echo '$'"$1"`
+
+    echo "$value" | sed -e 's/:/\n/g'
+}
+
+dump_path() {
+    # usage: dump_path
+    #
+    # Prints $PATH with :'s converted to new lines.
+    #
+    echo "$PATH" | sed -e 's/:/\n/g'
 }
 
 in_path() {

@@ -67,12 +67,12 @@ in_path() {
 }
 
 append_path() {
-    PATH="$PATH:$1"
+    PATH="${PATH}${PATH:+:}$1"
 }
 
 
 prepend_path() {
-    PATH="$1:$PATH"
+    PATH="$1${PATH:+:}$PATH"
 }
 
 ensure_path() {

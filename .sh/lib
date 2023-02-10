@@ -281,7 +281,7 @@ fuzzy_ensure_path() {
 find_in_normpath() {
     #
     # Search in the usual paths for the indicated programs. If found print the
-    # full path to the program to standard output.
+    # full path to the program to standard output. Stops at the first found.
     #
     # params: 
     #   $@  = a list of programs to search for
@@ -324,7 +324,7 @@ get_ruby_major_version() {
 get_python_version() {
     local p
     
-    p="`find_in_normpath python`"
+    p="`find_in_normpath python python3 python2`"
     # groan, python seems to use stderr here.
     [ -n "$p" ] && "$p" -V 2>&1 | cut -d ' ' -f 2
 }

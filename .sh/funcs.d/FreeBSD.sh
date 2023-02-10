@@ -16,7 +16,7 @@ unmute() {
 }
 
 free() {
-    if in_path -b freecolor; then
+    if in_path -e freecolor; then
         freecolor -o $*
     else
         echo "Please install freecolor." 2>/dev/null

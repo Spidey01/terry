@@ -41,7 +41,7 @@ xsetroot -cursor_name left_ptr
 # -> Modern systems automate this as part of Xorg's XSession.
 # -> Or in through the init system.
 #
-if in_path -b dbus-launch && [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+if in_path -e dbus-launch && [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     eval `dbus-launch --sh-syntax --exit-with-session`
 fi
 
@@ -50,14 +50,14 @@ fi
 #
 # Requires PAM suitably configured and keyring password to match user account.
 #
-if in_path -b gnome-keyring-daemon; then
+if in_path -e gnome-keyring-daemon; then
     eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
     export SSH_AUTH_SOCK
 fi
 
 # if running on a laptop, try to disable the touch pad while typing
 #
-if in_path -b laptop-detect && laptop-detect && in_path -b syndaemon; then
+if in_path -e laptop-detect && laptop-detect && in_path -e syndaemon; then
     # [ ! -f "${HOME}/tmp/syndaemon.pid" ] &&
     syndaemon -d -tK -i 0.5 #-p "${HOME}/tmp/syndaemon.pid"
     # TODO: a way of trapping logout events for cleanup

@@ -2,7 +2,7 @@
 
 xscreensaver -no-splash&
 
-if in_path -b bbkeys; then
+if in_path -e bbkeys; then
     bbkeys &
 fi
 

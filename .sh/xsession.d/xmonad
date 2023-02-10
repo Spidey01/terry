@@ -25,9 +25,9 @@
 
 xscreensaver -no-splash&
 
-if in_path -b compton; then
+if in_path -e compton; then
     compton -b
-elif in_path -b xcompmgr; then
+elif in_path -e xcompmgr; then
     xcompmgr -cfF &
 else
     echo "$0: No supported compositor found."
@@ -35,7 +35,7 @@ fi
 
 # if blueman is present, then I probably want to run the applet.
 #
-if in_path -b blueman-applet; then
+if in_path -e blueman-applet; then
     blueman-applet &
 fi
 

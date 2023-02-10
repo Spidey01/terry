@@ -53,7 +53,7 @@ in_pathlike() {
                 file=1
                 ;;
             h)
-                echo "usage: in_pathlike [-e | -f | -d] VAR NAME"
+                echo "usage: in_pathlike [-e | -f | -d] VAR NAME ..."
                 echo "Check for  executable (-e), regular file (-f), or directory (-d) in VAR."
                 return
                 ;;
@@ -86,6 +86,36 @@ in_pathlike() {
     done
 
     return 127
+}
+
+in_path() {
+    local option flags
+
+    OPTIND=1
+    while getopts "edfh" option; do
+        case "$option" in
+            e)
+                flags=e
+                ;;
+            d)
+                flags=d
+                ;;
+            f)
+                flags=f
+                ;;
+            h)
+                echo "usage: in_path [-e | -d | -f] NAME ..."
+                echo "Check for  executable (-e) or directory (-d) in VAR."
+                return
+                ;;
+            \?)
+                # bad option
+                return
+                ;;
+        esac
+    done
+    shift `expr $OPTIND - 1`
+    in_pathlike ${flags:+-$flags} PATH $*
 }
 
 append_pathlike() {

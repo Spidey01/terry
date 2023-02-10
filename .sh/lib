@@ -22,36 +22,39 @@ dump_path() {
     echo "$PATH" | sed -e 's/:/\n/g'
 }
 
-in_path() {
+in_pathlike() {
     #
-    # usage: in_path [OPTION] WHAT...
+    # usage: in_pathlike [OPTION] VAR WHAT...
     #
-    # Searches PATH for WHAT.
+    # Searches $VAR for WHAT.
     #
     # options: 
     #   
     #   -d = WHAT refers to directories. (Default.)
-    #   -b = WHAT refers to programs.
+    #   -f = WHAT refers to regular files.
+    #   -e = WHAT refers to executables.
     #
     # exit status:
     #   0	= found
     #   >0	= not found
-    # 
     #
-    local what bin dir prog option
+    local varname what bin dir file option from_path node
 
     OPTIND=1
-    while getopts "bedh" option; do
+    while getopts "edfh" option; do
         case "$option" in
-            b|e)
+            e)
                 bin=1
                 ;;
             d)
                 dir=1
                 ;;
+            f)
+                file=1
+                ;;
             h)
-                echo "usage: in_path [-b | -d] NAME"
-                echo "Check for  binary (-b) or directory (-d) in PATH."
+                echo "usage: in_pathlike [-e | -f | -d] VAR NAME"
+                echo "Check for  executable (-e), regular file (-f), or directory (-d) in VAR."
                 return
                 ;;
             \?)
@@ -63,15 +66,22 @@ in_path() {
     shift `expr $OPTIND - 1`
 
     # default to -d (directory).
-    [ -z "$bin" -a -z "$dir" ] && dir=1
+    [ -z "$file" -a -z "$bin" -a -z "$dir" ] && dir=1
+
+    varname=$1
+    shift
+    if [ -z "$varname" ] ; then
+        echo "$0: must specify variable to evaluate."
+    fi
 
     # needle
-    for dir_or_bin; do
+    for node; do
         # haystacks
-        for from_path in `dump_path`; do
+        for from_path in `dump_pathlike $varname`; do
             # magnet
-            [ -n "$bin" -a -x "${from_path}/${dir_or_bin}" ] && return 0
-            [ -n "$dir" -a -d "${dir_or_bin}" -a "${from_path}" = "${dir_or_bin}" ] && return 0
+            [ -n "$bin"  -a -x "${from_path}/${node}" ] && return 0
+            [ -n "$file" -a -f "${from_path}/${node}" ] && return 0
+            [ -n "$dir"  -a -d "${node}" -a "${from_path}" = "${node}" ] && return 0
         done
     done
 

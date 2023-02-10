@@ -48,7 +48,7 @@ BLOCKSIZE='M'; export BLOCKSIZE
 # use (Linux, *BSD). Other systems should use ~/.sh/env.d/$OS_NAME to set the
 # correct value from this variable and/or unset this one.
 #
-LD_LIBRARY_PATH="${HOME}/sw/lib:$LD_LIBRARY_PATH"
+append_pathlike LD_LIBRARY_PATH "${HOME}/sw/lib"
 export LD_LIBRARY_PATH
 
 

@@ -147,7 +147,7 @@ ensure_path() {
     #   -h help message.
     #   -p prepend.
     #
-    local newpath aflag eflag pflag option
+    local newpath node aflag eflag pflag option
     OPTIND=1
     while getopts "aehp" option; do
         case "$option" in
@@ -182,10 +182,9 @@ ensure_path() {
         [ -n "$eflag" -a ! -d "$newpath" ] && continue
 
         # already in path
-        if in_path -d "$newpath"; then
-            # echo "$newpath is in PATH"
-            continue
-        fi
+        for node in `dump_path`; do
+            [ "$newpath" = "$node" ] && return 0
+        done
 
 
         if [ -n "$aflag" ]; then

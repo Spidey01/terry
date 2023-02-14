@@ -36,6 +36,8 @@ ensure_path -e -a \
     /usr/local/sbin /usr/sbin /sbin
 
 # Search path for manual pages.
+# N.B. if setting: make sure ':' is included as man treats that as the default
+# manpath.
 export MANPATH
 
 # Attempt to override default timezone; I prefer UTC

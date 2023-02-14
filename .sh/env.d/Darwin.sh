@@ -1,5 +1,7 @@
 
 if [ -d "/Applications/Wireshark.app" ]; then
     ensure_path -ae "/Applications/Wireshark.app/Contents/MacOS/"
-    prepend_pathlike MANPATH "/Applications/Wireshark.app/Contents/Resources/share/man"
+    # N.B. not using prepend_pathlike because the : is needed to keep the
+    # default search path functional when there is no MANPATH.
+    MANPATH="/Applications/Wireshark.app/Contents/Resources/share/man:${MANPATH}"
 fi

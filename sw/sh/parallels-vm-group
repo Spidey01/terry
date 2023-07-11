@@ -1,0 +1,133 @@
+#!/usr/bin/env python3
+
+"""Manipulates VMs as a group with prlctl.
+
+usage: vm_group [--config|-c|-f config] {action} [group]
+
+config is a JSON file like this:
+
+{
+    "groups": [
+        { "name": "group", "machines": ["VM Name", ...], "comment": "..." },
+        ...
+    ]
+}
+
+action is one of:
+    - list
+    - start
+    - stop
+    - restart
+    - suspend
+    - resume
+
+group is one of the objects in config's groups list, selected by 'name'.
+"""
+
+import argparse
+import json
+import logging
+import os.path
+import subprocess
+import sys
+
+# Default location to find Parallel's control tool.
+prlctl = "/usr/local/bin/prlctl"
+
+def from_argv(argv):
+    """Parses argv and returns path to config, action string, and groups list."""
+    cfg = {}
+    action = ""
+    groups = []
+    default_config = os.path.expandvars("${XDG_USER_HOME}/vm_group.json")
+    if default_config[0] == '$':
+        default_config = os.path.expanduser("~/.config/vm_group.json")
+    parser = argparse.ArgumentParser(description="Terry's prlctl VM group wrangler")
+    parser.add_argument("--config", "-c", "-f", metavar="FILE", type=str, nargs=1,
+                        default=[default_config],
+                        help="Load configuration fro FILE")
+    parser.add_argument("action", metavar="ACTION", type=str, nargs=1, help="One of list, start, stop, restart, suspend, or resume")
+    parser.add_argument("groups", metavar="GROUPS", type=str, nargs='*', help="Groups to act upon")
+
+    args = parser.parse_args(argv[1:])
+    return (args.config[0], args.action[0], args.groups)
+
+def get_config_dict(pathname):
+    """Returns pathname loaded as a JSON object, or the empty dict."""
+    logging.info("loading configuration %s", pathname)
+    with open(pathname) as fp:
+        return json.load(fp)
+    return {}
+
+def is_valid_action(action):
+    return action in ("list", "start", "stop", "restart", "suspend", "resume")
+
+def get_group_dict(cfg, grp):
+    """Returns the dict from cfg["groups"] where name == grp, or an empty dict."""
+    if not "groups" in cfg:
+        logging.error("no groups defined in configuration")
+    for group in cfg["groups"]:
+        if "name" in group and group["name"] == grp:
+            return group
+    logging.warning("no group %s in configuration", grp)
+    return {}
+
+def get_machines_list(group):
+    """Returns group["machines"] or the empty list."""
+    if not "name" in group:
+        return []
+    if "machines" in group:
+        return group["machines"]
+    logging.warning("no machines defined in group %s", group["name"])
+    return []
+
+def start_vm(name):
+    logging.debug("starting vm %s", name)
+    subprocess.run([prlctl, "start", name])
+
+def stop_vm(name):
+    logging.debug("stopping vm %s", name)
+    subprocess.run([prlctl, "stop", name, "--acpi"])
+
+def suspend_vm(name):
+    logging.debug("suspending vm %s", name)
+    subprocess.run([prlctl, "suspend", name])
+
+def resume_vm(name):
+    logging.debug("resuming vm %s", name)
+    subprocess.run([prlctl, "resume", name])
+
+if __name__ == "__main__":
+    logging.getLogger().setLevel(logging.DEBUG)
+    cfg, action, groups = from_argv(sys.argv)
+
+    cfg = get_config_dict(cfg)
+
+    if not is_valid_action(action):
+        logging.fatal("unknown action: %s", action)
+        sys.exit(1)
+
+    if action == "list":
+        logging.info("Parallels Status:")
+        subprocess.run([prlctl, "list"])
+        logging.info("My Groups:")
+        if not "groups" in cfg:
+            sys.exit(0)
+        for group in cfg["groups"]:
+            print("-", group)
+
+    for grp in groups:
+        logging.info("%s group %s", action, grp)
+        group = get_group_dict(cfg, grp)
+        if "comment" in group:
+            logging.debug(group["comment"])
+        for machine in get_machines_list(group):
+            if action in ("stop", "restart"):
+                stop_vm(machine)
+            if action in ("start", "restart"):
+                start_vm(machine)
+            if action == "suspend":
+                suspend_vm(machine)
+            if action == "resume":
+                resume_vm(machine)
+

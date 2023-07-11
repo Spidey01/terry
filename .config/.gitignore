@@ -59,6 +59,7 @@ unix-backup.rc.local
 user-dirs.dirs
 user-dirs.locale
 vlc
+vm_group*
 weston.ini
 wireshark
 xarchiver

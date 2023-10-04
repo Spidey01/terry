@@ -20,7 +20,7 @@ autoload -Uz compinit && compinit -C
 # Compat with bash-completion.
 autoload -Uz bashcompinit && bashcompinit
 
-PS1="[ %n@%m ]$ "
+PS1="[ %1~ ]%% "
 export PS1
 # display the (24h) time in the right-prompt`
 #RPS1="%T"; export RPS1

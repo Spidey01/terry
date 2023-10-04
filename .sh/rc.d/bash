@@ -27,7 +27,7 @@ if [ -n "$PS1" ]; then
     PS1_Cyan='\e[0;36m'
     PS1_White='\e[0;37m'
 
-    PS1="[ ${debian_chroot:+($debian_chroot)}\u@\h ]$ "
+    PS1="[ ${debian_chroot:+($debian_chroot)}\W ]\$ "
     export PS1
 fi
 

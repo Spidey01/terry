@@ -1,0 +1,69 @@
+#!/bin/sh
+# Reads a list of repositories and clones them.
+
+# where to clone to.
+workspace_root="$PWD"
+
+# enable debugging if set.
+debug_dest=
+
+echo_debug() {
+    [ -n "$debug_dest" ] || return 0
+    echo "$@" > "$debug_dest"
+}
+
+workspaces_from_file() {
+    local input
+    for input; do
+        echo_debug "${0}: input file: $input"
+        cat "$input" | workspaces_from_stdin
+    done
+}
+
+workspaces_from_stdin() {
+    local input names
+    while read input; do
+        # input may be the URL to clone, optionally followed by whitespace and
+        # the ref to checkout (branch name, git tag, commit id). 
+        echo_debug "${0}: input line ${input}"
+        clone_repo $input
+    done
+}
+
+clone_repo() {
+    local url ref
+    url="$1"
+    ref="$2"
+
+    (cd "$workspace_root" && git clone ${ref:+-b "${ref}"} "$url")
+}
+
+#### Make the magic happen.
+
+while getopts "d:v" opt; do
+    case "$opt" in
+        d)
+            echo_debug "changing directory to $OPTARG"
+            workspace_root="$OPTARG"
+            ;;
+        v)
+            debug_dest=/dev/stderr
+            ;;
+        \?)
+            echo "usage: $(basename "$0") [-v] [-d workspace_root ] [file...]"
+            echo
+            echo file... '(default stdin)' can be the URL for git clone, \
+                 optionally followed by whitespace and the branch name \
+                 to checkout. One repo per line.
+            exit 64
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+[ -d "$workspace_root" ] || exit 1
+if [ $# -eq 0 ]; then
+    workspaces_from_stdin
+else
+    workspaces_from_file "$@"
+fi

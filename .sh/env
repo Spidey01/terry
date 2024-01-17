@@ -53,7 +53,6 @@ BLOCKSIZE='M'; export BLOCKSIZE
 append_pathlike LD_LIBRARY_PATH "${HOME}/sw/lib"
 export LD_LIBRARY_PATH
 
-
 # Test for ssh to local host and assume a GUI is present. E.g. Chrome Secure Shell app.
 # Unset in rc.local if needed!
 #
@@ -64,6 +63,9 @@ if [ -z "$DISPLAY" ]; then
         export DISPLAY
 	fi
 fi
+
+# Set for use in interactive mode but not exported.
+workspace="${HOME}/sw/workspace"
 
 [ -f "${HOME}/.sh/env.d/`uname -s`.sh" ] && . "${HOME}/.sh/env.d/`uname -s`.sh"
 . "${HOME}/.sh/env.d/pager.sh"

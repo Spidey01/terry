@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# Given a hosts file(s) as input (file or stdin), print out a sequence of ssh
+# configuration entries for each host.
+
+while getopts hi:u: args; do
+    case $args in
+        h)
+            cat << EOF
+$(basename $0) [options] [FILE...]
+
+Reads hosts file data from standard input or file(s) translating it to ssh
+configuration format.
+
+If '#user:USER' is found in the input, the following entries will have a User
+directive set to 'USER'.
+
+If '#identityfile:IDENTITY_FILE' is found in the input, the following entries
+will have an IdentityFile directive set to 'IDENTITY_FILE'.
+
+Options:
+    -i IDENTITY_FILE    Force a 'IdentityFile IDENTITY_FILE' directive to each entry.
+    -u USER             Force a 'User USER' directive to each entry.
+
+EOF
+            exit 0
+            ;;
+        i)
+            ssh_identity_file=$OPTARG
+            ;;
+        u)
+            ssh_user=$OPTARG
+            ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+print_if() {
+    [ -n "$1" ] && [ -n "$2" ] && echo "$1" "$2"
+}
+
+to_ssh() {
+    local address name indent
+    address="$1"
+    name="$2"
+    indent="    "
+
+    echo Host $name
+    echo "${indent}Hostname" "$address"
+    print_if "${indent}User" $ssh_user
+    print_if "${indent}IdentityFile" $ssh_identity_file
+}
+
+convert() {
+    local line hostip hostname i
+    local -a words
+
+    while read line; do
+        if [ -z "$ssh_user" ] && echo "$line" | grep -q '#user:'; then
+            ssh_user=$(echo "$line" | cut -d: -f2-)
+        fi
+        if [ -z "$ssh_identity_file" ] && echo "$line" | grep -q '#identityfile:'; then
+            ssh_identity_file=$(echo "$line" | cut -d: -f2-)
+        fi
+        echo "$line" | grep -q '#' && continue
+        words=($line)
+        hostip=${words[0]}
+        i=1
+        while [ "$i" -lt "${#words[@]}" ]; do
+            hostname="${words[$i]}"
+            to_ssh "$hostip" "$hostname"
+            i=$((i + 1))
+        done
+    done
+}
+
+# from file(s) or input.
+cat $* | convert

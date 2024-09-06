@@ -68,8 +68,11 @@ convert() {
         i=1
         while [ "$i" -lt "${#words[@]}" ]; do
             hostname="${words[$i]}"
-            to_ssh "$hostip" "$hostname"
             i=$((i + 1))
+            if [[ "$hostname" == localhost* ]] || [[ "$hostname" == broadcast* ]]; then
+                continue
+            fi
+            to_ssh "$hostip" "$hostname"
         done
     done
 }

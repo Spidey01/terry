@@ -99,6 +99,7 @@ Thumbs.db
 /.android
 /.anyconnect
 /.atom
+/.cargo
 /.cinnamon
 /.cisco
 /.davmail.properties
@@ -143,6 +144,7 @@ Thumbs.db
 /.pythonrc.local
 /.recently-used
 /.rhosts
+/.rustup
 /.selected_editor
 /.ssh
 /.steam

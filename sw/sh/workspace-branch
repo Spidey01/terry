@@ -1,0 +1,71 @@
+#!/bin/sh
+# Set workspace to specified branch, and associated functions.
+
+# where to find projects
+workspace_root="$PWD"
+
+recursive=1
+
+is_recursive() {
+    [ -n "$recursive" ]
+}
+
+find_git() {
+    if is_recursive; then
+        find "$1" -type d -name .git
+    else
+        find "$1" -maxdepth 2 -type d -name .git
+    fi
+}
+
+echo_verbose() {
+    [ -n "$verbose" ] || return 0
+    echo "$@"
+}
+
+set_git_branch() {
+    local remote branch
+    remote="$(git config --default origin --get checkout.defaultRemote)"
+    branch="$1"
+    if [ -z "$branch" ]; then
+        printf "project: %-32s\tbranch: %-16s\n" \
+            "$(basename "$(dirname "$(realpath "$PWD")")")" \
+            "$(git branch --show-current)"
+        return
+    fi
+    # There's really no better way when you consider remote might exist, might
+    # not exist (error for switch -C/checkout -B), and whether the local might
+    # exist already. So just handle the 3 cases based on the current and whether
+    # there is a remote.
+    [ "$(git branch --show-current)" = "${branch}" ] && return
+    if git branch -a | grep -q "remotes/${remote}/${branch}"; then
+        git checkout --track "${remote}/${branch}"
+    else
+        git switch -c "${branch}"
+    fi
+}
+
+while getopts "hd:v" opt; do
+case "$opt" in
+    d)
+        workspace_root="$OPTARG"
+        ;;
+    v)
+        verbose=1
+        ;;
+    \?)
+        echo "usage: $(basename "$0") [-d workspace_root ] [branch]"
+        echo
+        echo "Write me."
+        exit 64
+        ;;
+esac
+done
+shift $((OPTIND - 1))
+
+[ -d "$workspace_root" ] || exit 1
+
+echo_verbose "workspace: $(realpath $workspace_root)"
+for gitdir in $(find_git $workspace_root); do
+    (cd $gitdir && set_git_branch "$@")
+done

@@ -1,0 +1,108 @@
+#!/bin/sh
+
+die() {
+    echo aborting
+    exit 1
+}
+
+verbose() {
+    [ -n "$verbose" ]
+}
+
+quiet() {
+    [ -z "$verbose" ]
+}
+
+is_treeview() {
+    [ -n "$treeview" ]
+}
+
+is_recursive() {
+    [ -n "$recursive" ]
+}
+
+find_git() {
+    if is_recursive; then
+        find "$1" -type d -name .git
+    else
+        find "$1" -maxdepth 2 -type d -name .git
+    fi
+}
+
+print_workspace() {
+    local location workspace gitdir
+    location="$1"
+    workspace="$(realpath "$location")"
+    printf "workspace: %s\n" "$location"
+    for gitdir in $(find_git "$workspace")
+    do
+        project="$(realpath "${gitdir}/..")"
+        print_project "$project"
+    done
+}
+
+print_project() {
+    local oldwd project indent
+
+    # need to resolve paths relative to initial directory.
+    oldwd="$PWD"
+
+    project="$1"
+    cd $project || die
+    quiet && project="$(basename $1)"
+
+    ident=""
+    is_treeview && indent="\t"
+
+    printf "${indent:+${indent} }project: %-32s \t branch: %-16s \t changes: %3d\n" \
+        "$project" \
+        "$(git branch --show-current)" \
+        "$(git status --short | wc -l)"
+
+    verbose && git status --porcelain=v1 | sed -e "s/^/${indent}${indent}/"
+
+    cd "$oldwd" || die
+}
+
+treeview=1
+verbose=
+recursive=
+while getopts hlqrtv arg; do
+    case "$arg" in
+        h)
+            echo usage: $(basename $0) '[options]' '[WORKSPACE]'
+            echo "-h - this help"
+            echo "-l - list view; don't indent"
+            echo "-q - quiet (default)"
+            echo "-r - recursive into workspace"
+            echo "-t - tree view (default); indent workspace->project->status"
+            echo "-v - verbose"
+            exit
+            ;;
+        l)
+            treeview=
+            ;;
+        q)
+            verbose=
+            ;;
+        r)
+            recursive=1
+            ;;
+        t)
+            treeview=1
+            ;;
+        v)
+            verbose=1
+            ;;
+        \?)
+            exit 64
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+for location in "${@:-$PWD}"
+do
+    print_workspace "$location"
+done
+

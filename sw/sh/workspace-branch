@@ -67,5 +67,5 @@ shift $((OPTIND - 1))
 
 echo_verbose "workspace: $(realpath $workspace_root)"
 for gitdir in $(find_git $workspace_root); do
-    (cd $gitdir && set_git_branch "$@")
+    (cd "$(realpath "${gitdir}/..")" && set_git_branch "$@")
 done

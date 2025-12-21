@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+
+import os.path
+import sys
+
+ndigits = None
+
+def die(*args):
+    print(*args)
+    sys.exit(1)
+
+def usage():
+    prog = os.path.basename(sys.argv[0])
+    print("""usage: {} [options] args..."
+
+args... = pairs of decimal numbers
+
+options:
+
+\t-h, --help          \t display this help
+\t-r, --round NDIGITS \t round output to NDIGITS precision
+
+Example:
+
+\t{} -r 3 60 72
+\t---- old: 60.0 new: 72.0 ----
+\tdifference:  12.0
+\timprovement: 0.2x
+\tpercent:     20.0%
+""".format(prog, prog))
+
+def parse_options(argv):
+    """Given an argument vector, parse command line flags and return the remaining parameters."""
+    args = argv[1:]
+
+    # Since there's so few args, KISS.
+    if args[0] in ("-h", "-help", "--help", "/?"):
+        usage()
+        sys.exit(0)
+    if args[0] in ("-r", "round"):
+        global ndigits
+        try:
+            ndigits = int(args[1])
+        except IndexError:
+            print("option '{}' requires a value".format(args[0]))
+            sys.exit(64)
+        args = args[2:]
+    return args
+
+def parse_values(values):
+    """Returns consecutive pairs of numbers, or dies."""
+    if len(values) % 2 != 0:
+        print("values must come in pairs, ordered old then new")
+        usage()
+        sys.exit(1)
+    for x, y in zip(values[::2], values[1::2]):
+        try:
+            yield float(x), float(y)
+        except ValueError as ve:
+            die("ERROR:", ve)
+
+def difference(old, new):
+    return new - old
+
+def improvement(old, new):
+    return difference(old, new)/old
+
+def percent(old, new):
+    return improvement(old, new)*100.0
+
+def maybe_round(n, ndigits):
+    """Like round(), but ndigits=None = don't round."""
+    if ndigits is None:
+        return n
+    return round(n, ndigits)
+
+def report(old, new):
+    print("---- old: {} new: {} ----".format(old, new))
+    print("difference: ", maybe_round(difference(old, new), ndigits))
+    print("improvement: {}x".format(maybe_round(improvement(old, new), ndigits)))
+    print("percent:     {}%".format(maybe_round(percent(old, new), ndigits)))
+
+if __name__ == "__main__":
+    if len(sys.argv) == 1:
+        usage()
+        sys.exit(0)
+    args = parse_options(sys.argv)
+    for old, new in parse_values(args):
+        report(old, new)
+

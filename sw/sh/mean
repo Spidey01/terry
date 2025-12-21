@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+
+"""
+Definitions:
+  - Arithmetic Mean:  
+    - Sum of values of a data set divided by number of values.
+      - let x = values, n = number of values
+      - sum(i=1..n, x[i]) = (x[1] + x[2] + ... + x[n])
+      - mean(x)           = sum(i=1..n, x[i]) / n
+    - Example: (1 + 2 + 2 + 3 + 4 + 7 + 9) / 7 => 4
+  - Median:
+    - Middle value separating the lesser and greater halves of a data set.
+      - Let x = sorted values, n = number of values
+      - When n is odd:  median(x) = x[(n + 1) / 2]
+      - When n is even: median(x) = (x[n / 2] + x[(n / 2) + 1]) / 2
+    - Example: 1, 2, 2, 3, 4, 7, 9 => 3
+  - Mode:
+    - The most frequent value in the sequence.
+    - Example: 1 2 2 3 4 7 9 => 2
+  - Mid-range:
+    - Arithmetic mean of the highest and lowest values.
+    - Example: (1+9)/2 => 5
+"""
+
+import argparse
+import os.path
+import statistics
+import sys
+
+def parse():
+    """Parses command line arguments and returns a namespace.
+
+    - samples=[...] the values as strings.
+    - mean=True if only the arithmetic mean should be printed.
+    - median=True if only the median should be printed.
+    - mode=True if only the mode should be printed.
+    - midrange=True if only the mid-range should be printed.
+    """
+    parser = argparse.ArgumentParser(
+            prog=os.path.basename(sys.argv[0]),
+            description="Script to compute averages",
+            epilog=__doc__,
+            formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('--mean', action='store_true', default=False,
+                        help="Print the arithmetic mean (sum of values divided by number of values).")
+    parser.add_argument('--median', action='store_true', default=False,
+                        help='Print the median (middle value).')
+    parser.add_argument('--mode', action='store_true', default=False,
+                        help='Print the mode (most frequent value).')
+    parser.add_argument('--midrange', action='store_true', default=False,
+                        help='Print the mid-range (arithmetic mean of highest and lowest values).')
+
+    parser.add_argument('samples', action='extend', nargs='+',
+                        help='Ordered set of decimal values. At least one value must be given.')
+
+    args = parser.parse_args()
+    if len([v for v in (args.mean, args.median, args.mode,args.midrange) if v]) > 1:
+        print("The --mean, --median, --mode, and --midrange flags are mutually exclusive.")
+        sys.exit(64)
+    return args
+
+if __name__ == "__main__":
+    args = parse()
+    samples = []
+    try:
+        for value in args.samples:
+            samples.append(float(value))
+    except ValueError as ve:
+        print("ERROR:", ve)
+        sys.exit(1)
+
+    # The statistics module provides all of this, so there's no need to
+    # implement the formula's from scratch. It does however require Python 3.4+.
+    if True not in (args.mean, args.median, args.mode, args.midrange):
+        args.mean = args.median = args.mode = args.midrange = True
+    if args.mean:
+        print("arithmetic mean:", statistics.mean(samples))
+    if args.median:
+        print("median:         ", statistics.median(samples))
+    if args.mode:
+        print("mode:           ", statistics.mode(samples))
+    if args.midrange:
+        print("mid-range:      ", statistics.mean([min(samples), max(samples)]))

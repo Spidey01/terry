@@ -123,6 +123,7 @@ Thumbs.db
 /.gradle
 /.gstreamer-*
 /.gtk-bookmarks
+/.gtkrc-*
 /.hplip
 /.icedtea
 /.irbrc

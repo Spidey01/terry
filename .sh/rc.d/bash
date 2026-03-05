@@ -2,7 +2,10 @@
 # Bourne again shell runtime configuration.
 #
 
-set bell-style none
+# Commenting this out because it was causing KDE Plasma 6 to drop back to sddm
+# on Fedora Kinoite 43.20260303.0. Many Bothans died to debug this.
+#set bell-style none
+
 set -o emacs 
 shopt -s checkwinsize
 

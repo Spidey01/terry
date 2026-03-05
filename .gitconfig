@@ -1,6 +1,8 @@
 [user]
-	email = BigBoss1964@gmail.com
 	name = Terry M. Poulin
+	# From Git 2.8 (2016) this effectively halts commit if user.email is
+	# not set.
+	useConfigOnly = true
 [alias]
 	st = !git status -s | grep -v '??'
 	pp = log --graph --abbrev-commit --decorate --full-history --all
@@ -14,7 +16,19 @@
 [core]
 	autocrlf = input
 
-# Create ~/.gitconfig.local to hold system local overrides.
-# Requires >= Git 2.13 (2018) but great way to store e-mail address.
+# Include additional configuration files.
+#
+# N.B. this requires >= Git 2.13 (2018) but great way to store e-mail address.
+#
+# Default identity for this system.
+[include]
+	path = .gitconfig.identity
+# If the URL is write access to my GitHub, load my identity from this file. Needed on machines where user.email differs from other repos.
+[includeIf "hasconfig:remote.*.url:git@github.com:Spidey01/**"]
+	path = .gitconfig.github
+# For projects in my workspace.
 [includeIf "gitdir:~/sw/workspace/"]
+	path = .gitconfig.workspace
+# Create ~/.gitconfig.local to hold any system local overrides.
+[include]
 	path = .gitconfig.local

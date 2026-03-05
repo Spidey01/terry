@@ -1,10 +1,13 @@
 # Explicitly ignore these
+k*
 Amazon
 Code
 GIMP
 Insync
+KDE
 Kitware
 Mousepad
+Plasma*
 Qt
 QtProject.conf
 Slack
@@ -29,11 +32,12 @@ fbpanel/local*
 geeqie
 go
 google-chrome
-gtk-2.0
-gtk-3.0
+gtk-*.0
+gtkrc*
 hexchat
 htop
 inkscape
+kde*
 libfm
 libreoffice
 linuxmint
@@ -50,6 +54,7 @@ openbox
 orage
 pavucontrol.ini
 pcmanfm
+plasma*
 pop3-watcherrc
 psi
 pulse

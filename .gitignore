@@ -85,6 +85,8 @@ _viminfo
 /vimfiles
 Thumbs.db
 
+# Default Calibre library location
+/Calibre Library
 
 # Dropbox stuff
 /Dropbox
@@ -105,6 +107,7 @@ Thumbs.db
 /.cargo
 /.cinnamon
 /.cisco
+/.cups
 /.davmail.properties
 /.dlv
 /.dmenu_cache

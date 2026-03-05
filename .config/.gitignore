@@ -1,5 +1,5 @@
 # Explicitly ignore these
-/k*
+/*rc
 /Amazon
 /Code
 /GIMP
@@ -37,7 +37,9 @@
 /hexchat
 /htop
 /inkscape
+/k*
 /kde*
+/libaccounts-glib
 /libfm
 /libreoffice
 /linuxmint
@@ -59,8 +61,10 @@
 /psi
 /pulse
 /ristretto
+/session
 /squeeze
 /ssh-tunneller.rc
+/toolbox
 /totem
 /unix-backup.rc.local
 /user-dirs.dirs
@@ -72,3 +76,4 @@
 /xarchiver
 /xfburn
 /xfce4
+/xsettingsd

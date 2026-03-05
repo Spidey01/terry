@@ -32,6 +32,7 @@ _viminfo
 /.cache
 /.ccache
 /.dbus
+/.var
 /Desktop
 /Documents
 /Download*

@@ -10,11 +10,25 @@
 LANG=en_US.utf-8
 
 #
-# Debian systems use this file to indicate a chroot environment. Such as using
-# schroot -c some_chroot = /etc/debian_chroot contains 'some_chroot'.
+# Detect the presense of a container, includng its name if possible.
+# For some shells, this may be inserted into the prompt.
 #
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
+if [ -z "${container_name}" ]; then
+    if [ -r /run/.containerenv ]; then
+        # OCI containers like Podman use this file to indicate the container is running.
+        # It generally contains shell variables describing the container.
+        container_name="$(grep -oP "(?<=name=\")[^\";]+" /run/.containerenv)"
+    elif [ -r /etc/debian_chroot ]; then
+        # Debian systems use this file to indicate a chroot environment. Such as using
+        # schroot -c some_chroot = /etc/debian_chroot contains 'some_chroot'.
+        container_name="$(cat /etc/debian_chroot)"
+    elif [ -r /.dockerenv ]; then
+        # non-standard and generally empty.
+        container_name="docker"
+    elif [ -r /.toolboxenv ]; then
+        # about as useless but indicates Fedora toolbox.
+        container_name="toolbx"
+    fi
 fi
 
 #

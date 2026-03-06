@@ -30,7 +30,7 @@ if [ -n "$PS1" ]; then
     PS1_Cyan='\e[0;36m'
     PS1_White='\e[0;37m'
 
-    PS1="[ ${debian_chroot:+($debian_chroot)}\W ]\$ "
+    PS1="[ ${container_name:+($container_name)}\W ]\$ "
     export PS1
 fi
 

@@ -7,7 +7,7 @@
 #
 # Utility functions.
 #
-. ~/.sh/lib
+. ~/sw/etc/lib
 
 #
 # If these are not in PATH, force them.
@@ -34,7 +34,7 @@ xsetroot -cursor_name left_ptr
 # Load custom X key maps.
 #
 [ -f ~/.Xmodmap ] && xmodmap ~/.Xmodmap
-[ -f "${HOME}/.sh/xmodmap.d/$(hostname -s)" ] && xmodmap ~/.sh/xmodmap.d/$(hostname -s)
+[ -f "${HOME}/sw/etc/xmodmap.d/$(hostname -s)" ] && xmodmap ~/sw/etc/xmodmap.d/$(hostname -s)
 
 #
 # Launch a D-Bus channel for this session if missing.
@@ -67,7 +67,7 @@ fi
 # Start the big kahuna
 #
 gst-play-1.0 --no-interactive --quiet /usr/local/etc/startup.ogg &
-[ -x ~/.sh/xsession.d/local ] && . ~/.sh/xsession.d/local
+[ -x ~/sw/etc/xsession.d/local ] && . ~/sw/etc/xsession.d/local
 gst-play-1.0 --no-interactive --quiet /usr/local/etc/shutdown.ogg &
 
 # clean up

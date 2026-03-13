@@ -1,14 +1,14 @@
 #!/bin/sh
 #
-# Executes ~/.sh/monitors.d/{hostname} with the name of each connected monitor
-# as an argument. The names are the same as given by xrandr.
+# Executes ~/sw/etc/monitors.d/{hostname} with the name of each connected
+# monitor as an argument. The names are the same as given by xrandr.
 #
 
-. "${HOME}/.sh/lib"
+. "${HOME}/sw/etc/lib"
 
 monitors="`xrandr -q | grep ' connected ' | cut -d ' ' -f 1`"
 
-monitor_setup="${HOME}/.sh/monitors.d/`uname -n`"
+monitor_setup="${HOME}/sw/etc.sh/monitors.d/`uname -n`"
 
 if [ -x "$monitor_setup" ]; then
     exec "$monitor_setup" $monitors

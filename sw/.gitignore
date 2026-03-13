@@ -6,6 +6,8 @@
 /share
 # local shell profile additions.
 /etc/rc.local
+# local xsession override.
+/etc/xsession.d/local
 # Sort of often dumped or linked here.
 /android-sdk-linux
 # shortcut to my web server files.

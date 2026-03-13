@@ -18,11 +18,9 @@ if [ -z "$PATH" ]; then
     PATH="/bin:/sbin:/usr/bin:/usr/sbin"; export PATH
 fi
 
-# prepend ~/sw/ directories to path
+# prepend my scripts to the path.
 #
 ensure_path -p "$HOME/sw/bin"
-ensure_path -p "$HOME/sw/sbin"
-ensure_path -p "$HOME/sw/sh"
 
 # and ~/.local/bin for local things, packages from pip, etc.
 ensure_path -p "$HOME/.local/bin"

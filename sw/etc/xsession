@@ -15,8 +15,6 @@
 ensure_path -p "/usr/local/bin"
 ensure_path -p "/usr/local/sbin"
 ensure_path -p "$HOME/sw/bin"
-ensure_path -p "$HOME/sw/sbin"
-ensure_path -p "$HOME/sw/sh"
 ensure_path -p "$HOME/.local/bin"
 
 #

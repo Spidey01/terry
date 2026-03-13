@@ -292,8 +292,7 @@ find_in_normpath() {
     local progname p name
 
     for progname; do
-        for p in "${HOME}/.local/bin" "${HOME}/sw/sh" "${HOME}/sw/bin" \
-                  "${HOME}/sw/sbin" \
+        for p in "${HOME}/.local/bin" "${HOME}/sw/bin" \
                   /usr/local/bin /usr/local/sbin \
                   /usr/bin /usr/sbin \
                   /bin /sbin

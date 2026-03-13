@@ -93,5 +93,3 @@ eval_for_each() {
 # System specific.
 [ -f "${HOME}/.sh/funcs.d/`uname -s`.sh" ] && . "${HOME}/.sh/funcs.d/`uname -s`.sh"
 
-# Emulated dirs, pushd, and popd.
-. "${HOME}/.sh/funcs.d/dirstack.sh"

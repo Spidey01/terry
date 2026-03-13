@@ -55,6 +55,7 @@ get_power_state() {
     # Battery 0: Full, 100%
     # [ terry@alice ]()
     #
+    # That said, many Linux distros no longer include it by default.
     case `acpi -b | cut -d , -f 1 | cut -d : -f 2` in
         *Charging|*Full)
             echo 'adapter'

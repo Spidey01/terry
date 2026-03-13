@@ -27,4 +27,4 @@ alias   la='ls -aF'
 #
 # Source system specific aliases.
 #
-[ -f "${HOME}/.sh/alias.d/`uname -s`.sh" ] && . "${HOME}/.sh/alias.d/`uname -s`.sh"
+[ -f "${HOME}/sw/etc/alias.d/`uname -s`.sh" ] && . "${HOME}/sw/etc/alias.d/`uname -s`.sh"

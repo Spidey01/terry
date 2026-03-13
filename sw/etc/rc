@@ -4,48 +4,47 @@
 # This should be portable across virtually all Bourne shells and operating
 # systems, as long as aliases and functions are supported.
 #
-# - Library functions needed early on.
-# - Shell runtime configuration from ~/.sh/$SHELL.
-# - Environment data is sourced from ~/.sh/env.
-# - Functions are sourced from ~/.sh/funcs.
-# - Aliases are sourced from ~/.sh/aliases.
+# - Library functions needed early on from ./lib.
+# - Shell runtime configuration from ./rc.d/$SHELL.
+# - Environment data is sourced from ./env.
+# - Functions are sourced from ./funcs.
+# - Aliases are sourced from ~/aliases.
 #
 # If it exists, most of these source associated those.d directories for the
 # current OS name as per `uname -s` with a .sh extension added.
 #
-#
-# ~/.sh/rc.local is sourced after everything else, to privide system local changes.
+# ./rc.local is sourced after everything else, to privide system local changes.
 #
 
 #
 # include library functions that are required by ./env.
 #
-. "${HOME}/.sh/lib"
+. "${HOME}/sw/etc/lib"
 
 #
 # set shell specific settings.
 #
 case `basename $SHELL` in
     'sh')
-        . "${HOME}/.sh/rc.d/sh"
+        . "${HOME}/sw/etc/rc.d/sh"
         ;;
     'bash')
-        . "${HOME}/.sh/rc.d/bash"
+        . "${HOME}/sw/etc/rc.d/bash"
         ;;
     'ksh' | 'pdksh' | 'mksh' | 'ksh88' | 'ksh93')
-        . "${HOME}/.sh/rc.d/ksh"
+        . "${HOME}/sw/etc/rc.d/ksh"
         ;;
     'zsh')
-        . "${HOME}/.sh/rc.d/zsh"
+        . "${HOME}/sw/etc/rc.d/zsh"
         ;;
 esac
 
 #
 # set my standard environment, functions, and aliases.
 #
-. "${HOME}/.sh/env"
-. "${HOME}/.sh/funcs"
-. "${HOME}/.sh/aliases"
+. "${HOME}/sw/etc/env"
+. "${HOME}/sw/etc/funcs"
+. "${HOME}/sw/etc/aliases"
 
 #
 # give a fortune cookie and the current date/time on login.
@@ -61,4 +60,4 @@ fi
 #
 # parse site local additions
 #
-[ -f "${HOME}/.sh/rc.local" ] && . "${HOME}/.sh/rc.local"
+[ -f "${HOME}/sw/etc/rc.local" ] && . "${HOME}/sw/etc/rc.local"

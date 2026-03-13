@@ -1,2 +1,1 @@
-
-. $HOME/.sh/rc
+. "$HOME/sw/etc/rc"

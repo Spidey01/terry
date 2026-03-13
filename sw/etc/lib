@@ -334,4 +334,4 @@ get_python_major_version() {
 
 # Load OS specific library code if present.
 #
-[ -f "${HOME}/.sh/lib.d/`uname -s`.sh" ] && . "${HOME}/.sh/lib.d/`uname -s`.sh"
+[ -f "${HOME}/sw/etc/lib.d/`uname -s`.sh" ] && . "${HOME}/sw/etc/lib.d/`uname -s`.sh"

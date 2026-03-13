@@ -7,4 +7,4 @@
 #
 
 # System specific.
-[ -f "${HOME}/.sh/funcs.d/`uname -s`.sh" ] && . "${HOME}/.sh/funcs.d/`uname -s`.sh"
+[ -f "${HOME}/sw/etc/funcs.d/`uname -s`.sh" ] && . "${HOME}/sw/etc/funcs.d/`uname -s`.sh"

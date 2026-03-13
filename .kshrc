@@ -1,1 +1,1 @@
-ENV="$HOME/.sh/rc"; export ENV
+ENV="$HOME/sw/etc/rc"; export ENV

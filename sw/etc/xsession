@@ -17,7 +17,7 @@ ensure_path -p "/usr/local/sbin"
 ensure_path -p "$HOME/sw/bin"
 ensure_path -p "$HOME/sw/sbin"
 ensure_path -p "$HOME/sw/sh"
-ensure_path -p "$HOME/sw/sh.local"
+ensure_path -p "$HOME/.local/bin"
 
 #
 # Force parsing of our current X resources file.

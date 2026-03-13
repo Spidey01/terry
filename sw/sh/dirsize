@@ -1,0 +1,4 @@
+#!/bin/sh
+# report the disk usage for $@ in human readable format
+
+du -ch "${@:-.}" | tail -n 1 | cut -f 1

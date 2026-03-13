@@ -1,95 +1,10 @@
 #
-# General functions that should be fairly portable
+# General functions that should be fairly portable.
 #
+# In most cases, I prefer ~/sw/sh/<script> unless there's a reason to mutate
+# the current shell's environment, or the command should only be enabled on
+# specific systems.
 #
-
-new_script() {
-    #
-    # create a new script, with the shebang! pre-inserted.
-    #
-    # params:
-    #  $1   = interp
-    #  $2   = filename
-    #
-    if [ -z "$1" ]; then
-        echo "Usage: $0 iterpname scriptname"
-        return 0
-    fi
-    printf "#!/usr/bin/env $1\n\n" >> "$2" && chmod +x "$2"
-}
-
-vimhelp() {
-    vim -c "help $@ | only"
-}
-
-swaptwofiles() {
-    mv "$1" "${2}.new" && \
-    mv "$2" "${1}" && \
-    mv "${2}.new" "$2"
-    echo "'$1' -> '${2}.new' -> '$2' '${1}' -> '${2}.new' '$2'"
-}
-
-swapfiles() {
-    type expr >/dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo "$0: error: can't find 'expr' in PATH"
-        return 1
-    fi
-
-    if [ `expr $# % 2` -ne 0 ]; then
-        echo "usage: $0 src1 dst1 [src2 dest2 ...]"
-        return 1
-    fi
-
-    for null; do
-        swaptwofiles $1 $2
-        if [ $# -eq 2 ]; then break; fi
-        shift 2 >/dev/null 2>&1
-    done
-    unset null
-}
-
-
-dirsize() {
-    # report the disk usage for $@ in human readable format
-
-    du -ch "${@:-.}" | tail -n 1 | cut -f 1
-}
-
-whereami() {
-    # report where I am
-
-    echo "`whoami`@`uname -n`:`pwd`"
-    echo '-----'
-    ls -F
-}
-
-doneat() {
-    # eval its arguments and display the start/done at times bracketing the command
-
-    printf "started at "; date
-    eval "$@"
-    printf "done at "; date
-}
-
-eval_for_each() {
-    # eval it's arguments in a for loop style.
-    #
-    # $1        = command to run
-    # $2..$#    = words for for loop.
-    #
-
-    local cmd what
-
-    cmd="$1"
-    shift 1
-    echo '$1 = '$1' $@ = '"$@"
-
-    for what in $@; do
-        eval "$cmd" "$what"
-    done
-}
 
 # System specific.
 [ -f "${HOME}/.sh/funcs.d/`uname -s`.sh" ] && . "${HOME}/.sh/funcs.d/`uname -s`.sh"
-

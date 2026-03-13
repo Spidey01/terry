@@ -1,0 +1,6 @@
+#!/bin/sh
+# report where I am
+
+echo "`whoami`@`uname -n`:`pwd`"
+echo '-----'
+ls -F

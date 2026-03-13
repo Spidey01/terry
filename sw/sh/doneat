@@ -1,0 +1,5 @@
+#!/bin/sh
+# eval its arguments and display the start/done at times bracketing the command
+printf "started at "; date
+eval "$@"
+printf "done at "; date

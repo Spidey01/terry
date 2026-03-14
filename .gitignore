@@ -1,7 +1,4 @@
 # vim stuff
-.viminfo
-_viminfo
-*.sw?
 /.vimrc
 /_vimrc
 /.gvimrc
@@ -12,7 +9,7 @@ _viminfo
 /.gitconfig.workspace
 /.gitconfig.local
 
-# various history files
+# various history files - often under .local/state now.
 /.history
 /*_history
 /.lesshst
@@ -26,7 +23,7 @@ _viminfo
 /.xsession-errors
 /.xsession-errors.old
 
-# csh/tcsh stuff I don't care about.
+# csh/tcsh stuff that I don't care about.
 /.cshrc
 /.login
 
@@ -43,8 +40,7 @@ _viminfo
 /Videos
 
 # Macintosh stuff.
-.CFUserTextEncoding
-.DS_Store
+/.CFUserTextEncoding
 /.Trash
 /.bash_sessions
 /.zsh_sessions
@@ -83,7 +79,6 @@ _viminfo
 /ntuser.dat*
 /ntuser.ini*
 /vimfiles
-Thumbs.db
 
 # Default Calibre library location
 /Calibre Library
@@ -174,19 +169,3 @@ Thumbs.db
 /.zcompdump
 /Parallels
 /go
-davmail.log*
-
-# archive formats.
-*.tgz
-*.bz2
-*.txz
-*.tar
-*.tar.*
-*.zip
-*.7z
-
-
-# Special
-*.log
-*.chroot
-

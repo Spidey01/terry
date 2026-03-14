@@ -10,3 +10,23 @@ _viminfo
 
 # Windows stuff to universally ignore.
 Thumbs.db
+
+# It's unlikely I ever want to add a log file.
+*.log
+
+# archive formats.
+*.tar
+*.tar.*
+*.tbz
+*.tbz2
+*.bz2
+*.tgz
+*.gz
+*.txz
+*.xz
+*.tzst
+*.zst
+*.zip
+*.7z
+*.rar
+

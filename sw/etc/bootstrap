@@ -1,0 +1,86 @@
+#!/bin/sh
+# Script for bootstrapping a new home directory. Assumes we're run right after
+# a fresh git clone.
+
+if ! cd "$HOME/tptest" ; then
+    echo What a Terrible Failure to Change Directory
+    exit 1
+fi
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    cat << EOF
+Run this to bootstrap after cloning a new home directory. E.g.,
+
+    git clone git@github.com:Spidey01/terry.git
+    mv terry/.git .git
+    git reset --hard HEAD
+    sw/etc/bootstrap
+EOF
+    exit
+fi
+
+# Ensure the scripts below are in path.
+PATH="${HOME}/sw/bin:$PATH"
+
+set_git_useremail () {
+    local user_email gitconfig_file
+    gitconfig_file="$1"
+    if [ -z "$gitconfig_file" ]; then
+        echo set_git_email: must specify config file
+        exit 1
+    fi
+    while true; do
+        printf "Enter Git user.email for ${gitconfig_file}: "
+        read user_email
+        case "$user_email" in
+            *@*)
+                break
+                ;;
+            *)
+                printf 'Bad user.email: "%s"\n"' "$user_email"
+                ;;
+        esac
+    done
+    echo Setting user.email to "$user_email" in "$gitconfig_file"
+    printf "[user]\n\temail = %s\n" "$user_email" > "$gitconfig_file"
+}
+
+echo Set primary git identity used for most repositories.
+set_git_useremail .gitconfig.identity
+if yes-or-no "Do you want to create a separate git identity for GitHub?"; then
+    set_git_useremail .gitconfig.github
+fi
+if yes-or-no "Do you want to create a separate git identity for sw/workspace?"; then
+    set_git_useremail .gitconfig.workspace
+fi
+
+echo Bootstraping submodules
+git submodule init
+git submodule update
+
+echo Bootstrapping permissions
+if type ssh; then
+    mkdir .ssh
+    fix-ssh-perms
+fi
+[ -f .netrc ] && chmod 0600 .netrc
+
+echo Bootstrapping vim.
+if type vim; then
+    make-vim-helptags
+    make-vim-spellfiles
+    cat << EOF
+if vim is older than 7.4 then you'll have to make links:
+
+    ln -s .vim/vimrc .vimrc
+    ln -s .vim/gvimrc .gvimrc
+EOF
+fi
+
+echo Bootstrapping nodump attribute
+for nodump in Dropbox Insync .cache dbus/session-bus .m2/repository .npm; do
+    if [ -d "$nodump" ]; then
+       chattr +d "$nodump"
+    fi
+done
+

@@ -1,0 +1,7 @@
+#!/bin/sh
+# compile helptags for each vim plugin.
+for docdir in .vim/bundle/*/doc; do
+    echo "vim :helptags $docdir"
+    vim -e --cmd "helptags $docdir | q"
+done
+

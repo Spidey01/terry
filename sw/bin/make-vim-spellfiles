@@ -1,0 +1,6 @@
+#!/bin/sh
+# compile wordlists into spell files for vim.
+for spellfile in .vim/wordlists/*.add; do
+    echo "vim :mkspell ${spellfile}.spl $spellfile"
+    vim -e --cmd ":mkspell! ${spellfile}.spl $spellfile | q"
+done

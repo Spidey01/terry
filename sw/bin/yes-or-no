@@ -1,0 +1,19 @@
+#!/bin/sh
+# Simple script that asks yes or no with the provided prompt.
+# Unlike the usual select loop, this doesn't require bash or korn.
+# exits zero if yes, non-zero if no.
+while true; do
+    printf "%s [Y/N] " "$*"
+    read yorn
+    case "$yorn" in
+        y|yes|Y|YES)
+            exit 0
+            ;;
+        n|no|N|NO)
+            exit 1
+            ;;
+        *)
+            echo please enter one of y, yes, n, or no
+            ;;
+    esac
+done

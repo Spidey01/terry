@@ -1,13 +1,10 @@
-# ignore stuff installed here
-/bin
-/include
-/lib
-/sbin
-/share
 # local shell profile additions.
 /etc/rc.local
 # local xsession override.
 /etc/xsession.d/local
+#
+# ignore stuff installed here
+#
 # Sort of often dumped or linked here.
 /android-sdk-linux
 # shortcut to my web server files.

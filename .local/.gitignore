@@ -1,5 +1,7 @@
 # Platform-specific user binaries are now often installed here.
 /bin
+/include
 /lib
+/sbin
 # Some apps keep state files here, like window positions and command history files.
 /state

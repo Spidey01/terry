@@ -49,12 +49,5 @@ else
 	keybind  $'clear\n'
 fi
 
-# ksh doesn't support C-style directory stacks, emulate them
-DIRSTACK="$HOME"
-export DIRSTACK
-alias dirs=emulate_dirs
-alias popd=emulate_popd
-alias pushd=emulate_pushd
-
 PS1="[ \u@\h ]$ "
 export PS1

@@ -56,10 +56,10 @@ convert() {
     local -a words
 
     while read line; do
-        if [ -z "$ssh_user" ] && echo "$line" | grep -q '#user:'; then
+        if echo "$line" | grep -q '#user:'; then
             ssh_user=$(echo "$line" | cut -d: -f2-)
         fi
-        if [ -z "$ssh_identity_file" ] && echo "$line" | grep -q '#identityfile:'; then
+        if echo "$line" | grep -q '#identityfile:'; then
             ssh_identity_file=$(echo "$line" | cut -d: -f2-)
         fi
         echo "$line" | grep -q '#' && continue

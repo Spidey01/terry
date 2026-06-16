@@ -1,0 +1,80 @@
+#!/bin/sh
+
+script_name="$(basename "$0")"
+grep_flags=
+grep_pattern=
+show_total=
+only_total=
+browser_mode=
+html_file=
+
+while getopts "hBCEH:cf:" arg; do
+    case "$arg" in
+        h)
+            printf 'usage: %s [options] packages...\n' "$script_name"
+            printf '\nPrints the code coverage of the packages, optionally limited to selected file patterns.\n'
+            printf '\noptions:\n'
+            printf '  -B \t Works like go cover tool -html=FILE. Disables other flags\n'
+            printf '  -C \t Like -c, but only show a total.\n'
+            printf '  -E \t Use extended regexp for patterns.\n'
+            printf '  -H FILE \t Works like go cover tool -html=... -o FILE. Disables other flags\n'
+            printf '  -c \t Append a total percentage for the selected files.\n'
+            printf '  -f PATTERN \t Use grep pattern to filter by file name.\n'
+            printf '  -h \t Display this help.\n'
+            exit 0
+            ;;
+        B)
+            browser_mode==yes
+            ;;
+        C)
+            only_total=yes
+            ;;
+        E)
+            grep_flags=-E
+            ;;
+        H)
+            html_file="$OPTARG"
+            ;;
+        c)
+            show_total=yes
+            ;;
+        f)
+            grep_pattern="$OPTARG"
+            ;;
+        \?)
+            [ -n "$OPTARG" ] && echo "Invalid option: -${OPTARG}"
+            exit $OPTERR
+            ;;
+    esac
+done
+shift $(($OPTIND - 1))
+if [ $# -eq 0 ]; then
+    echo "${script_name}: must specify packages"
+    exit 1
+fi
+
+cover_profile=$(mktemp)
+
+get_coverage() {
+    go tool cover --func="$cover_profile" | grep $grep_flags "${grep_pattern:-.*}"
+}
+calc_total() {
+    awk '{s+=$3; c++} END {printf "coverage: %.1f%% of selection\n", s/c}'
+}
+
+go test "$@" -coverprofile="$cover_profile" || exit $?
+
+if [ -n "$browser_mode" ]; then
+    go tool cover --html="$cover_profile"
+elif [ -n "$html_file" ]; then
+    go tool cover --html="$cover_profile" -o "$html_file"
+elif [ -n "$only_total" ]; then 
+    get_coverage | calc_total
+else
+    get_coverage
+    if [ -n "$show_total" ]; then
+        get_coverage | calc_total
+    fi
+fi
+
+[ -f "$cover_profile" ] && rm -f "$cover_profile"

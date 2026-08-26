@@ -2,7 +2,7 @@
 # Script for bootstrapping a new home directory. Assumes we're run right after
 # a fresh git clone.
 
-if ! cd "$HOME/tptest" ; then
+if ! cd "$HOME" ; then
     echo What a Terrible Failure to Change Directory
     exit 1
 fi
